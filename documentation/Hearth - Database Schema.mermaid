@@ -1,0 +1,113 @@
+erDiagram
+    USERS ||--o{ PRACTITIONERS : "owns / claims"
+    USERS ||--o{ EVENTS : "submits"
+    USERS ||--o{ REPORTS : "files"
+    USERS ||--o{ REGISTRATIONS : "registers"
+    PRACTITIONERS ||--o{ PRACTITIONER_CATEGORIES : "tagged with"
+    CATEGORIES ||--o{ PRACTITIONER_CATEGORIES : "applies to"
+    PRACTITIONERS ||--o{ EVENTS : "hosts"
+    PRACTITIONERS ||--o{ REPORTS : "is flagged in"
+    EVENTS ||--o{ REPORTS : "is flagged in"
+    EVENTS ||--o{ REGISTRATIONS : "has"
+    EVENTS ||--o{ EVENTS : "recurs from"
+
+    USERS {
+        uuid id PK
+        text email UK
+        text display_name
+        text phone
+        enum role "member|practitioner|steward|admin"
+        text avatar_url
+        timestamptz created_at
+    }
+
+    PRACTITIONERS {
+        uuid id PK
+        uuid owner_user_id FK "nullable - for self-edit"
+        text name
+        text practice_name
+        text slug UK
+        text description
+        text area
+        enum mode "in_person|online|both"
+        text whatsapp
+        text email
+        text website
+        text instagram
+        text photo_url
+        text pricing_note
+        boolean is_member
+        enum status "pending|live|hidden|rejected"
+        enum auto_check "ok|needs_review"
+        int flag_count
+        boolean featured
+        enum source "hearth_form|import|whatsapp|manual"
+        tsvector search_vector
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    CATEGORIES {
+        uuid id PK
+        text name UK
+        text slug UK
+        text description
+        int sort_order
+        boolean active
+    }
+
+    PRACTITIONER_CATEGORIES {
+        uuid practitioner_id PK_FK
+        uuid category_id PK_FK
+    }
+
+    EVENTS {
+        uuid id PK
+        uuid host_practitioner_id FK "nullable"
+        uuid submitted_by_user_id FK "nullable"
+        uuid recurrence_parent_id FK "nullable - self ref"
+        text title
+        text description
+        text registration_link
+        timestamptz start_at
+        timestamptz end_at
+        text location_text
+        enum mode "in_person|online|both"
+        text host_name
+        text cost_note
+        text image_url
+        text recurrence_rule "RRULE"
+        enum status "pending|live|hidden|cancelled"
+        boolean featured
+        enum source "hearth_form|google_calendar|whatsapp|manual"
+        text external_id "GCal id for dedupe"
+        tsvector search_vector
+        timestamptz created_at
+        timestamptz updated_at
+    }
+
+    REPORTS {
+        uuid id PK
+        uuid practitioner_id FK "nullable"
+        uuid event_id FK "nullable"
+        uuid reporter_user_id FK "nullable"
+        text reporter_contact "email/whatsapp for dedupe"
+        enum reason "spam|inappropriate|not_real|outdated|other"
+        text details
+        enum status "open|reviewed|dismissed|actioned"
+        timestamptz created_at
+    }
+
+    REGISTRATIONS {
+        uuid id PK
+        uuid event_id FK
+        uuid user_id FK "nullable - no-login allowed"
+        text attendee_name
+        text attendee_email
+        enum status "registered|waitlist|cancelled|attended"
+        text ticket_code
+        enum payment_method "free|cash|etransfer|card"
+        enum payment_status "none|pending|confirmed"
+        text proof_url "uploaded proof of payment"
+        timestamptz created_at
+    }

@@ -1,0 +1,83 @@
+# Claude.md — working notes for the AI assistant
+
+*Tips, conventions, and nuances for working on Hearth. Read this alongside `Readme.md`. Update it whenever you learn something non-obvious.*
+
+---
+
+## What this project is
+
+Hearth is a free, phone-first community hub: a **practitioner directory** (the defensible core) + a **native events layer** (the warm front door), database-backed with **Next.js + Supabase**. See `documentation/Product.md` for the North Star — **check every decision against it**: *does this strengthen the trusted, low-friction home, or just make it bigger / rebuild what WhatsApp/Luma already do?*
+
+---
+
+## Document map (what each file is for)
+
+**Root:**
+- **`Readme.md`** — high-level overview, tech stack, repo layout, version/build. Start here.
+- **`Changelog.md`** — every change, newest at top, grouped by build under the current version. Append here at the end of each work session.
+- **`Claude.md`** *(this file)* — working notes, conventions, nuances for the assistant.
+- **`Bugs.md`** — known bugs/issues spotted while thinking or building; tick them off as fixed.
+
+**`documentation/` (living source-of-truth docs):**
+- **`Architecture.md`** — system design, tech stack, app structure, data flow.
+- **`Security.md`** — auth, RLS, abuse-resistance, privacy, secrets. Security watchlist lives here.
+- **`Product.md`** — North Star, personas, experience, forms, scope staging. The "why."
+- **`Design.md`** — visual system, mobile-first UX, components, what to avoid.
+- **`Hearth - Database Schema.md`** + **`.mermaid`** — the full data model & ER diagram. **The authoritative schema.**
+- **`planning-archive/`** — original planning docs (North Star, Product Brief, Implementation Spec, Proposals, Anat & Curtis's message). **Preserved for provenance only**; their content is assimilated into the living docs. Don't edit them; cite them.
+
+---
+
+## Core conventions & locked decisions
+
+- **Database-backed** (Next.js + Supabase), **not** the old static-site/Google-Sheets plan. The archived Implementation Spec describes that superseded approach — read it for context, but the living docs win.
+- **No login for the public.** Browsing, submitting, and reporting never require an account. Only admins authenticate (Supabase Auth). The `users`/`registrations` tables are **modelled but dormant** until v2/v3 — don't wire them up yet.
+- **Trust signal = community-member badge only.** No public upvotes or written reviews in v1.
+- **Status is server-controlled.** Never trust `status`/`auto_check` from the client. Public submissions go `live` (clean) or `pending` (suspicious) via the server-side content check.
+- **RLS is the backstop** — public read = `status = live` only; public may insert submissions/reports but not update/delete. Write/verify policies before any public write path ships.
+- **Provenance everywhere** — set `source` (and `external_id` for imports) on every practitioner/event row.
+- **Linked layers** — wire `events.host_practitioner_id` so directory↔events cross-discovery works.
+- **Search is a DB feature** — use Postgres `search_vector`, not client-side filtering hacks.
+- **Mobile-first, calm aesthetic** — soft greens/whites, rounded cards (see `Design.md`). No Yelp-style ratings, no default month-grid calendar, no corporate vibes.
+
+---
+
+## Versioning & changelog ritual (per `/wouldyou` workflow)
+
+- **Version** and **Build** live in `Readme.md` (and the app's about surface once code exists).
+- **Increment the Build number** each work session; **do not** bump the Version unless explicitly told.
+- **Append changes to the top of `Changelog.md`** under the new build + current version.
+- If a change touches anything a doc references, **update that doc** in the same session.
+- **Build the app** to confirm it compiles without errors/warnings before finishing (once code exists).
+
+---
+
+## Gotchas & nuances
+
+- **Two source docs disagreed.** The archived Implementation Spec says "$0 static site, no DB, events are a commodity — don't build them." We **overrode** that: database-backed + native events. If you find guidance that contradicts the living docs, the living docs are authoritative.
+- **"Events are a commodity" still half-applies** — we still happily link out to Luma/Eventbrite registration links; we just own the *listing and the on-phone experience.* Don't rebuild ticketing/payments (that's deferred to v3, and even then payment stays off-platform).
+- **At-least-one-contact rule** is enforced both app-side and as a DB `CHECK (whatsapp IS NOT NULL OR email IS NOT NULL OR website IS NOT NULL)`. Keep both.
+- **Flag threshold = 3 distinct reporters**, deduped by `reporter_contact`. Flags **notify**, never auto-hide. No public flag counts.
+- **Category seed = 11 rows** (see schema §`categories`). Categories are a table, not a hardcoded list — admins add more.
+- **Historical event import** = the **"Conscious Events TO Calendar"** (`src = consciouseventsto@gmail.com`, tz `America/Toronto`), **2026-01-01 forward**, `source = google_calendar`, deduped by `external_id`. Today's form (https://forms.gle/fzgQ7s43udWcFaSr6) captures only name + registration link + start/end; Hearth's `events` table is a strict superset (see `documentation/Product.md §7`).
+- **Supabase keys:** anon key is browser-safe *because of RLS*; service-role key is server-only — never bundle it client-side.
+
+---
+
+## Dev commands
+
+- `npm run dev` — local dev at http://localhost:3000 (runs without env; pages show empty states until Supabase is connected).
+- `npm run build` — production build. **Must compile with zero errors/warnings** before committing.
+- `npm run lint` — ESLint.
+- Apply DB schema: run `supabase/migrations/0001_initial_schema.sql` in the Supabase SQL editor (or via the Supabase CLI).
+- Public list pages are `export const dynamic = "force-dynamic"` (they read live data per request; no DB fetch at build time).
+- Filtering is **URL-param driven & server-rendered** (no client JS): `?q=&category=&mode=` via `FilterChips` link chips + GET search form.
+
+## Open questions (track resolutions here)
+
+1. ~~v1 = Directory + Events together~~ **Confirmed** (native events chosen).
+2. ~~Event taxonomy~~ **Resolved:** events reuse the practitioner `categories` table via `events.category_id` (shared taxonomy; same chips on both tabs).
+3. ~~Seed import — which Google Calendar?~~ **Resolved:** "Conscious Events TO Calendar" (`consciouseventsto@gmail.com`, `America/Toronto`). *Still need:* confirm publicly API-readable + the 2026-01-01-forward window.
+4. Brand — using a soft-green/cream default (see `documentation/Design.md`); confirm or supply Anat & Curtis's colours/logo to reskin.
+5. Initial admins — Bhavna + Anat + Curtis? (needed when wiring admin auth.)
+6. Endorsements — park for v2 or rule out entirely?

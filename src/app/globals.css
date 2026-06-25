@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* Hearth design tokens — soft greens & warm cream (see documentation/Design.md).
+   Calm, healing, uncluttered; light-only (warm community aesthetic, no dark mode). */
+@theme {
+  --color-cream: #faf6ed; /* page background */
+  --color-sand: #f1ead9; /* subtle panels / chips */
+  --color-card: #fffdf8; /* card surfaces */
+  --color-line: #e7dfce; /* hairline borders */
+
+  --color-forest: #3f5d49; /* primary green */
+  --color-forest-deep: #324a3a; /* hover/active */
+  --color-sage: #7c9a83; /* secondary / accents */
+  --color-clay: #c08457; /* warm accent (sparingly) */
+
+  --color-ink: #2f2a23; /* primary text */
+  --color-muted: #6f675a; /* secondary text */
+
+  --font-display: var(--font-fraunces);
+  --font-sans: var(--font-nunito);
+
+  --radius-card: 1rem;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  background: var(--color-cream);
+  color: var(--color-ink);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1,
+h2,
+h3,
+.font-display {
+  font-family: var(--font-display), Georgia, serif;
+}
