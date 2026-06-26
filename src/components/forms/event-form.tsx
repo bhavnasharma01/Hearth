@@ -4,6 +4,7 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { submitEvent } from "@/lib/actions/submit-event";
 import { INITIAL_FORM_STATE } from "@/lib/actions/types";
+import { AddressAutocomplete } from "@/components/forms/address-autocomplete";
 import type { Category } from "@/lib/types/database";
 
 const labelCls = "block text-sm font-medium text-ink";
@@ -95,8 +96,11 @@ export function EventForm({ categories }: { categories: Category[] }) {
         </div>
       </fieldset>
 
-      <Field label="Location" hint="Address, venue, or “online”">
-        <input name="location_text" className={inputCls} />
+      <Field
+        label="Location"
+        hint="Pick a suggestion so it shows up in “near me” and gets a directions link"
+      >
+        <AddressAutocomplete inputClassName={inputCls} />
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">

@@ -1,4 +1,5 @@
 import { externalHref, formatMode, whatsappLink } from "@/lib/format";
+import { formatDistance } from "@/lib/geo";
 import type { PractitionerWithCategories } from "@/lib/types/database";
 
 /**
@@ -11,6 +12,8 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
   const meta = [primaryCategory, p.area, formatMode(p.mode), p.pricing_note]
     .filter(Boolean)
     .join("  ·  ");
+  const distance =
+    p.distance_km != null ? formatDistance(p.distance_km) : null;
 
   return (
     <div className="px-4 py-3.5">
@@ -33,8 +36,13 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
           <p className="mt-0.5 line-clamp-1 text-sm text-muted">
             {p.description}
           </p>
-          {meta && (
-            <p className="mt-0.5 truncate text-xs text-muted/80">{meta}</p>
+          {(meta || distance) && (
+            <p className="mt-0.5 truncate text-xs text-muted/80">
+              {distance && (
+                <span className="font-semibold text-forest">{distance} · </span>
+              )}
+              {meta}
+            </p>
           )}
         </div>
       </div>

@@ -3,6 +3,7 @@ import { getCategories } from "@/lib/data/categories";
 import { getPractitioners } from "@/lib/data/practitioners";
 import { PractitionerCard } from "@/components/practitioner-card";
 import { FilterChips, type ChipOption } from "@/components/filter-chips";
+import { LocationControl } from "@/components/location-control";
 import { buildQuery, firstParam } from "@/lib/url";
 import type { ListingMode } from "@/lib/types/database";
 
@@ -30,9 +31,25 @@ export default async function PractitionersPage({
     | ListingMode
     | undefined;
 
+  const lat = firstParam(sp.lat);
+  const lng = firstParam(sp.lng);
+  const radius = firstParam(sp.radius);
+  const near =
+    lat && lng && Number.isFinite(Number(lat)) && Number.isFinite(Number(lng))
+      ? { lat: Number(lat), lng: Number(lng) }
+      : null;
+  const radiusKm = near ? Number(radius) || 25 : null;
+  const loc = { lat, lng, radius };
+
   const [categories, practitioners] = await Promise.all([
     getCategories(),
-    getPractitioners({ search: q, category: category ?? undefined, mode }),
+    getPractitioners({
+      search: q,
+      category: category ?? undefined,
+      mode,
+      near,
+      radiusKm,
+    }),
   ]);
 
   const categoryOptions: ChipOption[] = [
@@ -59,10 +76,22 @@ export default async function PractitionersPage({
         </Link>
       </header>
 
+      {/* Near me */}
+      <div className="mb-3">
+        <LocationControl basePath="/practitioners" />
+      </div>
+
       {/* Search */}
       <form action="/practitioners" method="get" className="mb-4">
         {category && <input type="hidden" name="category" value={category} />}
         {mode && <input type="hidden" name="mode" value={mode} />}
+        {near && (
+          <>
+            <input type="hidden" name="lat" value={lat} />
+            <input type="hidden" name="lng" value={lng} />
+            <input type="hidden" name="radius" value={radius ?? "25"} />
+          </>
+        )}
         <div className="flex gap-2">
           <input
             type="search"
@@ -87,7 +116,7 @@ export default async function PractitionersPage({
             options={categoryOptions}
             current={category}
             build={(value) =>
-              `/practitioners${buildQuery({ q, category: value ?? undefined, mode })}`
+              `/practitioners${buildQuery({ q, category: value ?? undefined, mode, ...loc })}`
             }
           />
         </div>
@@ -99,7 +128,7 @@ export default async function PractitionersPage({
           options={MODE_OPTIONS}
           current={mode ?? null}
           build={(value) =>
-            `/practitioners${buildQuery({ q, category: category ?? undefined, mode: value ?? undefined })}`
+            `/practitioners${buildQuery({ q, category: category ?? undefined, mode: value ?? undefined, ...loc })}`
           }
         />
       </div>
@@ -107,9 +136,11 @@ export default async function PractitionersPage({
       {/* Results */}
       {practitioners.length === 0 ? (
         <p className="rounded-[var(--radius-card)] border border-dashed border-line bg-card/60 p-8 text-center text-sm text-muted">
-          {q || category || mode
-            ? "No practitioners match these filters yet. Try clearing them."
-            : "No practitioners are listed yet — the directory will fill in as people add themselves."}
+          {near
+            ? `No practitioners within ${radiusKm} km yet — try a wider radius, or clear the location.`
+            : q || category || mode
+              ? "No practitioners match these filters yet. Try clearing them."
+              : "No practitioners are listed yet — the directory will fill in as people add themselves."}
         </p>
       ) : (
         <>

@@ -2,8 +2,8 @@
 
 *The lasting, searchable home for the practitioners and events that **our** community vouches for.*
 
-**Version:** 0.1.0 · **Build:** 6
-*(Status: working app with a "rich & sacred" mobile-first redesign — deep jewel-tone theme, Luma-style events agenda, compact directory rows, slim filters. Browse + submit + 553 seeded events, all on live Supabase. Next: profiles, report flow, admin, and deploy to Vercel.)*
+**Version:** 0.1.0 · **Build:** 7
+*(Status: working app on live Supabase — rich & sacred mobile design, browse + submit, 553 seeded events, and a "📍 near me" feature (distance, nearest-sort, radius, directions) for both events and practitioners. Next: profiles, report flow, admin, and deploy to Vercel.)*
 
 ---
 
@@ -82,7 +82,8 @@ project (SQL editor or the Supabase CLI).
 Seed the community events from the public calendar (no API key needed):
 
 ```bash
-npm run import:calendar
+npm run import:calendar     # import/refresh events from the public ICS feed
+npm run geocode             # backfill coordinates for events/practitioners with a location
 ```
 
 ---

@@ -43,6 +43,8 @@ Nullable everywhere it's referenced, so v1 can ship with zero accounts. With Sup
 | slug | text, unique | for a shareable profile URL, e.g. `/p/jane-smith` |
 | description | text, required | ~300 chars, "what you offer" |
 | area | text | e.g. "Oakville", "Toronto + online" |
+| latitude / longitude | double precision | **added Build 7** — geocoded from `area` (coarse/area-level, not a home address) for "near me" |
+| geocoded_at | timestamptz | when coordinates were last set |
 | mode | enum | `in_person` / `online` / `both` |
 | whatsapp | text | at least one contact required (app-level rule) |
 | email | text | |
@@ -125,6 +127,8 @@ A **superset** of the current Google form (which only captures name, registratio
 | featured | boolean | |
 | source | enum | `hearth_form` / `google_calendar` / `whatsapp` / `manual` |
 | external_id | text | Google Calendar event id, for dedupe during transition |
+| latitude / longitude | double precision | **added Build 7** — geocoded from `location_text` (precise) for "near me" |
+| geocoded_at | timestamptz | when coordinates were last set |
 | search_vector | tsvector | |
 | created_at / updated_at | timestamptz | |
 

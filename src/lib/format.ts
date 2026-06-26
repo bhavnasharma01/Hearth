@@ -98,6 +98,21 @@ export function externalHref(raw: string): string {
   return /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
 }
 
+/** A Google Maps link (opens the maps app on a phone) from coords or address text. */
+export function mapsUrl(
+  lat: number | null,
+  lng: number | null,
+  text: string | null,
+): string | null {
+  if (lat != null && lng != null) {
+    return `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+  }
+  if (text) {
+    return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(text)}`;
+  }
+  return null;
+}
+
 export interface EventGroup {
   key: string;
   label: string;

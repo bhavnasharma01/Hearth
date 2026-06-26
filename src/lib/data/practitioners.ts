@@ -1,4 +1,5 @@
 import { getSupabaseServer } from "@/lib/supabase/server";
+import { withDistance, type LatLng } from "@/lib/geo";
 import type {
   ListingMode,
   PractitionerWithCategories,
@@ -13,6 +14,10 @@ export interface PractitionerQuery {
   mode?: ListingMode;
   /** Featured only (used by the Home peek). */
   featuredOnly?: boolean;
+  /** When set, attach distance and sort nearest-first. */
+  near?: LatLng | null;
+  /** When set with `near`, drop practitioners beyond this many km. */
+  radiusKm?: number | null;
   limit?: number;
 }
 
@@ -71,6 +76,8 @@ export async function getPractitioners(
       p.categories.some((c) => c.slug === query.category),
     );
   }
+  // Attach distance + sort nearest-first when a location is active.
+  rows = withDistance(rows, query.near ?? null, query.radiusKm);
   return rows;
 }
 

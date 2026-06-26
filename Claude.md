@@ -71,6 +71,14 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - `npm run lint` — ESLint.
 - Apply DB schema: run `supabase/migrations/0001_initial_schema.sql` in the Supabase SQL editor (or via the Supabase CLI).
 - Import community events: `npm run import:calendar` — reads the **public iCal feed** (no API key), parses with `node-ical`, inserts via service role, deduped by `external_id`. Safe to re-run; recurring series expand 120 days out, so re-run periodically.
+- Backfill coordinates: `npm run geocode` — geocodes events (`location_text`) + practitioners (`area`) that have a location but no coords, via Nominatim.
+
+## "Near me" / geocoding
+
+- Coords live in `latitude`/`longitude`/`geocoded_at` on events **and** practitioners. Events geocode from `location_text` (precise); practitioners from `area` (coarse — never a home address).
+- **Geocode only on write** (submit/import/backfill) via `src/lib/geocode.ts` (Nominatim, `server-only`); never on public reads. The `/api/geocode` route proxies autocomplete so the browser never calls Nominatim directly.
+- **Gotcha:** Nominatim chokes on venue-name prefixes + postal codes ("Hendon Park, 50 Hendon Ave … M2M 1A2"). `geocodeAddress` strips those and tries fallback variants — keep that logic if you touch it.
+- Distance/sort/filter: `src/lib/geo.ts` (`withDistance`). Pages read `?lat=&lng=&radius=`; `LocationControl` sets them. **Geolocation needs HTTPS** — works on localhost + Vercel, but not the plain-http LAN URL on a phone (use the "type a place" box there).
 - Public list pages are `export const dynamic = "force-dynamic"` (they read live data per request; no DB fetch at build time).
 - Filtering is **URL-param driven & server-rendered** (no client JS): `?q=&category=&mode=` via `FilterChips` link chips + GET search form.
 - **Two Supabase clients:** `src/lib/supabase/server.ts` (anon, RLS-bound, READS for public pages) vs. `src/lib/supabase/admin.ts` (service-role, `server-only`, WRITES inside server actions). Never use the admin client outside a server action; never import it into a client component.

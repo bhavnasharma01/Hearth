@@ -72,6 +72,7 @@ All user input is treated as untrusted: validated server-side, parameterized in 
 - Directory/event data is **public by design** — practitioners consent by submitting (the community agreement checkbox).
 - **Reporter contact** is collected only for dedupe, stored privately, never displayed.
 - **No tracking, no ads, no third-party analytics** beyond what's strictly needed; nothing that profiles visitors.
+- **"Near me" location** is used only to build the page URL (`?lat=&lng=`) so the server can sort by distance — it is **never stored server-side, logged, or sent to any third party**. Geolocation requires the visitor's explicit per-use permission (and HTTPS). Practitioner coordinates are **area-level** (geocoded from `area`, e.g. a neighbourhood), never a home address.
 - Contact links use `wa.me`/`mailto:` — no contact data is brokered through a server.
 
 ---

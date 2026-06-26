@@ -3,6 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { runContentCheck } from "@/lib/moderation/content-check";
+import { geocodeAddress } from "@/lib/geocode";
 import { uniquePractitionerSlug } from "@/lib/slug";
 import type { ListingMode } from "@/lib/types/database";
 import type { FormState } from "./types";
@@ -84,6 +85,10 @@ export async function submitPractitioner(
 
   const slug = await uniquePractitionerSlug(supabase, name);
 
+  // Geocode the area (coarse — a neighbourhood/city, never a home address) so
+  // the practitioner can surface in "near me".
+  const geo = area ? await geocodeAddress(area) : null;
+
   const { data: inserted, error } = await supabase
     .from("practitioners")
     .insert({
@@ -105,6 +110,9 @@ export async function submitPractitioner(
       status,
       auto_check: check.result,
       source: "hearth_form",
+      latitude: geo?.lat ?? null,
+      longitude: geo?.lng ?? null,
+      geocoded_at: geo ? new Date().toISOString() : null,
     })
     .select("id, slug")
     .single();

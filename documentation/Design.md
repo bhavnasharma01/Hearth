@@ -52,6 +52,7 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 - **Filters = one slim, horizontally-scrolling strip** (`FilterChips`), not a wrapping wall of pills. Categories scroll in a single line; mode is a second slim line.
 - **Lists, not grids.** Rows live in a single rounded `bg-card` container with `divide-y` separators — calm and uniform.
 - **Restrained copy.** The hero is one deep panel with a short line; section intros are a single short sentence. Content, not prose, fills the screen.
+- **"Near me"** is a slim control (a 📍 button + a "type a place" box) above the list. When active, each row shows a forest-green distance chip, the list sorts nearest-first, radius chips appear, and events get a "Directions" link — distance never adds clutter when it's off.
 - **Shape:** rounded cards, soft shadows, generous spacing and white space (room to breathe).
 - **Type:** friendly, highly legible; comfortable line-length and size for reading on a phone.
 - **Imagery:** practitioner photos and event flyers are first-class; graceful placeholders when absent (no broken-image gaps).

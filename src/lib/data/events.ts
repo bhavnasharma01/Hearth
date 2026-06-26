@@ -1,4 +1,5 @@
 import { getSupabaseServer } from "@/lib/supabase/server";
+import { withDistance, type LatLng } from "@/lib/geo";
 import type {
   Category,
   EventWithCategory,
@@ -12,6 +13,10 @@ export interface EventQuery {
   /** Only events starting at/after now (the default public "upcoming" view). */
   upcomingOnly?: boolean;
   featuredOnly?: boolean;
+  /** When set, attach distance and sort nearest-first. */
+  near?: LatLng | null;
+  /** When set with `near`, drop events beyond this many km. */
+  radiusKm?: number | null;
   limit?: number;
 }
 
@@ -55,6 +60,9 @@ export async function getEvents(
   if (query.category) {
     rows = rows.filter((e) => e.category?.slug === query.category);
   }
+  // Attach distance + sort nearest-first when a location is active (otherwise
+  // the start_at ordering above is preserved).
+  rows = withDistance(rows, query.near ?? null, query.radiusKm);
   return rows;
 }
 

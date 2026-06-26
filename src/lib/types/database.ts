@@ -44,6 +44,9 @@ export interface Practitioner {
   flag_count: number;
   featured: boolean;
   source: PractitionerSource;
+  latitude: number | null;
+  longitude: number | null;
+  geocoded_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -51,6 +54,8 @@ export interface Practitioner {
 /** A practitioner row joined with its categories (as the directory renders it). */
 export interface PractitionerWithCategories extends Practitioner {
   categories: Category[];
+  /** Distance from the visitor in km when a "near me" location is active. */
+  distance_km?: number | null;
 }
 
 export interface Event {
@@ -74,6 +79,9 @@ export interface Event {
   featured: boolean;
   source: EventSource;
   external_id: string | null;
+  latitude: number | null;
+  longitude: number | null;
+  geocoded_at: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -81,4 +89,6 @@ export interface Event {
 /** An event row joined with its (optional) category. */
 export interface EventWithCategory extends Event {
   category: Category | null;
+  /** Distance from the visitor in km when a "near me" location is active. */
+  distance_km?: number | null;
 }

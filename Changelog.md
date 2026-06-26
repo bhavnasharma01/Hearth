@@ -4,6 +4,25 @@
 
 ---
 
+## v0.1.0 — Build 7 (2026-06-26)
+
+*"📍 Near me" for both events and practitioners — distance, nearest-sort, radius, directions. Builds clean; lint passes.*
+
+### Added — location feature
+- **Schema (migration 0002):** `latitude`/`longitude`/`geocoded_at` on `events` and `practitioners`.
+- **Geocoding (free, no key):** `src/lib/geocode.ts` (OpenStreetMap Nominatim, `server-only`, with venue/postal cleaning + fallback variants + cache) and `/api/geocode` autocomplete proxy. Geocoding happens **only on write**.
+- **Distance:** `src/lib/geo.ts` — haversine `distanceKm`, `formatDistance`, and `withDistance` (attach distance, sort nearest-first, filter by radius).
+- **Geocode on submit:** events geocode `location_text` (or use the autocomplete's picked coords); practitioners geocode `area`.
+- **Address autocomplete** (`AddressAutocomplete`) on the Add-an-event form — pick a suggestion to capture precise coordinates.
+- **"Near me" UI** (`LocationControl`, shared by both pages): GPS button + "type a neighbourhood" box, distance chips on each result, nearest-first ordering, radius chips (5/10/25/50 km), and **"Directions"** links (open the maps app) on events.
+- **Backfill:** `scripts/geocode-events.mjs` (`npm run geocode`) — geocoded the **29 addressed events**; practitioners geocode as they're added.
+
+### Notes
+- Geolocation needs HTTPS, so "Near me" (GPS) works on localhost + Vercel but not the plain-http LAN URL on a phone — the "type a place" box works everywhere. Practitioner coordinates are area-level (never a home address) and "near me" location is never stored server-side.
+- Docs updated: Architecture, Security (privacy), Schema, Design, Claude, Readme → Build 7.
+
+---
+
 ## v0.1.0 — Build 6 (2026-06-26)
 
 *Design pass: a "rich & sacred" identity + a mobile-first rethink from user feedback. Builds clean; lint passes.*

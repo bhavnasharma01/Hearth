@@ -2,12 +2,14 @@ import {
   eventDateParts,
   externalHref,
   formatTimeRange,
+  mapsUrl,
 } from "@/lib/format";
+import { formatDistance } from "@/lib/geo";
 import type { EventWithCategory } from "@/lib/types/database";
 
 /**
- * A single agenda row (not a tile): a date badge on the left, the title, and one
- * clean meta line (time · place · cost). Designed to sit in a divided list.
+ * An agenda row: date badge, title, one clean meta line (with distance when a
+ * "near me" location is active), and small Register / Directions actions.
  */
 export function EventCard({ event }: { event: EventWithCategory }) {
   const { month, day, weekday } = eventDateParts(event.start_at);
@@ -21,10 +23,13 @@ export function EventCard({ event }: { event: EventWithCategory }) {
   ]
     .filter(Boolean)
     .join("  ·  ");
+  const distance =
+    event.distance_km != null ? formatDistance(event.distance_km) : null;
+  const directions = mapsUrl(event.latitude, event.longitude, event.location_text);
 
-  const inner = (
-    <div className="flex items-center gap-4 px-4 py-3.5">
-      <div className="flex w-11 shrink-0 flex-col items-center">
+  return (
+    <div className="flex items-start gap-4 px-4 py-3.5">
+      <div className="flex w-11 shrink-0 flex-col items-center pt-0.5">
         <span className="text-[10px] font-semibold uppercase tracking-wide text-gold">
           {month}
         </span>
@@ -33,29 +38,41 @@ export function EventCard({ event }: { event: EventWithCategory }) {
         </span>
         <span className="text-[10px] text-muted">{weekday}</span>
       </div>
+
       <div className="min-w-0 flex-1">
         <h3 className="truncate font-medium text-ink">{event.title}</h3>
-        <p className="mt-0.5 truncate text-sm text-muted">{meta}</p>
+        <p className="mt-0.5 truncate text-sm text-muted">
+          {distance && (
+            <span className="font-semibold text-forest">{distance} · </span>
+          )}
+          {meta}
+        </p>
+
+        {(event.registration_link || directions) && (
+          <div className="mt-1.5 flex flex-wrap gap-2">
+            {event.registration_link && (
+              <a
+                href={externalHref(event.registration_link)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm font-medium text-gold hover:underline"
+              >
+                Register ›
+              </a>
+            )}
+            {directions && (
+              <a
+                href={directions}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="rounded-full border border-line px-2.5 py-0.5 text-xs text-forest transition-colors hover:bg-sand"
+              >
+                Directions
+              </a>
+            )}
+          </div>
+        )}
       </div>
-      {event.registration_link && (
-        <span aria-hidden className="shrink-0 text-lg text-gold">
-          ›
-        </span>
-      )}
     </div>
   );
-
-  if (event.registration_link) {
-    return (
-      <a
-        href={externalHref(event.registration_link)}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block transition-colors hover:bg-sand/40"
-      >
-        {inner}
-      </a>
-    );
-  }
-  return inner;
 }
