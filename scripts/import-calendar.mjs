@@ -42,9 +42,37 @@ const icsUrl = `https://calendar.google.com/calendar/ical/${encodeURIComponent(
   calendarId,
 )}/public/basic.ics`;
 
-function firstUrl(text) {
-  const m = text.match(/https?:\/\/[^\s]+/);
-  return m ? m[0] : null;
+function decodeEntities(s) {
+  return s
+    .replace(/&amp;/g, "&")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&quot;/g, '"')
+    .replace(/&#0?39;/g, "'")
+    .replace(/&apos;/g, "'")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&#(\d+);/g, (_, n) => String.fromCharCode(Number(n)));
+}
+
+/** ICS descriptions often contain HTML (<a href>) — convert to clean text and
+ *  pull out the registration link, so users never see raw markup. */
+function cleanDescription(raw) {
+  if (!raw) return { text: null, link: null };
+  const href = raw.match(/href=["']?(https?:\/\/[^"'\s>]+)/i);
+  let text = raw
+    .replace(/<br\s*\/?>/gi, "\n")
+    .replace(/<\/p>/gi, "\n")
+    .replace(/<[^>]+>/g, " ");
+  text = decodeEntities(text)
+    .replace(/[ \t]+/g, " ")
+    .replace(/\n{2,}/g, "\n")
+    .trim();
+  const inText = text.match(/https?:\/\/[^\s]+/);
+  const link = (href && href[1]) || (inText && inText[0]) || null;
+  if (link) text = text.split(link).join(" ").replace(/[ \t]+/g, " ").trim();
+  // Drop separators left behind if the text was essentially just the link.
+  if (text.replace(/[\s|·,–-]/g, "") === "") text = "";
+  return { text: text ? text.slice(0, 600) : null, link };
 }
 
 function inferMode(...parts) {
@@ -52,12 +80,7 @@ function inferMode(...parts) {
 }
 
 function buildRow(externalId, start, end, summary, rawDesc, location, rrule) {
-  const url = rawDesc ? firstUrl(rawDesc) : null;
-  // If the description is only the URL, don't duplicate it as description text.
-  const descText =
-    rawDesc && url && rawDesc.replace(url, "").trim() === ""
-      ? null
-      : rawDesc || null;
+  const { text: descText, link: url } = cleanDescription(rawDesc);
   return {
     external_id: externalId,
     title: summary.slice(0, 300),
@@ -74,6 +97,15 @@ function buildRow(externalId, start, end, summary, rawDesc, location, rrule) {
 }
 
 async function main() {
+  if (process.argv.includes("--reset")) {
+    const { error } = await supabase
+      .from("events")
+      .delete()
+      .eq("source", "google_calendar");
+    if (error) throw new Error(`reset: ${error.message}`);
+    console.log("Reset: cleared existing google_calendar events.");
+  }
+
   console.log(`Fetching ${icsUrl}`);
   const res = await fetch(icsUrl);
   if (!res.ok) throw new Error(`ICS fetch failed: HTTP ${res.status}`);

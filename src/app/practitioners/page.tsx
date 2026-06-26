@@ -47,9 +47,8 @@ export default async function PractitionersPage({
           <h1 className="font-display text-3xl font-semibold text-ink">
             Practitioners
           </h1>
-          <p className="mt-1 max-w-prose text-muted">
-            Healers, therapists, facilitators, and conscious businesses our
-            community trusts. Search or filter, then tap to reach out.
+          <p className="mt-1 text-sm text-muted">
+            Healers, facilitators, and conscious businesses we trust.
           </p>
         </div>
         <Link
@@ -114,11 +113,11 @@ export default async function PractitionersPage({
         </p>
       ) : (
         <>
-          <p className="mb-4 text-sm text-muted">
+          <p className="mb-2 text-xs text-muted">
             {practitioners.length}{" "}
             {practitioners.length === 1 ? "practitioner" : "practitioners"}
           </p>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="divide-y divide-line overflow-hidden rounded-[var(--radius-card)] border border-line bg-card">
             {practitioners.map((p) => (
               <PractitionerCard key={p.id} p={p} />
             ))}

@@ -15,33 +15,35 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4">
-      {/* Hero */}
-      <section className="py-12 text-center sm:py-16">
-        <p className="text-sm font-medium uppercase tracking-wide text-sage">
-          Our community’s warm gathering place
-        </p>
-        <h1 className="mt-3 font-display text-4xl font-semibold leading-tight text-ink sm:text-5xl">
-          Find the practitioners and events
-          <br className="hidden sm:block" /> our community trusts.
-        </h1>
-        <p className="mx-auto mt-4 max-w-xl text-base leading-relaxed text-muted">
-          A lasting, searchable home for the healers, facilitators, and
-          conscious events we love — beautiful and easy on your phone. Free, and
-          no login needed.
-        </p>
-        <div className="mt-7 flex flex-col justify-center gap-3 sm:flex-row">
-          <Link
-            href="/practitioners"
-            className="rounded-full bg-forest px-6 py-3 font-medium text-cream transition-colors hover:bg-forest-deep"
-          >
-            Find a practitioner
-          </Link>
-          <Link
-            href="/events"
-            className="rounded-full border border-line bg-card px-6 py-3 font-medium text-forest transition-colors hover:bg-sand"
-          >
-            See what’s happening
-          </Link>
+      {/* Hero — deep, ceremonial */}
+      <section className="pt-6">
+        <div className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-b from-night to-night-2 px-6 py-14 text-center shadow-sm sm:py-20">
+          <p className="text-xs font-medium uppercase tracking-[0.22em] text-gold-soft">
+            Our community’s gathering place
+          </p>
+          <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-cream sm:text-5xl">
+            Find the practitioners and events our community trusts.
+          </h1>
+          <div className="gold-rule mx-auto my-6 w-28" />
+          <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
+            A lasting, searchable home for the healers, facilitators, and
+            conscious events we love — beautiful and easy on your phone. Free,
+            and no login needed.
+          </p>
+          <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
+            <Link
+              href="/practitioners"
+              className="rounded-full bg-gold px-6 py-3 font-medium text-night transition-colors hover:bg-gold-soft"
+            >
+              Find a practitioner
+            </Link>
+            <Link
+              href="/events"
+              className="rounded-full border border-gold/40 px-6 py-3 font-medium text-cream transition-colors hover:bg-white/5"
+            >
+              See what’s happening
+            </Link>
+          </div>
         </div>
       </section>
 
@@ -93,9 +95,9 @@ function HomeSection({
 }) {
   return (
     <section className="py-6">
-      <div className="mb-4 flex items-baseline justify-between">
-        <h2 className="font-display text-2xl font-semibold text-ink">{title}</h2>
-        <Link href={href} className="text-sm text-forest hover:underline">
+      <div className="mb-3 flex items-baseline justify-between">
+        <h2 className="font-display text-xl font-semibold text-ink">{title}</h2>
+        <Link href={href} className="text-sm font-medium text-gold hover:underline">
           {linkLabel} →
         </Link>
       </div>
@@ -104,7 +106,9 @@ function HomeSection({
           {empty}
         </p>
       ) : (
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">{children}</div>
+        <div className="divide-y divide-line overflow-hidden rounded-[var(--radius-card)] border border-line bg-card">
+          {children}
+        </div>
       )}
     </section>
   );

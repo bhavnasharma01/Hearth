@@ -1,20 +1,33 @@
 @import "tailwindcss";
 
-/* Hearth design tokens — soft greens & warm cream (see documentation/Design.md).
-   Calm, healing, uncluttered; light-only (warm community aesthetic, no dark mode). */
+/* Hearth design tokens — "rich & sacred" (see documentation/Design.md).
+   Warm parchment base, deep emerald + plum jewel tones, antique gold accents,
+   dramatic deep "night" surfaces for hero/header/footer. Light, readable on a
+   phone, but elevated and ceremonial. */
 @theme {
-  --color-cream: #faf6ed; /* page background */
-  --color-sand: #f1ead9; /* subtle panels / chips */
-  --color-card: #fffdf8; /* card surfaces */
-  --color-line: #e7dfce; /* hairline borders */
+  --color-parchment: #f3e9d2; /* page background (warm, rich) */
+  --color-sand: #ece0c6; /* subtle panels / chips */
+  --color-card: #fdf8ee; /* warm ivory card surfaces */
+  --color-line: #e4d8bd; /* warm hairline borders */
+  --color-cream: #f4ead6; /* light text/elements on dark surfaces */
 
-  --color-forest: #3f5d49; /* primary green */
-  --color-forest-deep: #324a3a; /* hover/active */
-  --color-sage: #7c9a83; /* secondary / accents */
-  --color-clay: #c08457; /* warm accent (sparingly) */
+  --color-night: #14342b; /* deep emerald — hero / header / footer */
+  --color-night-2: #102a23; /* deeper, for gradients */
 
-  --color-ink: #2f2a23; /* primary text */
-  --color-muted: #6f675a; /* secondary text */
+  --color-forest: #1f5547; /* primary jewel emerald */
+  --color-forest-deep: #143a30; /* hover / active */
+  --color-sage: #7f9b8e; /* soft muted accent */
+
+  --color-plum: #6d3557; /* secondary jewel accent */
+  --color-plum-soft: #8a5476;
+
+  --color-gold: #c6a24a; /* antique gold accent */
+  --color-gold-soft: #dcc187; /* soft gold (on dark) */
+
+  --color-clay: #b4603f; /* terracotta — gentle error/warn */
+
+  --color-ink: #2a211b; /* primary text */
+  --color-muted: #6e6253; /* secondary text */
 
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-nunito);
@@ -27,7 +40,7 @@ html {
 }
 
 body {
-  background: var(--color-cream);
+  background: var(--color-parchment);
   color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -38,4 +51,15 @@ h2,
 h3,
 .font-display {
   font-family: var(--font-display), Georgia, serif;
+}
+
+/* A thin gold rule used as a sacred little divider/accent. */
+.gold-rule {
+  height: 1px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    var(--color-gold) 50%,
+    transparent
+  );
 }

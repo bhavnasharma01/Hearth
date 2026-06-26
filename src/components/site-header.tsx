@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Logo } from "@/components/logo";
 
 const NAV = [
   { href: "/", label: "Home" },
@@ -16,15 +17,10 @@ export function SiteHeader() {
     href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-line bg-cream/90 backdrop-blur">
+    <header className="sticky top-0 z-20 border-b border-gold/20 bg-night/95 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
-        <Link href="/" className="flex items-center gap-2">
-          <span aria-hidden className="text-xl">
-            🔥
-          </span>
-          <span className="font-display text-xl font-semibold text-forest">
-            Hearth
-          </span>
+        <Link href="/" aria-label="Hearth home">
+          <Logo tone="light" />
         </Link>
         <nav className="flex items-center gap-1 text-sm">
           {NAV.map((item) => (
@@ -33,8 +29,8 @@ export function SiteHeader() {
               href={item.href}
               className={`rounded-full px-3 py-1.5 transition-colors ${
                 isActive(item.href)
-                  ? "bg-forest text-cream"
-                  : "text-muted hover:bg-sand hover:text-ink"
+                  ? "bg-gold/15 text-gold-soft"
+                  : "text-cream/70 hover:bg-white/5 hover:text-cream"
               }`}
             >
               {item.label}

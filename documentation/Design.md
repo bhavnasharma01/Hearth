@@ -22,22 +22,36 @@
 
 ## 3. Visual system (starting point — refine with Anat & Curtis)
 
-- **Palette:** soft greens & warm whites/creams; gentle earthy accents. Calm, natural, healing — never neon or corporate-blue. **Light-only** (no dark mode — keeps the warm community feel). Implemented as Tailwind v4 `@theme` tokens in `src/app/globals.css`:
+- **Direction: "rich & sacred."** Warm parchment base, deep emerald + plum **jewel tones**, **antique gold** accents, and dramatic deep **"night"** surfaces for the hero/header/footer. Elevated and ceremonial, but still light and readable on a phone. Light-only (no dark mode). Tailwind v4 `@theme` tokens in `src/app/globals.css`:
 
   | Token | Hex | Use |
   |---|---|---|
-  | `cream` | `#faf6ed` | page background |
-  | `sand` | `#f1ead9` | chips / subtle panels |
-  | `card` | `#fffdf8` | card surfaces |
-  | `line` | `#e7dfce` | hairline borders |
-  | `forest` | `#3f5d49` | primary green (buttons, links) |
-  | `forest-deep` | `#324a3a` | hover/active |
-  | `sage` | `#7c9a83` | secondary / accents |
-  | `clay` | `#c08457` | warm accent (sparingly) |
-  | `ink` | `#2f2a23` | primary text |
-  | `muted` | `#6f675a` | secondary text |
+  | `parchment` | `#f3e9d2` | page background |
+  | `card` | `#fdf8ee` | card / list surfaces |
+  | `sand` | `#ece0c6` | subtle panels / chips |
+  | `line` | `#e4d8bd` | hairline borders |
+  | `cream` | `#f4ead6` | light text/elements on dark |
+  | `night` / `night-2` | `#14342b` / `#102a23` | deep hero / header / footer |
+  | `forest` / `forest-deep` | `#1f5547` / `#143a30` | primary jewel emerald |
+  | `plum` | `#6d3557` | secondary jewel accent |
+  | `gold` / `gold-soft` | `#c6a24a` / `#dcc187` | antique gold accents |
+  | `sage` | `#7f9b8e` | soft accent |
+  | `clay` | `#b4603f` | gentle error/warn |
+  | `ink` / `muted` | `#2a211b` / `#6e6253` | text |
 
-- **Type:** **Fraunces** (warm display serif) for headings + **Nunito Sans** for body — friendly and highly legible, loaded via `next/font`.
+  Gold is used sparingly — eyebrows, the flame mark, thin `.gold-rule` dividers, active states, "view all" links, and the member mark. A **crafted SVG flame** wordmark (`src/components/logo.tsx`) replaces the emoji.
+
+- **Type:** **Fraunces** (warm display serif) for headings + **Nunito Sans** for body — loaded via `next/font`.
+
+### Mobile patterns (the heart of the redesign)
+
+Phone-first, inspired by apps that do this well (Luma for events). The goals: **less text, fewer pills, more scannable content.**
+
+- **Events = a date-led agenda, not tiles.** Single column, grouped under slim gold uppercase labels (This week / Next week / Later). Each event is a compact **row**: a left date badge (gold month · big day · weekday), the title, and **one** clean meta line (`time · place · cost`), with a gold ›‑chevron when it links out. Far easier to read than two-column tiles.
+- **Directory = compact rows, not pill-heavy cards.** Avatar (photo or gold-ringed initial), name + a small gold `✦ member` mark, a one-line description, and **one** meta line (single primary category · area · mode). Contact actions are small (a primary "Message", then slim Email/Website/Instagram).
+- **Filters = one slim, horizontally-scrolling strip** (`FilterChips`), not a wrapping wall of pills. Categories scroll in a single line; mode is a second slim line.
+- **Lists, not grids.** Rows live in a single rounded `bg-card` container with `divide-y` separators — calm and uniform.
+- **Restrained copy.** The hero is one deep panel with a short line; section intros are a single short sentence. Content, not prose, fills the screen.
 - **Shape:** rounded cards, soft shadows, generous spacing and white space (room to breathe).
 - **Type:** friendly, highly legible; comfortable line-length and size for reading on a phone.
 - **Imagery:** practitioner photos and event flyers are first-class; graceful placeholders when absent (no broken-image gaps).
@@ -82,6 +96,10 @@
 ## 7. What to avoid
 
 - ❌ Corporate/SaaS dashboard vibes; ❌ Yelp-style star ratings & review walls (clashes with trust-bound ethos); ❌ dense data tables on the public site; ❌ ads, tracking, pop-ups, cookie-consent clutter; ❌ a default month-grid calendar (the very thing we're improving on); ❌ anything that makes a phone user pinch-zoom.
+- ❌ **Walls of pills** — wrapping rows of category/filter chips that eat the screen. Use one slim horizontal-scroll strip, and show at most one category per row.
+- ❌ **Heavy tiles / multi-column card grids** on the public lists — they read poorly on a phone. Use single-column agenda/list rows.
+- ❌ **Text-heavy hero/intros** — keep copy to a line; let the content fill the screen.
+- ❌ **Raw HTML/links shown as text** — imported descriptions are stripped to clean text (the registration URL becomes the row's link/chevron, never visible markup).
 
 ---
 

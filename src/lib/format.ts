@@ -54,6 +54,39 @@ export function formatEventWhen(startISO: string, endISO: string | null): string
   return `${dayPart} ${startTime} → ${endDay} ${endTime}`;
 }
 
+/** Calendar-style date parts in community time, e.g. { month:"JUL", day:"12", weekday:"Sat" }. */
+export function eventDateParts(iso: string): {
+  month: string;
+  day: string;
+  weekday: string;
+} {
+  const d = new Date(iso);
+  const fmt = (opts: Intl.DateTimeFormatOptions) =>
+    new Intl.DateTimeFormat("en-US", { ...opts, timeZone: TZ }).format(d);
+  return {
+    month: fmt({ month: "short" }).toUpperCase(),
+    day: fmt({ day: "numeric" }),
+    weekday: fmt({ weekday: "short" }),
+  };
+}
+
+/** "7:00–9:00 PM" when same day, else just the start time. */
+export function formatTimeRange(startISO: string, endISO: string | null): string {
+  const t = (iso: string) =>
+    new Intl.DateTimeFormat("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZone: TZ,
+    }).format(new Date(iso));
+  const dayKey = (iso: string) =>
+    new Intl.DateTimeFormat("en-CA", { dateStyle: "short", timeZone: TZ }).format(
+      new Date(iso),
+    );
+  if (!endISO) return t(startISO);
+  if (dayKey(startISO) === dayKey(endISO)) return `${t(startISO)}–${t(endISO)}`;
+  return t(startISO);
+}
+
 /** wa.me deep link from a free-text WhatsApp number (digits only, no '+'). */
 export function whatsappLink(raw: string): string {
   const digits = raw.replace(/[^\d]/g, "");

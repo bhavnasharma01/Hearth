@@ -7,9 +7,9 @@ export interface ChipOption {
 }
 
 /**
- * A row of tappable filter chips rendered as links, so filtering works without
- * client-side JavaScript. `build` maps an option value to its href (preserving
- * the page's other active filters).
+ * A single-line, horizontally scrollable strip of small filter chips (links, so
+ * filtering needs no client JS). One slim line instead of a wrapping wall —
+ * far kinder to a phone screen. `build` maps a value to its href.
  */
 export function FilterChips({
   options,
@@ -21,14 +21,14 @@ export function FilterChips({
   build: (value: string | null) => string;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
+    <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {options.map((option) => {
         const active = (option.value ?? "") === (current ?? "");
         return (
           <Link
             key={option.label}
             href={build(option.value)}
-            className={`rounded-full px-3 py-1.5 text-sm transition-colors ${
+            className={`shrink-0 whitespace-nowrap rounded-full px-3 py-1 text-sm transition-colors ${
               active
                 ? "bg-forest text-cream"
                 : "border border-line bg-card text-muted hover:bg-sand hover:text-ink"

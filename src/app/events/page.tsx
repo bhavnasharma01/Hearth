@@ -55,8 +55,7 @@ export default async function EventsPage({
             Upcoming events
           </h1>
           <p className="mt-1 max-w-prose text-muted">
-            Conscious gatherings in our community — ecstatic dance, breathwork,
-            ceremonies, workshops, and more. Easy to scan on your phone.
+            Conscious gatherings — easy to scan on your phone.
           </p>
         </div>
         <Link
@@ -110,7 +109,7 @@ export default async function EventsPage({
         />
       </div>
 
-      {/* Grouped feed */}
+      {/* Grouped agenda feed */}
       {groups.length === 0 ? (
         <p className="rounded-[var(--radius-card)] border border-dashed border-line bg-card/60 p-8 text-center text-sm text-muted">
           {q || category || mode
@@ -118,13 +117,13 @@ export default async function EventsPage({
             : "No upcoming events yet — check back soon, or add one."}
         </p>
       ) : (
-        <div className="space-y-8">
+        <div className="space-y-6">
           {groups.map((group) => (
             <section key={group.key}>
-              <h2 className="mb-3 font-display text-xl font-semibold text-forest">
+              <h2 className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
                 {group.label}
               </h2>
-              <div className="grid gap-4 sm:grid-cols-2">
+              <div className="divide-y divide-line overflow-hidden rounded-[var(--radius-card)] border border-line bg-card">
                 {group.events.map((event) => (
                   <EventCard key={event.id} event={event} />
                 ))}

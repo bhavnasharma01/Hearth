@@ -2,8 +2,8 @@
 
 *The lasting, searchable home for the practitioners and events that **our** community vouches for.*
 
-**Version:** 0.1.0 · **Build:** 5
-*(Status: browse + submit + seeded events — Home / Practitioners / Events, native Add-a-practitioner & Add-an-event forms, and the community Google Calendar imported (553 events). Profiles, the report flow, and admin are the next increments. Design polish + deploy to Vercel are upcoming.)*
+**Version:** 0.1.0 · **Build:** 6
+*(Status: working app with a "rich & sacred" mobile-first redesign — deep jewel-tone theme, Luma-style events agenda, compact directory rows, slim filters. Browse + submit + 553 seeded events, all on live Supabase. Next: profiles, report flow, admin, and deploy to Vercel.)*
 
 ---
 

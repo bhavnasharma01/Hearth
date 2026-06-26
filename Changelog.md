@@ -4,6 +4,28 @@
 
 ---
 
+## v0.1.0 — Build 6 (2026-06-26)
+
+*Design pass: a "rich & sacred" identity + a mobile-first rethink from user feedback. Builds clean; lint passes.*
+
+### Changed — visual identity
+- New **"rich & sacred"** palette in `globals.css` (Tailwind v4 `@theme`): warm parchment base, deep emerald + plum jewel tones, antique gold accents, deep "night" hero/header/footer. Added a `.gold-rule` divider.
+- **Crafted SVG flame mark + wordmark** (`src/components/logo.tsx`) replacing the emoji; deep-night header & footer with gold accents; dramatic gradient hero on Home.
+
+### Changed — mobile-first UX (from feedback)
+- **Events → date-led agenda** (Luma-inspired): single-column rows with a date badge + one clean meta line, under slim gold bucket labels — replacing the two-column tiles that were hard to read.
+- **Practitioners → compact rows:** avatar (photo or gold-ringed initial), name + small `✦ member` mark, one-line description, a single meta line, condensed contact actions — replacing pill-heavy cards.
+- **Filters → one slim horizontal-scroll strip** (`FilterChips` reworked) instead of a wrapping wall of pills.
+- **Lists not grids:** rows sit in a single rounded `bg-card` container with `divide-y`. Trimmed the hero and section copy.
+
+### Fixed
+- **Raw `href` / HTML showing in event descriptions.** `scripts/import-calendar.mjs` now strips HTML + decodes entities and extracts the registration link from `<a href>`; added a `--reset` flag and re-imported (553 events) to clean existing rows.
+
+### Docs
+- `Design.md` rewritten for the new palette, mobile patterns, and "what to avoid"; `Readme.md` → Build 6.
+
+---
+
 ## v0.1.0 — Build 5 (2026-06-26)
 
 *The Events page is now alive with the real community calendar. Builds clean; lint passes.*
