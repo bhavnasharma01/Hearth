@@ -1,3 +1,4 @@
+import Link from "next/link";
 import {
   eventDateParts,
   externalHref,
@@ -78,6 +79,12 @@ export function EventCard({ event }: { event: EventWithCategory }) {
               Directions
             </a>
           )}
+          <Link
+            href={`/report?type=event&id=${event.id}`}
+            className="ml-auto text-xs text-muted/70 hover:text-muted hover:underline"
+          >
+            Report
+          </Link>
         </div>
       </div>
     </div>

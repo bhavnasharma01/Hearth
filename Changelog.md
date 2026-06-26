@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 12 (2026-06-26)
+
+*Community report / flagging flow. Builds clean; lint passes.*
+
+### Added — #2 report flow
+- **`/report?type=&id=`** page + **`ReportForm`** (no login): reason, reporter email/WhatsApp (for dedupe), optional details, with private/quiet framing.
+- **`submitReport`** server action (service-role): one report per contact per target (dedupe), denormalizes the **distinct-reporter `flag_count`** onto practitioners, and logs a steward alert when distinct reporters reach **3** (flags never auto-hide).
+- **"Report" links** on practitioner profiles ("Report this listing") and event cards (subtle "Report").
+- Verified end-to-end: inserts for both target types, distinct-count/flag-count update, and the one-target `CHECK` rejecting bad rows.
+
+### Docs
+- `Architecture.md`, `Readme.md` → Build 12.
+
+---
+
 ## v0.1.0 — Build 11 (2026-06-26)
 
 *Shareable practitioner profile pages. Builds clean; lint passes.*

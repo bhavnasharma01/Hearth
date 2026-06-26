@@ -112,7 +112,9 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 - *Profiles (Build 11):* `/p/[slug]` practitioner profile (full info, contacts, hosted events, share metadata); directory cards link to it; the add-event form has an optional **host-practitioner** selector (`host_practitioner_id`) so events cross-link to a profile.
 
-**Not yet built:** event detail pages (`/events/[id]`), the report flow, and the `/admin` area.
+- *Report flow (Build 12):* `/report?type=&id=` page + `ReportForm` + `submitReport` (service-role) — dedupes by `reporter_contact`, denormalizes the distinct-reporter `flag_count` onto practitioners, logs a steward alert past the threshold of 3. "Report" links on profiles + event cards.
+
+**Not yet built:** event detail pages (`/events/[id]`) and the `/admin` area.
 
 ---
 

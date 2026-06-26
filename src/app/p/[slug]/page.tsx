@@ -109,6 +109,15 @@ export default async function PractitionerProfile({
         )}
       </div>
 
+      <div className="mt-6">
+        <Link
+          href={`/report?type=practitioner&id=${p.id}`}
+          className="text-xs text-muted underline hover:text-ink"
+        >
+          Report this listing
+        </Link>
+      </div>
+
       {/* Hosted events */}
       {events.length > 0 && (
         <section className="mt-8">
