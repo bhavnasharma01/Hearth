@@ -15,8 +15,9 @@
 - [ ] 🟠 **Public-form spam/bot flood.** *(Forms now live in Build 4.)* The submission forms have a content-check but **no rate-limiting or bot check yet** — add a honeypot field + per-IP throttle before public launch.
 - [ ] 🔵 **Stored XSS in user text.** Descriptions/bios/event text are user-supplied; ensure they're escaped on render and never injected via `dangerouslySetInnerHTML`.
 - [ ] 🔵 **Service-role key leakage.** Must never reach the client bundle; restrict to server actions/scripts.
-- [ ] 🔵 **Google Calendar API key scope.** Restrict to the production domain; read-only.
-- [ ] 🔵 **Seed-import dedupe correctness.** Re-running the import must not duplicate events — enforce uniqueness on `external_id` (+ `source`).
+- [x] 🔵 **Google Calendar API key scope.** *(Build 5)* N/A — import reads the public iCal feed, no key.
+- [x] 🔵 **Seed-import dedupe correctness.** *(Build 5)* Import skips existing `external_id`s (verified: a second run inserts 0). Recurring occurrences keyed `UID:<occurrenceISO>`.
+- [ ] 🟡 **Recurring-event horizon.** Recurring series are expanded only 120 days out; a periodic re-run of `import:calendar` is needed to keep the far future populated (or add a scheduled job later).
 - [ ] 🔵 **Sybil limits of no-login flagging.** Acknowledged & accepted for v1 (dedupe + human-in-loop + no auto-action). Revisit if abuse escalates; v2 accounts raise the bar.
 
 ---

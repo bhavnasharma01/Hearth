@@ -2,8 +2,8 @@
 
 *The lasting, searchable home for the practitioners and events that **our** community vouches for.*
 
-**Version:** 0.1.0 · **Build:** 4
-*(Status: browse + submit built — Home / Practitioners / Events, plus native Add-a-practitioner & Add-an-event forms with moderation. Profiles, the report flow, admin, and the calendar import are the next increments.)*
+**Version:** 0.1.0 · **Build:** 5
+*(Status: browse + submit + seeded events — Home / Practitioners / Events, native Add-a-practitioner & Add-an-event forms, and the community Google Calendar imported (553 events). Profiles, the report flow, and admin are the next increments. Design polish + deploy to Vercel are upcoming.)*
 
 ---
 
@@ -78,6 +78,12 @@ Without env values the app still runs and compiles — the pages render their
 calm empty states until the Supabase project is connected. Apply the schema by
 running `supabase/migrations/0001_initial_schema.sql` against the Supabase
 project (SQL editor or the Supabase CLI).
+
+Seed the community events from the public calendar (no API key needed):
+
+```bash
+npm run import:calendar
+```
 
 ---
 

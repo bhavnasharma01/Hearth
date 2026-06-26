@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 5 (2026-06-26)
+
+*The Events page is now alive with the real community calendar. Builds clean; lint passes.*
+
+### Added — Google Calendar import
+- **`scripts/import-calendar.mjs`** + **`npm run import:calendar`** — reads the community calendar's **public iCal feed** (`…/public/basic.ics`) with **no API key needed**, parses via **`node-ical`**, and inserts events through the service-role client.
+  - Maps the form's registration link out of the event DESCRIPTION (Eventbrite/Luma) into `registration_link`; infers `mode`; carries `recurrence_rule`.
+  - **Non-recurring** events import from `EVENT_IMPORT_FROM` (2026-01-01) forward; **recurring** series are expanded into upcoming occurrences (today → +120 days), each keyed `external_id = UID:<occurrenceISO>`.
+  - **Idempotent** — skips already-imported `external_id`s, safe to re-run during the transition.
+- **First run result:** 553 events imported, **229 upcoming** — now rendering on `/events` (This week / Next week / Later) and the Home "Coming up" peek.
+
+### Changed
+- Simplified the calendar approach to the **public ICS feed** (dropped the Google Calendar API-key requirement): updated `.env.example` / `.env.local`, `Architecture.md` (stack + §6 import detail), `Security.md` (no key to leak — ticked), `Bugs.md` (API-key + dedupe items resolved; added a recurring-horizon note), `Product.md` (open Q3 resolved), `Claude.md` (import command), `Readme.md` (Build 5 + import step).
+- Added `node-ical` dependency.
+
+---
+
 ## v0.1.0 — Build 4 (2026-06-26)
 
 *Native submission — the community can now add practitioners and events directly into Hearth. Builds clean (zero warnings); lint passes.*

@@ -52,7 +52,7 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
 | File storage | **Supabase Storage** | Practitioner photos, event flyers; external-URL fallback supported by the schema. |
 | Search | **Postgres full-text** (`tsvector` / `search_vector`) | Search is a DB feature, not a client hack. |
 | Hosting | **Vercel** (Cloudflare Pages alt) | Free tier. |
-| Event seed | **Google Calendar API v3** (`events.list`, API key) | One-time/occasional import to seed events; deduped by `external_id`. |
+| Event seed | **Public iCal feed** (`/public/basic.ics`) parsed with `node-ical` | One-time/occasional import; **no API key needed** (the calendar is public); deduped by `external_id`. |
 
 ---
 
@@ -105,7 +105,9 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 - *Browse (Build 3):* `src/app` Home / `/practitioners` / `/events`; `src/components` header, footer, practitioner & event cards, filter chips; `src/lib` supabase server (anon) client, data access, types, formatting/url helpers; `supabase/migrations/0001_initial_schema.sql`.
 - *Submit (Build 4):* `/add-practitioner` & `/add-event` pages + client forms (`src/components/forms/*`); server actions (`src/lib/actions/submit-practitioner.ts`, `submit-event.ts`); the **service-role write client** (`src/lib/supabase/admin.ts`, `server-only`); the **content-check** (`src/lib/moderation/content-check.ts`); slug uniqueness (`src/lib/slug.ts`); Toronto-time conversion (`src/lib/datetime.ts`).
 
-**Not yet built:** profile/detail pages (`/p/[slug]`, `/events/[id]`), the report flow, the `/admin` area, and the `scripts/` Google Calendar import.
+- *Import (Build 5):* `scripts/import-calendar.mjs` (`npm run import:calendar`) — public-ICS seed of the community calendar via `node-ical`.
+
+**Not yet built:** profile/detail pages (`/p/[slug]`, `/events/[id]`), the report flow, and the `/admin` area.
 
 ---
 
@@ -133,10 +135,13 @@ Host ─▶ Google Form ─▶ (manual copy) ─▶ Google Calendar ─▶ (clun
 | Form fields | Event name *(req)* · registration link *(req)* · start date *(req)* + time *(opt)* · end date *(req)* + time *(opt)* |
 | Calendar (seed source) | **Conscious Events TO Calendar** |
 | Calendar src / ID | `consciouseventsto@gmail.com` |
+| Public iCal feed | `https://calendar.google.com/calendar/ical/consciouseventsto%40gmail.com/public/basic.ics` |
 | Timezone | `America/Toronto` |
 | Recurring events | Currently manual — host emails an admin to repeat. Hearth replaces this with `recurrence_rule` (RRULE). |
 
 The Hearth `events` table is a strict superset of these fields (see `Product.md §7`), so the import maps cleanly and adds enrichment (description, category, mode/location, cost, image, host link).
+
+**Import implementation (`scripts/import-calendar.mjs`, `npm run import:calendar`):** fetches the public ICS feed (no API key), parses with `node-ical`, and inserts via the service-role client. The registration link lives in the event DESCRIPTION (Eventbrite/Luma URLs) and is extracted into `registration_link`. Non-recurring events import from `EVENT_IMPORT_FROM` (2026-01-01) forward; recurring series are expanded into upcoming occurrences (today → +120 days), each row keyed `external_id = UID:<occurrenceISO>`. Safe to re-run — existing `external_id`s are skipped. First run: **553 events imported (229 upcoming).**
 
 ---
 

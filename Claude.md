@@ -70,6 +70,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - `npm run build` — production build. **Must compile with zero errors/warnings** before committing.
 - `npm run lint` — ESLint.
 - Apply DB schema: run `supabase/migrations/0001_initial_schema.sql` in the Supabase SQL editor (or via the Supabase CLI).
+- Import community events: `npm run import:calendar` — reads the **public iCal feed** (no API key), parses with `node-ical`, inserts via service role, deduped by `external_id`. Safe to re-run; recurring series expand 120 days out, so re-run periodically.
 - Public list pages are `export const dynamic = "force-dynamic"` (they read live data per request; no DB fetch at build time).
 - Filtering is **URL-param driven & server-rendered** (no client JS): `?q=&category=&mode=` via `FilterChips` link chips + GET search form.
 - **Two Supabase clients:** `src/lib/supabase/server.ts` (anon, RLS-bound, READS for public pages) vs. `src/lib/supabase/admin.ts` (service-role, `server-only`, WRITES inside server actions). Never use the admin client outside a server action; never import it into a client component.

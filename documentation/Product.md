@@ -126,7 +126,7 @@ A practitioner may hold up to ~3.
 
 1. Confirm **v1 = Directory + Events together** (implied by choosing native events).
 2. Event taxonomy — reuse practitioner categories as event types, or a small dedicated list?
-3. Seed import — **calendar identified** ("Conscious Events TO Calendar", `consciouseventsto@gmail.com`, `America/Toronto`); still confirm it's publicly API-readable and the 2026-01-01-forward window.
+3. ~~Seed import~~ **Done (Build 5):** imported from the public iCal feed of "Conscious Events TO Calendar" (no API key), 2026-01-01 forward — 553 events (229 upcoming).
 4. Brand — existing colours/logo from Anat & Curtis, or design from scratch?
 5. Initial admins — Bhavna + Anat + Curtis?
 6. Endorsements — park for v2 or rule out entirely?

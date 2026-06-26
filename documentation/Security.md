@@ -62,7 +62,7 @@ All user input is treated as untrusted: validated server-side, parameterized in 
 ## 6. Secrets & keys
 
 - **Supabase keys:** the **anon/public key** is safe in the browser *because RLS constrains it* — it can only do what policies allow. The **service-role key is server-only**, never shipped to the client, used only in trusted server actions / scripts.
-- **Google Calendar API key:** read-only, **restricted to our domain**, used only for the seed import; safe to be limited-scope. (Public calendar, read-only — low risk.)
+- **Google Calendar:** the seed import reads the calendar's **public iCal feed** — **no API key or secret at all**, read-only, lowest possible risk.
 - All secrets live in environment variables (`.env`, Vercel project settings), never committed.
 
 ---
@@ -93,5 +93,5 @@ All user input is treated as untrusted: validated server-side, parameterized in 
 - [ ] Rate-limit public submit/report endpoints (defense against flood spam).
 - [ ] Add a lightweight bot check (honeypot field / hCaptcha) to public forms.
 - [ ] Sanitize/escape all rendered user text; verify no `dangerouslySetInnerHTML` on user content.
-- [ ] Restrict the Google Calendar API key to the production domain.
+- [x] Google Calendar import uses the public iCal feed — no API key to restrict or leak. *(Build 5)*
 - [ ] Confirm service-role key never reaches a client bundle.
