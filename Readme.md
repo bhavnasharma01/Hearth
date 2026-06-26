@@ -2,6 +2,8 @@
 
 *The lasting, searchable home for the practitioners and events that **our** community vouches for.*
 
+**🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
+
 **Version:** 0.1.0 · **Build:** 7
 *(Status: working app on live Supabase — rich & sacred mobile design, browse + submit, 553 seeded events, and a "📍 near me" feature (distance, nearest-sort, radius, directions) for both events and practitioners. Next: profiles, report flow, admin, and deploy to Vercel.)*
 
