@@ -88,7 +88,8 @@ All user input is treated as untrusted: validated server-side, parameterized in 
 
 *(Track concrete items in `Bugs.md`; this is the standing checklist for the build.)*
 - [x] Write RLS policies for every table (done in `0001_initial_schema.sql`; anon read-only, live-only; admin full access). *Still verify against the live project once connected.*
-- [ ] Implement public write paths as service-role server actions (submissions/reports) — the content-check gate lives here.
+- [x] Public write paths implemented as service-role server actions (`src/lib/actions/*`) with the content-check gate (`src/lib/moderation/content-check.ts`); `status`/`auto_check` set server-side. *(Build 4)*
+- [ ] Rate-limit + bot check (honeypot/hCaptcha) on the public submission forms — still open (the forms currently rely on the content-check + human moderation only).
 - [ ] Rate-limit public submit/report endpoints (defense against flood spam).
 - [ ] Add a lightweight bot check (honeypot field / hCaptcha) to public forms.
 - [ ] Sanitize/escape all rendered user text; verify no `dangerouslySetInnerHTML` on user content.

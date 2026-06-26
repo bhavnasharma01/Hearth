@@ -2,8 +2,8 @@
 
 *The lasting, searchable home for the practitioners and events that **our** community vouches for.*
 
-**Version:** 0.1.0 · **Build:** 3
-*(Status: foundation built — Next.js app, full schema, and the public browse experience (Home / Practitioners / Events). Native submission forms, profiles, admin, and the calendar import are the next increments.)*
+**Version:** 0.1.0 · **Build:** 4
+*(Status: browse + submit built — Home / Practitioners / Events, plus native Add-a-practitioner & Add-an-event forms with moderation. Profiles, the report flow, admin, and the calendar import are the next increments.)*
 
 ---
 

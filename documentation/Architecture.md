@@ -101,7 +101,11 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 /scripts                        # one-off: google-calendar-seed-import
 ```
 
-**Built so far (Build 3):** `src/app` (Home, `/practitioners`, `/events`), `src/components` (header, footer, practitioner/event cards, filter chips), `src/lib` (supabase server client, data access for practitioners/events/categories, types, formatting/url helpers), and `supabase/migrations/0001_initial_schema.sql`. **Not yet built:** the submission forms (`add-practitioner`, `add-event`, `report`), profile/detail pages, the `/admin` area, the service-role write client + content-check (`src/lib/moderation`), and the `scripts/` calendar import.
+**Built so far (Build 4):**
+- *Browse (Build 3):* `src/app` Home / `/practitioners` / `/events`; `src/components` header, footer, practitioner & event cards, filter chips; `src/lib` supabase server (anon) client, data access, types, formatting/url helpers; `supabase/migrations/0001_initial_schema.sql`.
+- *Submit (Build 4):* `/add-practitioner` & `/add-event` pages + client forms (`src/components/forms/*`); server actions (`src/lib/actions/submit-practitioner.ts`, `submit-event.ts`); the **service-role write client** (`src/lib/supabase/admin.ts`, `server-only`); the **content-check** (`src/lib/moderation/content-check.ts`); slug uniqueness (`src/lib/slug.ts`); Toronto-time conversion (`src/lib/datetime.ts`).
+
+**Not yet built:** profile/detail pages (`/p/[slug]`, `/events/[id]`), the report flow, the `/admin` area, and the `scripts/` Google Calendar import.
 
 ---
 

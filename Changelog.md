@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 4 (2026-06-26)
+
+*Native submission — the community can now add practitioners and events directly into Hearth. Builds clean (zero warnings); lint passes.*
+
+### Added — submission flow
+- **Service-role write client** `src/lib/supabase/admin.ts` (guarded by `server-only`, bypasses RLS) — used only by trusted server actions. Installed the `server-only` package.
+- **Content check** `src/lib/moderation/content-check.ts` — flagged-term + link-density scan returning `ok` / `needs_review`.
+- **Helpers** — `src/lib/slug.ts` (slugify + unique practitioner slug) and `src/lib/datetime.ts` (convert a `datetime-local` wall time in America/Toronto to a UTC ISO).
+- **Server actions** `src/lib/actions/submit-practitioner.ts` & `submit-event.ts` — validate required fields + the at-least-one-contact rule, run the content check, **set `status`/`auto_check` server-side** (clean → `live`, suspicious → `pending`), insert via the service role (+ `practitioner_categories`), and `revalidatePath`. Shared `FormState` in `src/lib/actions/types.ts`.
+- **Forms** `src/components/forms/practitioner-form.tsx` & `event-form.tsx` (client, `useActionState`): all Product.md fields — practitioner (name, up-to-3 categories, description, bio, area, mode, the four contacts, pricing, languages, keywords, member flag, agreement) and event (title, type, start/end, mode, location, registration link, cost, host, **repeats → RRULE**, description, agreement). Inline error + success/thank-you states (instant-publish vs held-for-review messaging).
+- **Pages** `/add-practitioner` & `/add-event` (load categories, render the forms).
+
+### Changed
+- **Practitioners** page now has a **➕ Add your practice** button; **Events** page's **➕ Add an event** now points to the native `/add-event` form (the Google form remains available externally during the transition).
+- Docs: `Architecture.md` (built-so-far → Build 4), `Security.md` (write-path + content-check ticked; rate-limit/bot-check still open), `Bugs.md` (server-controlled status resolved; spam/bot flood now the live open item), `Claude.md` (two-clients rule, submissions, datetime), `Readme.md` (Build 4 + status).
+
+---
+
 ## v0.1.0 — Build 3 (2026-06-25)
 
 *First application code — the project foundation and the public browse experience. Builds clean (zero warnings); lint passes.*

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getCategories } from "@/lib/data/categories";
 import { getEvents } from "@/lib/data/events";
 import { EventCard } from "@/components/event-card";
@@ -7,11 +8,6 @@ import { buildQuery, firstParam } from "@/lib/url";
 import type { ListingMode } from "@/lib/types/database";
 
 export const dynamic = "force-dynamic";
-
-// During the transition we still accept events through the community's existing
-// Google form (see documentation/Architecture.md §6). Native submission is the
-// next build increment.
-const EXISTING_EVENT_FORM = "https://forms.gle/fzgQ7s43udWcFaSr6";
 
 const MODE_OPTIONS: ChipOption[] = [
   { label: "All", value: null },
@@ -63,14 +59,12 @@ export default async function EventsPage({
             ceremonies, workshops, and more. Easy to scan on your phone.
           </p>
         </div>
-        <a
-          href={EXISTING_EVENT_FORM}
-          target="_blank"
-          rel="noopener noreferrer"
+        <Link
+          href="/add-event"
           className="rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
         >
           ➕ Add an event
-        </a>
+        </Link>
       </header>
 
       {/* Search */}

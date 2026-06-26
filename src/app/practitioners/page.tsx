@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getCategories } from "@/lib/data/categories";
 import { getPractitioners } from "@/lib/data/practitioners";
 import { PractitionerCard } from "@/components/practitioner-card";
@@ -41,14 +42,22 @@ export default async function PractitionersPage({
 
   return (
     <div className="mx-auto max-w-5xl px-4 py-8">
-      <header className="mb-6">
-        <h1 className="font-display text-3xl font-semibold text-ink">
-          Practitioners
-        </h1>
-        <p className="mt-1 max-w-prose text-muted">
-          Healers, therapists, facilitators, and conscious businesses our
-          community trusts. Search or filter, then tap to reach out.
-        </p>
+      <header className="mb-6 flex flex-wrap items-start justify-between gap-3">
+        <div>
+          <h1 className="font-display text-3xl font-semibold text-ink">
+            Practitioners
+          </h1>
+          <p className="mt-1 max-w-prose text-muted">
+            Healers, therapists, facilitators, and conscious businesses our
+            community trusts. Search or filter, then tap to reach out.
+          </p>
+        </div>
+        <Link
+          href="/add-practitioner"
+          className="rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
+        >
+          ➕ Add your practice
+        </Link>
       </header>
 
       {/* Search */}

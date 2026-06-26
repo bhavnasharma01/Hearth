@@ -72,6 +72,9 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - Apply DB schema: run `supabase/migrations/0001_initial_schema.sql` in the Supabase SQL editor (or via the Supabase CLI).
 - Public list pages are `export const dynamic = "force-dynamic"` (they read live data per request; no DB fetch at build time).
 - Filtering is **URL-param driven & server-rendered** (no client JS): `?q=&category=&mode=` via `FilterChips` link chips + GET search form.
+- **Two Supabase clients:** `src/lib/supabase/server.ts` (anon, RLS-bound, READS for public pages) vs. `src/lib/supabase/admin.ts` (service-role, `server-only`, WRITES inside server actions). Never use the admin client outside a server action; never import it into a client component.
+- **Submissions** go through server actions (`src/lib/actions/submit-*.ts`) used with React `useActionState`. The action sets `status`/`auto_check` from `runContentCheck` — clean → `live`, suspicious → `pending`. Both clients return `null` when env is unset so the app builds/runs without Supabase.
+- Event times: forms use `datetime-local`; `src/lib/datetime.ts` converts the entered wall time (America/Toronto) to a UTC ISO before storage.
 
 ## Open questions (track resolutions here)
 
