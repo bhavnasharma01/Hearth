@@ -10,7 +10,7 @@
 
 - [ ] 🟠 **Public-form spam/bot flood.** The submission forms have a content-check but **no rate-limiting or bot check yet** — add a honeypot field + per-IP throttle before wide public launch.
 - [x] 🟡 **Recurring-event horizon.** *(Build 9)* The daily Vercel Cron import (`/api/cron/import`) re-runs automatically, keeping the 120-day recurrence window fresh.
-- [ ] 🟡 **Cron-imported events aren't geocoded.** The daily import inserts events without coordinates; new addressed events won't appear in "near me" until `npm run geocode` runs. Automate later (a geocode step in the cron, throttled).
+- [x] 🟡 **Cron-imported events aren't geocoded.** *(Build 10)* The daily cron now runs `geocodePending` after the import — geocoding new addressed events + practitioners (capped 20/run, throttled ~1/sec), so they join "near me" automatically.
 - [ ] 🔵 **Stored XSS in user text.** Descriptions/bios/event text are user-supplied; keep them escaped on render (React does this by default) and never inject via `dangerouslySetInnerHTML`. Imported HTML is stripped at import time.
 - [ ] 🔵 **Service-role key leakage.** Must never reach the client bundle; it's confined to server actions/scripts (`server-only` guard on `src/lib/supabase/admin.ts`). The key was shared in chat during setup — rotate it before wide launch.
 - [ ] 🔵 **Sybil limits of no-login flagging.** Accepted for v1 (dedupe + human-in-loop + no auto-action). Revisit if abuse escalates; v2 accounts raise the bar.

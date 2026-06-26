@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 10 (2026-06-26)
+
+*The daily cron now auto-geocodes new addressed events/practitioners. Builds clean; lint passes.*
+
+### Added
+- **`src/lib/import/geocode-pending.ts`** (`geocodePending`) — geocodes events (`location_text`) and practitioners (`area`) that have a location but no coordinates, reusing `geocodeAddress` (same cleaning/fallbacks as the submit path). Capped at 20 addresses/run and throttled ~1/sec (Nominatim-friendly; repeated addresses geocoded once); the rest roll to the next run.
+- **`/api/cron/import`** now runs `geocodePending` right after the import, so freshly-imported addressed events join **"near me"** with no manual step. Response shape is now `{ ok, import, geocode }`.
+
+### Verified
+- End-to-end: a temp addressed event imported coordinate-less was auto-geocoded by the cron (Nathan Phillips Square → 43.65, -79.38), `geocode:{attempted:1,geocoded:1}`, then cleaned up.
+
+### Docs
+- `Bugs.md` (limitation resolved), `Architecture.md`, `Claude.md`, `Readme.md` → Build 10.
+
+---
+
 ## v0.1.0 — Build 9 (2026-06-26)
 
 *Automatic daily Google Calendar import (Vercel Cron) + "Add to calendar" on events. Builds clean; lint passes.*

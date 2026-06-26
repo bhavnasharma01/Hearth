@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { runCalendarImport } from "@/lib/import/calendar";
+import { geocodePending } from "@/lib/import/geocode-pending";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -22,8 +23,14 @@ export async function GET(request: Request) {
   }
 
   try {
-    const result = await runCalendarImport();
-    return NextResponse.json({ ok: true, ...result });
+    const importResult = await runCalendarImport();
+    // Geocode any new addressed events/practitioners so they join "near me".
+    const geocodeResult = await geocodePending();
+    return NextResponse.json({
+      ok: true,
+      import: importResult,
+      geocode: geocodeResult,
+    });
   } catch (error) {
     console.error("cron import:", error);
     return NextResponse.json(

@@ -108,9 +108,9 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 - *Import (Build 5):* `scripts/import-calendar.mjs` (`npm run import:calendar`) — public-ICS seed of the community calendar via `node-ical`.
 - *Near me (Build 7):* `latitude`/`longitude`/`geocoded_at` on events + practitioners; `src/lib/geocode.ts` (Nominatim, server-only) + `/api/geocode` autocomplete proxy; `src/lib/geo.ts` (haversine + `withDistance` sort/filter); `LocationControl` + `AddressAutocomplete`; geocode-on-submit; `scripts/geocode-events.mjs` (`npm run geocode`) backfill.
-- *Auto-import + calendar (Build 9):* shared import core `src/lib/import/ics-core.mjs` (+ `.d.mts`) used by **both** the standalone script and a server module `src/lib/import/calendar.ts`; **`/api/cron/import`** route (CRON_SECRET-guarded) run **daily by Vercel Cron** (`vercel.json`) to sync Google-Form events during the transition; `node-ical` is in `serverExternalPackages` (doesn't bundle). "Add to calendar" link on events (`googleCalendarUrl`).
+- *Auto-import + calendar (Build 9–10):* shared import core `src/lib/import/ics-core.mjs` (+ `.d.mts`) used by **both** the standalone script and a server module `src/lib/import/calendar.ts`; **`/api/cron/import`** route (CRON_SECRET-guarded) run **daily by Vercel Cron** (`vercel.json`) to sync Google-Form events during the transition; `node-ical` is in `serverExternalPackages` (doesn't bundle). After importing, the cron runs `geocodePending` (`src/lib/import/geocode-pending.ts`) to geocode new addressed events + practitioners (capped/throttled), so they join "near me" automatically. "Add to calendar" link on events (`googleCalendarUrl`).
 
-**Not yet built:** profile/detail pages (`/p/[slug]`, `/events/[id]`), the report flow, the `/admin` area, and **auto-geocoding of cron-imported events** (still a manual `npm run geocode`).
+**Not yet built:** profile/detail pages (`/p/[slug]`, `/events/[id]`), the report flow, and the `/admin` area.
 
 ---
 
