@@ -22,13 +22,12 @@ export default async function HomePage() {
             Our community’s gathering place
           </p>
           <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-cream sm:text-5xl">
-            Find the practitioners and events our community trusts.
+            Find the events and practitioners our community trusts.
           </h1>
           <div className="gold-rule mx-auto my-6 w-28" />
           <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
             A lasting, searchable home for the healers, facilitators, and
-            conscious events we love — beautiful and easy on your phone. Free,
-            and no login needed.
+            conscious events we love.
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link

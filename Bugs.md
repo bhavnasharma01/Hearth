@@ -8,20 +8,19 @@
 
 ## Open
 
-*No application code exists yet (v0.1.0, Build 1 — documentation phase), so there are no runtime bugs. The items below are risks and must-dos to design against from the first line of code.*
-
-- [x] 🔵 **RLS must exist before any public write path ships.** *(Build 3)* Policies written in `0001_initial_schema.sql`: anon is **read-only, live-only**; admins get full access; public writes will use the service role. Still verify against the live project once connected.
-- [x] 🔵 **Server-controlled status.** *(Build 4)* `status`/`auto_check` are set inside the service-role server actions (`src/lib/actions/*`) from the content-check; never accepted from the client.
-- [ ] 🟠 **Public-form spam/bot flood.** *(Forms now live in Build 4.)* The submission forms have a content-check but **no rate-limiting or bot check yet** — add a honeypot field + per-IP throttle before public launch.
-- [ ] 🔵 **Stored XSS in user text.** Descriptions/bios/event text are user-supplied; ensure they're escaped on render and never injected via `dangerouslySetInnerHTML`.
-- [ ] 🔵 **Service-role key leakage.** Must never reach the client bundle; restrict to server actions/scripts.
-- [x] 🔵 **Google Calendar API key scope.** *(Build 5)* N/A — import reads the public iCal feed, no key.
-- [x] 🔵 **Seed-import dedupe correctness.** *(Build 5)* Import skips existing `external_id`s (verified: a second run inserts 0). Recurring occurrences keyed `UID:<occurrenceISO>`.
-- [ ] 🟡 **Recurring-event horizon.** Recurring series are expanded only 120 days out; a periodic re-run of `import:calendar` is needed to keep the far future populated (or add a scheduled job later).
-- [ ] 🔵 **Sybil limits of no-login flagging.** Acknowledged & accepted for v1 (dedupe + human-in-loop + no auto-action). Revisit if abuse escalates; v2 accounts raise the bar.
+- [ ] 🟠 **Public-form spam/bot flood.** The submission forms have a content-check but **no rate-limiting or bot check yet** — add a honeypot field + per-IP throttle before wide public launch.
+- [ ] 🟡 **Recurring-event horizon.** Recurring series are expanded only 120 days out; `import:calendar` must be re-run periodically to keep the far future populated. *(Planned: the Build-8+ Vercel Cron auto-import addresses this.)*
+- [ ] 🔵 **Stored XSS in user text.** Descriptions/bios/event text are user-supplied; keep them escaped on render (React does this by default) and never inject via `dangerouslySetInnerHTML`. Imported HTML is stripped at import time.
+- [ ] 🔵 **Service-role key leakage.** Must never reach the client bundle; it's confined to server actions/scripts (`server-only` guard on `src/lib/supabase/admin.ts`). The key was shared in chat during setup — rotate it before wide launch.
+- [ ] 🔵 **Sybil limits of no-login flagging.** Accepted for v1 (dedupe + human-in-loop + no auto-action). Revisit if abuse escalates; v2 accounts raise the bar.
 
 ---
 
 ## Resolved
 
-*(none yet)*
+- [x] 🟠 **"Near me" showed one recurring event repeated.** *(Build 8)* Imported recurring events are stored as one row per occurrence, so the two addressed weekly yoga series (14 + 15 rows) dominated the distance-sorted list. Fixed by collapsing each series to its next upcoming occurrence in `getEvents` (`collapseSeries`, keyed by the `external_id` UID prefix). Also declutters the time agenda.
+- [x] 🟠 **Raw `href`/HTML in imported event descriptions.** *(Build 6)* Import strips HTML, decodes entities, extracts the link from `<a href>`.
+- [x] 🔵 **RLS before any public write path.** *(Build 3)* `0001_initial_schema.sql`: anon read-only & live-only; admins full; public writes via service role.
+- [x] 🔵 **Server-controlled status.** *(Build 4)* `status`/`auto_check` set in the service-role server actions from the content-check; never from the client.
+- [x] 🔵 **Google Calendar API key scope.** *(Build 5)* N/A — import reads the public iCal feed, no key.
+- [x] 🔵 **Seed-import dedupe.** *(Build 5)* Skips existing `external_id`s (a second run inserts 0).

@@ -48,7 +48,7 @@ export async function getEvents(
       config: "english",
     });
   }
-  if (query.limit) q = q.limit(query.limit);
+  // Note: no SQL limit here — we collapse recurring series first, then slice.
 
   const { data, error } = await q;
   if (error) {
@@ -60,10 +60,35 @@ export async function getEvents(
   if (query.category) {
     rows = rows.filter((e) => e.category?.slug === query.category);
   }
+  // Collapse recurring series to a single next-occurrence row (input is sorted
+  // by start_at asc, so the first row seen per series is the soonest upcoming).
+  // Without this, a weekly event shows once per occurrence — which piled up in
+  // the distance-sorted "near me" view as the same event over and over.
+  rows = collapseSeries(rows);
   // Attach distance + sort nearest-first when a location is active (otherwise
   // the start_at ordering above is preserved).
   rows = withDistance(rows, query.near ?? null, query.radiusKm);
+  if (query.limit) rows = rows.slice(0, query.limit);
   return rows;
+}
+
+/** Key identifying a recurring series: the imported event's UID (external_id is
+ *  `UID:<occurrenceISO>` for expanded occurrences), else a native parent, else id. */
+function seriesKey(e: EventWithCategory): string {
+  if (e.external_id) return e.external_id.split(":")[0];
+  return e.recurrence_parent_id ?? e.id;
+}
+
+function collapseSeries(events: EventWithCategory[]): EventWithCategory[] {
+  const seen = new Set<string>();
+  const out: EventWithCategory[] = [];
+  for (const e of events) {
+    const key = seriesKey(e);
+    if (seen.has(key)) continue;
+    seen.add(key);
+    out.push(e);
+  }
+  return out;
 }
 
 /** Supabase returns a to-one embed as an object or single-element array; normalize it. */

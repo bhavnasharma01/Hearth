@@ -4,6 +4,25 @@
 
 ---
 
+## v0.1.0 — Build 8 (2026-06-26)
+
+*Deployed to production; near-me recurring-duplicate bug fixed; copy + logo polish; documentation refreshed (`/updatestructure`). Builds clean; lint passes.*
+
+### Deployed
+- Live on **Vercel at https://hearthto.vercel.app** (auto-deploys from `main`), connected to the live Supabase project. Verified end-to-end in production (browse, submit, near-me over HTTPS). URL recorded in `Readme.md`.
+
+### Fixed
+- **"Near me" repeated one event.** Imported recurring events are stored one row per occurrence; the two addressed weekly yoga series (14 + 15 rows) dominated the distance-sorted list. `getEvents` now **collapses each series to its next upcoming occurrence** (`collapseSeries`, keyed by the `external_id` UID prefix); the `limit` is applied after collapse + distance sort. Also declutters the time agenda.
+
+### Changed
+- **Homepage copy:** hero now "Find the **events and practitioners** our community trusts" (events first); subline trimmed to "A lasting, searchable home for the healers, facilitators, and conscious events we love."
+- **Logo pop:** richer gold gradient, brighter inner ember, and a soft glow on the flame mark.
+
+### Docs (`/updatestructure` refresh)
+- Verified all root + `documentation/` files against the code. Brought `Bugs.md` current (removed the stale "no code yet" note; reorganized Open/Resolved; logged the near-me fix). Updated `Architecture.md` (series collapse), `Claude.md` (collapse gotcha), `Design.md` (logo), `Readme.md` (Build 8 + live status).
+
+---
+
 ## v0.1.0 — Build 7 (2026-06-26)
 
 *"📍 Near me" for both events and practitioners — distance, nearest-sort, radius, directions. Builds clean; lint passes.*

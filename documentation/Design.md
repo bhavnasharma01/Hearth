@@ -39,7 +39,7 @@
   | `clay` | `#b4603f` | gentle error/warn |
   | `ink` / `muted` | `#2a211b` / `#6e6253` | text |
 
-  Gold is used sparingly — eyebrows, the flame mark, thin `.gold-rule` dividers, active states, "view all" links, and the member mark. A **crafted SVG flame** wordmark (`src/components/logo.tsx`) replaces the emoji.
+  Gold is used sparingly — eyebrows, the flame mark, thin `.gold-rule` dividers, active states, "view all" links, and the member mark. A **crafted SVG flame** wordmark (`src/components/logo.tsx`) replaces the emoji — a gold-gradient flame with a brighter inner ember and a soft glow (`drop-shadow`) so it pops on the deep night header.
 
 - **Type:** **Fraunces** (warm display serif) for headings + **Nunito Sans** for body — loaded via `next/font`.
 

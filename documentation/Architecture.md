@@ -115,7 +115,7 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 ## 6. Data flow
 
-- **Public read** — Server Components query Supabase for `status = live` rows (RLS enforces this even if a query forgets). Search/filter compiled to Postgres full-text + category/mode/date predicates.
+- **Public read** — Server Components query Supabase for `status = live` rows (RLS enforces this even if a query forgets). Search/filter compiled to Postgres full-text + category/mode/date predicates. Recurring events (stored one row per occurrence) are collapsed to one next-occurrence row per series for display (`collapseSeries`).
 - **Public submit** — Server Action validates → runs the **content check** → inserts with `status = live` (clean) or `status = pending` (suspicious) → notifies admin on a hold. No account required.
 - **Report** — Server Action inserts a `reports` row keyed by `reporter_contact`; the dedup routine recounts **distinct** reporters; crossing **3** notifies a steward. Flags never auto-hide.
 - **Admin** — authenticated Server Actions do full CRUD, toggle `featured`, manage `categories`, and trigger the **Google Calendar seed import**.
