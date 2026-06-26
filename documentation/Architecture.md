@@ -113,8 +113,9 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 - *Profiles (Build 11):* `/p/[slug]` practitioner profile (full info, contacts, hosted events, share metadata); directory cards link to it; the add-event form has an optional **host-practitioner** selector (`host_practitioner_id`) so events cross-link to a profile.
 
 - *Report flow (Build 12):* `/report?type=&id=` page + `ReportForm` + `submitReport` (service-role) — dedupes by `reporter_contact`, denormalizes the distinct-reporter `flag_count` onto practitioners, logs a steward alert past the threshold of 3. "Report" links on profiles + event cards.
+- *Admin (Build 13):* Supabase Auth login (`/admin/login`); `src/middleware.ts` refreshes the session on `/admin`; `src/lib/auth.ts` gates by `ADMIN_EMAILS`; admin reads (`src/lib/data/admin.ts`) + mutations (`src/lib/actions/admin.ts`, each `requireAdmin`) use the **service role**. Pages under `app/admin/(protected)`: dashboard, moderation (approve/reject pending), reports inbox (distinct counts, hide/dismiss), practitioners + events management (hide/feature/delete, run-import), categories CRUD.
 
-**Not yet built:** event detail pages (`/events/[id]`) and the `/admin` area.
+**Not yet built:** event detail pages (`/events/[id]`).
 
 ---
 

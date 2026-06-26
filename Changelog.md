@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 13 (2026-06-26)
+
+*Admin panel — the v1 feature set is complete. Builds clean; lint passes.*
+
+### Added — #3 admin panel
+- **Auth:** Supabase Auth login (`/admin/login`, `LoginForm`), `src/middleware.ts` session refresh on `/admin`, `src/lib/auth.ts` gate by **`ADMIN_EMAILS`** allowlist. Pages under `app/admin/(protected)/` redirect non-admins to login (verified: `/admin*` → 307 login when unauthenticated).
+- **Security model:** admin reads (`src/lib/data/admin.ts`) + mutations (`src/lib/actions/admin.ts`) use the **service role**; every mutation calls `requireAdmin()` — admin power never depends on broad `authenticated` RLS.
+- **Pages:** Dashboard (counts) · Moderation (approve/reject pending practitioners + events) · Reports (open reports grouped by target with distinct-reporter counts; hide / dismiss) · Practitioners (hide/feature/delete) · Events (hide/feature/delete + **Run import now**) · Categories (add / rename / activate-deactivate).
+- Reusable `ActionButton` + `SignOutButton`.
+
+### Setup required
+- Add `ADMIN_EMAILS` (local + Vercel) and create the matching user(s) in Supabase Auth; keep public sign-ups disabled.
+
+### Docs
+- `Architecture.md`, `Security.md`, `Claude.md`, `.env.example`, `Readme.md` → Build 13.
+
+---
+
 ## v0.1.0 — Build 12 (2026-06-26)
 
 *Community report / flagging flow. Builds clean; lint passes.*

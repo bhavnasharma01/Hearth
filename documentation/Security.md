@@ -18,7 +18,10 @@ Hearth is a **public, no-login** community resource for a ~550-person trust-base
 ## 2. Authentication & authorization
 
 - **Public surface — no auth.** Browsing, submitting a practitioner/event, and reporting require no account. This is a deliberate product principle, not an oversight.
-- **Admin surface — Supabase Auth.** Only stewards/admins sign in. Admin routes (`/admin/*`) are gated server-side; an unauthenticated request never reaches admin data or mutations.
+- **Admin surface — Supabase Auth.** Only stewards/admins sign in. Admin routes (`/admin/*`) are gated server-side (`getAdminUser` → redirect to login); an unauthenticated request never reaches admin data or mutations. *(Build 13.)*
+  - **Authorization = an `ADMIN_EMAILS` allowlist**, not merely "is authenticated." Even a logged-in non-allowlisted user is bounced.
+  - **All admin reads/writes use the service-role client**, and every admin mutation calls `requireAdmin()` first — so admin power never depends on the broad `authenticated` RLS policies (defence in depth). Keep public sign-ups disabled in Supabase Auth; create stewards via the dashboard.
+  - `src/middleware.ts` refreshes the session cookie on `/admin` navigation (recommended `@supabase/ssr` pattern).
 - **Authorization = roles.** The `users.role` enum (`member`/`practitioner`/`steward`/`admin`) governs privilege. In v1 only `steward`/`admin` accounts exist; `member`/`practitioner` accounts arrive in v2.
 
 ---

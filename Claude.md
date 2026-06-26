@@ -64,6 +64,14 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 
 ---
 
+## Admin panel (Build 13)
+
+- Auth: Supabase Auth login at `/admin/login`. Gate = `getAdminUser()` (session email ∈ `ADMIN_EMAILS`). Pages live under `app/admin/(protected)/` (route group → URLs are `/admin/...`); the group's layout redirects non-admins to login.
+- **Two clients again:** identity from the session (server client, `src/lib/auth.ts`); all admin **reads** (`src/lib/data/admin.ts`) and **writes** (`src/lib/actions/admin.ts`) use the **service role**, and every action calls `requireAdmin()` first. Don't rely on `authenticated` RLS for admin.
+- To use it: set `ADMIN_EMAILS` (local + Vercel) and create the matching user in Supabase Auth (Dashboard → Authentication → Add user, auto-confirm). Keep public sign-ups disabled.
+- `src/middleware.ts` (matcher `/admin/:path*`) refreshes the session cookie.
+- Note: admin pages currently also render the public `SiteHeader`/`SiteFooter` (single root layout) — cosmetic, fine for now.
+
 ## Dev commands
 
 - `npm run dev` — local dev at http://localhost:3000 (runs without env; pages show empty states until Supabase is connected).

@@ -4,8 +4,8 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 12
-*(Status: **deployed & live** at hearthto.vercel.app — browse + submit, daily auto-import + auto-geocode, "📍 near me", add-to-calendar, shareable profiles, and a community **report/flagging flow** (private, distinct-reporter dedupe). Next: admin panel.)*
+**Version:** 0.1.0 · **Build:** 13
+*(Status: **deployed & live** at hearthto.vercel.app — browse + submit, daily auto-import + auto-geocode, "📍 near me", add-to-calendar, shareable profiles, report/flagging flow, and a full **admin panel** (moderation, reports, listings/events management, categories). A feature-complete v1.)*
 
 ---
 
