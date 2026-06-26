@@ -2,6 +2,7 @@ import {
   eventDateParts,
   externalHref,
   formatTimeRange,
+  googleCalendarUrl,
   mapsUrl,
 } from "@/lib/format";
 import { formatDistance } from "@/lib/geo";
@@ -48,30 +49,36 @@ export function EventCard({ event }: { event: EventWithCategory }) {
           {meta}
         </p>
 
-        {(event.registration_link || directions) && (
-          <div className="mt-1.5 flex flex-wrap gap-2">
-            {event.registration_link && (
-              <a
-                href={externalHref(event.registration_link)}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-sm font-medium text-gold hover:underline"
-              >
-                Register ›
-              </a>
-            )}
-            {directions && (
-              <a
-                href={directions}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="rounded-full border border-line px-2.5 py-0.5 text-xs text-forest transition-colors hover:bg-sand"
-              >
-                Directions
-              </a>
-            )}
-          </div>
-        )}
+        <div className="mt-1.5 flex flex-wrap items-center gap-2">
+          {event.registration_link && (
+            <a
+              href={externalHref(event.registration_link)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm font-medium text-gold hover:underline"
+            >
+              Register ›
+            </a>
+          )}
+          <a
+            href={googleCalendarUrl(event)}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="rounded-full border border-line px-2.5 py-0.5 text-xs text-forest transition-colors hover:bg-sand"
+          >
+            + Calendar
+          </a>
+          {directions && (
+            <a
+              href={directions}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="rounded-full border border-line px-2.5 py-0.5 text-xs text-forest transition-colors hover:bg-sand"
+            >
+              Directions
+            </a>
+          )}
+        </div>
       </div>
     </div>
   );

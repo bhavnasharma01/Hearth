@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 9 (2026-06-26)
+
+*Automatic daily Google Calendar import (Vercel Cron) + "Add to calendar" on events. Builds clean; lint passes.*
+
+### Added — #4 auto-import (the transition mechanism)
+- **Shared import core** `src/lib/import/ics-core.mjs` (+ `ics-core.d.mts` types): parse/recurrence-expand/clean/dedupe/insert — one implementation now used by **both** the standalone script and the cron.
+- **Server module** `src/lib/import/calendar.ts` (`runCalendarImport`, service-role, reads `process.env`).
+- **`/api/cron/import`** route — `CRON_SECRET`-guarded (Vercel Cron sends the Bearer; open locally for manual runs).
+- **`vercel.json`** — daily cron at 09:00 UTC, so events still added via the legacy Google Form sync into Hearth automatically during the transition.
+- Rewrote `scripts/import-calendar.mjs` to a thin wrapper over the shared core (no duplicated logic). Added `serverExternalPackages: ["node-ical"]` (the route otherwise fails to build with a `BigInt` bundling error).
+
+### Added — #5 add to calendar
+- **"+ Calendar"** link on every event (`googleCalendarUrl`) — opens a pre-filled Google Calendar event (works on desktop + mobile), alongside Register / Directions.
+
+### Notes
+- Cron import does **not** geocode; new addressed events need `npm run geocode` to join "near me" (tracked in `Bugs.md`).
+- Needs a one-time `CRON_SECRET` env var added in Vercel.
+- Docs updated: Architecture, Claude, Bugs (recurring-horizon resolved), `.env.example`, Readme → Build 9.
+
+---
+
 ## v0.1.0 — Build 8 (2026-06-26)
 
 *Deployed to production; near-me recurring-duplicate bug fixed; copy + logo polish; documentation refreshed (`/updatestructure`). Builds clean; lint passes.*

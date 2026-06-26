@@ -98,6 +98,31 @@ export function externalHref(raw: string): string {
   return /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
 }
 
+/** A Google Calendar "add event" link, pre-filled (opens Google Calendar on web/app). */
+export function googleCalendarUrl(e: {
+  title: string;
+  description: string | null;
+  location_text: string | null;
+  start_at: string;
+  end_at: string | null;
+}): string {
+  const fmt = (iso: string) =>
+    new Date(iso).toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
+  const start = fmt(e.start_at);
+  const end = fmt(
+    e.end_at ??
+      new Date(new Date(e.start_at).getTime() + 2 * 3600 * 1000).toISOString(),
+  );
+  const params = new URLSearchParams({
+    action: "TEMPLATE",
+    text: e.title,
+    dates: `${start}/${end}`,
+  });
+  if (e.description) params.set("details", e.description);
+  if (e.location_text) params.set("location", e.location_text);
+  return `https://calendar.google.com/calendar/render?${params.toString()}`;
+}
+
 /** A Google Maps link (opens the maps app on a phone) from coords or address text. */
 export function mapsUrl(
   lat: number | null,

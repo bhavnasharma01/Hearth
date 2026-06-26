@@ -4,8 +4,8 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 8
-*(Status: **deployed & live** at hearthto.vercel.app on Supabase — rich & sacred mobile design, browse + submit, 553 seeded events, "📍 near me" (distance/sort/radius/directions) for events & practitioners, recurring-series de-duplication. Next: auto daily import (Vercel Cron), "add to calendar", then profiles, report flow, admin.)*
+**Version:** 0.1.0 · **Build:** 9
+*(Status: **deployed & live** at hearthto.vercel.app — rich & sacred mobile design, browse + submit, 553 events with a **daily auto-import** (Vercel Cron), "📍 near me" for events & practitioners, and "add to calendar" on events. Next: profiles, report flow, admin.)*
 
 ---
 

@@ -70,7 +70,9 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - `npm run build` — production build. **Must compile with zero errors/warnings** before committing.
 - `npm run lint` — ESLint.
 - Apply DB schema: run `supabase/migrations/0001_initial_schema.sql` in the Supabase SQL editor (or via the Supabase CLI).
-- Import community events: `npm run import:calendar` — reads the **public iCal feed** (no API key), parses with `node-ical`, inserts via service role, deduped by `external_id`. Safe to re-run; recurring series expand 120 days out, so re-run periodically.
+- Import community events: `npm run import:calendar` — reads the **public iCal feed** (no API key), parses with `node-ical`, inserts via service role, deduped by `external_id`. Safe to re-run.
+- **Single import implementation:** the parse/dedupe/insert logic lives in `src/lib/import/ics-core.mjs` (pure, typed by `.d.mts`). Both the script **and** the cron route (`src/lib/import/calendar.ts` → `/api/cron/import`) use it — don't fork it. `node-ical` is in `serverExternalPackages` (next.config) or the route build fails (`BigInt` bundling error).
+- **Daily auto-import:** Vercel Cron (`vercel.json`, 09:00 UTC) hits `/api/cron/import`, guarded by `CRON_SECRET` (set in Vercel; unset locally = open for manual `curl`). This keeps Google-Form events flowing in during the transition. *Note:* cron import does **not** geocode — run `npm run geocode` for new addressed events.
 - Backfill coordinates: `npm run geocode` — geocodes events (`location_text`) + practitioners (`area`) that have a location but no coords, via Nominatim.
 
 ## "Near me" / geocoding
