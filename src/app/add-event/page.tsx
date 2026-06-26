@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getCategories } from "@/lib/data/categories";
+import { getPractitionerOptions } from "@/lib/data/practitioners";
 import { EventForm } from "@/components/forms/event-form";
 
 export const dynamic = "force-dynamic";
@@ -10,7 +11,10 @@ export const metadata: Metadata = {
 };
 
 export default async function AddEventPage() {
-  const categories = await getCategories();
+  const [categories, hosts] = await Promise.all([
+    getCategories(),
+    getPractitionerOptions(),
+  ]);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
@@ -23,7 +27,7 @@ export default async function AddEventPage() {
           spaces of healing, growth, and connection.
         </p>
       </header>
-      <EventForm categories={categories} />
+      <EventForm categories={categories} hosts={hosts} />
     </div>
   );
 }

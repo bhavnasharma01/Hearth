@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { externalHref, formatMode, whatsappLink } from "@/lib/format";
 import { formatDistance } from "@/lib/geo";
 import type { PractitionerWithCategories } from "@/lib/types/database";
@@ -22,7 +23,9 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <h3 className="truncate font-medium text-ink">
-              {p.practice_name || p.name}
+              <Link href={`/p/${p.slug}`} className="hover:text-forest hover:underline">
+                {p.practice_name || p.name}
+              </Link>
             </h3>
             {p.is_member && (
               <span

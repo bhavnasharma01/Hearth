@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 11 (2026-06-26)
+
+*Shareable practitioner profile pages. Builds clean; lint passes.*
+
+### Added — #1 practitioner profiles
+- **`/p/[slug]`** profile page: avatar/photo, name + practice, `✦` member badge, all categories, description + bio, area/mode/languages/pricing, full contact buttons, and **upcoming events they host**. Per-profile share metadata (`generateMetadata`) for clean WhatsApp link previews.
+- Data: `getPractitionerBySlug` + `getEventsByHost`.
+- Directory cards now **link the name to the profile**.
+- The add-event form has an optional **"Are you a Hearth practitioner?"** selector (`getPractitionerOptions` → `host_practitioner_id`), so events cross-link to a profile and surface there. `submitEvent` stores it.
+
+### Docs
+- `Architecture.md`, `Readme.md` → Build 11.
+
+---
+
 ## v0.1.0 — Build 10 (2026-06-26)
 
 *The daily cron now auto-geocodes new addressed events/practitioners. Builds clean; lint passes.*

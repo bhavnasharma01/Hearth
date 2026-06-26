@@ -11,7 +11,13 @@ const labelCls = "block text-sm font-medium text-ink";
 const inputCls =
   "mt-1 w-full rounded-xl border border-line bg-card px-3 py-2 text-sm outline-none focus:border-sage";
 
-export function EventForm({ categories }: { categories: Category[] }) {
+export function EventForm({
+  categories,
+  hosts,
+}: {
+  categories: Category[];
+  hosts: Array<{ id: string; label: string }>;
+}) {
   const [state, formAction, pending] = useActionState(
     submitEvent,
     INITIAL_FORM_STATE,
@@ -111,6 +117,22 @@ export function EventForm({ categories }: { categories: Category[] }) {
           <input name="cost_note" className={inputCls} />
         </Field>
       </div>
+
+      {hosts.length > 0 && (
+        <Field
+          label="Are you a Hearth practitioner?"
+          hint="Optional — link this event to your directory listing"
+        >
+          <select name="host_practitioner_id" className={inputCls} defaultValue="">
+            <option value="">— not listed / skip —</option>
+            {hosts.map((h) => (
+              <option key={h.id} value={h.id}>
+                {h.label}
+              </option>
+            ))}
+          </select>
+        </Field>
+      )}
 
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Host name" hint="Optional">

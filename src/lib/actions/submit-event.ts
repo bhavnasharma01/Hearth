@@ -36,6 +36,7 @@ export async function submitEvent(
   const registration_link = get("registration_link") || null;
   const cost_note = get("cost_note") || null;
   const host_name = get("host_name") || null;
+  const host_practitioner_id = get("host_practitioner_id") || null;
   const categorySlug = get("category") || null;
   const recurrence_rule = RECURRENCE[get("recurrence")] ?? null;
   const agreed = formData.get("agreement") != null;
@@ -94,6 +95,7 @@ export async function submitEvent(
     registration_link,
     cost_note,
     host_name,
+    host_practitioner_id,
     recurrence_rule,
     latitude: coords?.lat ?? null,
     longitude: coords?.lng ?? null,

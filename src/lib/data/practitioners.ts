@@ -81,6 +81,41 @@ export async function getPractitioners(
   return rows;
 }
 
+/** Minimal list of live practitioners for the "host" selector on the event form. */
+export async function getPractitionerOptions(): Promise<
+  Array<{ id: string; label: string }>
+> {
+  const supabase = await getSupabaseServer();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("practitioners")
+    .select("id, name, practice_name")
+    .eq("status", "live")
+    .order("name", { ascending: true });
+
+  if (error || !data) return [];
+  return data.map((p) => ({ id: p.id, label: p.practice_name || p.name }));
+}
+
+/** A single live practitioner by slug (with categories), or null. */
+export async function getPractitionerBySlug(
+  slug: string,
+): Promise<PractitionerWithCategories | null> {
+  const supabase = await getSupabaseServer();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("practitioners")
+    .select(CATEGORY_JOIN)
+    .eq("slug", slug)
+    .eq("status", "live")
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return flattenCategories(data);
+}
+
 /** Flatten the nested join shape into a clean `categories` array. */
 function flattenCategories(
   row: Record<string, unknown>,

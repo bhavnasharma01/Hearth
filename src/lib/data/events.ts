@@ -91,6 +91,25 @@ function collapseSeries(events: EventWithCategory[]): EventWithCategory[] {
   return out;
 }
 
+/** Upcoming live events hosted by a given practitioner (for their profile page). */
+export async function getEventsByHost(
+  practitionerId: string,
+): Promise<EventWithCategory[]> {
+  const supabase = await getSupabaseServer();
+  if (!supabase) return [];
+
+  const { data, error } = await supabase
+    .from("events")
+    .select(CATEGORY_JOIN)
+    .eq("host_practitioner_id", practitionerId)
+    .eq("status", "live")
+    .gte("start_at", new Date().toISOString())
+    .order("start_at", { ascending: true });
+
+  if (error || !data) return [];
+  return data.map(normalizeCategory);
+}
+
 /** Supabase returns a to-one embed as an object or single-element array; normalize it. */
 function normalizeCategory(row: Record<string, unknown>): EventWithCategory {
   const raw = row.category as Category | Category[] | null;

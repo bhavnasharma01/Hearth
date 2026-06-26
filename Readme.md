@@ -4,8 +4,8 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 10
-*(Status: **deployed & live** at hearthto.vercel.app — rich & sacred mobile design, browse + submit, 553 events with a **daily auto-import + auto-geocode** (Vercel Cron), "📍 near me" for events & practitioners, and "add to calendar" on events. Next: profiles, report flow, admin.)*
+**Version:** 0.1.0 · **Build:** 11
+*(Status: **deployed & live** at hearthto.vercel.app — browse + submit, daily auto-import + auto-geocode, "📍 near me", add-to-calendar, and **shareable practitioner profiles** (`/p/slug`) with hosted events. Next: report flow, admin panel.)*
 
 ---
 
