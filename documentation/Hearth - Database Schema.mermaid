@@ -36,12 +36,17 @@ erDiagram
         text instagram
         text photo_url
         text pricing_note
+        text languages
+        text keywords
         boolean is_member
         enum status "pending|live|hidden|rejected"
         enum auto_check "ok|needs_review"
         int flag_count
         boolean featured
         enum source "hearth_form|import|whatsapp|manual"
+        float latitude
+        float longitude
+        timestamptz geocoded_at
         tsvector search_vector
         timestamptz created_at
         timestamptz updated_at
@@ -81,6 +86,9 @@ erDiagram
         boolean featured
         enum source "hearth_form|google_calendar|whatsapp|manual"
         text external_id "GCal id for dedupe"
+        float latitude
+        float longitude
+        timestamptz geocoded_at
         tsvector search_vector
         timestamptz created_at
         timestamptz updated_at
@@ -110,4 +118,18 @@ erDiagram
         enum payment_status "none|pending|confirmed"
         text proof_url "uploaded proof of payment"
         timestamptz created_at
+    }
+
+    FEEDBACK {
+        uuid id PK
+        text message
+        enum type "bug|idea|confusing|praise|other"
+        text context
+        text submitter_name
+        text submitter_contact
+        enum status "new|reviewing|planned|done|declined"
+        enum priority "low|medium|high - nullable"
+        text admin_note
+        timestamptz created_at
+        timestamptz updated_at
     }

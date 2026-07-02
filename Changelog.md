@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 19 (2026-07-02)
+
+*Documentation audit (`/updatestructure`) — brought every doc in line with the code through Build 18. **No runtime/app code changed**; builds clean.*
+
+### Documentation — verified every `.md` against the code and fixed drift from Builds 14–18
+- **`Architecture.md`:** rewrote the app-structure tree to match reality (there is no `(public)` route group; added `/p/[slug]`, `/feedback`, `/admin/feedback`; marked the Events pages hidden; real `src/lib` layout; all four migrations). Reordered + completed the "Built so far" log (added 15/16/17, fixed the stale "(Build 4)" header). Corrected the §2 diagram and §9 "current build" (Build 18; public iCal feed, not the "Google Calendar API").
+- **`Hearth - Database Schema.mermaid`:** added the **`feedback`** entity and the missing `latitude`/`longitude`/`geocoded_at` (+ `languages`/`keywords`) columns.
+- **`Bugs.md`:** logged the Instagram-contact, "near me" location, and share-link fixes as **resolved**; broadened the spam item to all public-write paths (`/add-practitioner`, `/report`, `/feedback`); added watchlist items (steward alerts reach one inbox on Resend's onboarding sender; the `middleware`→`proxy` Next.js deprecation).
+- **`Readme.md`:** corrected the tech-stack table (public iCal feed via `node-ical`, not "Google Calendar API"; added the email row) and the schema-apply step (run all four migrations in order).
+- **`Claude.md`:** updated the schema-apply command to run all four migrations in order.
+- Confirmed the structure is already correct — living docs in `documentation/`, `planning-archive/` preserved for provenance, **no stray `.md` files to move**.
+
+### What each doc is for (the map)
+- **Root:** `Readme.md` (overview · stack · repo layout · version/build) · `Changelog.md` (this log, newest-first by build) · `Claude.md` (assistant working notes & nuances) · `Bugs.md` (known issues / watchlist).
+- **`documentation/`:** `Architecture.md` (system, tech, structure, data flow) · `Security.md` (auth, RLS, abuse-resistance, privacy, secrets) · `Product.md` (North Star, personas, forms, scope) · `Design.md` (visual system, mobile-first UX) · `Hearth - Database Schema.md` + `.mermaid` (authoritative data model / ER diagram) · `planning-archive/` (original planning docs — provenance only, don't edit).
+
+---
+
 ## v0.1.0 — Build 18 (2026-07-02)
 
 *A private feedback channel for the user-testing phase: an unlisted `/feedback` form feeding a steward status board. Builds clean; lint passes.*

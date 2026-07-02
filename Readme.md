@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 18
+**Version:** 0.1.0 · **Build:** 19
 *(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
@@ -34,8 +34,9 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 | Auth | Supabase Auth — **admins only** |
 | Storage | Supabase Storage (photos, flyers) |
 | Search | Postgres full-text (`tsvector`) |
+| Email | Steward alerts via Resend **or** Gmail SMTP (`nodemailer`) |
 | Hosting | Vercel (free tier) |
-| Event seed | Google Calendar API (one-time import) |
+| Event seed | Public iCal feed via `node-ical` (no API key) |
 
 Effectively **$0** at community scale. Architecture detail in `documentation/Architecture.md`.
 
@@ -78,8 +79,9 @@ npm run dev                  # http://localhost:3000
 
 Without env values the app still runs and compiles — the pages render their
 calm empty states until the Supabase project is connected. Apply the schema by
-running `supabase/migrations/0001_initial_schema.sql` against the Supabase
-project (SQL editor or the Supabase CLI).
+running the migrations in `supabase/migrations/` **in order** (`0001` schema +
+RLS + category seed → `0002` geocoding → `0003` Instagram-as-contact → `0004`
+feedback) against the Supabase project (SQL editor or the Supabase CLI).
 
 Seed the community events from the public calendar (no API key needed):
 

@@ -33,8 +33,8 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
                     • full-text search (tsvector)
                     • Row-Level Security (RLS)
                                         ▲
-                       one-time / occasional seed import
-                       Google Calendar API (events.list)
+                       daily / occasional seed import
+                       Public iCal feed (node-ical, no key)
                        → events  (source=google_calendar,
                                   external_id for dedupe)
 ```
@@ -76,34 +76,41 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 ## 5. Planned application structure
 
+Actual structure (public pages live at the root of `/app`; there is no `(public)`
+route group). Event pages exist but are **hidden** behind `EVENTS_ENABLED`.
+
 ```
-/app
-  /(public)                     # no-login surface
-    page.tsx                    # Home (peek at both worlds)
-    practitioners/page.tsx      # directory: search + filters + cards
-    practitioners/[slug]/page.tsx  # practitioner profile + their events
-    events/page.tsx             # upcoming feed (This week/Next week/Later) + month view
-    events/[id]/page.tsx        # event detail
-    add-practitioner/page.tsx   # native add form
-    add-event/page.tsx          # native add form
-    report/page.tsx             # report a listing/event (no login)
-  /admin                        # Supabase-Auth protected
-    page.tsx                    # dashboard
-    moderation/                 # pending queue (auto-check holds)
-    reports/                    # reports inbox + distinct-reporter counts
-    categories/                 # add/rename/reorder/deactivate
-    listings/                   # manage practitioners
-    events/                     # manage events + GCal import trigger
-/lib
-  supabase/                     # browser + server clients, typed
-  moderation/                   # content-check + reporter-dedup logic
-  search/                       # query builders for tsvector search
-/components                     # cards, chips, forms, layout
-/supabase                       # SQL migrations + seed (categories, RLS policies)
-/scripts                        # one-off: google-calendar-seed-import
+src/app
+  layout.tsx                    # root layout (SiteHeader/Footer, fonts, metadata)
+  page.tsx                      # Home (peek at the directory)
+  icon.svg                      # Hearth-flame favicon
+  practitioners/page.tsx        # directory: search + filters + cards
+  p/[slug]/page.tsx             # practitioner profile + their events
+  events/page.tsx               # upcoming feed  (hidden: EVENTS_ENABLED → 404)
+  add-practitioner/page.tsx     # native add form (required, geocoded area)
+  add-event/page.tsx            # native add form (hidden: EVENTS_ENABLED → 404)
+  report/page.tsx               # report a listing (no login)
+  feedback/page.tsx             # unlisted testing feedback (FEEDBACK_ENABLED → 404)
+  api/geocode/route.ts          # Nominatim autocomplete proxy
+  api/cron/import/route.ts      # daily Vercel-Cron GCal import (events-gated)
+  admin/login/page.tsx          # Supabase-Auth login
+  admin/(protected)/            # gated: layout redirects non-admins to login
+    page.tsx  moderation/  reports/  feedback/  listings/  events/  categories/
+src/lib
+  supabase/                     # anon (server) + service-role (admin) clients
+  actions/                      # server actions: submit-*, admin, types
+  data/                         # read queries: practitioners, events, categories, admin
+  moderation/                   # content-check
+  import/                       # ics-core (shared), calendar, geocode-pending
+  types/                        # hand-authored DB types
+  auth · notify · features · geocode · geo · format · url · slug · datetime
+src/components                  # cards, chips, forms/, admin/, logo, share-button, layout
+src/middleware.ts               # refreshes the Supabase session on /admin
+supabase/migrations             # 0001 schema+RLS+seed · 0002 geocoding · 0003 instagram · 0004 feedback
+scripts                         # import-calendar.mjs · geocode-events.mjs
 ```
 
-**Built so far (Build 4):**
+**Built so far (through Build 18):**
 - *Browse (Build 3):* `src/app` Home / `/practitioners` / `/events`; `src/components` header, footer, practitioner & event cards, filter chips; `src/lib` supabase server (anon) client, data access, types, formatting/url helpers; `supabase/migrations/0001_initial_schema.sql`.
 - *Submit (Build 4):* `/add-practitioner` & `/add-event` pages + client forms (`src/components/forms/*`); server actions (`src/lib/actions/submit-practitioner.ts`, `submit-event.ts`); the **service-role write client** (`src/lib/supabase/admin.ts`, `server-only`); the **content-check** (`src/lib/moderation/content-check.ts`); slug uniqueness (`src/lib/slug.ts`); Toronto-time conversion (`src/lib/datetime.ts`).
 
@@ -115,10 +122,13 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 - *Report flow (Build 12):* `/report?type=&id=` page + `ReportForm` + `submitReport` (service-role) — dedupes by `reporter_contact`, denormalizes the distinct-reporter `flag_count` onto practitioners, logs a steward alert past the threshold of 3. "Report" links on profiles + event cards.
 - *Admin (Build 13):* Supabase Auth login (`/admin/login`); `src/middleware.ts` refreshes the session on `/admin`; `src/lib/auth.ts` gates by `ADMIN_EMAILS`; admin reads (`src/lib/data/admin.ts`) + mutations (`src/lib/actions/admin.ts`, each `requireAdmin`) use the **service role**. Pages under `app/admin/(protected)`: dashboard, moderation (approve/reject pending), reports inbox (distinct counts, hide/dismiss), practitioners + events management (hide/feature/delete, run-import), categories CRUD.
-- *Feedback board (Build 18):* private user-testing feedback — unlisted `/feedback` form (gated by `FEEDBACK_ENABLED`) → `submitFeedback` (service-role) → `feedback` table (migration `0004`, RLS admin-only) → a **status-column board** at `/admin/feedback` (move status, set priority, add notes) + a "new feedback" count on the dashboard.
 - *Steward alerts + practitioner-only pilot (Build 14):* `src/lib/notify.ts` (`notifyAdmins`) emails `ADMIN_EMAILS` when a practitioner submission is held or crosses the 3-reporter threshold — via **Resend** or **Gmail SMTP** (`nodemailer`), whichever env is set; `siteUrl()` (`src/lib/url.ts`) builds absolute links for those emails. A **"Report" link** now sits on every practitioner card (`PractitionerCard`), matching events. `src/lib/features.ts` (`EVENTS_ENABLED = false`) hides the whole public Events layer (nav, home peek/CTA, profile "events they host", `/events` + `/add-event` → 404, and the import cron) behind one reversible flag.
+- *Polish + shareability (Build 15):* Hearth-flame favicon (`src/app/icon.svg`); `ShareButton` (native share sheet / copy-link) on profiles **and** the "you're live" success screen (which now surfaces the practitioner's own `/p/…` link); an optional photo/logo field on the add form; a richer `/p/[slug]` layout (header card, **Offerings** chips from `keywords`, "Get in touch" card); and honest copy — dropped the "our community *trusts/vouches for*" claim from the hero + tab title.
+- *Required, easy location (Build 16):* `area` is now **required** on the practitioner form and entered via the shared type-ahead `AddressAutocomplete` (picking a suggestion pins area-level coords — reliable "near me"); extracted a shared `resolveCoordsFromForm` used by **both** submit actions.
+- *Instagram as a contact (Build 17):* Instagram now satisfies the at-least-one-contact rule — app validation **and** the DB constraint (migration `0003_instagram_contact.sql`).
+- *Feedback board (Build 18):* private user-testing feedback — unlisted `/feedback` form (gated by `FEEDBACK_ENABLED`) → `submitFeedback` (service-role) → `feedback` table (migration `0004`, RLS admin-only) → a **status-column board** at `/admin/feedback` (move status, set priority, add notes) + a "new feedback" count on the dashboard.
 
-**Not yet built:** event detail pages (`/events/[id]`).
+**Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 
 ---
 
@@ -176,4 +186,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 14** (steward email alerts + report-a-practitioner everywhere + a practitioner-only pilot that hides the Events layer behind one flag).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 18** (practitioner-only pilot: steward email alerts, report-a-practitioner everywhere, shareable/richer profiles, required geocoded location, Instagram-as-contact, and a private user-testing feedback board — with the Events layer built but hidden behind one flag).
