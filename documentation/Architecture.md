@@ -61,7 +61,7 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
 
 Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
-- **`practitioners`** — the directory. `status` (`pending`/`live`/`hidden`/`rejected`), `auto_check`, `flag_count`, `is_member`, `featured`, `source`, `search_vector`, `slug` (for `/p/slug`). DB `CHECK`: at least one of WhatsApp/email/website.
+- **`practitioners`** — the directory. `status` (`pending`/`live`/`hidden`/`rejected`), `auto_check`, `flag_count`, `is_member`, `featured`, `source`, `search_vector`, `slug` (for `/p/slug`). DB `CHECK`: at least one of WhatsApp/email/website/Instagram.
 - **`categories`** — taxonomy table (seeded with 11), admin-extendable; `sort_order`, `active`.
 - **`practitioner_categories`** — many-to-many join (a practitioner holds up to ~3).
 - **`events`** — native events. `host_practitioner_id` (links to directory), `start_at`/`end_at`, `mode`, `cost_note`, `recurrence_rule` (RRULE), `status`, `source`, `external_id` (GCal dedupe), `search_vector`.

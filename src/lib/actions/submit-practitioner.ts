@@ -52,8 +52,10 @@ export async function submitPractitioner(
   if (!description) missing.push("a short description");
   if (categorySlugs.length === 0) missing.push("at least one category");
   if (!area) missing.push("your area (so people can find you nearby)");
-  if (!whatsapp && !email && !website)
-    missing.push("at least one way to reach you (WhatsApp, email, or website)");
+  if (!whatsapp && !email && !website && !instagram)
+    missing.push(
+      "at least one way to reach you (WhatsApp, email, website, or Instagram)",
+    );
   if (!agreed) missing.push("agreement to the community spirit");
   if (missing.length > 0) {
     return { status: "error", message: `Please add: ${missing.join("; ")}.` };

@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 17 (2026-07-02)
+
+*Bugfix: Instagram now counts as a contact, so an Instagram-only practitioner can list. Builds clean; lint passes.*
+
+### Fixed
+- **Instagram-only listings were blocked.** The "at least one contact" rule counted WhatsApp / Email / Website but **not** Instagram — yet the form groups all four under "at least one is required," so entering only an Instagram failed with *"you need to enter one of the four fields above"* and wouldn't submit. Instagram now counts (which also realigns with the original directory spec's *"…or social link"*). Fixed in **two places that must agree**: the server validation (`submitPractitioner`) and the database constraint.
+- **⚠️ One DB migration to run:** `supabase/migrations/0003_instagram_contact.sql` — paste it into the Supabase SQL editor. It updates `practitioners_contact_check` to include `instagram`. Until it's run, an Instagram-only submit passes app validation but the DB rejects the insert (generic "something went wrong"). Safe to re-run.
+- Note: no form change was needed — the add-practitioner form already presented all four (WhatsApp/Email/Website/Instagram) as an equivalent "at least one required" group; only the validation + DB were stricter.
+
+### Docs
+- `Product.md`, `Architecture.md`, `Hearth - Database Schema.md`, `Claude.md`, `Readme.md`, `Changelog.md` → Build 17.
+
+---
+
 ## v0.1.0 — Build 16 (2026-07-02)
 
 *Practitioners must now add a location — with easy type-ahead — so they reliably show up in "near me." Builds clean; lint passes.*
