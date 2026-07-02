@@ -1,5 +1,6 @@
 import "server-only";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import type { Feedback } from "@/lib/types/database";
 
 // Admin reads use the service-role client (sees pending/hidden content). Only
 // ever called from the gated /admin area / admin actions (which requireAdmin).
@@ -9,6 +10,7 @@ export interface AdminOverview {
   pendingEvents: number;
   openReports: number;
   flaggedPractitioners: number;
+  newFeedback: number;
 }
 
 export async function getAdminOverview(): Promise<AdminOverview> {
@@ -18,17 +20,19 @@ export async function getAdminOverview(): Promise<AdminOverview> {
     pendingEvents: 0,
     openReports: 0,
     flaggedPractitioners: 0,
+    newFeedback: 0,
   };
   if (!sb) return zero;
 
   const head = (table: string) =>
     sb.from(table).select("*", { count: "exact", head: true });
 
-  const [pp, pe, or, fp] = await Promise.all([
+  const [pp, pe, or, fp, nf] = await Promise.all([
     head("practitioners").eq("status", "pending"),
     head("events").eq("status", "pending"),
     head("reports").eq("status", "open"),
     head("practitioners").gte("flag_count", 1),
+    head("feedback").eq("status", "new"),
   ]);
 
   return {
@@ -36,7 +40,19 @@ export async function getAdminOverview(): Promise<AdminOverview> {
     pendingEvents: pe.count ?? 0,
     openReports: or.count ?? 0,
     flaggedPractitioners: fp.count ?? 0,
+    newFeedback: nf.count ?? 0,
   };
+}
+
+/** All feedback, newest first (for the admin board). */
+export async function listFeedback(): Promise<Feedback[]> {
+  const sb = getSupabaseAdmin();
+  if (!sb) return [];
+  const { data } = await sb
+    .from("feedback")
+    .select("*")
+    .order("created_at", { ascending: false });
+  return (data as Feedback[]) ?? [];
 }
 
 export interface AdminPractitioner {

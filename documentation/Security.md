@@ -35,6 +35,7 @@ RLS is enabled on all tables so the database itself enforces access, even if app
 - **Public writes are mediated by trusted server actions** using the **service-role key** (server-only, never shipped to the client), which bypasses RLS. This is what lets the content-check gate run and set `status`/`auto_check` server-side — the client never supplies those, and the write path cannot be bypassed. *(This is a deliberate hardening over the original spec, which had anon inserting directly.)*
 - **Admin full access:** authenticated users (admins/stewards only, in v1) get full CRUD via `..._admin_all` policies, seeing `pending`/`hidden` content.
 - **Dormant tables** (`users`, `registrations`) carry only the admin policy until their features turn on.
+- **`feedback` (testing) is admin-only.** It has **no anon policy at all** — the anon role can neither read nor write it (a leaked anon key exposes nothing). Public submissions are inserted by a service-role server action; the `/feedback` form is unlisted and gated by `FEEDBACK_ENABLED` (off ⇒ 404 at launch). *(Build 18.)*
 
 ---
 
@@ -78,6 +79,7 @@ All user input is treated as untrusted: validated server-side, parameterized in 
 - **No tracking, no ads, no third-party analytics** beyond what's strictly needed; nothing that profiles visitors.
 - **"Near me" location** is used only to build the page URL (`?lat=&lng=`) so the server can sort by distance — it is **never stored server-side, logged, or sent to any third party**. Geolocation requires the visitor's explicit per-use permission (and HTTPS). Practitioner coordinates are **area-level** (geocoded from `area`, e.g. a neighbourhood), never a home address.
 - Contact links use `wa.me`/`mailto:` — no contact data is brokered through a server.
+- **Feedback** (testing phase) is stored privately and shown only in the admin board; the optional name/contact a tester provides is used only for follow-up, never displayed publicly.
 
 ---
 

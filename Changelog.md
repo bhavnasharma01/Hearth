@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 18 (2026-07-02)
+
+*A private feedback channel for the user-testing phase: an unlisted `/feedback` form feeding a steward status board. Builds clean; lint passes.*
+
+### Added — feedback (user-testing phase)
+- **Unlisted `/feedback` form** — gated by a new **`FEEDBACK_ENABLED`** flag (`src/lib/features.ts`, on now). **Never in the public nav**; flip the flag off at launch and it 404s. Fields: type (🐛 bug / 💡 idea / 😕 confusing / ❤️ love it / other), the message (required), optional "where in the app," and optional name + contact for follow-up. Marked `noindex` so it stays out of search.
+- **`feedback` table** (migration **`0004_feedback.sql`**) — RLS **admin-only** (no anon policy, so a leaked anon key can't read or write it); public submissions go through a **service-role** action (`submitFeedback`) and land as `status = 'new'`. No content-check (feedback is never published).
+- **Admin status board** at **`/admin/feedback`** — a kanban of columns **New → Looking into it → Planned → Done / Declined**; per card you can move status, set **priority** (low/med/high), add a private **note**, or delete. New **"Feedback"** admin nav tab + a **"new feedback"** count on the dashboard. Actions in `src/lib/actions/admin.ts` (`setFeedbackStatus` / `setFeedbackPriority` / `setFeedbackNote` / `deleteFeedback`, each `requireAdmin`).
+
+### Setup required
+- **Run `supabase/migrations/0004_feedback.sql`** in the Supabase SQL editor before this ships — otherwise feedback inserts fail. Safe to re-run.
+
+### Docs
+- `Architecture.md`, `Security.md`, `Product.md`, `Hearth - Database Schema.md`, `Claude.md`, `Readme.md`, `Changelog.md` → Build 18.
+
+---
+
 ## v0.1.0 — Build 17 (2026-07-02)
 
 *Bugfix: Instagram now counts as a contact, so an Instagram-only practitioner can list. Builds clean; lint passes.*

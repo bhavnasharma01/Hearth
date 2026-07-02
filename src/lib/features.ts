@@ -11,3 +11,12 @@
  * auth, shows nothing to the public, and stays ready for when events return.
  */
 export const EVENTS_ENABLED = false;
+
+/**
+ * `FEEDBACK_ENABLED` gates the private user-testing feedback form at `/feedback`
+ * (an unlisted link — never in the public nav). It's **on** during the testing
+ * phase so invited practitioners can log feedback; flip it to `false` at public
+ * launch and the page 404s. The admin feedback board (`/admin/feedback`) stays
+ * available regardless, so past feedback is never lost.
+ */
+export const FEEDBACK_ENABLED = true;

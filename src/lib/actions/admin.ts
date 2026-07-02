@@ -137,3 +137,45 @@ export async function runImportNow() {
   revalidatePath("/admin/events");
   revalidatePath("/events");
 }
+
+// --- Feedback board (user-testing phase) ----------------------------------
+
+const FEEDBACK_STATUSES = ["new", "reviewing", "planned", "done", "declined"];
+const FEEDBACK_PRIORITIES = ["low", "medium", "high"];
+
+export async function setFeedbackStatus(fd: FormData) {
+  const sb = await admin();
+  const id = str(fd, "id");
+  const status = str(fd, "status");
+  if (!id || !FEEDBACK_STATUSES.includes(status)) return;
+  await sb.from("feedback").update({ status }).eq("id", id);
+  revalidatePath("/admin/feedback");
+  revalidatePath("/admin");
+}
+
+export async function setFeedbackPriority(fd: FormData) {
+  const sb = await admin();
+  const id = str(fd, "id");
+  const priority = str(fd, "priority");
+  if (!id || !FEEDBACK_PRIORITIES.includes(priority)) return;
+  await sb.from("feedback").update({ priority }).eq("id", id);
+  revalidatePath("/admin/feedback");
+}
+
+export async function setFeedbackNote(fd: FormData) {
+  const sb = await admin();
+  const id = str(fd, "id");
+  if (!id) return;
+  const note = str(fd, "admin_note");
+  await sb.from("feedback").update({ admin_note: note || null }).eq("id", id);
+  revalidatePath("/admin/feedback");
+}
+
+export async function deleteFeedback(fd: FormData) {
+  const sb = await admin();
+  const id = str(fd, "id");
+  if (!id) return;
+  await sb.from("feedback").delete().eq("id", id);
+  revalidatePath("/admin/feedback");
+  revalidatePath("/admin");
+}

@@ -82,6 +82,13 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **`EVENTS_ENABLED` flag** (`src/lib/features.ts`, currently `false`): the practitioner-only pilot switch. It gates **every public events surface** — nav (`SiteHeader`), home peek + hero CTA/copy (`app/page.tsx`), profile "events they host" (`app/p/[slug]`), `/events` + `/add-event` (→ `notFound()`), footer copy, and the import cron (`/api/cron/import` short-circuits). **To bring events back: set it to `true`** — no other change needed. Admin event management is intentionally *not* gated (behind auth, invisible to public). `EventCard`/`getEvents`/etc. are still referenced under the flag, so they're not orphaned.
 - **Report a practitioner** is now on the **card** (`PractitionerCard`) *and* the profile — the backend/`/report`/admin inbox always handled practitioners; Build 14 just fixed discoverability.
 
+## Feedback (user-testing, Build 18)
+
+- **Private feedback channel for the testing phase.** Unlisted **`/feedback`** page (never in nav), gated by **`FEEDBACK_ENABLED`** (`src/lib/features.ts`) — on for testing, flip to `false` at public launch → 404. Share the link directly with testers.
+- **Same trusted pattern as reports:** public submit via a **service-role** action (`src/lib/actions/submit-feedback.ts`) into the **`feedback`** table (migration `0004_feedback.sql`); **RLS admin-only** (no anon policy — anon can't read or write it). No content-check (feedback is never published).
+- **Admin board** at `/admin/feedback` (`src/app/admin/(protected)/feedback`): a **status-column kanban** (New / Looking into it / Planned / Done / Declined) rendered from `listFeedback()`; move status, set priority, add a private note, delete — via actions in `src/lib/actions/admin.ts` (`setFeedbackStatus`/`setFeedbackPriority`/`setFeedbackNote`/`deleteFeedback`, each `requireAdmin`). Dashboard shows a "new feedback" count (`getAdminOverview`).
+- **Run migration `0004_feedback.sql`** in Supabase before this ships, or inserts fail.
+
 ## Dev commands
 
 - `npm run dev` — local dev at http://localhost:3000 (runs without env; pages show empty states until Supabase is connected).

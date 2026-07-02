@@ -92,3 +92,27 @@ export interface EventWithCategory extends Event {
   /** Distance from the visitor in km when a "near me" location is active. */
   distance_km?: number | null;
 }
+
+export type FeedbackType = "bug" | "idea" | "confusing" | "praise" | "other";
+export type FeedbackStatus =
+  | "new"
+  | "reviewing"
+  | "planned"
+  | "done"
+  | "declined";
+export type FeedbackPriority = "low" | "medium" | "high";
+
+/** A private feedback item from the user-testing phase (admin-only). */
+export interface Feedback {
+  id: string;
+  message: string;
+  type: FeedbackType;
+  context: string | null;
+  submitter_name: string | null;
+  submitter_contact: string | null;
+  status: FeedbackStatus;
+  priority: FeedbackPriority | null;
+  admin_note: string | null;
+  created_at: string;
+  updated_at: string;
+}

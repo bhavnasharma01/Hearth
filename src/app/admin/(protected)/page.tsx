@@ -10,6 +10,7 @@ export default async function AdminDashboard() {
     { label: "Pending events", value: o.pendingEvents, href: "/admin/moderation" },
     { label: "Open reports", value: o.openReports, href: "/admin/reports" },
     { label: "Flagged practitioners", value: o.flaggedPractitioners, href: "/admin/reports" },
+    { label: "New feedback", value: o.newFeedback, href: "/admin/feedback" },
   ];
 
   return (
