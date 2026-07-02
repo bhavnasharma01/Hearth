@@ -5,6 +5,7 @@ import Link from "next/link";
 import { submitPractitioner } from "@/lib/actions/submit-practitioner";
 import { INITIAL_FORM_STATE } from "@/lib/actions/types";
 import { ShareButton } from "@/components/share-button";
+import { AddressAutocomplete } from "@/components/forms/address-autocomplete";
 import { siteUrl } from "@/lib/url";
 import type { Category } from "@/lib/types/database";
 
@@ -131,31 +132,39 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         />
       </Field>
 
-      <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Area / location" hint="e.g. Oakville, Toronto + online">
-          <input name="area" className={inputCls} />
-        </Field>
-        <fieldset>
-          <legend className={labelCls}>How do you work?</legend>
-          <div className="mt-2 flex gap-4 text-sm">
-            {[
-              { v: "in_person", l: "In person" },
-              { v: "online", l: "Online" },
-              { v: "both", l: "Both" },
-            ].map((o, i) => (
-              <label key={o.v} className="flex items-center gap-1.5">
-                <input
-                  type="radio"
-                  name="mode"
-                  value={o.v}
-                  defaultChecked={i === 2}
-                />
-                {o.l}
-              </label>
-            ))}
-          </div>
-        </fieldset>
-      </div>
+      <Field
+        label="Your area"
+        required
+        hint="A neighbourhood or city — this is how people find you in “near me.” Pick a suggestion so it pins reliably. Use your general area, not your home address."
+      >
+        <AddressAutocomplete
+          name="area"
+          required
+          placeholder="Start typing a neighbourhood or city…"
+          inputClassName={inputCls}
+        />
+      </Field>
+
+      <fieldset>
+        <legend className={labelCls}>How do you work?</legend>
+        <div className="mt-2 flex gap-4 text-sm">
+          {[
+            { v: "in_person", l: "In person" },
+            { v: "online", l: "Online" },
+            { v: "both", l: "Both" },
+          ].map((o, i) => (
+            <label key={o.v} className="flex items-center gap-1.5">
+              <input
+                type="radio"
+                name="mode"
+                value={o.v}
+                defaultChecked={i === 2}
+              />
+              {o.l}
+            </label>
+          ))}
+        </div>
+      </fieldset>
 
       <div className="rounded-xl border border-line bg-sand/40 p-4">
         <p className="text-sm font-medium text-ink">

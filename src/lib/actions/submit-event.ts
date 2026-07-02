@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { runContentCheck } from "@/lib/moderation/content-check";
-import { geocodeAddress } from "@/lib/geocode";
+import { resolveCoordsFromForm } from "@/lib/geocode";
 import { zonedLocalToISO } from "@/lib/datetime";
 import type { ListingMode } from "@/lib/types/database";
 import type { FormState } from "./types";
@@ -82,7 +82,7 @@ export async function submitEvent(
   const status = check.result === "ok" ? "live" : "pending";
 
   // Coordinates: prefer the picked autocomplete result, else geocode the text.
-  const coords = await resolveCoords(formData, location_text);
+  const coords = await resolveCoordsFromForm(formData, location_text);
 
   const { error } = await supabase.from("events").insert({
     title,
@@ -123,23 +123,4 @@ export async function submitEvent(
         message:
           "Thank you — your event was received and will appear right after a quick review.",
       };
-}
-
-/** Coordinates for the event: the picked autocomplete result, else geocode the text. */
-async function resolveCoords(
-  formData: FormData,
-  locationText: string | null,
-): Promise<{ lat: number; lng: number } | null> {
-  const latRaw = formData.get("latitude")?.toString().trim();
-  const lngRaw = formData.get("longitude")?.toString().trim();
-  if (latRaw && lngRaw) {
-    const lat = Number(latRaw);
-    const lng = Number(lngRaw);
-    if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng };
-  }
-  if (locationText) {
-    const g = await geocodeAddress(locationText);
-    if (g) return { lat: g.lat, lng: g.lng };
-  }
-  return null;
 }

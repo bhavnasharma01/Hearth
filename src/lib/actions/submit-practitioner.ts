@@ -3,7 +3,7 @@
 import { revalidatePath } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { runContentCheck } from "@/lib/moderation/content-check";
-import { geocodeAddress } from "@/lib/geocode";
+import { resolveCoordsFromForm } from "@/lib/geocode";
 import { uniquePractitionerSlug } from "@/lib/slug";
 import { notifyAdmins } from "@/lib/notify";
 import { siteUrl } from "@/lib/url";
@@ -51,6 +51,7 @@ export async function submitPractitioner(
   if (!name) missing.push("your name");
   if (!description) missing.push("a short description");
   if (categorySlugs.length === 0) missing.push("at least one category");
+  if (!area) missing.push("your area (so people can find you nearby)");
   if (!whatsapp && !email && !website)
     missing.push("at least one way to reach you (WhatsApp, email, or website)");
   if (!agreed) missing.push("agreement to the community spirit");
@@ -91,9 +92,11 @@ export async function submitPractitioner(
 
   const slug = await uniquePractitionerSlug(supabase, name);
 
-  // Geocode the area (coarse — a neighbourhood/city, never a home address) so
-  // the practitioner can surface in "near me".
-  const geo = area ? await geocodeAddress(area) : null;
+  // Coordinates for "near me": prefer the precise pin the autocomplete captured
+  // when they picked a suggestion, else geocode the typed area (coarse — a
+  // neighbourhood/city, never a home address). Area is required, so a listing
+  // won't silently vanish from "near me" for lack of a location.
+  const geo = await resolveCoordsFromForm(formData, area);
 
   const { data: inserted, error } = await supabase
     .from("practitioners")

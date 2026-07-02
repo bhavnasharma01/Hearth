@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 16 (2026-07-02)
+
+*Practitioners must now add a location — with easy type-ahead — so they reliably show up in "near me." Builds clean; lint passes.*
+
+### Changed
+- **`area` is now required** on the add-practitioner form. It was optional, so a practitioner who skipped it (or typed something ungeocodable) silently dropped out of "near me," making them hard to find. Now enforced **client-side** (required field) **and server-side** (`submitPractitioner`). This aligns the code with `Product.md §7`, which already specified it as required.
+- **Easy location entry:** the practitioner form now uses the same **type-ahead `AddressAutocomplete`** as the event form — pick a suggestion and it **pins area-level coordinates** for reliable "near me" placement; free-typing still geocodes on submit. Generalized the component with `name` / `placeholder` / `required` props (events keep `location_text`, practitioners use `area`). Framed as a **neighbourhood/city, not a home address** (keeps the area-level privacy norm).
+
+### Refactor
+- Extracted **`resolveCoordsFromForm`** into `src/lib/geocode.ts` (prefer the picked autocomplete coords, else geocode the typed text) and used it in **both** `submitPractitioner` and `submitEvent` — removing the duplicated resolver that lived in the event action.
+
+### Docs
+- `Product.md`, `Claude.md`, `Readme.md`, `Changelog.md` → Build 16.
+
+---
+
 ## v0.1.0 — Build 15 (2026-07-02)
 
 *Polish pass on the practitioner pilot: Hearth-flame favicon, warmer honest copy, shareable-link buttons, and richer profiles (+ a photo field). Builds clean; lint passes.*

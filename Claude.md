@@ -96,6 +96,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 ## "Near me" / geocoding
 
 - Coords live in `latitude`/`longitude`/`geocoded_at` on events **and** practitioners. Events geocode from `location_text` (precise); practitioners from `area` (coarse — never a home address).
+- **`area` is a *required* field** on the practitioner form (Build 16) — a listing with no location silently vanishes from "near me", so we enforce it. Both forms use the shared **`AddressAutocomplete`** (pass `name` — `location_text` for events, `area` for practitioners); picking a suggestion pins precise coords via hidden `latitude`/`longitude`. Both submit actions call **`resolveCoordsFromForm(formData, text)`** (`src/lib/geocode.ts`) — prefers the picked coords, else geocodes the typed text. Don't re-inline that resolver; extend the shared one.
 - **Geocode only on write** (submit/import/backfill) via `src/lib/geocode.ts` (Nominatim, `server-only`); never on public reads. The `/api/geocode` route proxies autocomplete so the browser never calls Nominatim directly.
 - **Gotcha:** Nominatim chokes on venue-name prefixes + postal codes ("Hendon Park, 50 Hendon Ave … M2M 1A2"). `geocodeAddress` strips those and tries fallback variants — keep that logic if you touch it.
 - Distance/sort/filter: `src/lib/geo.ts` (`withDistance`). Pages read `?lat=&lng=&radius=`; `LocationControl` sets them. **Geolocation needs HTTPS** — works on localhost + Vercel, but not the plain-http LAN URL on a phone (use the "type a place" box there).

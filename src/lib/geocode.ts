@@ -87,3 +87,28 @@ export async function geocodeAddress(
   }
   return null;
 }
+
+/**
+ * Coordinates for a submitted location, shared by the event + practitioner
+ * server actions: prefer the precise coordinates the `AddressAutocomplete`
+ * captured when the user picked a suggestion (hidden `latitude`/`longitude`
+ * fields), and fall back to geocoding the free-typed text. Returns null if
+ * neither yields a coordinate.
+ */
+export async function resolveCoordsFromForm(
+  formData: FormData,
+  text: string | null,
+): Promise<{ lat: number; lng: number } | null> {
+  const latRaw = formData.get("latitude")?.toString().trim();
+  const lngRaw = formData.get("longitude")?.toString().trim();
+  if (latRaw && lngRaw) {
+    const lat = Number(latRaw);
+    const lng = Number(lngRaw);
+    if (Number.isFinite(lat) && Number.isFinite(lng)) return { lat, lng };
+  }
+  if (text) {
+    const g = await geocodeAddress(text);
+    if (g) return { lat: g.lat, lng: g.lng };
+  }
+  return null;
+}

@@ -77,7 +77,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 ## 7. Forms (what we ask)
 
 ### Practitioner "add yourself" form
-**Required (one screen):** Name · Category (up to 3) · Short description (~300 chars) · Area/location · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website) · Community agreement.
+**Required (one screen):** Name · Category (up to 3) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins area-level coordinates so the listing reliably appears in "near me" — general neighbourhood/city, never a home address) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website) · Community agreement.
 **Optional enrichment:** Practice/business name · Longer bio · Photo/logo · Instagram · Website/booking link · Pricing note · Languages spoken · Keywords/offerings (search) · "Are you a community member?" (→ badge).
 *Deliberately not asked in v1:* credential/certification gating (trust-based, not certificate-based).
 

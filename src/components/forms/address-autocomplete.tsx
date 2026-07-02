@@ -9,14 +9,22 @@ interface Suggestion {
 }
 
 /**
- * Address field with type-ahead suggestions (via /api/geocode). Picking a
+ * Address/place field with type-ahead suggestions (via /api/geocode). Picking a
  * suggestion captures precise coordinates in hidden lat/lng fields; free-typing
- * still works (the server geocodes the text on submit). Submits `location_text`.
+ * still works (the server geocodes the text on submit). Used by both the event
+ * form (`location_text`) and the practitioner form (`area`) — pass `name` to
+ * choose which field it submits. `required` mirrors onto the visible input.
  */
 export function AddressAutocomplete({
   inputClassName,
+  name = "location_text",
+  placeholder = "Start typing an address or venue…",
+  required = false,
 }: {
   inputClassName: string;
+  name?: string;
+  placeholder?: string;
+  required?: boolean;
 }) {
   const [value, setValue] = useState("");
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
@@ -58,12 +66,13 @@ export function AddressAutocomplete({
   return (
     <div className="relative">
       <input
-        name="location_text"
+        name={name}
         value={value}
         onChange={onChange}
         onBlur={() => setTimeout(() => setOpen(false), 150)}
         autoComplete="off"
-        placeholder="Start typing an address or venue…"
+        required={required}
+        placeholder={placeholder}
         className={inputClassName}
       />
       <input type="hidden" name="latitude" value={coords?.lat ?? ""} />
