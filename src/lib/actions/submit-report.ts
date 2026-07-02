@@ -2,6 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { notifyAdmins } from "@/lib/notify";
+import { siteUrl } from "@/lib/url";
 import type { ReportReason } from "@/lib/types/database";
 import type { FormState } from "./types";
 
@@ -83,8 +85,37 @@ export async function submitReport(
         .from("practitioners")
         .update({ flag_count: distinct })
         .eq("id", id);
-      if (distinct >= FLAG_THRESHOLD) {
-        console.warn(`Practitioner ${id} reached ${distinct} distinct reports.`);
+
+      // Email the stewards the moment a listing crosses the threshold — once,
+      // when the Nth distinct reporter arrives (not on every later report, to
+      // avoid alert fatigue). Flags still never auto-hide; a human decides.
+      if (distinct === FLAG_THRESHOLD) {
+        const { data: prac } = await supabase
+          .from("practitioners")
+          .select("name, practice_name, slug")
+          .eq("id", id)
+          .maybeSingle();
+        const label =
+          (prac as { name: string; practice_name: string | null } | null)
+            ?.practice_name ||
+          (prac as { name: string } | null)?.name ||
+          "a practitioner";
+        const pracSlug = (prac as { slug: string } | null)?.slug;
+        await notifyAdmins({
+          subject: `Hearth: “${label}” reached ${distinct} reports`,
+          body: [
+            `“${label}” has now been flagged by ${distinct} different people.`,
+            `Most recent reason: ${reason}${details ? ` — “${details}”` : ""}.`,
+            "",
+            "Flags never auto-hide anything — this is just a heads-up so a",
+            "steward can take a quiet look and decide what to do.",
+            "",
+            pracSlug ? `Listing:  ${siteUrl(`/p/${pracSlug}`)}` : null,
+            `Reports:  ${siteUrl("/admin/reports")}`,
+          ]
+            .filter((line) => line !== null)
+            .join("\n"),
+        });
       }
     }
   }

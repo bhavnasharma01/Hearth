@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { runCalendarImport } from "@/lib/import/calendar";
 import { geocodePending } from "@/lib/import/geocode-pending";
+import { EVENTS_ENABLED } from "@/lib/features";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -20,6 +21,13 @@ export async function GET(request: Request) {
     if (auth !== `Bearer ${secret}`) {
       return NextResponse.json({ error: "unauthorized" }, { status: 401 });
     }
+  }
+
+  // Events are hidden for the practitioner-only pilot — don't spend the import
+  // (or Nominatim geocoding budget) syncing events no one can see. The import is
+  // safe to re-run, so it simply resumes when events are re-enabled.
+  if (!EVENTS_ENABLED) {
+    return NextResponse.json({ ok: true, skipped: "events-disabled" });
   }
 
   try {

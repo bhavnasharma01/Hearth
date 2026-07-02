@@ -7,9 +7,10 @@ const nextConfig: NextConfig = {
   turbopack: {
     root: path.join(__dirname),
   },
-  // node-ical (used by the cron import route) doesn't bundle cleanly — load it
-  // from node_modules at runtime instead.
-  serverExternalPackages: ["node-ical"],
+  // node-ical (cron import) and nodemailer (steward email alerts) are Node
+  // libraries that don't bundle cleanly — load them from node_modules at
+  // runtime instead of tracing them into the serverless bundle.
+  serverExternalPackages: ["node-ical", "nodemailer"],
 };
 
 export default nextConfig;

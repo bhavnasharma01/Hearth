@@ -50,7 +50,7 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
         </div>
       </div>
 
-      <div className="mt-2.5 flex flex-wrap gap-2 pl-[3.25rem]">
+      <div className="mt-2.5 flex flex-wrap items-center gap-2 pl-[3.25rem]">
         {p.whatsapp && (
           <Contact href={whatsappLink(p.whatsapp)} label="Message" primary />
         )}
@@ -59,6 +59,12 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
         {p.instagram && (
           <Contact href={externalHref(p.instagram)} label="Instagram" />
         )}
+        <Link
+          href={`/report?type=practitioner&id=${p.id}`}
+          className="ml-auto text-xs text-muted/70 hover:text-muted hover:underline"
+        >
+          Report
+        </Link>
       </div>
     </div>
   );

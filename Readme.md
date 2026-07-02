@@ -4,8 +4,8 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 13
-*(Status: **deployed & live** at hearthto.vercel.app — browse + submit, daily auto-import + auto-geocode, "📍 near me", add-to-calendar, shareable profiles, report/flagging flow, and a full **admin panel** (moderation, reports, listings/events management, categories). A feature-complete v1.)*
+**Version:** 0.1.0 · **Build:** 14
+*(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners, "📍 near me", shareable profiles, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
 
@@ -102,6 +102,6 @@ npm run geocode             # backfill coordinates for events/practitioners with
 
 ## Scope at a glance
 
-- **v1 (current):** Directory + Events (native add, search/filter, profiles, seeded import), moderation, admin panel, category management.
+- **v1 (current):** Directory + Events (native add, search/filter, profiles, seeded import), moderation, admin panel, category management. **Piloting practitioners only** — the Events layer is temporarily hidden behind the `EVENTS_ENABLED` flag (`src/lib/features.ts`); flip it to bring events back.
 - **v2:** member accounts, practitioner self-edit, optional positive-only endorsements.
 - **v3:** off-platform-payment registrations, education/blog.

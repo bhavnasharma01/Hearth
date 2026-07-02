@@ -114,6 +114,7 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 - *Report flow (Build 12):* `/report?type=&id=` page + `ReportForm` + `submitReport` (service-role) — dedupes by `reporter_contact`, denormalizes the distinct-reporter `flag_count` onto practitioners, logs a steward alert past the threshold of 3. "Report" links on profiles + event cards.
 - *Admin (Build 13):* Supabase Auth login (`/admin/login`); `src/middleware.ts` refreshes the session on `/admin`; `src/lib/auth.ts` gates by `ADMIN_EMAILS`; admin reads (`src/lib/data/admin.ts`) + mutations (`src/lib/actions/admin.ts`, each `requireAdmin`) use the **service role**. Pages under `app/admin/(protected)`: dashboard, moderation (approve/reject pending), reports inbox (distinct counts, hide/dismiss), practitioners + events management (hide/feature/delete, run-import), categories CRUD.
+- *Steward alerts + practitioner-only pilot (Build 14):* `src/lib/notify.ts` (`notifyAdmins`) emails `ADMIN_EMAILS` when a practitioner submission is held or crosses the 3-reporter threshold — via **Resend** or **Gmail SMTP** (`nodemailer`), whichever env is set; `siteUrl()` (`src/lib/url.ts`) builds absolute links for those emails. A **"Report" link** now sits on every practitioner card (`PractitionerCard`), matching events. `src/lib/features.ts` (`EVENTS_ENABLED = false`) hides the whole public Events layer (nav, home peek/CTA, profile "events they host", `/events` + `/add-event` → 404, and the import cron) behind one reversible flag.
 
 **Not yet built:** event detail pages (`/events/[id]`).
 
@@ -122,8 +123,9 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 ## 6. Data flow
 
 - **Public read** — Server Components query Supabase for `status = live` rows (RLS enforces this even if a query forgets). Search/filter compiled to Postgres full-text + category/mode/date predicates. Recurring events (stored one row per occurrence) are collapsed to one next-occurrence row per series for display (`collapseSeries`).
-- **Public submit** — Server Action validates → runs the **content check** → inserts with `status = live` (clean) or `status = pending` (suspicious) → notifies admin on a hold. No account required.
-- **Report** — Server Action inserts a `reports` row keyed by `reporter_contact`; the dedup routine recounts **distinct** reporters; crossing **3** notifies a steward. Flags never auto-hide.
+- **Public submit** — Server Action validates → runs the **content check** → inserts with `status = live` (clean) or `status = pending` (suspicious) → on a hold, **emails the stewards** (`src/lib/notify.ts`, to `ADMIN_EMAILS`). No account required.
+- **Report** — Server Action inserts a `reports` row keyed by `reporter_contact`; the dedup routine recounts **distinct** reporters; crossing **3** **emails the stewards** once (same `notify.ts` path). Flags never auto-hide.
+- **Admin notifications** — `src/lib/notify.ts` (`notifyAdmins`, `server-only`) is the single email path, targeting `ADMIN_EMAILS`. It sends via **Resend** (`RESEND_API_KEY`) or **Gmail SMTP** (`GMAIL_USER`/`GMAIL_APP_PASSWORD`) — preferring Resend when both are set — otherwise logs to the server console, and never throws (a failed alert can't break a public write).
 - **Admin** — authenticated Server Actions do full CRUD, toggle `featured`, manage `categories`, and trigger the **Google Calendar seed import**.
 - **Seed import** — a script calls `events.list` on the public community calendar (from 2026-01-01), maps each event into `events` with `source = google_calendar` and `external_id`, skipping any already-imported id.
 
@@ -171,4 +173,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 3** (foundation: Next.js app, schema, and the public browse experience).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 14** (steward email alerts + report-a-practitioner everywhere + a practitioner-only pilot that hides the Events layer behind one flag).

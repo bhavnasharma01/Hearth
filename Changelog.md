@@ -4,6 +4,32 @@
 
 ---
 
+## v0.1.0 — Build 14 (2026-07-02)
+
+*Practitioner-only pilot: email alerts to stewards, report-a-practitioner everywhere, and the Events layer hidden behind one flag. Builds clean; lint passes.*
+
+### Added — steward email notifications (the missing "notify a human")
+- **`src/lib/notify.ts`** (`notifyAdmins`, server-only) — emails everyone in `ADMIN_EMAILS`, using whichever provider is configured (no code change to switch): **Resend** (`RESEND_API_KEY` — no email account/domain/app-password needed; onboarding sender delivers to your Resend-account inbox until a domain is verified) or **Gmail SMTP** (`nodemailer`, from a Gmail you control via a Google App Password — no recipient limit). Degrades gracefully: with neither configured it logs to the server console instead of sending, so the app still builds/runs without credentials, and it **never throws** (a failed alert can't break a submission).
+- **Report threshold now emails** (`submitReport`): when a practitioner crosses **3 distinct reporters**, stewards get one email (fires once, on crossing — no alert fatigue) with the listing name, reason, and links to the listing + `/admin/reports`. Replaces the previous silent `console.warn`. *Flags still never auto-hide.*
+- **Held submissions now email** (`submitPractitioner`): a listing held `pending` by the content check emails stewards the name, the reason it was held, and a link to `/admin/moderation` — delivering the "notify the admin immediately" the docs always promised.
+- **`siteUrl()`** helper (`src/lib/url.ts`) for absolute links inside emails; `NEXT_PUBLIC_SITE_URL` env (defaults to the production domain).
+
+### Added — report a practitioner from anywhere
+- **"Report" link on every practitioner card** (`PractitionerCard`), matching the event cards — previously the only entry point was a buried link on the profile page. The backend, `/report` page, and admin inbox already handled practitioners; this closes the discoverability gap.
+
+### Changed — practitioner-only pilot (Events hidden, reversibly)
+- **`src/lib/features.ts`** — new `EVENTS_ENABLED` flag (`false`). One switch hides the whole public Events layer; no code deleted. Gated: the **Events nav** link, the home **"Coming up"** peek + hero events CTA/copy, the **"events they host"** section on profiles, and the **`/events` + `/add-event`** routes (→ 404 while hidden). Footer copy softened to practitioners-only.
+- **Daily import cron** (`/api/cron/import`) short-circuits when events are disabled — no wasted import/geocoding of events no one can see; resumes automatically when re-enabled.
+- Admin-side event management is intentionally left intact (behind auth, invisible to the public, ready for when events return).
+
+### Setup required
+- Turn on email delivery (local + Vercel) with **either** `RESEND_API_KEY` (easiest — no email account/domain needed) **or** `GMAIL_USER` + `GMAIL_APP_PASSWORD` (a Google App Password on a 2-Step-Verification account); optionally `NEXT_PUBLIC_SITE_URL`. Without either, alerts log to the server console.
+
+### Docs
+- `Readme.md`, `Architecture.md`, `Security.md`, `Product.md`, `Design.md`, `Claude.md`, `.env.example` → Build 14.
+
+---
+
 ## v0.1.0 — Build 13 (2026-06-26)
 
 *Admin panel — the v1 feature set is complete. Builds clean; lint passes.*

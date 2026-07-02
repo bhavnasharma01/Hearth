@@ -117,6 +117,7 @@ A practitioner may hold up to ~3.
 ## 10. Scope staging
 
 - **v1 — two layers, one home** *(current build):* Directory (add/browse/search/filter/profile/contact/member badge) · Events (native add/upcoming feed/filters/month view/seeded import) · moderation (auto-check + reporting) · admin panel · category management.
+  - **Pilot note (Build 14):** we're launching the **directory first** — the Events layer is fully built but **hidden behind the `EVENTS_ENABLED` flag** while we validate adoption of the defensible core with the community. This keeps the pilot focused ("strengthen the trusted home, don't just make it bigger") and events switch back on with one flag when we're ready. Reporting now covers **practitioners** end-to-end (link on every card + profile), and stewards get an **email** when a listing is held for review or crosses the 3-reporter flag threshold.
 - **v2 — accounts & richer trust:** member sign-in · practitioner claim & self-edit (`owner_user_id`) · optional positive-only endorsements · richer notifications.
 - **v3 — registrations & education:** off-platform-payment RSVP/registrations (cash/e-transfer + uploaded proof; lean on Luma for real ticketing) · education/blog ("What is Kundalini yoga?" + curated resources).
 

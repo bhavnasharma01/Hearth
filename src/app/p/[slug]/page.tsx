@@ -5,6 +5,7 @@ import { getPractitionerBySlug } from "@/lib/data/practitioners";
 import { getEventsByHost } from "@/lib/data/events";
 import { EventCard } from "@/components/event-card";
 import { externalHref, formatMode, whatsappLink } from "@/lib/format";
+import { EVENTS_ENABLED } from "@/lib/features";
 
 export const dynamic = "force-dynamic";
 
@@ -32,7 +33,8 @@ export default async function PractitionerProfile({
   const p = await getPractitionerBySlug(slug);
   if (!p) notFound();
 
-  const events = await getEventsByHost(p.id);
+  // Events are hidden for the practitioner-only pilot (see @/lib/features).
+  const events = EVENTS_ENABLED ? await getEventsByHost(p.id) : [];
   const label = (p.practice_name || p.name).trim();
   const initial = label ? label[0].toUpperCase() : "·";
   const safePhoto =

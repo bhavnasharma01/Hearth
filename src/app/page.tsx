@@ -3,13 +3,15 @@ import { getEvents } from "@/lib/data/events";
 import { getPractitioners } from "@/lib/data/practitioners";
 import { EventCard } from "@/components/event-card";
 import { PractitionerCard } from "@/components/practitioner-card";
+import { EVENTS_ENABLED } from "@/lib/features";
 
 // Reads live data per request (no build-time prerender of DB content).
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
+  // Events are hidden for the practitioner-only pilot — skip fetching them.
   const [events, practitioners] = await Promise.all([
-    getEvents({ upcomingOnly: true, limit: 3 }),
+    EVENTS_ENABLED ? getEvents({ upcomingOnly: true, limit: 3 }) : [],
     getPractitioners({ limit: 3 }),
   ]);
 
@@ -22,12 +24,15 @@ export default async function HomePage() {
             Our community’s gathering place
           </p>
           <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-cream sm:text-5xl">
-            Find the events and practitioners our community trusts.
+            {EVENTS_ENABLED
+              ? "Find the events and practitioners our community trusts."
+              : "Find the practitioners our community trusts."}
           </h1>
           <div className="gold-rule mx-auto my-6 w-28" />
           <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
-            A lasting, searchable home for the healers, facilitators, and
-            conscious events we love.
+            {EVENTS_ENABLED
+              ? "A lasting, searchable home for the healers, facilitators, and conscious events we love."
+              : "A lasting, searchable home for the healers, facilitators, and conscious practitioners we love."}
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link
@@ -37,27 +42,29 @@ export default async function HomePage() {
               Find a practitioner
             </Link>
             <Link
-              href="/events"
+              href={EVENTS_ENABLED ? "/events" : "/add-practitioner"}
               className="rounded-full border border-gold/40 px-6 py-3 font-medium text-cream transition-colors hover:bg-white/5"
             >
-              See what’s happening
+              {EVENTS_ENABLED ? "See what’s happening" : "Add your practice"}
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Upcoming events peek */}
-      <HomeSection
-        title="Coming up"
-        href="/events"
-        linkLabel="All events"
-        empty="No upcoming events to show yet — they’ll appear here as they’re added."
-        isEmpty={events.length === 0}
-      >
-        {events.map((event) => (
-          <EventCard key={event.id} event={event} />
-        ))}
-      </HomeSection>
+      {/* Upcoming events peek — hidden during the practitioner-only pilot. */}
+      {EVENTS_ENABLED && (
+        <HomeSection
+          title="Coming up"
+          href="/events"
+          linkLabel="All events"
+          empty="No upcoming events to show yet — they’ll appear here as they’re added."
+          isEmpty={events.length === 0}
+        >
+          {events.map((event) => (
+            <EventCard key={event.id} event={event} />
+          ))}
+        </HomeSection>
+      )}
 
       {/* Practitioners peek */}
       <HomeSection

@@ -1,4 +1,5 @@
 import { Logo } from "@/components/logo";
+import { EVENTS_ENABLED } from "@/lib/features";
 
 export function SiteFooter() {
   return (
@@ -7,9 +8,11 @@ export function SiteFooter() {
         <Logo tone="light" />
         <div className="gold-rule my-4 max-w-xs" />
         <p className="max-w-prose text-sm leading-relaxed text-cream/70">
-          A volunteer community resource — a warm, lasting home for the
-          practitioners and conscious events we trust. Offered in a spirit of
-          respect, care, and mutual support.
+          A volunteer community resource — a warm, lasting home for the{" "}
+          {EVENTS_ENABLED
+            ? "practitioners and conscious events we trust"
+            : "practitioners our community trusts"}
+          . Offered in a spirit of respect, care, and mutual support.
         </p>
       </div>
     </footer>

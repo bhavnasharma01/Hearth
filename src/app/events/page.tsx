@@ -1,3 +1,4 @@
+import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getCategories } from "@/lib/data/categories";
 import { getEvents } from "@/lib/data/events";
@@ -6,6 +7,7 @@ import { FilterChips, type ChipOption } from "@/components/filter-chips";
 import { LocationControl } from "@/components/location-control";
 import { groupUpcomingEvents } from "@/lib/format";
 import { buildQuery, firstParam } from "@/lib/url";
+import { EVENTS_ENABLED } from "@/lib/features";
 import type { ListingMode } from "@/lib/types/database";
 
 export const dynamic = "force-dynamic";
@@ -24,6 +26,9 @@ export default async function EventsPage({
 }: {
   searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 }) {
+  // Events layer is hidden for the practitioner-only pilot (see @/lib/features).
+  if (!EVENTS_ENABLED) notFound();
+
   const sp = await searchParams;
   const q = firstParam(sp.q)?.trim() || undefined;
   const category = firstParam(sp.category) ?? null;

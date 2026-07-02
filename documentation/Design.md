@@ -74,7 +74,7 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 
 ## 5. Key components
 
-- **Practitioner card** — name/practice, category tag(s), short description, area + mode, **Community-member badge**, optional photo, contact buttons (*Message on WhatsApp* via `wa.me`, Email, Website, Instagram).
+- **Practitioner card** — name/practice, category tag(s), short description, area + mode, **Community-member badge**, optional photo, contact buttons (*Message on WhatsApp* via `wa.me`, Email, Website, Instagram), and a subtle right-aligned **Report** link (matching the event card, so a listing can be flagged straight from the list — not only from its profile).
 - **Practitioner profile (`/p/slug`)** — full bio, all categories, contacts, **upcoming events this person hosts** (cross-discovery payoff). A shareable, WhatsApp-droppable URL.
 - **Event card** — title, date & time, in-person/online + location, short description, cost note ("PWYC"/price), flyer, **View / Register** button.
 - **Event feed grouping** — *This week / Next week / Later* headers; an optional month-grid toggle for traditionalists.

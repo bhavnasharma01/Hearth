@@ -3,11 +3,13 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
+import { EVENTS_ENABLED } from "@/lib/features";
 
 const NAV = [
   { href: "/", label: "Home" },
   { href: "/practitioners", label: "Practitioners" },
-  { href: "/events", label: "Events" },
+  // Events layer is hidden for the practitioner-only pilot (see @/lib/features).
+  ...(EVENTS_ENABLED ? [{ href: "/events", label: "Events" }] : []),
 ];
 
 export function SiteHeader() {

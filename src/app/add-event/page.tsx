@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
+import { notFound } from "next/navigation";
 import { getCategories } from "@/lib/data/categories";
 import { getPractitionerOptions } from "@/lib/data/practitioners";
 import { EventForm } from "@/components/forms/event-form";
+import { EVENTS_ENABLED } from "@/lib/features";
 
 export const dynamic = "force-dynamic";
 
@@ -11,6 +13,9 @@ export const metadata: Metadata = {
 };
 
 export default async function AddEventPage() {
+  // Events layer is hidden for the practitioner-only pilot (see @/lib/features).
+  if (!EVENTS_ENABLED) notFound();
+
   const [categories, hosts] = await Promise.all([
     getCategories(),
     getPractitionerOptions(),

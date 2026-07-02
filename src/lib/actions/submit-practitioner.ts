@@ -5,6 +5,8 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { runContentCheck } from "@/lib/moderation/content-check";
 import { geocodeAddress } from "@/lib/geocode";
 import { uniquePractitionerSlug } from "@/lib/slug";
+import { notifyAdmins } from "@/lib/notify";
+import { siteUrl } from "@/lib/url";
 import type { ListingMode } from "@/lib/types/database";
 import type { FormState } from "./types";
 
@@ -140,17 +142,35 @@ export async function submitPractitioner(
   revalidatePath("/practitioners");
   revalidatePath("/");
 
-  return status === "live"
-    ? {
-        status: "success",
-        pendingReview: false,
-        slug: inserted.slug,
-        message: "You’re live in the directory! 🌿",
-      }
-    : {
-        status: "success",
-        pendingReview: true,
-        message:
-          "Thank you — your listing was received and will appear right after a quick review.",
-      };
+  if (status === "live") {
+    return {
+      status: "success",
+      pendingReview: false,
+      slug: inserted.slug,
+      message: "You’re live in the directory! 🌿",
+    };
+  }
+
+  // Held for review (the content check flagged it) — notify the stewards so the
+  // small suspicious fraction doesn't wait unseen (see Security.md §4).
+  const label = practice_name || name;
+  await notifyAdmins({
+    subject: `Hearth: new listing “${label}” needs review`,
+    body: [
+      `A new practitioner listing was submitted and held for review because`,
+      `the automated content check flagged it.`,
+      "",
+      `Name:  ${label}`,
+      `Why held:  ${check.reasons.join("; ")}`,
+      "",
+      `Review it here:  ${siteUrl("/admin/moderation")}`,
+    ].join("\n"),
+  });
+
+  return {
+    status: "success",
+    pendingReview: true,
+    message:
+      "Thank you — your listing was received and will appear right after a quick review.",
+  };
 }
