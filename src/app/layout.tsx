@@ -17,9 +17,9 @@ const nunito = Nunito_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Hearth — practitioners & events our community trusts",
+  title: "Hearth — a warm home for our community’s practitioners",
   description:
-    "The lasting, searchable home for the practitioners and conscious events our community vouches for. Free, phone-friendly, no login.",
+    "Search and connect with the healers, facilitators, and conscious practitioners in our community. Free, phone-friendly, no login.",
 };
 
 export default function RootLayout({

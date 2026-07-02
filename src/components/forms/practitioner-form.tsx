@@ -4,6 +4,8 @@ import { useActionState } from "react";
 import Link from "next/link";
 import { submitPractitioner } from "@/lib/actions/submit-practitioner";
 import { INITIAL_FORM_STATE } from "@/lib/actions/types";
+import { ShareButton } from "@/components/share-button";
+import { siteUrl } from "@/lib/url";
 import type { Category } from "@/lib/types/database";
 
 const labelCls = "block text-sm font-medium text-ink";
@@ -17,6 +19,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
   );
 
   if (state.status === "success") {
+    const live = !state.pendingReview && Boolean(state.slug);
     return (
       <div className="rounded-[var(--radius-card)] border border-line bg-card p-8 text-center">
         <p className="font-display text-2xl text-forest">{state.message}</p>
@@ -25,10 +28,37 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
             ? "We’ll take a quick look and it’ll be visible soon."
             : "Thank you for adding your practice to Hearth."}
         </p>
-        <div className="mt-5 flex justify-center gap-3">
+
+        {live && (
+          <div className="mx-auto mt-6 max-w-sm">
+            <p className="mb-2 text-sm font-medium text-ink">
+              Your profile is live — share it anywhere 🌿
+            </p>
+            <ShareButton
+              url={siteUrl(`/p/${state.slug}`)}
+              title="My Hearth profile"
+              label="Copy link"
+              showUrl
+            />
+          </div>
+        )}
+
+        <div className="mt-6 flex flex-wrap justify-center gap-3">
+          {live && (
+            <Link
+              href={`/p/${state.slug}`}
+              className="rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-cream hover:bg-forest-deep"
+            >
+              View your profile
+            </Link>
+          )}
           <Link
             href="/practitioners"
-            className="rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-cream hover:bg-forest-deep"
+            className={
+              live
+                ? "rounded-full border border-line px-5 py-2.5 text-sm text-forest hover:bg-sand"
+                : "rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-cream hover:bg-forest-deep"
+            }
           >
             See the directory
           </Link>
@@ -87,6 +117,18 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
 
       <Field label="A little more about you" hint="Optional — shown on your profile">
         <textarea name="bio" rows={3} className={inputCls} />
+      </Field>
+
+      <Field
+        label="Photo or logo link"
+        hint="Optional — paste a link to an image (direct uploads coming soon)"
+      >
+        <input
+          name="photo_url"
+          inputMode="url"
+          placeholder="https://…"
+          className={inputCls}
+        />
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">

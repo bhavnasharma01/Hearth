@@ -25,14 +25,14 @@ export default async function HomePage() {
           </p>
           <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-cream sm:text-5xl">
             {EVENTS_ENABLED
-              ? "Find the events and practitioners our community trusts."
-              : "Find the practitioners our community trusts."}
+              ? "A warm home for our community’s events and practitioners."
+              : "A warm home for our community’s healers."}
           </h1>
           <div className="gold-rule mx-auto my-6 w-28" />
           <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
             {EVENTS_ENABLED
-              ? "A lasting, searchable home for the healers, facilitators, and conscious events we love."
-              : "A lasting, searchable home for the healers, facilitators, and conscious practitioners we love."}
+              ? "Search, discover, and connect — the practitioners and conscious events our community is building together."
+              : "Search, discover, and connect — the practitioners our community is building together."}
           </p>
           <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
             <Link

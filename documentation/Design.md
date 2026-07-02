@@ -39,7 +39,7 @@
   | `clay` | `#b4603f` | gentle error/warn |
   | `ink` / `muted` | `#2a211b` / `#6e6253` | text |
 
-  Gold is used sparingly — eyebrows, the flame mark, thin `.gold-rule` dividers, active states, "view all" links, and the member mark. A **crafted SVG flame** wordmark (`src/components/logo.tsx`) replaces the emoji — a gold-gradient flame with a brighter inner ember and a soft glow (`drop-shadow`) so it pops on the deep night header.
+  Gold is used sparingly — eyebrows, the flame mark, thin `.gold-rule` dividers, active states, "view all" links, and the member mark. A **crafted SVG flame** wordmark (`src/components/logo.tsx`) replaces the emoji — a gold-gradient flame with a brighter inner ember and a soft glow (`drop-shadow`) so it pops on the deep night header. The same flame is the **browser-tab favicon** (`src/app/icon.svg`) — gold flame on a rounded deep-"night" tile so it reads on any browser theme.
 
 - **Type:** **Fraunces** (warm display serif) for headings + **Nunito Sans** for body — loaded via `next/font`.
 
@@ -75,7 +75,8 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 ## 5. Key components
 
 - **Practitioner card** — name/practice, category tag(s), short description, area + mode, **Community-member badge**, optional photo, contact buttons (*Message on WhatsApp* via `wa.me`, Email, Website, Instagram), and a subtle right-aligned **Report** link (matching the event card, so a listing can be flagged straight from the list — not only from its profile).
-- **Practitioner profile (`/p/slug`)** — full bio, all categories, contacts, **upcoming events this person hosts** (cross-discovery payoff). A shareable, WhatsApp-droppable URL.
+- **Practitioner profile (`/p/slug`)** — a **header card** (gradient "night" banner + large rounded avatar/photo), name + `✦ member`, category chips, an **Offerings** chip row (from `keywords`), an **About** block (description + bio + area/mode/languages/pricing), a dedicated **"Get in touch"** contact card, and **upcoming events this person hosts** (cross-discovery payoff; hidden while the events pilot is off). A **Share / copy-link** button (`ShareButton`) makes the WhatsApp-droppable URL one tap to send. Designed to grow into a profile-as-mini-site.
+- **Share button (`ShareButton`)** — opens the phone's native share sheet (Web Share API) or copies the link with a calm "Link copied!" confirmation. Also shown on the "you're live" screen so a practitioner can grab their own `/p/…` link.
 - **Event card** — title, date & time, in-person/online + location, short description, cost note ("PWYC"/price), flyer, **View / Register** button.
 - **Event feed grouping** — *This week / Next week / Later* headers; an optional month-grid toggle for traditionalists.
 - **Filter chips** — tappable categories; In person / Online / Both; date range. Search bar over name/practice/description/keywords.

@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 15 (2026-07-02)
+
+*Polish pass on the practitioner pilot: Hearth-flame favicon, warmer honest copy, shareable-link buttons, and richer profiles (+ a photo field). Builds clean; lint passes.*
+
+### Added
+- **Hearth-flame favicon** — replaced the default Next.js/Vercel tab icon with `src/app/icon.svg` (the gold flame from `logo.tsx` on a deep "night" tile, so it reads on any browser theme); removed `src/app/favicon.ico`.
+- **Share / copy-link** — new `ShareButton` (`src/components/share-button.tsx`): opens the phone's native share sheet (Web Share API) or copies the link + confirms. It takes an absolute `url` built with `siteUrl()` so it shares the canonical deployed link (no `window`/effect, no hydration mismatch). Placed on the **practitioner profile** ("Share this profile") and on the **"you're live" screen** after adding a practice — which now shows the practitioner **their own `/p/…` link to copy** plus a "View your profile" button (previously there was no way to grab it).
+- **Photo/logo on the add-practitioner form** — a new optional `photo_url` field (stored only if it's an `http(s)` link; the card/profile already render it). Direct uploads are the **next build** (see below).
+- **Richer profile layout** (`/p/[slug]`) — a header card with a gradient banner + larger rounded avatar, an **Offerings** chip row from the `keywords` field (previously not shown), and a dedicated **"Get in touch"** contact card. A step toward the "profile-as-mini-site" vision.
+
+### Changed
+- **Honest, warmer copy** — dropped the "our community *trusts / vouches for*" claim (anyone can post, so it over-claimed) in the hero headline/subheading (`app/page.tsx`) and the browser-tab title/description (`app/layout.tsx`). Hero now: *"A warm home for our community's healers."*
+
+### Planned next (not yet built)
+- **Practitioner profiles as mini-websites:** real photo **uploads** (Supabase Storage bucket + RLS, replacing URL-paste), a small **gallery**, and a fuller profile redesign. Scoped for the next build.
+
+### Docs
+- `Readme.md`, `Design.md`, `Product.md`, `Changelog.md` → Build 15.
+
+---
+
 ## v0.1.0 — Build 14 (2026-07-02)
 
 *Practitioner-only pilot: email alerts to stewards, report-a-practitioner everywhere, and the Events layer hidden behind one flag. Builds clean; lint passes.*

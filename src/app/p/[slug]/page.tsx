@@ -4,7 +4,9 @@ import { notFound } from "next/navigation";
 import { getPractitionerBySlug } from "@/lib/data/practitioners";
 import { getEventsByHost } from "@/lib/data/events";
 import { EventCard } from "@/components/event-card";
+import { ShareButton } from "@/components/share-button";
 import { externalHref, formatMode, whatsappLink } from "@/lib/format";
+import { siteUrl } from "@/lib/url";
 import { EVENTS_ENABLED } from "@/lib/features";
 
 export const dynamic = "force-dynamic";
@@ -42,83 +44,116 @@ export default async function PractitionerProfile({
   const meta = [p.area, formatMode(p.mode), p.languages, p.pricing_note]
     .filter(Boolean)
     .join("  ·  ");
+  // "Offerings" chips from the free-text keywords field (comma/·-separated).
+  const offerings = (p.keywords ?? "")
+    .split(/[,·]/)
+    .map((k) => k.trim())
+    .filter(Boolean);
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
-      <Link
-        href="/practitioners"
-        className="text-sm text-muted hover:text-ink"
-      >
+      <Link href="/practitioners" className="text-sm text-muted hover:text-ink">
         ← All practitioners
       </Link>
 
-      <header className="mt-4 flex items-start gap-4">
-        {safePhoto ? (
-          <div
-            role="img"
-            aria-label={label}
-            className="h-20 w-20 shrink-0 rounded-full bg-sand bg-cover bg-center ring-1 ring-gold/40"
-            style={{ backgroundImage: `url(${JSON.stringify(safePhoto)})` }}
-          />
-        ) : (
-          <div className="flex h-20 w-20 shrink-0 items-center justify-center rounded-full bg-sand font-display text-3xl text-forest-deep ring-1 ring-gold/40">
-            {initial}
+      {/* Header card */}
+      <header className="mt-4 overflow-hidden rounded-[var(--radius-card)] border border-line bg-card">
+        <div className="h-16 bg-gradient-to-r from-night to-forest-deep sm:h-20" />
+        <div className="px-5 pb-5 sm:px-6">
+          <div className="-mt-10 flex items-end gap-4 sm:-mt-12">
+            {safePhoto ? (
+              <div
+                role="img"
+                aria-label={label}
+                className="h-24 w-24 shrink-0 rounded-2xl bg-sand bg-cover bg-center ring-4 ring-card sm:h-28 sm:w-28"
+                style={{ backgroundImage: `url(${JSON.stringify(safePhoto)})` }}
+              />
+            ) : (
+              <div className="flex h-24 w-24 shrink-0 items-center justify-center rounded-2xl bg-sand font-display text-4xl text-forest-deep ring-4 ring-card sm:h-28 sm:w-28">
+                {initial}
+              </div>
+            )}
           </div>
-        )}
-        <div className="min-w-0 flex-1">
-          <h1 className="font-display text-2xl font-semibold text-ink">
-            {p.practice_name || p.name}
-          </h1>
-          {p.practice_name && <p className="text-muted">with {p.name}</p>}
-          {p.is_member && (
-            <span className="mt-1 inline-block text-sm font-medium text-gold">
-              ✦ Community member
-            </span>
+
+          <div className="mt-3">
+            <h1 className="font-display text-2xl font-semibold text-ink sm:text-3xl">
+              {p.practice_name || p.name}
+            </h1>
+            {p.practice_name && <p className="text-muted">with {p.name}</p>}
+            {p.is_member && (
+              <span className="mt-1 inline-block text-sm font-medium text-gold">
+                ✦ Community member
+              </span>
+            )}
+          </div>
+
+          {p.categories.length > 0 && (
+            <div className="mt-3 flex flex-wrap gap-1.5">
+              {p.categories.map((c) => (
+                <span
+                  key={c.id}
+                  className="rounded-full bg-sand px-3 py-0.5 text-xs text-muted"
+                >
+                  {c.name}
+                </span>
+              ))}
+            </div>
           )}
+
+          <ShareButton
+            url={siteUrl(`/p/${p.slug}`)}
+            title={label}
+            label="Share this profile"
+            className="mt-4"
+          />
         </div>
       </header>
 
-      {p.categories.length > 0 && (
-        <div className="mt-4 flex flex-wrap gap-1.5">
-          {p.categories.map((c) => (
-            <span
-              key={c.id}
-              className="rounded-full bg-sand px-3 py-0.5 text-xs text-muted"
-            >
-              {c.name}
-            </span>
-          ))}
+      {/* About */}
+      <section className="mt-5">
+        <p className="leading-relaxed text-ink">{p.description}</p>
+        {p.bio && (
+          <p className="mt-3 whitespace-pre-line leading-relaxed text-ink/90">
+            {p.bio}
+          </p>
+        )}
+        {meta && <p className="mt-3 text-sm text-muted">{meta}</p>}
+
+        {offerings.length > 0 && (
+          <div className="mt-4">
+            <h2 className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+              Offerings
+            </h2>
+            <div className="flex flex-wrap gap-1.5">
+              {offerings.map((k) => (
+                <span
+                  key={k}
+                  className="rounded-full border border-line bg-card px-3 py-0.5 text-xs text-muted"
+                >
+                  {k}
+                </span>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+
+      {/* Get in touch */}
+      <section className="mt-5 rounded-[var(--radius-card)] border border-line bg-card p-5 sm:p-6">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+          Get in touch
+        </h2>
+        <div className="flex flex-wrap gap-2">
+          {p.whatsapp && (
+            <Contact href={whatsappLink(p.whatsapp)} label="Message on WhatsApp" primary />
+          )}
+          {p.email && <Contact href={`mailto:${p.email}`} label="Email" />}
+          {p.website && <Contact href={externalHref(p.website)} label="Website" />}
+          {p.instagram && (
+            <Contact href={externalHref(p.instagram)} label="Instagram" />
+          )}
         </div>
-      )}
-
-      <p className="mt-4 leading-relaxed text-ink">{p.description}</p>
-      {p.bio && (
-        <p className="mt-3 whitespace-pre-line leading-relaxed text-ink/90">
-          {p.bio}
-        </p>
-      )}
-      {meta && <p className="mt-3 text-sm text-muted">{meta}</p>}
-
-      {/* Contact */}
-      <div className="mt-5 flex flex-wrap gap-2">
-        {p.whatsapp && (
-          <Contact href={whatsappLink(p.whatsapp)} label="Message on WhatsApp" primary />
-        )}
-        {p.email && <Contact href={`mailto:${p.email}`} label="Email" />}
-        {p.website && <Contact href={externalHref(p.website)} label="Website" />}
-        {p.instagram && (
-          <Contact href={externalHref(p.instagram)} label="Instagram" />
-        )}
-      </div>
-
-      <div className="mt-6">
-        <Link
-          href={`/report?type=practitioner&id=${p.id}`}
-          className="text-xs text-muted underline hover:text-ink"
-        >
-          Report this listing
-        </Link>
-      </div>
+      </section>
 
       {/* Hosted events */}
       {events.length > 0 && (
@@ -134,6 +169,14 @@ export default async function PractitionerProfile({
         </section>
       )}
 
+      <div className="mt-6">
+        <Link
+          href={`/report?type=practitioner&id=${p.id}`}
+          className="text-xs text-muted underline hover:text-ink"
+        >
+          Report this listing
+        </Link>
+      </div>
     </div>
   );
 }

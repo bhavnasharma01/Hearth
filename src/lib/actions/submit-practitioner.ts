@@ -31,6 +31,10 @@ export async function submitPractitioner(
   const email = get("email") || null;
   const website = get("website") || null;
   const instagram = get("instagram") || null;
+  // Only keep a photo link if it's an http(s) URL (the card/profile render it
+  // through the same guard); anything else is dropped rather than stored as junk.
+  const rawPhoto = get("photo_url");
+  const photo_url = /^https?:\/\//.test(rawPhoto) ? rawPhoto : null;
   const pricing_note = get("pricing_note") || null;
   const languages = get("languages") || null;
   const keywords = get("keywords") || null;
@@ -105,6 +109,7 @@ export async function submitPractitioner(
       email,
       website,
       instagram,
+      photo_url,
       pricing_note,
       languages,
       keywords,
