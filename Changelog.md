@@ -4,6 +4,17 @@
 
 ---
 
+## v0.1.0 — Build 20 (2026-07-02)
+
+*Design exploration session — no runtime/app code changed.*
+
+### Design — palette exploration for the visual refresh
+- Added **`palette-explorations.html`** (repo root): a standalone, shareable page with **30 palette/design directions** across three moods (warm & grounded · unexpected · light & airy), each with a mini app mockup and hex swatches. Built for reviewer feedback (reply with numbers).
+- Copied it to **`public/palette-explorations.html`** so it's served at `/palette-explorations.html` on the next deploy (easy link for reviewers, e.g. Greg). Remove from `public/` once a direction is chosen.
+- No decision yet — `Design.md` unchanged until a direction is picked; a full token hand-off spec will follow.
+
+---
+
 ## v0.1.0 — Build 19 (2026-07-02)
 
 *Documentation audit (`/updatestructure`) — brought every doc in line with the code through Build 18. **No runtime/app code changed**; builds clean.*
