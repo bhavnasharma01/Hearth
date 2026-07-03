@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 35 (2026-07-02)
+
+*Restore the homepage's warmth (Build 34 made it feel "industrial/transactional") while keeping the in-hero search. Builds clean; lint passes.*
+
+### Changed — Home
+- **Diagnosed the coldness:** Build 34 traded away the four warmth-carriers — headline **scale** (4xl→3xl), **breathing room** (py-14/20→10/14), the **one human sentence** (cut), and **gold** (the CTA became a utility-green icon). Restored all four: full-size headline, taller hero, the warm line back above the search, and a **gold** search button.
+- **Placeholder softened:** "What are you looking for? massage, reiki, grief support…" (was the clinical "What do you need? e.g. …").
+- **Category rail moved below the directory peek** — an emoji icon strip pressed against the hero was the most marketplace-feeling element; lower down it reads as gentle "more ways in" rather than a storefront aisle.
+- Net: the hero is ceremonial again *and* the search stays one glance away — warmth first, utility held inside it. Lesson recorded in `Design.md`.
+
+### Docs
+- `Design.md`, `Readme.md`, `Changelog.md` → Build 35.
+
+---
+
 ## v0.1.0 — Build 34 (2026-07-02)
 
 *Site-wide UX sweep — every page reviewed through the Build 33 lens; the ones with real gaps redesigned. Builds clean; lint passes.*

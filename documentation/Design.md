@@ -67,7 +67,7 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 
 ## 4. Information architecture
 
-- **Home** — the hero is a **front door, not a billboard**: eyebrow + one warm headline, then a **search pill right in the hero** (submits to the directory) with quiet links below ("Browse all →", "＋ Add your practice"), then a **"Browse by need" category rail**, then the directory peek. The task is available within the first screen; no paragraph or button wall.
+- **Home** — **warmth first, utility held inside it.** The hero keeps its full ceremonial scale (big display headline, gold rule, the one warm sentence, generous breathing room) and the **search pill lives within that warmth** (gold submit, soft placeholder "What are you looking for?…"), with quiet links below ("Browse all →", "＋ Add your practice"). The **"Browse by need" category rail** sits *below* the directory peek — an icon strip pressed against the hero read commercial/marketplace, so it stays under the fold as "more ways in." Lesson learned (Build 35): the heartiness lives in **scale, breath, the human sentence, and gold** — trimming those for utility density makes the page feel transactional.
 - **Practitioners** — search + category chips + mode filter → cards → profile page (`/p/slug`).
 - **Events** — "Upcoming" feed grouped by time → cards → event detail; optional month grid.
 - **Add flows** — `Add your practice`, `Add an event` (prominent), `Report a listing` (subtle).

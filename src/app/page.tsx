@@ -21,41 +21,46 @@ export default async function HomePage() {
 
   return (
     <div className="mx-auto max-w-5xl px-4">
-      {/* Hero — deep and warm, but the search IS the front door. */}
+      {/* Hero — the warm center first; the search lives inside the warmth. */}
       <section className="pt-6">
-        <div className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-b from-night to-night-2 px-6 py-10 text-center shadow-sm sm:py-14">
+        <div className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-b from-night to-night-2 px-6 py-12 text-center shadow-sm sm:py-16">
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-gold-soft">
             Our community’s gathering place
           </p>
-          <h1 className="mx-auto mt-3 max-w-2xl font-display text-3xl font-semibold leading-tight text-cream sm:text-4xl">
+          <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-cream sm:text-5xl">
             {EVENTS_ENABLED
               ? "A warm home for our community’s events and practitioners."
               : "A warm home for our community’s healers."}
           </h1>
-          <div className="gold-rule mx-auto my-5 w-24" />
+          <div className="gold-rule mx-auto my-6 w-28" />
+          <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
+            {EVENTS_ENABLED
+              ? "Search, discover, and connect — the practitioners and conscious events our community is building together."
+              : "Search, discover, and connect — the practitioners our community is building together."}
+          </p>
 
-          {/* The task, right here: search goes straight to the directory. */}
+          {/* The task, held gently: search goes straight to the directory. */}
           <form
             action="/practitioners"
             method="get"
-            className="relative mx-auto max-w-md"
+            className="relative mx-auto mt-7 max-w-md"
           >
             <input
               type="search"
               name="q"
-              placeholder="What do you need? e.g. massage, reiki, grief support"
-              className="h-12 w-full rounded-full border border-gold/30 bg-cream/95 pl-5 pr-14 text-sm text-ink shadow-lg outline-none placeholder:text-muted focus:border-gold"
+              placeholder="What are you looking for? massage, reiki, grief support…"
+              className="h-12 w-full rounded-full border border-gold/25 bg-cream/95 pl-5 pr-14 text-sm text-ink shadow-lg outline-none placeholder:text-muted focus:border-gold"
             />
             <button
               type="submit"
               aria-label="Search practitioners"
-              className="absolute right-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-forest text-sm text-cream transition-colors hover:bg-forest-deep"
+              className="absolute right-1.5 top-1/2 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full bg-gold text-sm text-night transition-colors hover:bg-gold-soft"
             >
               🔍
             </button>
           </form>
 
-          <div className="mt-5 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
             <Link
               href="/practitioners"
               className="text-cream/75 transition-colors hover:text-cream"
@@ -79,22 +84,6 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
-
-      {/* Browse by need — instant paths into the directory. */}
-      {categories.length > 0 && (
-        <section className="mt-5">
-          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-            Browse by need
-          </p>
-          <CategoryRail
-            categories={categories}
-            current={null}
-            build={(value) =>
-              `/practitioners${buildQuery({ category: value ?? undefined })}`
-            }
-          />
-        </section>
-      )}
 
       {/* Upcoming events peek — hidden during the practitioner-only pilot. */}
       {EVENTS_ENABLED && (
@@ -123,6 +112,22 @@ export default async function HomePage() {
           <PractitionerCard key={p.id} p={p} />
         ))}
       </HomeSection>
+
+      {/* More ways in — kept below the fold so the hero stays warm, not commercial. */}
+      {categories.length > 0 && (
+        <section className="pb-2">
+          <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+            Browse by need
+          </p>
+          <CategoryRail
+            categories={categories}
+            current={null}
+            build={(value) =>
+              `/practitioners${buildQuery({ category: value ?? undefined })}`
+            }
+          />
+        </section>
+      )}
 
       <div className="h-8" />
     </div>
