@@ -22,6 +22,8 @@
 
 ## 3. Visual system (starting point — refine with Anat & Curtis)
 
+> **Visual refresh under review (Build 20).** A palette exploration with **30 directions** across three moods (warm & grounded · unexpected · light & airy), each with a mini app mockup, lives at **`public/palette-explorations.html`** (served at `/palette-explorations.html`) and is being shared with reviewers. The tokens below **remain the live system** until a direction is chosen; once picked, we update this section + `globals.css` and a full token hand-off follows.
+
 - **Direction: "rich & sacred."** Warm parchment base, deep emerald + plum **jewel tones**, **antique gold** accents, and dramatic deep **"night"** surfaces for the hero/header/footer. Elevated and ceremonial, but still light and readable on a phone. Light-only (no dark mode). Tailwind v4 `@theme` tokens in `src/app/globals.css`:
 
   | Token | Hex | Use |

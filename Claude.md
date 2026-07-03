@@ -26,6 +26,10 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **`Hearth - Database Schema.md`** + **`.mermaid`** — the full data model & ER diagram. **The authoritative schema.**
 - **`planning-archive/`** — original planning docs (North Star, Product Brief, Implementation Spec, Proposals, Anat & Curtis's message). **Preserved for provenance only**; their content is assimilated into the living docs. Don't edit them; cite them.
 
+**Other (non-`.md`):**
+- **`public/palette-explorations.html`** — a standalone, shareable page of **30 palette/design directions** with mini app mockups, served at `/palette-explorations.html` for reviewer feedback on the visual refresh. **Temporary** — remove once a direction is chosen. (A root copy `palette-explorations.html` is the source; only the `public/` copy is served.)
+- **`.env.example`** — the required-env template (now tracked; `.gitignore` has `!.env.example`). **`vercel.json`** — the daily-import Cron schedule.
+
 ---
 
 ## Core conventions & locked decisions

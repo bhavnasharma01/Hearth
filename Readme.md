@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 21
+**Version:** 0.1.0 · **Build:** 22
 *(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
@@ -50,14 +50,18 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
 ├── Changelog.md                   ← every change, newest at top, by build
 ├── Claude.md                      ← working notes / tips for the AI assistant
 ├── Bugs.md                        ← known bugs & issues spotted while building
-├── .env.example                   ← required env vars (copy to .env.local)
+├── .env.example                   ← required env vars (copy to .env.local); tracked
+├── vercel.json                    ← Vercel Cron schedule (daily event import)
 ├── package.json / next.config.ts / tsconfig.json …   ← Next.js project config
 ├── src/
-│   ├── app/                       ← App Router pages (Home, /practitioners, /events)
-│   ├── components/                ← UI (header, footer, cards, filter chips)
-│   └── lib/                       ← supabase clients, data access, types, helpers
+│   ├── app/                       ← App Router pages (Home, /practitioners, /p/[slug],
+│   │                                /feedback, /report, /admin, api routes)
+│   ├── components/                ← UI (header, footer, cards, forms, share button)
+│   └── lib/                       ← supabase clients, actions, data, auth, notify, geo…
+├── public/                        ← static assets served at the site root
+│   └── palette-explorations.html  ← shareable palette-review page (temporary)
 ├── supabase/
-│   └── migrations/                ← SQL schema, RLS policies, category seed
+│   └── migrations/                ← SQL schema, RLS, category seed (0001 → 0004)
 └── documentation/
     ├── Architecture.md            ← system & tech architecture (living)
     ├── Security.md                ← security, privacy, abuse-resistance (living)
@@ -73,7 +77,7 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
 
 ```bash
 npm install
-cp .env.example .env.local   # fill in Supabase + Google Calendar values
+cp .env.example .env.local   # fill in Supabase (+ optional admin/email vars)
 npm run dev                  # http://localhost:3000
 ```
 

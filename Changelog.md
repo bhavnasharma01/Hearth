@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 22 (2026-07-02)
+
+*Documentation audit (`/updatestructure`) — re-verified every doc against the code after Builds 20–21. **No runtime/app code changed.***
+
+### Documentation — fixed drift from the palette page (Build 20) + `NOTIFY_EMAILS` (Build 21)
+- **`Design.md`:** noted the in-progress **palette exploration** (Build 20) — 30 directions at `public/palette-explorations.html`; the current tokens stay the live system until a direction is chosen.
+- **`Readme.md`:** added `public/` (+ the palette page) and `vercel.json` to the repo-layout tree; broadened the `src/app` / `src/lib` descriptions; clarified the local-setup env comment.
+- **`Architecture.md`:** added `public/` + `vercel.json` to the structure tree; **disambiguated the "Event seed" row** — the `/public/basic.ics` shorthand meant Google's iCal feed path, not our new `public/` dir, so it now clearly reads "Google's public iCal feed."
+- **`Claude.md`:** documented the non-`.md` artifacts in the map (`public/palette-explorations.html`, the now-tracked `.env.example`, `vercel.json`).
+- Confirmed everything else is current: the `NOTIFY_EMAILS` decouple and tracked `.env.example` (Build 21) are already in the docs, no stray `.md` files to move, `planning-archive/` preserved for provenance.
+
+### Docs
+- `Design.md`, `Readme.md`, `Architecture.md`, `Claude.md`, `Changelog.md` → Build 22.
+
+---
+
 ## v0.1.0 — Build 21 (2026-07-02)
 
 *Decouple steward alert recipients from admin-panel access. Builds clean; lint passes.*

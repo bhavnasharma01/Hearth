@@ -52,7 +52,7 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
 | File storage | **Supabase Storage** | Practitioner photos, event flyers; external-URL fallback supported by the schema. |
 | Search | **Postgres full-text** (`tsvector` / `search_vector`) | Search is a DB feature, not a client hack. |
 | Hosting | **Vercel** (Cloudflare Pages alt) | Free tier. |
-| Event seed | **Public iCal feed** (`/public/basic.ics`) parsed with `node-ical` | One-time/occasional import; **no API key needed** (the calendar is public); deduped by `external_id`. |
+| Event seed | **Google's public iCal feed** (the calendar's `…/public/basic.ics` URL) parsed with `node-ical` | Daily/occasional import; **no API key needed** (the calendar is public); deduped by `external_id`. |
 | Geocoding | **OpenStreetMap Nominatim** | Free, no key; geocode-on-write only (submit/import/backfill); address cleaning + fallbacks; results cached. |
 
 ---
@@ -108,6 +108,8 @@ src/components                  # cards, chips, forms/, admin/, logo, share-butt
 src/middleware.ts               # refreshes the Supabase session on /admin
 supabase/migrations             # 0001 schema+RLS+seed · 0002 geocoding · 0003 instagram · 0004 feedback
 scripts                         # import-calendar.mjs · geocode-events.mjs
+public                          # static assets served at "/" (palette-explorations.html — temporary reviewer page)
+vercel.json                     # Vercel Cron schedule → daily /api/cron/import
 ```
 
 **Built so far (through Build 18):**
@@ -188,4 +190,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 18** (practitioner-only pilot: steward email alerts, report-a-practitioner everywhere, shareable/richer profiles, required geocoded location, Instagram-as-contact, and a private user-testing feedback board — with the Events layer built but hidden behind one flag).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 22** (practitioner-only pilot: steward email alerts with recipients decoupled from admin access, report-a-practitioner everywhere, shareable/richer profiles, required geocoded location, Instagram-as-contact, and a private user-testing feedback board — with the Events layer built but hidden behind one flag; Builds 19 & 22 were documentation audits, Build 20 added the palette-review page).
