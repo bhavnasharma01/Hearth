@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getListingByManageToken } from "@/lib/data/practitioners";
+import {
+  getListingByManageToken,
+  getPractitionerServices,
+} from "@/lib/data/practitioners";
 import { getCategories } from "@/lib/data/categories";
 import { ManageForm } from "@/components/forms/manage-form";
 
@@ -25,6 +28,9 @@ export default async function ManageListingPage({
   ]);
   if (!listing) notFound();
 
+  // Owner view — read services with the service-role client (listing may not be live).
+  const services = await getPractitionerServices(listing.id, true);
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
       <header className="mb-6">
@@ -42,7 +48,12 @@ export default async function ManageListingPage({
           View your public profile →
         </Link>
       </header>
-      <ManageForm listing={listing} categories={categories} token={token} />
+      <ManageForm
+        listing={listing}
+        categories={categories}
+        services={services}
+        token={token}
+      />
     </div>
   );
 }

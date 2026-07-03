@@ -6,7 +6,12 @@ import { updateListing } from "@/lib/actions/manage-listing";
 import { INITIAL_FORM_STATE } from "@/lib/actions/types";
 import { AddressAutocomplete } from "@/components/forms/address-autocomplete";
 import { AvatarUploader } from "@/components/forms/avatar-uploader";
-import type { Category, PractitionerWithCategories } from "@/lib/types/database";
+import { ServicesEditor } from "@/components/forms/services-editor";
+import type {
+  Category,
+  PractitionerService,
+  PractitionerWithCategories,
+} from "@/lib/types/database";
 
 const labelCls = "block text-sm font-medium text-ink";
 const inputCls =
@@ -15,10 +20,12 @@ const inputCls =
 export function ManageForm({
   listing,
   categories,
+  services,
   token,
 }: {
   listing: PractitionerWithCategories;
   categories: Category[];
+  services: PractitionerService[];
   token: string;
 }) {
   const [state, formAction, pending] = useActionState(
@@ -184,6 +191,14 @@ export function ManageForm({
       <Field label="Keywords / offerings" hint="Optional — helps people find you">
         <input name="keywords" defaultValue={listing.keywords ?? ""} className={inputCls} />
       </Field>
+
+      <div>
+        <p className={labelCls}>What I offer</p>
+        <p className="mb-2 text-xs text-muted">
+          Optional — a short menu of your services, shown on your profile.
+        </p>
+        <ServicesEditor initial={services} />
+      </div>
 
       <label className="flex items-center gap-2 text-sm">
         <input type="checkbox" name="is_member" defaultChecked={listing.is_member} />

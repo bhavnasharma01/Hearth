@@ -59,6 +59,17 @@ export interface PractitionerWithCategories extends Practitioner {
   distance_km?: number | null;
 }
 
+/** A single "what I offer" entry on a practitioner's profile. */
+export interface PractitionerService {
+  id: string;
+  practitioner_id: string;
+  title: string;
+  description: string | null;
+  price_note: string | null;
+  sort_order: number;
+  created_at: string;
+}
+
 export interface Event {
   id: string;
   host_practitioner_id: string | null;

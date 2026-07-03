@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 24
+**Version:** 0.1.0 · **Build:** 25
 *(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
@@ -86,7 +86,8 @@ calm empty states until the Supabase project is connected. Apply the schema by
 running the migrations in `supabase/migrations/` **in order** (`0001` schema +
 RLS + category seed → `0002` geocoding → `0003` Instagram-as-contact → `0004`
 feedback → `0005` manage-token + accepting-clients → `0006` avatars Storage
-bucket) against the Supabase project (SQL editor or the Supabase CLI).
+bucket → `0007` services) against the Supabase project (SQL editor or the
+Supabase CLI).
 
 Seed the community events from the public calendar (no API key needed):
 

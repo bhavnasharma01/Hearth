@@ -133,6 +133,31 @@ export async function updateListing(
     .from("practitioner_categories")
     .insert(categoryIds.map((category_id) => ({ practitioner_id: listing.id, category_id })));
 
+  // Replace the services menu (rows are parallel-named; zip by index, drop
+  // rows without a title, and renumber sort_order).
+  const titles = formData.getAll("service_title").map(String);
+  const descs = formData.getAll("service_desc").map(String);
+  const prices = formData.getAll("service_price").map(String);
+  const services = titles
+    .map((t, i) => ({
+      title: t.trim(),
+      description: (descs[i] ?? "").trim() || null,
+      price_note: (prices[i] ?? "").trim() || null,
+    }))
+    .filter((s) => s.title);
+  await supabase.from("practitioner_services").delete().eq("practitioner_id", listing.id);
+  if (services.length > 0) {
+    await supabase.from("practitioner_services").insert(
+      services.map((s, i) => ({
+        practitioner_id: listing.id,
+        title: s.title,
+        description: s.description,
+        price_note: s.price_note,
+        sort_order: i,
+      })),
+    );
+  }
+
   revalidatePath(`/p/${listing.slug}`);
   revalidatePath("/practitioners");
   revalidatePath("/");

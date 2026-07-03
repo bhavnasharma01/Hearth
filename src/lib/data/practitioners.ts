@@ -4,6 +4,7 @@ import { withDistance, type LatLng } from "@/lib/geo";
 import type {
   ListingMode,
   PractitionerWithCategories,
+  PractitionerService,
 } from "@/lib/types/database";
 
 const UUID_RE =
@@ -141,6 +142,25 @@ export async function getListingByManageToken(
 
   if (error || !data) return null;
   return flattenCategories(data);
+}
+
+/**
+ * A practitioner's services (the "what I offer" menu), ordered. Uses the anon
+ * client by default (public read = live practitioners only); pass `useAdmin` for
+ * the owner's manage page, which must see services on a not-yet-live listing.
+ */
+export async function getPractitionerServices(
+  practitionerId: string,
+  useAdmin = false,
+): Promise<PractitionerService[]> {
+  const supabase = useAdmin ? getSupabaseAdmin() : await getSupabaseServer();
+  if (!supabase) return [];
+  const { data } = await supabase
+    .from("practitioner_services")
+    .select("*")
+    .eq("practitioner_id", practitionerId)
+    .order("sort_order", { ascending: true });
+  return (data as PractitionerService[]) ?? [];
 }
 
 /** Flatten the nested join shape into a clean `categories` array. */

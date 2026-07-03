@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 25 (2026-07-02)
+
+*Profiles as mini-sites — Phase 1c: a "what I offer" services menu. **Phase 1 (mini-site core) complete.** Builds clean; lint passes.*
+
+### Added — services menu
+- **`practitioner_services`** table (migration `0007`) — `title` (req), optional `description`/`price_note`, `sort_order`. Public-read for **live** practitioners (mirrors `practitioner_categories`); writes via the service-role manage action.
+- **`ServicesEditor`** on the `/manage/<token>` page — a dynamic add/remove list (rows are parallel-named `service_title` / `service_price` / `service_desc`, zipped by index in `updateListing` and replaced on save; empty-title rows dropped).
+- **"What I offer"** section on `/p/[slug]` (title · price on a line, optional blurb). Data via `getPractitionerServices` (anon = live-only; `useAdmin` for the owner's manage view).
+- The free-text keyword chips on the profile were relabelled **"Specialties"** to distinguish them from the structured services menu.
+
+### Setup required
+- **Run `supabase/migrations/0007_practitioner_services.sql`** in Supabase before this ships. Safe to re-run.
+
+### Milestone
+- **Phase 1 (mini-site core) is complete:** editable listings (manage link) + avatar upload + services menu + "accepting clients." **Next: Phase 2 — solicited testimonials** (positive, practitioner-requested — not open reviews).
+
+### Docs
+- `Architecture.md`, `Product.md`, `Design.md`, `Hearth - Database Schema.md` + `.mermaid`, `Claude.md`, `Readme.md`, `Changelog.md` → Build 25.
+
+---
+
 ## v0.1.0 — Build 24 (2026-07-02)
 
 *Profiles as mini-sites — Phase 1b: real photo (avatar) uploads. Builds clean; lint passes.*

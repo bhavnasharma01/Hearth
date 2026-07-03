@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getPractitionerBySlug } from "@/lib/data/practitioners";
+import {
+  getPractitionerBySlug,
+  getPractitionerServices,
+} from "@/lib/data/practitioners";
 import { getEventsByHost } from "@/lib/data/events";
 import { EventCard } from "@/components/event-card";
 import { ShareButton } from "@/components/share-button";
@@ -37,6 +40,7 @@ export default async function PractitionerProfile({
 
   // Events are hidden for the practitioner-only pilot (see @/lib/features).
   const events = EVENTS_ENABLED ? await getEventsByHost(p.id) : [];
+  const services = await getPractitionerServices(p.id);
   const label = (p.practice_name || p.name).trim();
   const initial = label ? label[0].toUpperCase() : "·";
   const safePhoto =
@@ -122,7 +126,7 @@ export default async function PractitionerProfile({
         {offerings.length > 0 && (
           <div className="mt-4">
             <h2 className="mb-2 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-              Offerings
+              Specialties
             </h2>
             <div className="flex flex-wrap gap-1.5">
               {offerings.map((k) => (
@@ -137,6 +141,30 @@ export default async function PractitionerProfile({
           </div>
         )}
       </section>
+
+      {/* What I offer (services menu) */}
+      {services.length > 0 && (
+        <section className="mt-5 rounded-[var(--radius-card)] border border-line bg-card p-5 sm:p-6">
+          <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+            What I offer
+          </h2>
+          <ul className="divide-y divide-line">
+            {services.map((s) => (
+              <li key={s.id} className="py-2.5 first:pt-0 last:pb-0">
+                <div className="flex items-baseline justify-between gap-3">
+                  <span className="font-medium text-ink">{s.title}</span>
+                  {s.price_note && (
+                    <span className="shrink-0 text-sm text-forest">{s.price_note}</span>
+                  )}
+                </div>
+                {s.description && (
+                  <p className="mt-0.5 text-sm text-muted">{s.description}</p>
+                )}
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       {/* Get in touch */}
       <section className="mt-5 rounded-[var(--radius-card)] border border-line bg-card p-5 sm:p-6">

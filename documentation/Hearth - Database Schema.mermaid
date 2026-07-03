@@ -5,6 +5,7 @@ erDiagram
     USERS ||--o{ REGISTRATIONS : "registers"
     PRACTITIONERS ||--o{ PRACTITIONER_CATEGORIES : "tagged with"
     CATEGORIES ||--o{ PRACTITIONER_CATEGORIES : "applies to"
+    PRACTITIONERS ||--o{ PRACTITIONER_SERVICES : "offers"
     PRACTITIONERS ||--o{ EVENTS : "hosts"
     PRACTITIONERS ||--o{ REPORTS : "is flagged in"
     EVENTS ||--o{ REPORTS : "is flagged in"
@@ -66,6 +67,16 @@ erDiagram
     PRACTITIONER_CATEGORIES {
         uuid practitioner_id PK_FK
         uuid category_id PK_FK
+    }
+
+    PRACTITIONER_SERVICES {
+        uuid id PK
+        uuid practitioner_id FK
+        text title
+        text description
+        text price_note
+        int sort_order
+        timestamptz created_at
     }
 
     EVENTS {
