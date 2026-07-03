@@ -1,6 +1,19 @@
 import "server-only";
 import nodemailer from "nodemailer";
-import { adminEmails } from "@/lib/auth";
+import { adminEmails, parseEmails } from "@/lib/auth";
+
+/**
+ * Who receives steward alerts. Decoupled from admin-panel access: set
+ * `NOTIFY_EMAILS` to control the alert recipients independently of who can log
+ * in (`ADMIN_EMAILS`) — useful when several people can moderate but only some
+ * should be emailed (and, on Resend's onboarding sender, so the recipient list
+ * stays the single Resend-account inbox even as more admins are added). Falls
+ * back to `ADMIN_EMAILS` when `NOTIFY_EMAILS` is unset, preserving prior behavior.
+ */
+function notifyEmails(): string[] {
+  const explicit = parseEmails(process.env.NOTIFY_EMAILS);
+  return explicit.length > 0 ? explicit : adminEmails();
+}
 
 /**
  * Admin email notifications (server-only).
@@ -44,9 +57,11 @@ export async function notifyAdmins({
   subject,
   body,
 }: AdminNotification): Promise<{ sent: boolean; reason?: string }> {
-  const to = adminEmails();
+  const to = notifyEmails();
   if (to.length === 0) {
-    console.warn(`notifyAdmins: no ADMIN_EMAILS set — skipped "${subject}"`);
+    console.warn(
+      `notifyAdmins: no NOTIFY_EMAILS/ADMIN_EMAILS set — skipped "${subject}"`,
+    );
     return { sent: false, reason: "no-recipients" };
   }
 

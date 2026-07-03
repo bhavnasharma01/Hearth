@@ -4,6 +4,25 @@
 
 ---
 
+## v0.1.0 — Build 21 (2026-07-02)
+
+*Decouple steward alert recipients from admin-panel access. Builds clean; lint passes.*
+
+### Changed
+- **New `NOTIFY_EMAILS` — who gets alerted, separate from who can log in.** `notifyAdmins` now emails **`NOTIFY_EMAILS`** (comma-separated) if set, otherwise falls back to `ADMIN_EMAILS` (`notifyEmails()` in `src/lib/notify.ts`; shared `parseEmails()` extracted in `src/lib/auth.ts`). This lets several people have admin-panel access (`ADMIN_EMAILS`) without all of them receiving alert emails — and, on Resend's onboarding sender, keeps the recipient list to a single Resend-account inbox so adding more admins doesn't break email delivery.
+- **No behaviour change when `NOTIFY_EMAILS` is unset** — alerts still go to `ADMIN_EMAILS`, exactly as before.
+
+### Setup (optional but recommended before onboarding more admins)
+- Set `NOTIFY_EMAILS` in Vercel to the address(es) that should receive alerts (for now, your Resend-account inbox). `ADMIN_EMAILS` stays the login allowlist. Then a second steward can log in without breaking alerts.
+
+### Fixed (repo hygiene)
+- **`.env.example` is now actually committed.** The `.gitignore` pattern `.env*` was over-broad and had been silently ignoring the `.env.example` template too — so env-var docs added in earlier builds never reached the repo. Added `!.env.example` so the (secret-free, placeholder-only) template is tracked; this commit brings it in, up to date through `NOTIFY_EMAILS`.
+
+### Docs
+- `Security.md`, `Architecture.md`, `Claude.md`, `.env.example` (now tracked), `Readme.md`, `Changelog.md` → Build 21.
+
+---
+
 ## v0.1.0 — Build 20 (2026-07-02)
 
 *Design exploration session — no runtime/app code changed.*

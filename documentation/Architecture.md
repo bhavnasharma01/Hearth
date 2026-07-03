@@ -128,6 +128,8 @@ scripts                         # import-calendar.mjs · geocode-events.mjs
 - *Instagram as a contact (Build 17):* Instagram now satisfies the at-least-one-contact rule — app validation **and** the DB constraint (migration `0003_instagram_contact.sql`).
 - *Feedback board (Build 18):* private user-testing feedback — unlisted `/feedback` form (gated by `FEEDBACK_ENABLED`) → `submitFeedback` (service-role) → `feedback` table (migration `0004`, RLS admin-only) → a **status-column board** at `/admin/feedback` (move status, set priority, add notes) + a "new feedback" count on the dashboard.
 
+- *Alert recipients decoupled (Build 21):* steward alert emails now target **`NOTIFY_EMAILS`** (fallback `ADMIN_EMAILS`) via `notifyEmails()` — so several people can have admin-panel access while only a chosen list is emailed (and the Resend onboarding-sender recipient stays a single inbox as admins are added). Shared `parseEmails()` in `src/lib/auth.ts`.
+
 **Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 
 ---
@@ -138,7 +140,7 @@ scripts                         # import-calendar.mjs · geocode-events.mjs
 - **Public submit** — Server Action validates → runs the **content check** → inserts with `status = live` (clean) or `status = pending` (suspicious) → on a hold, **emails the stewards** (`src/lib/notify.ts`, to `ADMIN_EMAILS`). No account required.
 - **Report** — Server Action inserts a `reports` row keyed by `reporter_contact`; the dedup routine recounts **distinct** reporters; crossing **3** **emails the stewards** once (same `notify.ts` path). Flags never auto-hide.
 - **Feedback (testing)** — the unlisted `/feedback` page (gated by `FEEDBACK_ENABLED`) posts to a service-role action (`submitFeedback`) that inserts a `feedback` row (`status = 'new'`); stewards triage it on the `/admin/feedback` status board. Not public, no content-check (never published).
-- **Admin notifications** — `src/lib/notify.ts` (`notifyAdmins`, `server-only`) is the single email path, targeting `ADMIN_EMAILS`. It sends via **Resend** (`RESEND_API_KEY`) or **Gmail SMTP** (`GMAIL_USER`/`GMAIL_APP_PASSWORD`) — preferring Resend when both are set — otherwise logs to the server console, and never throws (a failed alert can't break a public write).
+- **Admin notifications** — `src/lib/notify.ts` (`notifyAdmins`, `server-only`) is the single email path, targeting **`NOTIFY_EMAILS`** (fallback `ADMIN_EMAILS`) — recipients decoupled from admin-panel access. It sends via **Resend** (`RESEND_API_KEY`) or **Gmail SMTP** (`GMAIL_USER`/`GMAIL_APP_PASSWORD`) — preferring Resend when both are set — otherwise logs to the server console, and never throws (a failed alert can't break a public write).
 - **Admin** — authenticated Server Actions do full CRUD, toggle `featured`, manage `categories`, and trigger the **Google Calendar seed import**.
 - **Seed import** — a script calls `events.list` on the public community calendar (from 2026-01-01), maps each event into `events` with `source = google_calendar` and `external_id`, skipping any already-imported id.
 

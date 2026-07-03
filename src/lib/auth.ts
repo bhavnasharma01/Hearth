@@ -2,12 +2,17 @@ import "server-only";
 import type { User } from "@supabase/supabase-js";
 import { getSupabaseServer } from "@/lib/supabase/server";
 
-/** Allowlisted admin emails (comma-separated env var). */
-export function adminEmails(): string[] {
-  return (process.env.ADMIN_EMAILS || "")
+/** Parse a comma-separated email env var into a normalized (lowercased) list. */
+export function parseEmails(raw: string | undefined): string[] {
+  return (raw || "")
     .split(",")
     .map((s) => s.trim().toLowerCase())
     .filter(Boolean);
+}
+
+/** Allowlisted admin emails — who may access the admin panel (`ADMIN_EMAILS`). */
+export function adminEmails(): string[] {
+  return parseEmails(process.env.ADMIN_EMAILS);
 }
 
 /**
