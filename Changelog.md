@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 33 (2026-07-02)
+
+*Directory redesign — task-first, patterned on the best consumer search apps. Builds clean; lint passes.*
+
+### Changed — `/practitioners`, viewed through a designer's lens
+- **Task-first header:** the page now opens with **"Find a practitioner"** (what you're here to *do*), one slim line. The subtitle is gone — the search placeholder ("What do you need? e.g. massage, reiki, grief support") carries that meaning. The big green "Add your practice" button is **demoted to a quiet "＋ Add yours" outline pill** so it stops competing with search.
+- **Command bar:** one search pill (44px, soft shadow, 🔍 as the round submit inside it) + a round **📍 icon button** (new `compact` variant of `LocationControl`). Two controls, one row.
+- **Category rail** (new `src/components/category-rail.tsx`): Airbnb-style **icon + short label** items on one scrolling line (💆 Massage · 🧘 Somatic · ✨ Energy…), active = forest underline. Replaces the row of identical long text pills. Slug→icon/label map for the 11 seeded categories with a safe fallback (`✻` + first words) for admin-added ones. Still pure links — filtering stays URL-driven, zero client JS.
+- **Recruitment banner** after the list — a night-gradient "Are you a practitioner?" section with a gold *Add your practice* CTA: the invitation lands **after** a visitor has seen the community, using previously dead end-of-page real estate.
+- **Smarter empty states:** filtering → "Clear search & filters"; truly empty → "Be the first — add your practice." Results line notes "· nearest first" when 📍 is active.
+- Card polish: avatar 44→48px with the contact row re-aligned.
+- **On shadcn/ui (considered, deliberately not adopted here):** the directory's filtering is intentionally server-rendered link navigation — fast on cheap phones, no hydration; shadcn/Radix would add a client dependency layer this page doesn't need, and Hearth has its own token system. Its *patterns* (icon rail, command bar, disclosure filters, recovery empty-states) are applied with zero new dependencies. Revisit shadcn for genuinely interactive surfaces (filter bottom-sheets, admin dialogs) if wanted.
+
+### Docs
+- `Design.md`, `Claude.md`, `Readme.md`, `Changelog.md` → Build 33.
+
+---
+
 ## v0.1.0 — Build 32 (2026-07-02)
 
 *Simplify the directory search row (Build 31 follow-up) — fewer controls, clearer. Builds clean; lint passes.*

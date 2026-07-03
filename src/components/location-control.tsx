@@ -13,7 +13,14 @@ const RADII = [5, 10, 25, 50];
  * "📍 Near me" pill (with a reveal-on-demand "type a place" fallback); active it's
  * a slim pill with an inline radius dropdown + clear.
  */
-export function LocationControl({ basePath }: { basePath: string }) {
+export function LocationControl({
+  basePath,
+  compact = false,
+}: {
+  basePath: string;
+  /** Icon-only inactive state (a round 📍 button) — for slotting into a search row. */
+  compact?: boolean;
+}) {
   const router = useRouter();
   const params = useSearchParams();
   const active = Boolean(params.get("lat") && params.get("lng"));
@@ -125,14 +132,29 @@ export function LocationControl({ basePath }: { basePath: string }) {
 
   return (
     <div className="shrink-0">
-      <button
-        type="button"
-        onClick={useMyLocation}
-        disabled={busy}
-        className="rounded-full border border-forest/30 bg-card px-4 py-2.5 text-sm font-medium text-forest transition-colors hover:bg-sand disabled:opacity-60"
-      >
-        📍 {busy ? "Locating…" : "Near me"}
-      </button>
+      {compact ? (
+        <button
+          type="button"
+          onClick={useMyLocation}
+          disabled={busy}
+          aria-label="Show practitioners near me"
+          title="Near me"
+          className={`flex h-11 w-11 items-center justify-center rounded-full border border-forest/30 bg-card text-base transition-colors hover:bg-sand disabled:opacity-60 ${
+            busy ? "animate-pulse" : ""
+          }`}
+        >
+          📍
+        </button>
+      ) : (
+        <button
+          type="button"
+          onClick={useMyLocation}
+          disabled={busy}
+          className="rounded-full border border-forest/30 bg-card px-4 py-2.5 text-sm font-medium text-forest transition-colors hover:bg-sand disabled:opacity-60"
+        >
+          📍 {busy ? "Locating…" : "Near me"}
+        </button>
+      )}
       {showManual && (
         <form onSubmit={submitManual} className="mt-2 flex gap-2">
           <input

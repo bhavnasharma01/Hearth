@@ -50,7 +50,7 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
         </div>
       </div>
 
-      <div className="mt-2.5 flex flex-wrap items-center gap-2 pl-[3.25rem]">
+      <div className="mt-2.5 flex flex-wrap items-center gap-2 pl-[3.75rem]">
         {p.whatsapp && (
           <Contact href={whatsappLink(p.whatsapp)} label="Message" primary />
         )}
@@ -81,13 +81,13 @@ function Avatar({ p }: { p: PractitionerWithCategories }) {
       <div
         role="img"
         aria-label={label}
-        className="h-11 w-11 shrink-0 rounded-full bg-sand bg-cover bg-center ring-1 ring-gold/30"
+        className="h-12 w-12 shrink-0 rounded-full bg-sand bg-cover bg-center ring-1 ring-gold/30"
         style={{ backgroundImage: `url(${JSON.stringify(safePhoto)})` }}
       />
     );
   }
   return (
-    <div className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-sand font-display text-lg text-forest-deep ring-1 ring-gold/30">
+    <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-sand font-display text-lg text-forest-deep ring-1 ring-gold/30">
       {initial}
     </div>
   );
