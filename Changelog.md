@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 28 (2026-07-02)
+
+*UX refinement: the identity header now pairs the photo with just the name (vertically centered), balanced instead of clunky. Builds clean; lint passes.*
+
+### Changed
+- The Build 27 header stacked **name + practice** beside a top-aligned avatar, which looked off-balance. Now the **avatar is vertically centered next to the single Name field** (a clean "photo + name" row) and **Practice name moves to its own full-width field** below — reads tidier on both the add and manage forms.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 28.
+
+---
+
 ## v0.1.0 — Build 27 (2026-07-02)
 
 *UX: the photo now sits at the top of the add/manage forms, next to the name (an identity header), instead of buried mid-form. Builds clean; lint passes.*
