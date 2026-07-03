@@ -35,8 +35,8 @@ export default async function HomePage() {
           <div className="gold-rule mx-auto my-6 w-28" />
           <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
             {EVENTS_ENABLED
-              ? "Bodywork, breathwork, ceremony, counselling — and the gatherings where we meet."
-              : "Bodywork, breathwork, ceremony, counselling — find the right person for what you need."}
+              ? "Bodywork, breathwork, ceremony, counselling, and the gatherings where we meet."
+              : "Bodywork, breathwork, ceremony, counselling. Find the right person for what you need."}
           </p>
 
           {/* The task, held gently: search goes straight to the directory. */}
@@ -91,7 +91,7 @@ export default async function HomePage() {
           title="Coming up"
           href="/events"
           linkLabel="All events"
-          empty="No upcoming events to show yet — they’ll appear here as they’re added."
+          empty="No upcoming events to show yet. They’ll appear here as they’re added."
           isEmpty={events.length === 0}
         >
           {events.map((event) => (
@@ -121,7 +121,7 @@ export default async function HomePage() {
         title="From the directory"
         href="/practitioners"
         linkLabel="All practitioners"
-        empty="No practitioners are listed yet — the directory will fill in as people add themselves."
+        empty="No practitioners are listed yet. The directory will fill in as people add themselves."
         isEmpty={practitioners.length === 0}
       >
         {practitioners.map((p) => (

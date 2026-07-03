@@ -16,7 +16,7 @@ export default async function ReportsPage() {
       <h1 className="font-display text-2xl font-semibold text-ink">Reports</h1>
       <p className="mt-1 mb-5 text-sm text-muted">
         Open reports, grouped by listing and sorted by distinct reporters. Flags
-        never hide anything automatically — you decide.
+        never hide anything automatically. You decide.
       </p>
 
       {groups.length === 0 ? (

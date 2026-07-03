@@ -69,7 +69,7 @@ export async function submitPractitioner(
     return {
       status: "error",
       message:
-        "The directory isn’t connected to its database yet — please try again shortly.",
+        "The directory isn’t connected to its database yet. Please try again shortly.",
     };
   }
 
@@ -185,6 +185,6 @@ export async function submitPractitioner(
     pendingReview: true,
     manageToken,
     message:
-      "Thank you — your listing was received and will appear right after a quick review.",
+      "Thank you. your listing was received and will appear right after a quick review.",
   };
 }

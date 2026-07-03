@@ -63,7 +63,7 @@ export async function submitEvent(
   if (!supabase) {
     return {
       status: "error",
-      message: "Events aren’t connected to the database yet — please try again shortly.",
+      message: "Events aren’t connected to the database yet. Please try again shortly.",
     };
   }
 
@@ -121,6 +121,6 @@ export async function submitEvent(
         status: "success",
         pendingReview: true,
         message:
-          "Thank you — your event was received and will appear right after a quick review.",
+          "Thank you. your event was received and will appear right after a quick review.",
       };
 }

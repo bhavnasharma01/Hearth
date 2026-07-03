@@ -60,7 +60,7 @@ export function ReportForm({
       <p className="text-sm text-muted">
         Reporting{" "}
         <span className="font-medium text-ink">{targetLabel ?? "this listing"}</span>
-        . Reports are private and never shown publicly — they simply send a quiet
+        . Reports are private and never shown publicly. They simply send a quiet
         heads-up to a steward.
       </p>
 
@@ -70,7 +70,7 @@ export function ReportForm({
         </label>
         <select name="reason" required className={inputCls} defaultValue="">
           <option value="" disabled>
-            — choose a reason —
+            Choose a reason…
           </option>
           {REASONS.map((r) => (
             <option key={r.value} value={r.value}>
@@ -86,7 +86,7 @@ export function ReportForm({
         </label>
         <input name="reporter_contact" required className={inputCls} />
         <p className="mt-1 text-xs text-muted">
-          Used only to count distinct reports — never shown, never contacted for marketing.
+          Used only to count distinct reports. Never shown, never contacted for marketing.
         </p>
       </div>
 

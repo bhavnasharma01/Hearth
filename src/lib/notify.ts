@@ -60,7 +60,7 @@ export async function notifyAdmins({
   const to = notifyEmails();
   if (to.length === 0) {
     console.warn(
-      `notifyAdmins: no NOTIFY_EMAILS/ADMIN_EMAILS set — skipped "${subject}"`,
+      `notifyAdmins: no NOTIFY_EMAILS/ADMIN_EMAILS set; skipped "${subject}"`,
     );
     return { sent: false, reason: "no-recipients" };
   }
@@ -96,7 +96,7 @@ async function sendViaResend(
     });
     if (!res.ok) {
       const detail = await res.text().catch(() => "");
-      console.error(`notifyAdmins: Resend responded ${res.status} — ${detail}`);
+      console.error(`notifyAdmins: Resend responded ${res.status}: ${detail}`);
       return { sent: false, reason: `http-${res.status}` };
     }
     return { sent: true };

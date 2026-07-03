@@ -35,7 +35,7 @@ export function AvatarUploader({
       if ("error" in res) setError(res.error);
       else setUrl(res.url);
     } catch {
-      setError("Couldn’t process that image — please try a different one.");
+      setError("Couldn’t process that image. Please try a different one.");
     } finally {
       setBusy(false);
     }

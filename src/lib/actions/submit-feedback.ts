@@ -36,7 +36,7 @@ export async function submitFeedback(
   if (!supabase) {
     return {
       status: "error",
-      message: "Couldn’t reach the server — please try again shortly.",
+      message: "Couldn’t reach the server. Please try again shortly.",
     };
   }
 
@@ -50,13 +50,13 @@ export async function submitFeedback(
   });
   if (error) {
     console.error("submitFeedback:", error.message);
-    return { status: "error", message: "Something went wrong — please try again." };
+    return { status: "error", message: "Something went wrong. Please try again." };
   }
 
   revalidatePath("/admin/feedback");
 
   return {
     status: "success",
-    message: "Thank you — your feedback went straight to the team. 🌿",
+    message: "Thank you. your feedback went straight to the team. 🌿",
   };
 }

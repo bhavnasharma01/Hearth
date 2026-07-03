@@ -34,7 +34,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         {live && (
           <div className="mx-auto mt-6 max-w-sm">
             <p className="mb-2 text-sm font-medium text-ink">
-              Your profile is live — share it anywhere 🌿
+              Your profile is live. Share it anywhere 🌿
             </p>
             <ShareButton
               url={siteUrl(`/p/${state.slug}`)}
@@ -51,7 +51,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
               ✎ Your private edit link
             </p>
             <p className="mb-2 text-xs text-muted">
-              Bookmark this — it’s how you update your listing later (no account
+              Bookmark this. It’s how you update your listing later (no account
               needed). Keep it to yourself.
             </p>
             <ShareButton
@@ -102,7 +102,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         <input name="name" required className={inputCls} />
       </Field>
 
-      <Field label="Practice or business name" hint="Optional — defaults to your name">
+      <Field label="Practice or business name" hint="Optional: defaults to your name">
         <input name="practice_name" className={inputCls} />
       </Field>
 
@@ -129,7 +129,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
       <Field
         label="Short description of what you offer"
         required
-        hint="~300 characters — this shows on your card"
+        hint="~300 characters, shown on your card"
       >
         <textarea
           name="description"
@@ -140,7 +140,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         />
       </Field>
 
-      <Field label="A little more about you" hint="Optional — shown on your profile">
+      <Field label="A little more about you" hint="Optional: shown on your profile">
         <textarea name="bio" rows={3} className={inputCls} />
       </Field>
 
@@ -149,7 +149,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
       <Field
         label="Your area"
         required
-        hint="A neighbourhood or city — this is how people find you in “near me.” Pick a suggestion so it pins reliably. Use your general area, not your home address."
+        hint="A neighbourhood or city. This is how people find you in “near me.” Pick a suggestion so it pins reliably. Use your general area, not your home address."
       >
         <AddressAutocomplete
           name="area"
@@ -215,7 +215,7 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
 
       <Field
         label="Keywords / offerings"
-        hint="Optional — helps people find you (e.g. Thai massage, prenatal, lymphatic)"
+        hint="Optional: helps people find you (e.g. Thai massage, prenatal, lymphatic)"
       >
         <input name="keywords" className={inputCls} />
       </Field>

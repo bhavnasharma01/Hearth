@@ -74,7 +74,7 @@ export async function updateListing(
 
   const supabase = getSupabaseAdmin();
   if (!supabase) {
-    return { status: "error", message: "Couldn’t reach the server — please try again shortly." };
+    return { status: "error", message: "Couldn’t reach the server. Please try again shortly." };
   }
 
   const { data: cats } = await supabase
@@ -179,7 +179,7 @@ export async function updateListing(
       status: "success",
       pendingReview: true,
       slug: listing.slug,
-      message: "Saved — but your changes need a quick review before they show publicly.",
+      message: "Saved, but your changes need a quick review before they show publicly.",
     };
   }
 
@@ -187,6 +187,6 @@ export async function updateListing(
     status: "success",
     pendingReview: status !== "live",
     slug: listing.slug,
-    message: "Saved — your listing has been updated. 🌿",
+    message: "Saved. Your listing has been updated. 🌿",
   };
 }

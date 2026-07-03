@@ -5,7 +5,7 @@ import { LoginForm } from "@/components/admin/login-form";
 
 export const dynamic = "force-dynamic";
 
-export const metadata: Metadata = { title: "Admin sign in — Hearth" };
+export const metadata: Metadata = { title: "Admin sign in · Hearth" };
 
 export default async function AdminLoginPage() {
   const user = await getAdminUser();

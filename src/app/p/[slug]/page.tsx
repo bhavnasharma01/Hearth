@@ -21,10 +21,10 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { slug } = await params;
   const p = await getPractitionerBySlug(slug);
-  if (!p) return { title: "Not found — Hearth" };
+  if (!p) return { title: "Not found · Hearth" };
   const name = p.practice_name || p.name;
   return {
-    title: `${name} — Hearth`,
+    title: `${name} · Hearth`,
     description: p.description,
   };
 }

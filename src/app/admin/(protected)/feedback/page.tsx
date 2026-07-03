@@ -53,13 +53,12 @@ export default async function FeedbackPage() {
       <h1 className="font-display text-2xl font-semibold text-ink">Feedback</h1>
       <p className="mt-1 mb-5 text-sm text-muted">
         From the private <code className="text-forest">/feedback</code> testing
-        link. Move a card through the columns, set a priority, and jot a note —
-        this is our prioritization board.
+        link. Move a card through the columns, set a priority, and jot a note. This is our prioritization board.
       </p>
 
       {feedback.length === 0 ? (
         <p className="rounded-[var(--radius-card)] border border-dashed border-line bg-card/60 p-6 text-sm text-muted">
-          No feedback yet — share the <code>/feedback</code> link with your
+          No feedback yet. Share the <code>/feedback</code> link with your
           testers and it’ll land here. 🌿
         </p>
       ) : (
@@ -80,7 +79,7 @@ export default async function FeedbackPage() {
                   ))}
                   {items.length === 0 && (
                     <p className="rounded-xl border border-dashed border-line/70 p-3 text-center text-xs text-muted/70">
-                      —
+                      ·
                     </p>
                   )}
                 </div>
@@ -113,7 +112,7 @@ function Card({ f }: { f: Feedback }) {
       )}
       {(f.submitter_name || f.submitter_contact) && (
         <p className="mt-1 text-xs text-muted">
-          — {f.submitter_name || "anon"}
+          From {f.submitter_name || "anon"}
           {f.submitter_contact ? ` · ${f.submitter_contact}` : ""}
         </p>
       )}

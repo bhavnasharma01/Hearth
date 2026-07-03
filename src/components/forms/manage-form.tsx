@@ -111,7 +111,7 @@ export function ManageForm({
         </div>
       </fieldset>
 
-      <Field label="Short description" required hint="~300 characters — shows on your card">
+      <Field label="Short description" required hint="~300 characters, shown on your card">
         <textarea
           name="description"
           required
@@ -122,7 +122,7 @@ export function ManageForm({
         />
       </Field>
 
-      <Field label="A little more about you" hint="Optional — shown on your profile">
+      <Field label="A little more about you" hint="Optional: shown on your profile">
         <textarea name="bio" rows={3} defaultValue={listing.bio ?? ""} className={inputCls} />
       </Field>
 
@@ -131,7 +131,7 @@ export function ManageForm({
       <Field
         label="Your area"
         required
-        hint="Neighbourhood or city — how people find you in “near me.” Not your home address."
+        hint="Neighbourhood or city. How people find you in “near me.” Not your home address."
       >
         <AddressAutocomplete
           name="area"
@@ -196,7 +196,7 @@ export function ManageForm({
         </Field>
       </div>
 
-      <Field label="Keywords / offerings" hint="Optional — helps people find you">
+      <Field label="Keywords / offerings" hint="Optional: helps people find you">
         <input name="keywords" defaultValue={listing.keywords ?? ""} className={inputCls} />
       </Field>
 
@@ -204,7 +204,7 @@ export function ManageForm({
 
       <div>
         <p className="mb-2 text-xs text-muted">
-          Optional — a short menu of your services, shown on your profile.
+          Optional: a short menu of your services, shown on your profile.
         </p>
         <ServicesEditor initial={services} />
       </div>

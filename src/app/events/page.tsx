@@ -74,7 +74,7 @@ export default async function EventsPage({
             Upcoming events
           </h1>
           <p className="mt-1 text-sm text-muted">
-            Conscious gatherings — easy to scan on your phone.
+            Conscious gatherings, easy to scan on your phone.
           </p>
         </div>
         <Link
@@ -144,7 +144,7 @@ export default async function EventsPage({
       {near ? (
         events.length === 0 ? (
           <EmptyFeed>
-            No upcoming events within {radiusKm} km — try a wider radius above.
+            No upcoming events within {radiusKm} km. Try a wider radius above.
           </EmptyFeed>
         ) : (
           <div className="divide-y divide-line overflow-hidden rounded-[var(--radius-card)] border border-line bg-card">
@@ -157,7 +157,7 @@ export default async function EventsPage({
         <EmptyFeed>
           {q || category || mode
             ? "No upcoming events match these filters."
-            : "No upcoming events yet — check back soon, or add one."}
+            : "No upcoming events yet. Check back soon, or add one."}
         </EmptyFeed>
       ) : (
         <div className="space-y-6">

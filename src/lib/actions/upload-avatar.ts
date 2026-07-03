@@ -43,7 +43,7 @@ export async function uploadAvatar(
     console.error("uploadAvatar:", error.message);
     return {
       error:
-        "Upload failed — is the “avatars” storage bucket set up? Please try again.",
+        "Upload failed. Is the “avatars” storage bucket set up? Please try again.",
     };
   }
 

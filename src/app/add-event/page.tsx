@@ -8,7 +8,7 @@ import { EVENTS_ENABLED } from "@/lib/features";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Add an event — Hearth",
+  title: "Add an event · Hearth",
   description: "Share a conscious event with the community. No account needed.",
 };
 
@@ -28,7 +28,7 @@ export default async function AddEventPage() {
           Add an event
         </h1>
         <p className="mt-1 text-muted">
-          Whether you’re hosting or attending — share it so more of us step into
+          Whether you’re hosting or attending, share it so more of us step into
           spaces of healing, growth, and connection.
         </p>
       </header>

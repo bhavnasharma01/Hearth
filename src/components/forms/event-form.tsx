@@ -58,7 +58,7 @@ export function EventForm({
 
       <Field label="Type of event" hint="Optional">
         <select name="category" className={inputCls} defaultValue="">
-          <option value="">— choose a category —</option>
+          <option value="">Choose a category…</option>
           {categories.map((c) => (
             <option key={c.id} value={c.slug}>
               {c.name}
@@ -110,7 +110,7 @@ export function EventForm({
       </Field>
 
       <div className="grid gap-5 sm:grid-cols-2">
-        <Field label="Registration / ticket link" hint="Optional — Luma, Eventbrite, etc.">
+        <Field label="Registration / ticket link" hint="Optional: Luma, Eventbrite, etc.">
           <input name="registration_link" className={inputCls} />
         </Field>
         <Field label="Cost" hint="e.g. Free, PWYC, $20">
@@ -121,10 +121,10 @@ export function EventForm({
       {hosts.length > 0 && (
         <Field
           label="Are you a Hearth practitioner?"
-          hint="Optional — link this event to your directory listing"
+          hint="Optional: link this event to your directory listing"
         >
           <select name="host_practitioner_id" className={inputCls} defaultValue="">
-            <option value="">— not listed / skip —</option>
+            <option value="">Not listed / skip</option>
             {hosts.map((h) => (
               <option key={h.id} value={h.id}>
                 {h.label}
@@ -148,7 +148,7 @@ export function EventForm({
         </Field>
       </div>
 
-      <Field label="Description" hint="Optional — what to expect">
+      <Field label="Description" hint="Optional: what to expect">
         <textarea name="description" rows={3} maxLength={1000} className={inputCls} />
       </Field>
 

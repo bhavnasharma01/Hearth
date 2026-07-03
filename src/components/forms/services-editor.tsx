@@ -40,7 +40,7 @@ export function ServicesEditor({ initial }: { initial: PractitionerService[] }) 
     <div className="space-y-3">
       {rows.length === 0 && (
         <p className="text-xs text-muted">
-          No services yet — add offerings like “60-min deep-tissue massage” with an
+          No services yet. Add offerings like “60-min deep-tissue massage” with an
           optional price.
         </p>
       )}
@@ -67,7 +67,7 @@ export function ServicesEditor({ initial }: { initial: PractitionerService[] }) 
             name="service_desc"
             value={row.description}
             onChange={(e) => set(row.key, "description", e.target.value)}
-            placeholder="Optional — a short line about it"
+            placeholder="Optional: a short line about it"
             className={`${inputCls} mt-2 w-full`}
           />
           <button

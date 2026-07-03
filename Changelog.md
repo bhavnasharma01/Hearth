@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 38 (2026-07-02)
+
+*Removed every em dash from user-visible copy (69 of them), per Bhavna's editorial rule. Builds clean; lint passes.*
+
+### Changed
+- Swept all UI strings, form hints, placeholders, empty states, error messages, success messages, page titles, and steward-email bodies for em dashes and replaced each with sentence-appropriate punctuation: periods for two-thought sentences, commas or colons for asides, "·" for title joins ("Add your practice · Hearth"), and "Choose a category…" style placeholders in selects.
+- Examples: "Thank you — your listing was received…" → "Thank you. Your listing was received…"; "Optional — shown on your profile" → "Optional: shown on your profile"; "No practitioners are listed yet — the directory fills in…" → two sentences.
+- Scope note: **code comments and the internal `.md` docs still contain em dashes** (invisible to users); happy to sweep those too on request.
+- Rule recorded in `Design.md` (tone of copy): no em dashes in UI copy.
+
+### Docs
+- `Design.md`, `Readme.md`, `Changelog.md` → Build 38.
+
+---
+
 ## v0.1.0 — Build 37 (2026-07-02)
 
 *Copy audit — say each thing once. Builds clean; lint passes.*

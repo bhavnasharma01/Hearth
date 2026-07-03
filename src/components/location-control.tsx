@@ -47,7 +47,7 @@ export function LocationControl({
   function useMyLocation() {
     setError(null);
     if (!("geolocation" in navigator)) {
-      setError("Location isn’t available here — type a place instead.");
+      setError("Location isn’t available here. Type a place instead.");
       setShowManual(true);
       return;
     }
@@ -62,8 +62,8 @@ export function LocationControl({
         setShowManual(true);
         setError(
           err.code === err.PERMISSION_DENIED
-            ? "Permission denied — type a place instead."
-            : "Couldn’t get your location — try typing a place.",
+            ? "Permission denied. Type a place instead."
+            : "Couldn’t get your location. Try typing a place.",
         );
       },
       { enableHighAccuracy: false, timeout: 10000, maximumAge: 300000 },

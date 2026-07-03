@@ -11,7 +11,7 @@ import { ManageForm } from "@/components/forms/manage-form";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Manage your listing — Hearth",
+  title: "Manage your listing · Hearth",
   // Private per-listing edit link — keep it out of search engines.
   robots: { index: false, follow: false },
 };
@@ -39,7 +39,7 @@ export default async function ManageListingPage({
         </h1>
         <p className="mt-1 text-muted">
           Update anything about your Hearth profile below. This is your private
-          edit link — keep it handy (bookmark it) to make changes any time.
+          edit link. Keep it handy (bookmark it) to make changes any time.
         </p>
         <Link
           href={`/p/${listing.slug}`}

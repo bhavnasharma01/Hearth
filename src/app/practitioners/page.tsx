@@ -138,10 +138,10 @@ export default async function PractitionersPage({
         <div className="rounded-[var(--radius-card)] border border-dashed border-line bg-card/60 p-8 text-center">
           <p className="text-sm text-muted">
             {near
-              ? `No practitioners within ${radiusKm} km yet — try a wider radius, or clear the location.`
+              ? `No practitioners within ${radiusKm} km yet. Try a wider radius, or clear the location.`
               : filtering
                 ? "No practitioners match this yet."
-                : "No practitioners are listed yet — the directory fills in as people add themselves."}
+                : "No practitioners are listed yet. The directory fills in as people add themselves."}
           </p>
           <div className="mt-4">
             {filtering ? (
@@ -156,7 +156,7 @@ export default async function PractitionersPage({
                 href="/add-practitioner"
                 className="rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-cream hover:bg-forest-deep"
               >
-                Be the first — add your practice
+                Be the first: add your practice
               </Link>
             )}
           </div>

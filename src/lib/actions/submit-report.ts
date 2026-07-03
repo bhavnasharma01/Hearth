@@ -34,7 +34,7 @@ export async function submitReport(
   const details = get("details") || null;
 
   if ((type !== "practitioner" && type !== "event") || !id) {
-    return { status: "error", message: "Sorry — that report link looks invalid." };
+    return { status: "error", message: "Sorry, that report link looks invalid." };
   }
   if (!reporterContact) {
     return {
@@ -45,7 +45,7 @@ export async function submitReport(
 
   const supabase = getSupabaseAdmin();
   if (!supabase) {
-    return { status: "error", message: "Couldn’t reach the server — please try again shortly." };
+    return { status: "error", message: "Couldn’t reach the server. Please try again shortly." };
   }
 
   const targetCol = type === "practitioner" ? "practitioner_id" : "event_id";
@@ -68,7 +68,7 @@ export async function submitReport(
     });
     if (error) {
       console.error("submitReport:", error.message);
-      return { status: "error", message: "Something went wrong — please try again." };
+      return { status: "error", message: "Something went wrong. Please try again." };
     }
 
     // Denormalize the distinct-reporter count onto practitioners (a steward is
@@ -105,9 +105,9 @@ export async function submitReport(
           subject: `Hearth: “${label}” reached ${distinct} reports`,
           body: [
             `“${label}” has now been flagged by ${distinct} different people.`,
-            `Most recent reason: ${reason}${details ? ` — “${details}”` : ""}.`,
+            `Most recent reason: ${reason}${details ? `: “${details}”` : ""}.`,
             "",
-            "Flags never auto-hide anything — this is just a heads-up so a",
+            "Flags never auto-hide anything. This is just a heads-up so a",
             "steward can take a quiet look and decide what to do.",
             "",
             pracSlug ? `Listing:  ${siteUrl(`/p/${pracSlug}`)}` : null,
@@ -124,6 +124,6 @@ export async function submitReport(
 
   return {
     status: "success",
-    message: "Thank you — a steward will take a quiet look. Reports are private.",
+    message: "Thank you. a steward will take a quiet look. Reports are private.",
   };
 }
