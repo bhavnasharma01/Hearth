@@ -59,7 +59,7 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 - **Shape:** rounded cards, soft shadows, generous spacing and white space (room to breathe).
 - **Type:** friendly, highly legible; comfortable line-length and size for reading on a phone.
 - **Imagery:** practitioner photos and event flyers are first-class; graceful placeholders when absent (no broken-image gaps).
-- **Tone of copy:** warm, human, first-person-plural ("our community"), never bureaucratic.
+- **Tone of copy:** warm, human, first-person-plural, never bureaucratic. **Say each thing once:** "community" earns its place in the headline — don't echo it in the eyebrow, subline, and footer too. Don't over-reassure ("free, no account, no cost" repeated everywhere reads as selling); state a practical fact at most once where it matters ("takes about two minutes"). Every line must carry information or warmth — a line that does neither ("Search, discover, and connect…") gets cut.
 
 > **Open item:** confirm whether Anat & Curtis have existing brand colours/logo, or we design this system from scratch. (See `Product.md` open questions.)
 

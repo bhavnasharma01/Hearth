@@ -25,7 +25,7 @@ export default async function HomePage() {
       <section className="pt-6">
         <div className="relative overflow-hidden rounded-[1.5rem] bg-gradient-to-b from-night to-night-2 px-6 py-12 text-center shadow-sm sm:py-16">
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-gold-soft">
-            Our community’s gathering place
+            Our gathering place
           </p>
           <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-cream sm:text-5xl">
             {EVENTS_ENABLED
@@ -35,8 +35,8 @@ export default async function HomePage() {
           <div className="gold-rule mx-auto my-6 w-28" />
           <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
             {EVENTS_ENABLED
-              ? "Search, discover, and connect — the practitioners and conscious events our community is building together."
-              : "Search, discover, and connect — the practitioners our community is building together."}
+              ? "Bodywork, breathwork, ceremony, counselling — and the gatherings where we meet."
+              : "Bodywork, breathwork, ceremony, counselling — find the right person for what you need."}
           </p>
 
           {/* The task, held gently: search goes straight to the directory. */}

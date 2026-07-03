@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
   title: "Add your practice — Hearth",
-  description: "Add yourself to the community practitioner directory. No account needed.",
+  description: "Add yourself to the practitioner directory in about two minutes.",
 };
 
 export default async function AddPractitionerPage() {
@@ -19,8 +19,8 @@ export default async function AddPractitionerPage() {
           Add your practice
         </h1>
         <p className="mt-1 text-muted">
-          Share what you offer with the community — no account, no cost. Clean
-          listings appear right away.
+          Share what you offer — it takes about two minutes, and clean listings
+          appear right away.
         </p>
       </header>
       <PractitionerForm categories={categories} />

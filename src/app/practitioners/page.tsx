@@ -185,8 +185,7 @@ export default async function PractitionersPage({
           Are you a practitioner?
         </h2>
         <p className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-cream/75">
-          Join the directory in about two minutes — free, no account needed, and
-          you get a shareable profile page.
+          It takes about two minutes, and you get a shareable profile page.
         </p>
         <Link
           href="/add-practitioner"

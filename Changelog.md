@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 37 (2026-07-02)
+
+*Copy audit — say each thing once. Builds clean; lint passes.*
+
+### Changed — copy across the public surface
+- **Home hero:** replaced the vague "Search, discover, and connect — the practitioners our community is building together" with a concrete line: *"Bodywork, breathwork, ceremony, counselling — find the right person for what you need."* Eyebrow trimmed to *"Our gathering place"* — "community" now appears **once** in the hero (the headline), not three times.
+- **De-duplicated the reassurances:** "free / no account / no cost" was repeated across the directory banner, the add-practitioner page + its metadata, and the site description. Each spot now states at most one practical fact ("takes about two minutes"); openness is evident from using the thing.
+- **Footer** simplified to one line — *"A volunteer-run community resource, offered in a spirit of respect, care, and mutual support."* — which also removes the lingering **"practitioners our community trusts"** over-claim the honest-copy pass (Build 15) had missed there.
+- **Site meta description** tightened: *"Find healers, facilitators, and conscious businesses — a warm, phone-friendly directory."*
+- **Kept deliberately:** the member-badge checkbox and the community agreement (functional meaning), and the one "(no account needed)" note on the private edit link (it carries real information — the link *is* the access).
+- Recorded the editorial rule in `Design.md`: **say each thing once**; every line must carry information or warmth, or it gets cut.
+
+### Docs
+- `Design.md`, `Readme.md`, `Changelog.md` → Build 37.
+
+---
+
 ## v0.1.0 — Build 36 (2026-07-02)
 
 *Home fixes per feedback: category rail back above the directory peek; "Add your practice" is a visible button again. Builds clean; lint passes.*
