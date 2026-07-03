@@ -20,13 +20,15 @@ export function AddressAutocomplete({
   name = "location_text",
   placeholder = "Start typing an address or venue…",
   required = false,
+  defaultValue = "",
 }: {
   inputClassName: string;
   name?: string;
   placeholder?: string;
   required?: boolean;
+  defaultValue?: string;
 }) {
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(defaultValue);
   const [coords, setCoords] = useState<{ lat: number; lng: number } | null>(
     null,
   );

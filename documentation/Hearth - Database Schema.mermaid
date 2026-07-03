@@ -39,6 +39,8 @@ erDiagram
         text languages
         text keywords
         boolean is_member
+        boolean accepting_clients
+        uuid manage_token "secret owner-edit capability; revoked from public roles"
         enum status "pending|live|hidden|rejected"
         enum auto_check "ok|needs_review"
         int flag_count

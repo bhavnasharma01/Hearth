@@ -143,6 +143,15 @@ export default async function PractitionerProfile({
         <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
           Get in touch
         </h2>
+        <p
+          className={`mb-3 text-sm ${
+            p.accepting_clients ? "text-forest" : "text-muted"
+          }`}
+        >
+          {p.accepting_clients
+            ? "✓ Currently taking new clients"
+            : "Not currently taking new clients"}
+        </p>
         <div className="flex flex-wrap gap-2">
           {p.whatsapp && (
             <Contact href={whatsappLink(p.whatsapp)} label="Message on WhatsApp" primary />

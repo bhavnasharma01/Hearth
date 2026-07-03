@@ -6,6 +6,8 @@ export interface FormState {
   pendingReview?: boolean;
   /** Slug of a newly created practitioner (for a "view your listing" link). */
   slug?: string;
+  /** Private manage token of a newly created listing (for the "edit anytime" link). */
+  manageToken?: string;
 }
 
 export const INITIAL_FORM_STATE: FormState = { status: "idle", message: "" };

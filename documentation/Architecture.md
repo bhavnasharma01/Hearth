@@ -61,7 +61,7 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
 
 Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
-- **`practitioners`** — the directory. `status` (`pending`/`live`/`hidden`/`rejected`), `auto_check`, `flag_count`, `is_member`, `featured`, `source`, `search_vector`, `slug` (for `/p/slug`). DB `CHECK`: at least one of WhatsApp/email/website/Instagram.
+- **`practitioners`** — the directory. `status` (`pending`/`live`/`hidden`/`rejected`), `auto_check`, `flag_count`, `is_member`, `accepting_clients`, `featured`, `source`, `search_vector`, `slug` (for `/p/slug`), and `manage_token` (a per-listing secret capability for the owner's edit link — **column-revoked from public roles**). DB `CHECK`: at least one of WhatsApp/email/website/Instagram.
 - **`categories`** — taxonomy table (seeded with 11), admin-extendable; `sort_order`, `active`.
 - **`practitioner_categories`** — many-to-many join (a practitioner holds up to ~3).
 - **`events`** — native events. `host_practitioner_id` (links to directory), `start_at`/`end_at`, `mode`, `cost_note`, `recurrence_rule` (RRULE), `status`, `source`, `external_id` (GCal dedupe), `search_vector`.
@@ -91,6 +91,7 @@ src/app
   add-event/page.tsx            # native add form (hidden: EVENTS_ENABLED → 404)
   report/page.tsx               # report a listing (no login)
   feedback/page.tsx             # unlisted testing feedback (FEEDBACK_ENABLED → 404)
+  manage/[token]/page.tsx       # owner edit page — private capability link (noindex)
   api/geocode/route.ts          # Nominatim autocomplete proxy
   api/cron/import/route.ts      # daily Vercel-Cron GCal import (events-gated)
   admin/login/page.tsx          # Supabase-Auth login
@@ -131,6 +132,7 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 - *Feedback board (Build 18):* private user-testing feedback — unlisted `/feedback` form (gated by `FEEDBACK_ENABLED`) → `submitFeedback` (service-role) → `feedback` table (migration `0004`, RLS admin-only) → a **status-column board** at `/admin/feedback` (move status, set priority, add notes) + a "new feedback" count on the dashboard.
 
 - *Alert recipients decoupled (Build 21):* steward alert emails now target **`NOTIFY_EMAILS`** (fallback `ADMIN_EMAILS`) via `notifyEmails()` — so several people can have admin-panel access while only a chosen list is emailed (and the Resend onboarding-sender recipient stays a single inbox as admins are added). Shared `parseEmails()` in `src/lib/auth.ts`.
+- *Editable listings — profiles-as-mini-sites, Phase 1a (Build 23):* a per-listing **manage link** (`/manage/<manage_token>`, migration `0005`) lets a practitioner **edit their own listing with no account** — the token is an unguessable capability (column-revoked from public roles), surfaced on the submission success screen. `getListingByManageToken` (service-role) loads it; `updateListing` (`src/lib/actions/manage-listing.ts`) saves, re-running the content-check. Added an **"accepting new clients"** toggle (shown on the profile). Foundation for the mini-site work (avatar upload = 1b, services menu = 1c) and reused later for testimonial-request links.
 
 **Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 
@@ -142,6 +144,7 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 - **Public submit** — Server Action validates → runs the **content check** → inserts with `status = live` (clean) or `status = pending` (suspicious) → on a hold, **emails the stewards** (`src/lib/notify.ts`, to `ADMIN_EMAILS`). No account required.
 - **Report** — Server Action inserts a `reports` row keyed by `reporter_contact`; the dedup routine recounts **distinct** reporters; crossing **3** **emails the stewards** once (same `notify.ts` path). Flags never auto-hide.
 - **Feedback (testing)** — the unlisted `/feedback` page (gated by `FEEDBACK_ENABLED`) posts to a service-role action (`submitFeedback`) that inserts a `feedback` row (`status = 'new'`); stewards triage it on the `/admin/feedback` status board. Not public, no content-check (never published).
+- **Owner edit (no account)** — a practitioner edits their own listing at `/manage/<manage_token>`; the token (a secret capability URL, shown on the submission success screen) resolves via the **service-role** client (`getListingByManageToken`), and `updateListing` saves the changes. On edit the content-check re-runs — a live listing that trips it is quietly held for review + stewards notified, so the link can't sneak spam live.
 - **Admin notifications** — `src/lib/notify.ts` (`notifyAdmins`, `server-only`) is the single email path, targeting **`NOTIFY_EMAILS`** (fallback `ADMIN_EMAILS`) — recipients decoupled from admin-panel access. It sends via **Resend** (`RESEND_API_KEY`) or **Gmail SMTP** (`GMAIL_USER`/`GMAIL_APP_PASSWORD`) — preferring Resend when both are set — otherwise logs to the server console, and never throws (a failed alert can't break a public write).
 - **Admin** — authenticated Server Actions do full CRUD, toggle `featured`, manage `categories`, and trigger the **Google Calendar seed import**.
 - **Seed import** — a script calls `events.list` on the public community calendar (from 2026-01-01), maps each event into `events` with `source = google_calendar` and `external_id`, skipping any already-imported id.

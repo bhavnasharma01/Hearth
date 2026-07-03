@@ -126,7 +126,7 @@ export async function submitPractitioner(
       longitude: geo?.lng ?? null,
       geocoded_at: geo ? new Date().toISOString() : null,
     })
-    .select("id, slug")
+    .select("id, slug, manage_token")
     .single();
 
   if (error || !inserted) {
@@ -152,11 +152,14 @@ export async function submitPractitioner(
   revalidatePath("/practitioners");
   revalidatePath("/");
 
+  const manageToken = (inserted as { manage_token: string }).manage_token;
+
   if (status === "live") {
     return {
       status: "success",
       pendingReview: false,
       slug: inserted.slug,
+      manageToken,
       message: "You’re live in the directory! 🌿",
     };
   }
@@ -180,6 +183,7 @@ export async function submitPractitioner(
   return {
     status: "success",
     pendingReview: true,
+    manageToken,
     message:
       "Thank you — your listing was received and will appear right after a quick review.",
   };

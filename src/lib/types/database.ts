@@ -39,6 +39,7 @@ export interface Practitioner {
   languages: string | null;
   keywords: string | null;
   is_member: boolean;
+  accepting_clients: boolean;
   status: PractitionerStatus;
   auto_check: AutoCheckResult;
   flag_count: number;

@@ -1,9 +1,13 @@
 import { getSupabaseServer } from "@/lib/supabase/server";
+import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { withDistance, type LatLng } from "@/lib/geo";
 import type {
   ListingMode,
   PractitionerWithCategories,
 } from "@/lib/types/database";
+
+const UUID_RE =
+  /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 export interface PractitionerQuery {
   /** Free-text search across name, practice, description, area, keywords. */
@@ -110,6 +114,29 @@ export async function getPractitionerBySlug(
     .select(CATEGORY_JOIN)
     .eq("slug", slug)
     .eq("status", "live")
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return flattenCategories(data);
+}
+
+/**
+ * A practitioner by its private manage token, for the owner's `/manage/<token>`
+ * edit page. Uses the **service-role** client (the token is column-revoked from
+ * the public roles) and returns any status (the owner can edit even while held
+ * for review). Returns null for a malformed or unknown token.
+ */
+export async function getListingByManageToken(
+  token: string,
+): Promise<PractitionerWithCategories | null> {
+  if (!UUID_RE.test(token)) return null;
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("practitioners")
+    .select(CATEGORY_JOIN)
+    .eq("manage_token", token)
     .maybeSingle();
 
   if (error || !data) return null;

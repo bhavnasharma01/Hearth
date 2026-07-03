@@ -93,12 +93,19 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **Admin board** at `/admin/feedback` (`src/app/admin/(protected)/feedback`): a **status-column kanban** (New / Looking into it / Planned / Done / Declined) rendered from `listFeedback()`; move status, set priority, add a private note, delete — via actions in `src/lib/actions/admin.ts` (`setFeedbackStatus`/`setFeedbackPriority`/`setFeedbackNote`/`deleteFeedback`, each `requireAdmin`). Dashboard shows a "new feedback" count (`getAdminOverview`).
 - **Run migration `0004_feedback.sql`** in Supabase before this ships, or inserts fail.
 
+## Owner edit — the "manage link" (Build 23; profiles-as-mini-sites Phase 1a)
+
+- **No practitioner accounts in v1**, so editing is via a **secret capability URL**: `/manage/<manage_token>`. The token (uuid on `practitioners`, migration `0005`) grants edit to *that one listing only* — never admin. Surfaced on the add-practitioner success screen ("your private edit link — bookmark it").
+- **Token must never leak.** Public reads use `select("*")` (`CATEGORY_JOIN`), so `manage_token` is **column-revoked from `anon`/`authenticated`** in `0005` (`revoke select (manage_token) …`) — that's why `*` is safe. It's **not** in the `Practitioner` TS type; the manage page passes the token to `ManageForm` as a prop, not off the row. Read it only via the **service-role** client (`getListingByManageToken`). If you ever add code that returns it to the client, you've made a hole.
+- **Edit path:** `updateListing` (`src/lib/actions/manage-listing.ts`, service-role) re-runs the content-check — a flagged **live** listing is downgraded to `pending` + stewards notified, so the link can't push spam public. It keeps the slug stable (shared links don't break).
+- **Roadmap:** 1b = compressed **avatar upload** (one Supabase Storage bucket), 1c = **services menu**. Then Phase 2 **testimonials** (solicited + positive only — NOT open reviews; see `Product.md §6`), reusing the same capability-link pattern for "request a testimonial." The `owner_user_id` column is the v2 upgrade path (real accounts).
+
 ## Dev commands
 
 - `npm run dev` — local dev at http://localhost:3000 (runs without env; pages show empty states until Supabase is connected).
 - `npm run build` — production build. **Must compile with zero errors/warnings** before committing.
 - `npm run lint` — ESLint.
-- Apply DB schema: run the migrations in `supabase/migrations/` **in order** in the Supabase SQL editor (or via the CLI) — `0001` (schema + RLS + 11-category seed) → `0002` (geocoding cols) → `0003` (Instagram-as-contact) → `0004` (feedback). All idempotent/safe to re-run. **New migrations must be run by hand in Supabase before the matching code ships**, or inserts fail.
+- Apply DB schema: run the migrations in `supabase/migrations/` **in order** in the Supabase SQL editor (or via the CLI) — `0001` (schema + RLS + 11-category seed) → `0002` (geocoding cols) → `0003` (Instagram-as-contact) → `0004` (feedback) → `0005` (manage-token + accepting-clients). All idempotent/safe to re-run. **New migrations must be run by hand in Supabase before the matching code ships**, or inserts fail.
 - Import community events: `npm run import:calendar` — reads the **public iCal feed** (no API key), parses with `node-ical`, inserts via service role, deduped by `external_id`. Safe to re-run.
 - **Single import implementation:** the parse/dedupe/insert logic lives in `src/lib/import/ics-core.mjs` (pure, typed by `.d.mts`). Both the script **and** the cron route (`src/lib/import/calendar.ts` → `/api/cron/import`) use it — don't fork it. `node-ical` is in `serverExternalPackages` (next.config) or the route build fails (`BigInt` bundling error).
 - **Daily auto-import:** Vercel Cron (`vercel.json`, 09:00 UTC) hits `/api/cron/import`, guarded by `CRON_SECRET` (set in Vercel; unset locally = open for manual `curl`). It imports **and then** geocodes new addressed events/practitioners via `geocodePending` (capped 20/run, throttled ~1/sec, reuses `geocodeAddress`) — so new locations join "near me" without a manual step. `npm run geocode` remains for bulk/manual backfill.

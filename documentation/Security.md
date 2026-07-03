@@ -36,6 +36,7 @@ RLS is enabled on all tables so the database itself enforces access, even if app
 - **Admin full access:** authenticated users (admins/stewards only, in v1) get full CRUD via `..._admin_all` policies, seeing `pending`/`hidden` content.
 - **Dormant tables** (`users`, `registrations`) carry only the admin policy until their features turn on.
 - **`feedback` (testing) is admin-only.** It has **no anon policy at all** — the anon role can neither read nor write it (a leaked anon key exposes nothing). Public submissions are inserted by a service-role server action; the `/feedback` form is unlisted and gated by `FEEDBACK_ENABLED` (off ⇒ 404 at launch). *(Build 18.)*
+- **Owner edit is capability-based, not a login (`manage_token`).** A practitioner edits their own listing via a secret `/manage/<manage_token>` URL — an unguessable UUID that grants edit rights to **that one listing only** (never admin). It's **column-revoked from the `anon`/`authenticated` roles** (`revoke select (manage_token)`) so it can't leak through a public `select *`, and is only ever read via the service-role. Edits re-run the content-check (a flagged live listing is held for review), so the link can't push spam public. Treat the link like a password; it can be rotated by reissuing the token. *(Build 23.)*
 
 ---
 

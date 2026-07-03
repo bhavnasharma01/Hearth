@@ -4,6 +4,30 @@
 
 ---
 
+## v0.1.0 — Build 23 (2026-07-02)
+
+*Profiles as mini-sites — Phase 1a: listings are now editable without an account, via a private "manage" link. Builds clean; lint passes.*
+
+### Added — editable listings (the manage link)
+- **`/manage/<token>` edit page** — a practitioner can update their whole listing **any time, with no account**, via a secret per-listing capability link (a uuid `manage_token`, migration `0005`). It's surfaced on the add-practitioner **success screen** ("your private edit link — bookmark it, keep it to yourself") and marked `noindex`.
+- **`updateListing`** (`src/lib/actions/manage-listing.ts`, service-role) saves edits, re-geocodes the area, and **re-runs the content-check** — a flagged *live* listing is quietly held for review + stewards notified, so the link can't push spam public. The slug stays stable (shared links keep working).
+- **"Accepting new clients"** toggle (migration `0005`), shown on the profile's "Get in touch" card.
+- `getListingByManageToken` (service-role lookup) + `AddressAutocomplete` gained a `defaultValue` prop (to prefill the area when editing).
+
+### Security
+- `manage_token` is **column-revoked from the `anon`/`authenticated` roles** (`revoke select (manage_token) …`) so it can't leak through a public `select *`; it's read only via the service-role and isn't in the `Practitioner` type. It grants edit to one listing — never admin.
+
+### Setup required
+- **Run `supabase/migrations/0005_manage_and_status.sql`** in the Supabase SQL editor before this ships. Safe to re-run — existing listings get a token automatically.
+
+### Next (Phase 1)
+- **1b:** compressed **avatar upload** (one Supabase Storage bucket). **1c:** **services menu**. Then Phase 2 **testimonials** (solicited + positive only — not open reviews).
+
+### Docs
+- `Architecture.md`, `Security.md`, `Product.md`, `Hearth - Database Schema.md` + `.mermaid`, `Claude.md`, `Readme.md`, `Changelog.md` → Build 23.
+
+---
+
 ## v0.1.0 — Build 22 (2026-07-02)
 
 *Documentation audit (`/updatestructure`) — re-verified every doc against the code after Builds 20–21. **No runtime/app code changed.***
