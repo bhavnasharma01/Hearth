@@ -98,6 +98,26 @@ export function externalHref(raw: string): string {
   return /^https?:\/\//i.test(raw) ? raw : `https://${raw}`;
 }
 
+/**
+ * Normalize an Instagram value into a real profile link. People enter it many
+ * ways — `@handle`, `handle`, `instagram.com/handle`, or a full URL — and a bare
+ * handle must not become `https://handle`. Returns `https://instagram.com/<handle>`
+ * (or a pasted full URL unchanged).
+ */
+export function instagramUrl(raw: string): string {
+  const v = raw.trim();
+  // A pasted full URL — trust it as-is (covers instagram.com profile links).
+  if (/^https?:\/\//i.test(v)) return v;
+  // Otherwise reduce to the bare handle: drop a leading @, any instagram.com
+  // prefix, and stray slashes.
+  const handle = v
+    .replace(/^@+/, "")
+    .replace(/^(www\.)?instagram\.com\//i, "")
+    .replace(/^\/+/, "")
+    .replace(/\/+$/, "");
+  return `https://instagram.com/${handle}`;
+}
+
 /** A Google Calendar "add event" link, pre-filled (opens Google Calendar on web/app). */
 export function googleCalendarUrl(e: {
   title: string;

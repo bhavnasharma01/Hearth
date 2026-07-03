@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 26 (2026-07-02)
+
+*Bugfix: the Instagram contact button now actually opens Instagram. Builds clean; lint passes.*
+
+### Fixed
+- **Instagram button led to a broken link.** Practitioners usually enter a **handle** (`@sarah` or `sarah`), but the button used `externalHref`, which turned that into `https://sarah` — a dead link. New **`instagramUrl()`** (`src/lib/format.ts`) normalizes any form — `@handle`, `handle`, `instagram.com/handle`, or a full pasted URL — into `https://instagram.com/<handle>`. Used on the practitioner **card** and **profile**. No data change needed (values are normalized at render).
+
+### Docs
+- `Bugs.md`, `Readme.md`, `Changelog.md` → Build 26.
+
+---
+
 ## v0.1.0 — Build 25 (2026-07-02)
 
 *Profiles as mini-sites — Phase 1c: a "what I offer" services menu. **Phase 1 (mini-site core) complete.** Builds clean; lint passes.*

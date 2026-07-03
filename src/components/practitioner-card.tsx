@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { externalHref, formatMode, whatsappLink } from "@/lib/format";
+import { externalHref, formatMode, instagramUrl, whatsappLink } from "@/lib/format";
 import { formatDistance } from "@/lib/geo";
 import type { PractitionerWithCategories } from "@/lib/types/database";
 
@@ -57,7 +57,7 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
         {p.email && <Contact href={`mailto:${p.email}`} label="Email" />}
         {p.website && <Contact href={externalHref(p.website)} label="Website" />}
         {p.instagram && (
-          <Contact href={externalHref(p.instagram)} label="Instagram" />
+          <Contact href={instagramUrl(p.instagram)} label="Instagram" />
         )}
         <Link
           href={`/report?type=practitioner&id=${p.id}`}
