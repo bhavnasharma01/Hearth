@@ -83,7 +83,7 @@ export default async function PractitionersPage({
 
       {/* Search + near me — one row */}
       <div className="mb-3 flex flex-wrap items-start gap-2">
-        <form action="/practitioners" method="get" className="flex min-w-0 flex-1 gap-2">
+        <form action="/practitioners" method="get" className="relative min-w-0 flex-1">
           {category && <input type="hidden" name="category" value={category} />}
           {mode && <input type="hidden" name="mode" value={mode} />}
           {near && (
@@ -93,26 +93,19 @@ export default async function PractitionersPage({
               <input type="hidden" name="radius" value={radius ?? "25"} />
             </>
           )}
-          <div className="relative min-w-0 flex-1">
-            <span
-              aria-hidden
-              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-muted"
-            >
-              🔍
-            </span>
-            <input
-              type="search"
-              name="q"
-              defaultValue={q ?? ""}
-              placeholder="Search name, practice, or need…"
-              className="w-full rounded-full border border-line bg-card py-2.5 pl-9 pr-4 text-sm outline-none focus:border-sage"
-            />
-          </div>
+          <input
+            type="search"
+            name="q"
+            defaultValue={q ?? ""}
+            placeholder="Search name, practice, or need…"
+            className="w-full rounded-full border border-line bg-card py-2.5 pl-4 pr-12 text-sm outline-none focus:border-sage"
+          />
           <button
             type="submit"
-            className="shrink-0 rounded-full bg-forest px-4 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
+            aria-label="Search"
+            className="absolute right-1.5 top-1/2 -translate-y-1/2 rounded-full bg-forest px-3 py-1.5 text-sm text-cream transition-colors hover:bg-forest-deep"
           >
-            Search
+            🔍
           </button>
         </form>
         <LocationControl basePath="/practitioners" />

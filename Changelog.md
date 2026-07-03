@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 32 (2026-07-02)
+
+*Simplify the directory search row (Build 31 follow-up) — fewer controls, clearer. Builds clean; lint passes.*
+
+### Changed
+- The search row had four things competing (search input + a "Search" button + "Near me" + a "type a place" link). Now it's **two**: a search pill with the **🔍 as its own submit button** (no separate Search button — Enter / the icon submits), and the **📍 Near me** button. The **"type a place"** fallback now appears **only if location access is denied**, instead of always cluttering the row. The collapsible **"Filters"** (mode) — which was working well — stays as-is.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 32.
+
+---
+
 ## v0.1.0 — Build 31 (2026-07-02)
 
 *Cleaner directory: the four stacked filter blocks are consolidated into one search row + a chip strip. Builds clean; lint passes.*

@@ -125,23 +125,14 @@ export function LocationControl({ basePath }: { basePath: string }) {
 
   return (
     <div className="shrink-0">
-      <div className="flex items-center gap-2">
-        <button
-          type="button"
-          onClick={useMyLocation}
-          disabled={busy}
-          className="rounded-full border border-forest/30 bg-card px-4 py-2.5 text-sm font-medium text-forest transition-colors hover:bg-sand disabled:opacity-60"
-        >
-          📍 {busy ? "Locating…" : "Near me"}
-        </button>
-        <button
-          type="button"
-          onClick={() => setShowManual((v) => !v)}
-          className="text-xs text-muted underline hover:text-ink"
-        >
-          type a place
-        </button>
-      </div>
+      <button
+        type="button"
+        onClick={useMyLocation}
+        disabled={busy}
+        className="rounded-full border border-forest/30 bg-card px-4 py-2.5 text-sm font-medium text-forest transition-colors hover:bg-sand disabled:opacity-60"
+      >
+        📍 {busy ? "Locating…" : "Near me"}
+      </button>
       {showManual && (
         <form onSubmit={submitManual} className="mt-2 flex gap-2">
           <input
