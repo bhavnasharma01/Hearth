@@ -4,10 +4,10 @@ import { useRef, useState } from "react";
 import { uploadAvatar } from "@/lib/actions/upload-avatar";
 
 /**
- * Photo picker that compresses the image on-device (phone photos are huge) and
- * uploads it via the `uploadAvatar` server action, then keeps the resulting
- * public URL in a hidden `name` field so the form's submit/update action stores
- * it in `photo_url`. No external image library, no raw multi-MB upload.
+ * Compact tap-to-upload avatar, sized to sit next to the name at the top of the
+ * form. Compresses the image on-device (phone photos are huge) and uploads it
+ * via the `uploadAvatar` server action, keeping the resulting public URL in a
+ * hidden `name` field so the form's submit/update action stores it in `photo_url`.
  */
 export function AvatarUploader({
   name = "photo_url",
@@ -42,40 +42,42 @@ export function AvatarUploader({
   }
 
   return (
-    <div className="flex items-center gap-4">
-      {url ? (
-        <div
-          role="img"
-          aria-label="Your photo"
-          className="h-16 w-16 shrink-0 rounded-full bg-sand bg-cover bg-center ring-1 ring-gold/30"
-          style={{ backgroundImage: `url(${JSON.stringify(url)})` }}
-        />
-      ) : (
-        <div className="flex h-16 w-16 shrink-0 items-center justify-center rounded-full bg-sand text-2xl text-forest-deep ring-1 ring-gold/30">
-          ☺
-        </div>
-      )}
+    <div className="flex w-20 shrink-0 flex-col items-center gap-1">
+      <button
+        type="button"
+        onClick={() => inputRef.current?.click()}
+        disabled={busy}
+        aria-label={url ? "Change photo" : "Add a photo"}
+        className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-sand bg-cover bg-center text-2xl text-forest-deep ring-1 ring-gold/30 transition-opacity hover:opacity-90 disabled:opacity-60"
+        style={url ? { backgroundImage: `url(${JSON.stringify(url)})` } : undefined}
+      >
+        {!url && "＋"}
+      </button>
 
-      <div className="min-w-0">
+      <div className="text-center text-xs leading-tight">
         <button
           type="button"
           onClick={() => inputRef.current?.click()}
           disabled={busy}
-          className="rounded-full border border-line px-4 py-1.5 text-sm text-forest transition-colors hover:bg-sand disabled:opacity-60"
+          className="text-forest hover:underline disabled:opacity-60"
         >
-          {busy ? "Uploading…" : url ? "Change photo" : "Upload photo"}
+          {busy ? "Uploading…" : url ? "Change" : "Add photo"}
         </button>
         {url && !busy && (
-          <button
-            type="button"
-            onClick={() => setUrl("")}
-            className="ml-2 text-xs text-muted underline hover:text-ink"
-          >
-            Remove
-          </button>
+          <>
+            {" · "}
+            <button
+              type="button"
+              onClick={() => setUrl("")}
+              className="text-muted hover:text-clay hover:underline"
+            >
+              Remove
+            </button>
+          </>
         )}
-        {error && <p className="mt-1 text-xs text-clay">{error}</p>}
       </div>
+
+      {error && <p className="max-w-[8rem] text-center text-xs text-clay">{error}</p>}
 
       <input
         ref={inputRef}

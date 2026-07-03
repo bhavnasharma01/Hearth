@@ -94,13 +94,17 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         </p>
       )}
 
-      <Field label="Your name" required>
-        <input name="name" required className={inputCls} />
-      </Field>
-
-      <Field label="Practice or business name" hint="Optional — defaults to your name">
-        <input name="practice_name" className={inputCls} />
-      </Field>
+      <div className="flex items-start gap-4">
+        <AvatarUploader name="photo_url" />
+        <div className="min-w-0 flex-1 space-y-4">
+          <Field label="Your name" required>
+            <input name="name" required className={inputCls} />
+          </Field>
+          <Field label="Practice or business name" hint="Optional — defaults to your name">
+            <input name="practice_name" className={inputCls} />
+          </Field>
+        </div>
+      </div>
 
       <fieldset>
         <legend className={labelCls}>
@@ -136,10 +140,6 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
 
       <Field label="A little more about you" hint="Optional — shown on your profile">
         <textarea name="bio" rows={3} className={inputCls} />
-      </Field>
-
-      <Field label="Photo or logo" hint="Optional — a friendly face or your logo (JPG/PNG/WebP, up to 2 MB)">
-        <AvatarUploader name="photo_url" />
       </Field>
 
       <Field

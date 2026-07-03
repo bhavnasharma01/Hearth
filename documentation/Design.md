@@ -83,7 +83,7 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 - **Event card** — title, date & time, in-person/online + location, short description, cost note ("PWYC"/price), flyer, **View / Register** button.
 - **Event feed grouping** — *This week / Next week / Later* headers; an optional month-grid toggle for traditionalists.
 - **Filter chips** — tappable categories; In person / Online / Both; date range. Search bar over name/practice/description/keywords.
-- **Forms** — single-screen where possible (required fields minimal), clear optional sections, friendly validation, a warm "thanks — you're live!" confirmation.
+- **Forms** — single-screen where possible (required fields minimal), clear optional sections, friendly validation, a warm "thanks — you're live!" confirmation. The **photo upload is a compact tap-to-upload avatar in an identity header at the top** (beside Name + Practice), where it reads naturally — not buried mid-form.
 - **Empty/placeholder states** — calm, encouraging copy (e.g. "No events next week yet — check back, or add one"), never a blank void.
 
 ---

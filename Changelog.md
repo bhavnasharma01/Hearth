@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 27 (2026-07-02)
+
+*UX: the photo now sits at the top of the add/manage forms, next to the name (an identity header), instead of buried mid-form. Builds clean; lint passes.*
+
+### Changed
+- **`AvatarUploader` is now a compact tap-to-upload avatar** — a clickable circle (with a `＋` placeholder) + an "Add photo / Change · Remove" caption — placed in an **identity header** at the top of both the **add-practitioner** and **manage** forms, right beside the Name + Practice fields. Previously the photo field sat mid-form (after the bio), which felt illogical and out of place. Now it reads like a normal profile-creation flow. Stacks cleanly on a phone.
+
+### Docs
+- `Design.md`, `Readme.md`, `Changelog.md` → Build 27.
+
+---
+
 ## v0.1.0 — Build 26 (2026-07-02)
 
 *Bugfix: the Instagram contact button now actually opens Instagram. Builds clean; lint passes.*
