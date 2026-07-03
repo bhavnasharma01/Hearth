@@ -4,6 +4,29 @@
 
 ---
 
+## v0.1.0 — Build 24 (2026-07-02)
+
+*Profiles as mini-sites — Phase 1b: real photo (avatar) uploads. Builds clean; lint passes.*
+
+### Added — avatar uploads
+- **`AvatarUploader`** (`src/components/forms/avatar-uploader.tsx`) replaces the paste-a-link photo field on **both** the add-practitioner form and the manage/edit page. It **compresses the image on-device** (canvas → ~512px JPEG, EXIF-orientation-aware, ~100–200 KB) so phones don't upload multi-MB files.
+- **`uploadAvatar`** (`src/lib/actions/upload-avatar.ts`, **service-role**) validates content-type (JPG/PNG/WebP) + size (≤2 MB) and stores the image in the public **`avatars`** Storage bucket (migration `0006`), returning a public URL that flows into `photo_url` via the existing submit/update actions.
+- Live preview + "Change/Remove"; graceful if the bucket isn't set up yet (shows an error, form still works).
+
+### Security / cost
+- The `avatars` bucket is public-**read** but has **no anon write policy** — uploads only happen through the service-role action (validated). Storage/egress ≈ **$0** at community scale with the on-device compression. *(Open-endpoint flood is on the rate-limit watchlist — `Bugs.md`.)*
+
+### Setup required
+- Create the **`avatars`** Storage bucket: run `supabase/migrations/0006_avatars_bucket.sql`, **or** in the dashboard: Storage → New bucket → name `avatars` → toggle **Public** → Create.
+
+### Next (Phase 1)
+- **1c:** services menu. Then **Phase 2:** testimonials (solicited + positive).
+
+### Docs
+- `Architecture.md`, `Security.md`, `Bugs.md`, `Product.md`, `Claude.md`, `Readme.md`, `Changelog.md` → Build 24.
+
+---
+
 ## v0.1.0 — Build 23 (2026-07-02)
 
 *Profiles as mini-sites — Phase 1a: listings are now editable without an account, via a private "manage" link. Builds clean; lint passes.*

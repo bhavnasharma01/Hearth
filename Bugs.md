@@ -9,6 +9,7 @@
 ## Open
 
 - [ ] 🟠 **Public-write spam/bot flood.** The public write paths (`/add-practitioner`, `/report`, `/feedback`) run a content-check on submissions but have **no rate-limiting or bot check yet** — add a honeypot field + per-IP throttle before wide public launch.
+- [ ] 🔵 **Avatar upload is an unauthenticated write path.** `uploadAvatar` (service-role) is callable by anyone (no login) — it validates image type + caps size at 2 MB, but a script could still fill the `avatars` bucket. Fine for the small pilot (free tier is 1 GB); add rate-limiting / a bot check + periodic orphan-file cleanup before wide launch. *(Build 24.)*
 - [ ] 🔵 **Steward alerts reach only one inbox (testing setup).** On Resend's onboarding sender, alert emails deliver only to the Resend-account address until a domain is verified; add a second admin and sends fail. Verify a domain, or switch to Gmail SMTP, before onboarding more stewards. *(See `Claude.md` → "Steward email alerts".)*
 - [ ] 🟡 **`middleware.ts` → `proxy.ts` deprecation.** Next.js warns on every build that the `middleware` file convention is deprecated in favour of `proxy`. Rename `src/middleware.ts` (and its `config` matcher) before a future Next major; cosmetic today.
 - [x] 🟡 **Recurring-event horizon.** *(Build 9)* The daily Vercel Cron import (`/api/cron/import`) re-runs automatically, keeping the 120-day recurrence window fresh.

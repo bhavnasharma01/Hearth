@@ -5,6 +5,7 @@ import Link from "next/link";
 import { updateListing } from "@/lib/actions/manage-listing";
 import { INITIAL_FORM_STATE } from "@/lib/actions/types";
 import { AddressAutocomplete } from "@/components/forms/address-autocomplete";
+import { AvatarUploader } from "@/components/forms/avatar-uploader";
 import type { Category, PractitionerWithCategories } from "@/lib/types/database";
 
 const labelCls = "block text-sm font-medium text-ink";
@@ -111,17 +112,8 @@ export function ManageForm({
         <textarea name="bio" rows={3} defaultValue={listing.bio ?? ""} className={inputCls} />
       </Field>
 
-      <Field
-        label="Photo or logo link"
-        hint="Optional — paste a link to an image (direct uploads coming soon)"
-      >
-        <input
-          name="photo_url"
-          inputMode="url"
-          placeholder="https://…"
-          defaultValue={listing.photo_url ?? ""}
-          className={inputCls}
-        />
+      <Field label="Photo or logo" hint="Optional — a friendly face or your logo (JPG/PNG/WebP, up to 2 MB)">
+        <AvatarUploader name="photo_url" initialUrl={listing.photo_url ?? ""} />
       </Field>
 
       <Field

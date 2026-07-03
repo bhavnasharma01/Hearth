@@ -6,6 +6,7 @@ import { submitPractitioner } from "@/lib/actions/submit-practitioner";
 import { INITIAL_FORM_STATE } from "@/lib/actions/types";
 import { ShareButton } from "@/components/share-button";
 import { AddressAutocomplete } from "@/components/forms/address-autocomplete";
+import { AvatarUploader } from "@/components/forms/avatar-uploader";
 import { siteUrl } from "@/lib/url";
 import type { Category } from "@/lib/types/database";
 
@@ -137,16 +138,8 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         <textarea name="bio" rows={3} className={inputCls} />
       </Field>
 
-      <Field
-        label="Photo or logo link"
-        hint="Optional — paste a link to an image (direct uploads coming soon)"
-      >
-        <input
-          name="photo_url"
-          inputMode="url"
-          placeholder="https://…"
-          className={inputCls}
-        />
+      <Field label="Photo or logo" hint="Optional — a friendly face or your logo (JPG/PNG/WebP, up to 2 MB)">
+        <AvatarUploader name="photo_url" />
       </Field>
 
       <Field
