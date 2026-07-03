@@ -94,17 +94,17 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         </p>
       )}
 
-      <div className="flex items-center gap-4">
+      <div className="flex justify-center pt-1 pb-1">
         <AvatarUploader name="photo_url" />
-        <div className="min-w-0 flex-1 space-y-4">
-          <Field label="Your name" required>
-            <input name="name" required className={inputCls} />
-          </Field>
-          <Field label="Practice or business name" hint="Optional — defaults to your name">
-            <input name="practice_name" className={inputCls} />
-          </Field>
-        </div>
       </div>
+
+      <Field label="Your name" required>
+        <input name="name" required className={inputCls} />
+      </Field>
+
+      <Field label="Practice or business name" hint="Optional — defaults to your name">
+        <input name="practice_name" className={inputCls} />
+      </Field>
 
       <fieldset>
         <legend className={labelCls}>

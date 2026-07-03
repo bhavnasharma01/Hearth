@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 30 (2026-07-02)
+
+*UX: settled on a larger avatar centered above the name/practice fields — the classic profile-creation look. Builds clean; lint passes.*
+
+### Changed
+- Moved the photo to a **centered "hero" avatar at the top** of the add + manage forms (enlarged to 112px), with **Name + Practice full-width below**. This is the conventional, phone-friendly profile-creation layout — no side-by-side width squeeze on a narrow screen, symmetric by nature, and gives the photo the prominence that suits a mini-site. `AvatarUploader` enlarged accordingly.
+
+### Docs
+- `Design.md`, `Readme.md`, `Changelog.md` → Build 30.
+
+---
+
 ## v0.1.0 — Build 29 (2026-07-02)
 
 *UX: the header photo is now vertically centered against **both** the Name and Practice fields (per feedback). Builds clean; lint passes.*

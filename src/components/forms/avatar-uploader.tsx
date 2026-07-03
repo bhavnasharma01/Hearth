@@ -42,13 +42,13 @@ export function AvatarUploader({
   }
 
   return (
-    <div className="flex w-20 shrink-0 flex-col items-center gap-1">
+    <div className="flex w-28 shrink-0 flex-col items-center gap-1">
       <button
         type="button"
         onClick={() => inputRef.current?.click()}
         disabled={busy}
         aria-label={url ? "Change photo" : "Add a photo"}
-        className="flex h-20 w-20 items-center justify-center overflow-hidden rounded-full bg-sand bg-cover bg-center text-2xl text-forest-deep ring-1 ring-gold/30 transition-opacity hover:opacity-90 disabled:opacity-60"
+        className="flex h-28 w-28 items-center justify-center overflow-hidden rounded-full bg-sand bg-cover bg-center text-4xl text-forest-deep ring-1 ring-gold/30 transition-opacity hover:opacity-90 disabled:opacity-60"
         style={url ? { backgroundImage: `url(${JSON.stringify(url)})` } : undefined}
       >
         {!url && "＋"}
