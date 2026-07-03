@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 29 (2026-07-02)
+
+*UX: the header photo is now vertically centered against **both** the Name and Practice fields (per feedback). Builds clean; lint passes.*
+
+### Changed
+- Put Name + Practice back together in the header's right column and **vertically centered the avatar against the pair** (`items-center`) — a balanced "photo beside name/practice" identity block, rather than Build 28's photo-beside-just-the-name. Applies to both the add + manage forms.
+
+### Docs
+- `Readme.md` (+ fixed a stale `migrations` range in the repo-layout tree), `Changelog.md` → Build 29.
+
+---
+
 ## v0.1.0 — Build 28 (2026-07-02)
 
 *UX refinement: the identity header now pairs the photo with just the name (vertically centered), balanced instead of clunky. Builds clean; lint passes.*

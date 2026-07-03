@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 28
+**Version:** 0.1.0 · **Build:** 29
 *(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
@@ -61,7 +61,7 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
 ├── public/                        ← static assets served at the site root
 │   └── palette-explorations.html  ← shareable palette-review page (temporary)
 ├── supabase/
-│   └── migrations/                ← SQL schema, RLS, category seed (0001 → 0004)
+│   └── migrations/                ← SQL schema, RLS, category seed (0001 → 0007)
 └── documentation/
     ├── Architecture.md            ← system & tech architecture (living)
     ├── Security.md                ← security, privacy, abuse-resistance (living)

@@ -71,21 +71,19 @@ export function ManageForm({
 
       <div className="flex items-center gap-4">
         <AvatarUploader name="photo_url" initialUrl={listing.photo_url ?? ""} />
-        <div className="min-w-0 flex-1">
-          <label className={labelCls}>
-            Your name <span className="text-clay">*</span>
-          </label>
-          <input name="name" required defaultValue={listing.name} className={inputCls} />
+        <div className="min-w-0 flex-1 space-y-4">
+          <Field label="Your name" required>
+            <input name="name" required defaultValue={listing.name} className={inputCls} />
+          </Field>
+          <Field label="Practice or business name" hint="Optional">
+            <input
+              name="practice_name"
+              defaultValue={listing.practice_name ?? ""}
+              className={inputCls}
+            />
+          </Field>
         </div>
       </div>
-
-      <Field label="Practice or business name" hint="Optional">
-        <input
-          name="practice_name"
-          defaultValue={listing.practice_name ?? ""}
-          className={inputCls}
-        />
-      </Field>
 
       <fieldset>
         <legend className={labelCls}>
