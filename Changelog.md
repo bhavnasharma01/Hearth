@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 36 (2026-07-02)
+
+*Home fixes per feedback: category rail back above the directory peek; "Add your practice" is a visible button again. Builds clean; lint passes.*
+
+### Changed — Home
+- **"Browse by need" moved back up** — directly under the hero, above "From the directory." Having browse paths *after* the content preview was the wrong order (a Build 35 over-correction).
+- **"＋ Add your practice" is a proper outline button in the hero again** (gold-bordered pill beside the quiet "Browse all →" link) — as a small text link it wasn't discoverable enough for practitioners, and recruiting them is the pilot's whole point.
+
+### Docs
+- `Design.md`, `Readme.md`, `Changelog.md` → Build 36.
+
+---
+
 ## v0.1.0 — Build 35 (2026-07-02)
 
 *Restore the homepage's warmth (Build 34 made it feel "industrial/transactional") while keeping the in-hero search. Builds clean; lint passes.*

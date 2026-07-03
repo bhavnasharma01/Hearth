@@ -60,27 +60,27 @@ export default async function HomePage() {
             </button>
           </form>
 
-          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm">
+          <div className="mt-6 flex flex-wrap items-center justify-center gap-x-6 gap-y-3">
+            <Link
+              href="/add-practitioner"
+              className="rounded-full border border-gold/40 px-6 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-white/5"
+            >
+              ＋ Add your practice
+            </Link>
             <Link
               href="/practitioners"
-              className="text-cream/75 transition-colors hover:text-cream"
+              className="text-sm text-cream/75 transition-colors hover:text-cream"
             >
               Browse all practitioners →
             </Link>
             {EVENTS_ENABLED && (
               <Link
                 href="/events"
-                className="text-cream/75 transition-colors hover:text-cream"
+                className="text-sm text-cream/75 transition-colors hover:text-cream"
               >
                 See what’s happening →
               </Link>
             )}
-            <Link
-              href="/add-practitioner"
-              className="text-gold-soft transition-colors hover:text-gold"
-            >
-              ＋ Add your practice
-            </Link>
           </div>
         </div>
       </section>
@@ -100,22 +100,9 @@ export default async function HomePage() {
         </HomeSection>
       )}
 
-      {/* Practitioners peek */}
-      <HomeSection
-        title="From the directory"
-        href="/practitioners"
-        linkLabel="All practitioners"
-        empty="No practitioners are listed yet — the directory will fill in as people add themselves."
-        isEmpty={practitioners.length === 0}
-      >
-        {practitioners.map((p) => (
-          <PractitionerCard key={p.id} p={p} />
-        ))}
-      </HomeSection>
-
-      {/* More ways in — kept below the fold so the hero stays warm, not commercial. */}
+      {/* Browse by need — the paths in, right after the welcome. */}
       {categories.length > 0 && (
-        <section className="pb-2">
+        <section className="mt-6">
           <p className="mb-1 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
             Browse by need
           </p>
@@ -128,6 +115,19 @@ export default async function HomePage() {
           />
         </section>
       )}
+
+      {/* Practitioners peek */}
+      <HomeSection
+        title="From the directory"
+        href="/practitioners"
+        linkLabel="All practitioners"
+        empty="No practitioners are listed yet — the directory will fill in as people add themselves."
+        isEmpty={practitioners.length === 0}
+      >
+        {practitioners.map((p) => (
+          <PractitionerCard key={p.id} p={p} />
+        ))}
+      </HomeSection>
 
       <div className="h-8" />
     </div>
