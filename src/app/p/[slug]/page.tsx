@@ -54,6 +54,18 @@ export default async function PractitionerProfile({
     .map((k) => k.trim())
     .filter(Boolean);
 
+  // The single most direct way to reach them — surfaced in the header card so
+  // the primary action never requires scrolling.
+  const primaryContact = p.whatsapp
+    ? { href: whatsappLink(p.whatsapp), label: "Message on WhatsApp" }
+    : p.email
+      ? { href: `mailto:${p.email}`, label: "Email" }
+      : p.website
+        ? { href: externalHref(p.website), label: "Visit website" }
+        : p.instagram
+          ? { href: instagramUrl(p.instagram), label: "Instagram" }
+          : null;
+
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
       <Link href="/practitioners" className="text-sm text-muted hover:text-ink">
@@ -84,10 +96,15 @@ export default async function PractitionerProfile({
               {p.practice_name || p.name}
             </h1>
             {p.practice_name && <p className="text-muted">with {p.name}</p>}
-            {p.is_member && (
-              <span className="mt-1 inline-block text-sm font-medium text-gold">
-                ✦ Community member
-              </span>
+            {(p.is_member || p.accepting_clients) && (
+              <div className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-sm">
+                {p.is_member && (
+                  <span className="font-medium text-gold">✦ Community member</span>
+                )}
+                {p.accepting_clients && (
+                  <span className="font-medium text-forest">✓ Taking new clients</span>
+                )}
+              </div>
             )}
           </div>
 
@@ -104,12 +121,13 @@ export default async function PractitionerProfile({
             </div>
           )}
 
-          <ShareButton
-            url={siteUrl(`/p/${p.slug}`)}
-            title={label}
-            label="Share this profile"
-            className="mt-4"
-          />
+          {/* The primary action lives up top — contact shouldn't require scrolling. */}
+          <div className="mt-4 flex flex-wrap items-center gap-2">
+            {primaryContact && (
+              <Contact href={primaryContact.href} label={primaryContact.label} primary />
+            )}
+            <ShareButton url={siteUrl(`/p/${p.slug}`)} title={label} label="Share" />
+          </div>
         </div>
       </header>
 

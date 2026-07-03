@@ -85,24 +85,27 @@ export function ManageForm({
         />
       </Field>
 
+      <SectionLabel>What you offer</SectionLabel>
+
       <fieldset>
         <legend className={labelCls}>
           Category <span className="text-clay">*</span>{" "}
           <span className="font-normal text-muted">(choose up to 3)</span>
         </legend>
-        <div className="mt-2 grid grid-cols-1 gap-2 sm:grid-cols-2">
+        <div className="mt-2 flex flex-wrap gap-2">
           {categories.map((c) => (
             <label
               key={c.id}
-              className="flex items-center gap-2 rounded-xl border border-line bg-card px-3 py-2 text-sm"
+              className="cursor-pointer rounded-full border border-line bg-card px-3 py-1.5 text-sm text-ink transition-colors has-[:checked]:border-forest has-[:checked]:bg-forest has-[:checked]:text-cream"
             >
               <input
                 type="checkbox"
                 name="categories"
                 value={c.slug}
                 defaultChecked={chosen.has(c.slug)}
+                className="sr-only"
               />
-              <span>{c.name}</span>
+              {c.name}
             </label>
           ))}
         </div>
@@ -122,6 +125,8 @@ export function ManageForm({
       <Field label="A little more about you" hint="Optional — shown on your profile">
         <textarea name="bio" rows={3} defaultValue={listing.bio ?? ""} className={inputCls} />
       </Field>
+
+      <SectionLabel>Where &amp; how you work</SectionLabel>
 
       <Field
         label="Your area"
@@ -158,11 +163,12 @@ export function ManageForm({
         </div>
       </fieldset>
 
+      <SectionLabel>Ways to reach you</SectionLabel>
+
       <div className="rounded-xl border border-line bg-sand/40 p-4">
-        <p className="text-sm font-medium text-ink">
-          Best way to reach you <span className="text-clay">*</span>
+        <p className="mb-3 text-xs text-muted">
+          At least one is required <span className="text-clay">*</span>
         </p>
-        <p className="mb-3 text-xs text-muted">At least one is required.</p>
         <div className="grid gap-3 sm:grid-cols-2">
           <Field label="WhatsApp number">
             <input name="whatsapp" inputMode="tel" defaultValue={listing.whatsapp ?? ""} className={inputCls} />
@@ -179,6 +185,8 @@ export function ManageForm({
         </div>
       </div>
 
+      <SectionLabel>The details</SectionLabel>
+
       <div className="grid gap-5 sm:grid-cols-2">
         <Field label="Pricing note" hint="e.g. sliding scale, PWYC">
           <input name="pricing_note" defaultValue={listing.pricing_note ?? ""} className={inputCls} />
@@ -192,8 +200,9 @@ export function ManageForm({
         <input name="keywords" defaultValue={listing.keywords ?? ""} className={inputCls} />
       </Field>
 
+      <SectionLabel>What I offer</SectionLabel>
+
       <div>
-        <p className={labelCls}>What I offer</p>
         <p className="mb-2 text-xs text-muted">
           Optional — a short menu of your services, shown on your profile.
         </p>
@@ -240,5 +249,14 @@ function Field({
       {children}
       {hint && <p className="mt-1 text-xs text-muted">{hint}</p>}
     </div>
+  );
+}
+
+/** Slim gold chapter heading — breaks the long form into scannable sections. */
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <p className="pt-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+      {children}
+    </p>
   );
 }

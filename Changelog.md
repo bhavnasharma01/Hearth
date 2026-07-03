@@ -4,6 +4,31 @@
 
 ---
 
+## v0.1.0 — Build 34 (2026-07-02)
+
+*Site-wide UX sweep — every page reviewed through the Build 33 lens; the ones with real gaps redesigned. Builds clean; lint passes.*
+
+### Changed — Home (`/`)
+- **The hero is now a front door, not a billboard:** trimmed height, dropped the redundant paragraph + button wall, and put a **search pill directly in the hero** (submits to the directory — the #1 task no longer requires a page hop). Quiet links below it ("Browse all practitioners →", gold "＋ Add your practice"). A **"Browse by need" category rail** sits right under the hero. The directory peek stays.
+
+### Changed — Profile (`/p/[slug]`)
+- **The primary action moved above the fold:** the header card now carries the **primary contact button** (WhatsApp → email → website → Instagram, first available) beside a compact **Share** — who is this + how to reach them, on the first screen. The `✓ Taking new clients` signal now sits beside the `✦ member` badge in the header. The full "Get in touch" card below is unchanged.
+
+### Changed — Add + Manage forms
+- **Categories are now selectable chips** (tap to toggle, forest fill when selected) instead of an 11-row checkbox grid — roughly half the height, and consistent with the feedback form's type picker.
+- **Chapter labels** (slim gold uppercase: "What you offer" · "Where & how you work" · "Ways to reach you" · "The details" · "What I offer") break the long forms into scannable sections.
+
+### Changed — Admin
+- **The nav now highlights the active tab** (new `AdminNav` client component) — a steward always knows where they are.
+
+### Reviewed, deliberately unchanged
+- `/report` and `/feedback` — already single-task, compact, and consistent (the feedback type-pills were the pattern the forms now follow). `/events` + `/add-event` — hidden behind the pilot flag; will get the same lens when events return. Deeper admin polish deferred ("function over polish" holds).
+
+### Docs
+- `Design.md` (home/profile/forms/admin patterns), `Readme.md`, `Changelog.md` → Build 34.
+
+---
+
 ## v0.1.0 — Build 33 (2026-07-02)
 
 *Directory redesign — task-first, patterned on the best consumer search apps. Builds clean; lint passes.*

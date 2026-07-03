@@ -67,7 +67,7 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 
 ## 4. Information architecture
 
-- **Home** — warm one-line welcome + a peek at *both* worlds (next few events, featured/just-added practitioners). Orients in one glance; routes to either layer.
+- **Home** — the hero is a **front door, not a billboard**: eyebrow + one warm headline, then a **search pill right in the hero** (submits to the directory) with quiet links below ("Browse all →", "＋ Add your practice"), then a **"Browse by need" category rail**, then the directory peek. The task is available within the first screen; no paragraph or button wall.
 - **Practitioners** — search + category chips + mode filter → cards → profile page (`/p/slug`).
 - **Events** — "Upcoming" feed grouped by time → cards → event detail; optional month grid.
 - **Add flows** — `Add your practice`, `Add an event` (prominent), `Report a listing` (subtle).
@@ -78,13 +78,13 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 ## 5. Key components
 
 - **Practitioner card** — name/practice, category tag(s), short description, area + mode, **Community-member badge**, optional photo, contact buttons (*Message on WhatsApp* via `wa.me`, Email, Website, Instagram), and a subtle right-aligned **Report** link (matching the event card, so a listing can be flagged straight from the list — not only from its profile).
-- **Practitioner profile (`/p/slug`)** — a **header card** (gradient "night" banner + large rounded avatar/photo), name + `✦ member`, category chips, an **Offerings** chip row (from `keywords`), an **About** block (description + bio + area/mode/languages/pricing), a dedicated **"Get in touch"** contact card, and **upcoming events this person hosts** (cross-discovery payoff; hidden while the events pilot is off). A **Share / copy-link** button (`ShareButton`) makes the WhatsApp-droppable URL one tap to send. Designed to grow into a profile-as-mini-site.
+- **Practitioner profile (`/p/slug`)** — a **header card** (gradient "night" banner + large rounded avatar/photo) with name, `✦ member` + `✓ taking new clients` signals, category chips, and — critically — **the primary contact button + Share right in the header** (the top screen answers *who is this* and *how do I reach them*; no scrolling for the main action). Below: an **About** block, **Specialties** chips (from `keywords`), the **"What I offer"** services menu, a full **"Get in touch"** card, and **upcoming events this person hosts** (hidden while the events pilot is off). Designed to grow into a profile-as-mini-site.
 - **Share button (`ShareButton`)** — opens the phone's native share sheet (Web Share API) or copies the link with a calm "Link copied!" confirmation. Also shown on the "you're live" screen so a practitioner can grab their own `/p/…` link.
 - **Owner "manage" page (`/manage/<token>`)** — a private, no-login edit page (secret capability link) where a practitioner tends their mini-site: all profile fields, an **avatar upload** (`AvatarUploader`, compressed on-device), a **"what I offer" services menu** (`ServicesEditor`), and an "accepting new clients" toggle. The profile renders these as a **"What I offer"** list + an accepting-clients line.
 - **Event card** — title, date & time, in-person/online + location, short description, cost note ("PWYC"/price), flyer, **View / Register** button.
 - **Event feed grouping** — *This week / Next week / Later* headers; an optional month-grid toggle for traditionalists.
 - **Filter chips** — tappable categories; In person / Online / Both; date range. Search bar over name/practice/description/keywords.
-- **Forms** — single-screen where possible (required fields minimal), clear optional sections, friendly validation, a warm "thanks — you're live!" confirmation. The **photo upload is a tap-to-upload avatar centered at the top** (the classic profile-creation position), with Name + Practice full-width below — not buried mid-form.
+- **Forms** — single-screen where possible (required fields minimal), clear optional sections, friendly validation, a warm "thanks — you're live!" confirmation. The **photo upload is a tap-to-upload avatar centered at the top** (the classic profile-creation position), with Name + Practice full-width below — not buried mid-form. Long forms are broken into **chapters with slim gold uppercase section labels** ("What you offer" / "Where & how you work" / "Ways to reach you" / "The details"), and **categories are selectable chips** (tap to toggle, forest fill when chosen) instead of a tall checkbox grid — the add/manage forms read as a handful of small steps, not a wall.
 - **Empty/placeholder states** — calm, encouraging copy (e.g. "No events next week yet — check back, or add one"), never a blank void.
 
 ---
@@ -111,4 +111,4 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 
 ## 8. Admin panel design
 
-Function over polish, but still calm and clear: simple lists with status badges, a moderation queue, a reports inbox with distinct-reporter counts, and straightforward category management. Optimized for "one steward, one minute, when pinged."
+Function over polish, but still calm and clear: simple lists with status badges, a moderation queue, a reports inbox with distinct-reporter counts, a feedback board, and straightforward category management. The **nav highlights the active tab** (`AdminNav`) so a steward always knows where they are. Optimized for "one steward, one minute, when pinged."
