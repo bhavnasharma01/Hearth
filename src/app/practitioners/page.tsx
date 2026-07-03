@@ -17,6 +17,11 @@ const MODE_OPTIONS: ChipOption[] = [
 ];
 
 const VALID_MODES = new Set(["in_person", "online", "both"]);
+const MODE_LABEL: Record<string, string> = {
+  in_person: "In person",
+  online: "Online",
+  both: "Both",
+};
 
 export default async function PractitionersPage({
   searchParams,
@@ -65,7 +70,7 @@ export default async function PractitionersPage({
             Practitioners
           </h1>
           <p className="mt-1 text-sm text-muted">
-            Healers, facilitators, and conscious businesses we trust.
+            Healers, facilitators, and conscious businesses in our community.
           </p>
         </div>
         <Link
@@ -76,42 +81,46 @@ export default async function PractitionersPage({
         </Link>
       </header>
 
-      {/* Near me */}
-      <div className="mb-3">
-        <LocationControl basePath="/practitioners" />
-      </div>
-
-      {/* Search */}
-      <form action="/practitioners" method="get" className="mb-4">
-        {category && <input type="hidden" name="category" value={category} />}
-        {mode && <input type="hidden" name="mode" value={mode} />}
-        {near && (
-          <>
-            <input type="hidden" name="lat" value={lat} />
-            <input type="hidden" name="lng" value={lng} />
-            <input type="hidden" name="radius" value={radius ?? "25"} />
-          </>
-        )}
-        <div className="flex gap-2">
-          <input
-            type="search"
-            name="q"
-            defaultValue={q ?? ""}
-            placeholder="Search by name, practice, or what you need…"
-            className="w-full rounded-full border border-line bg-card px-4 py-2.5 text-sm outline-none focus:border-sage"
-          />
+      {/* Search + near me — one row */}
+      <div className="mb-3 flex flex-wrap items-start gap-2">
+        <form action="/practitioners" method="get" className="flex min-w-0 flex-1 gap-2">
+          {category && <input type="hidden" name="category" value={category} />}
+          {mode && <input type="hidden" name="mode" value={mode} />}
+          {near && (
+            <>
+              <input type="hidden" name="lat" value={lat} />
+              <input type="hidden" name="lng" value={lng} />
+              <input type="hidden" name="radius" value={radius ?? "25"} />
+            </>
+          )}
+          <div className="relative min-w-0 flex-1">
+            <span
+              aria-hidden
+              className="pointer-events-none absolute left-3.5 top-1/2 -translate-y-1/2 text-sm text-muted"
+            >
+              🔍
+            </span>
+            <input
+              type="search"
+              name="q"
+              defaultValue={q ?? ""}
+              placeholder="Search name, practice, or need…"
+              className="w-full rounded-full border border-line bg-card py-2.5 pl-9 pr-4 text-sm outline-none focus:border-sage"
+            />
+          </div>
           <button
             type="submit"
-            className="rounded-full bg-forest px-5 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
+            className="shrink-0 rounded-full bg-forest px-4 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
           >
             Search
           </button>
-        </div>
-      </form>
+        </form>
+        <LocationControl basePath="/practitioners" />
+      </div>
 
-      {/* Category filter */}
+      {/* Category chips */}
       {categoryOptions.length > 1 && (
-        <div className="mb-3">
+        <div className="mb-2">
           <FilterChips
             options={categoryOptions}
             current={category}
@@ -122,16 +131,22 @@ export default async function PractitionersPage({
         </div>
       )}
 
-      {/* Mode filter */}
-      <div className="mb-6">
-        <FilterChips
-          options={MODE_OPTIONS}
-          current={mode ?? null}
-          build={(value) =>
-            `/practitioners${buildQuery({ q, category: category ?? undefined, mode: value ?? undefined, ...loc })}`
-          }
-        />
-      </div>
+      {/* Mode — tucked into a slim disclosure (opens if one's active) */}
+      <details open={Boolean(mode)} className="group mb-6">
+        <summary className="inline-flex cursor-pointer list-none items-center gap-1 text-xs text-muted hover:text-ink">
+          <span className="transition-transform group-open:rotate-90">›</span>
+          Filters{mode ? ` · ${MODE_LABEL[mode]}` : ""}
+        </summary>
+        <div className="mt-2">
+          <FilterChips
+            options={MODE_OPTIONS}
+            current={mode ?? null}
+            build={(value) =>
+              `/practitioners${buildQuery({ q, category: category ?? undefined, mode: value ?? undefined, ...loc })}`
+            }
+          />
+        </div>
+      </details>
 
       {/* Results */}
       {practitioners.length === 0 ? (

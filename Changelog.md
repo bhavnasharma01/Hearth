@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 31 (2026-07-02)
+
+*Cleaner directory: the four stacked filter blocks are consolidated into one search row + a chip strip. Builds clean; lint passes.*
+
+### Changed — directory filter bar (`/practitioners`)
+- Was **four stacked blocks** (near-me, search, category chips, mode chips) pushing results down. Now:
+  - **One row:** a search bar (with a 🔍 icon) + a compact **📍 Near me** button.
+  - **Category chips** on a single scrolling line below.
+  - **Mode** moved into a slim collapsible **"Filters"** disclosure (`<details>`, auto-opens when a mode is active) — no client JS, still URL-driven.
+- **`LocationControl` rewritten to be compact:** inactive = a single "📍 Near me" pill (with a reveal-on-demand "type a place" fallback); active = a slim pill with an **inline radius dropdown** + clear ✕ (was a full box with a separate radius chip row). Also used by the (hidden) events page.
+- Tidied the page subtitle (dropped the "we trust" over-claim, matching the honest-copy pass).
+
+### Docs
+- `Design.md`, `Readme.md`, `Changelog.md` → Build 31.
+
+---
+
 ## v0.1.0 — Build 30 (2026-07-02)
 
 *UX: settled on a larger avatar centered above the name/practice fields — the classic profile-creation look. Builds clean; lint passes.*

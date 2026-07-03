@@ -6,10 +6,12 @@ import { useRouter, useSearchParams } from "next/navigation";
 const RADII = [5, 10, 25, 50];
 
 /**
- * "Near me" control shared by the Events and Practitioners pages. Sets ?lat=&lng=
- * &radius= on the current path (preserving other filters) so the server can sort
- * nearest-first and filter by radius. Location is used only to build the URL — it
- * is never sent anywhere else or stored on a server (privacy-first).
+ * Compact "near me" control shared by the directory (and events). It sets
+ * ?lat=&lng=&radius= on the current path (preserving other filters) so the server
+ * sorts nearest-first and filters by radius — location is used only to build the
+ * URL, never stored or sent elsewhere (privacy-first). Inactive it's a single
+ * "📍 Near me" pill (with a reveal-on-demand "type a place" fallback); active it's
+ * a slim pill with an inline radius dropdown + clear.
  */
 export function LocationControl({ basePath }: { basePath: string }) {
   const router = useRouter();
@@ -19,6 +21,7 @@ export function LocationControl({ basePath }: { basePath: string }) {
 
   const [busy, setBusy] = useState(false);
   const [manual, setManual] = useState("");
+  const [showManual, setShowManual] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   function go(next: URLSearchParams) {
@@ -37,7 +40,8 @@ export function LocationControl({ basePath }: { basePath: string }) {
   function useMyLocation() {
     setError(null);
     if (!("geolocation" in navigator)) {
-      setError("Location isn’t available in this browser.");
+      setError("Location isn’t available here — type a place instead.");
+      setShowManual(true);
       return;
     }
     setBusy(true);
@@ -48,9 +52,10 @@ export function LocationControl({ basePath }: { basePath: string }) {
       },
       (err) => {
         setBusy(false);
+        setShowManual(true);
         setError(
           err.code === err.PERMISSION_DENIED
-            ? "Location permission was denied — you can type a place instead."
+            ? "Permission denied — type a place instead."
             : "Couldn’t get your location — try typing a place.",
         );
       },
@@ -76,9 +81,9 @@ export function LocationControl({ basePath }: { basePath: string }) {
     }
   }
 
-  function setRadius(r: number) {
+  function setRadius(r: string) {
     const next = new URLSearchParams(params.toString());
-    next.set("radius", String(r));
+    next.set("radius", r);
     go(next);
   }
 
@@ -92,62 +97,69 @@ export function LocationControl({ basePath }: { basePath: string }) {
 
   if (active) {
     return (
-      <div className="rounded-xl border border-line bg-sand/40 px-3 py-2.5 text-sm">
-        <div className="flex items-center justify-between gap-2">
-          <span className="font-medium text-forest-deep">
-            📍 Nearest first · within {radius} km
-          </span>
-          <button
-            onClick={clear}
-            className="text-xs text-muted underline hover:text-ink"
-          >
-            Clear
-          </button>
-        </div>
-        <div className="mt-2 flex gap-1.5">
+      <div className="flex shrink-0 items-center gap-1.5 rounded-full border border-forest/30 bg-sand/50 px-3 py-1.5 text-sm">
+        <span className="font-medium text-forest-deep">📍 within</span>
+        <select
+          value={radius}
+          onChange={(e) => setRadius(e.target.value)}
+          aria-label="Search radius"
+          className="rounded bg-transparent font-medium text-forest-deep outline-none"
+        >
           {RADII.map((r) => (
-            <button
-              key={r}
-              onClick={() => setRadius(r)}
-              className={`rounded-full px-2.5 py-0.5 text-xs transition-colors ${
-                String(r) === radius
-                  ? "bg-forest text-cream"
-                  : "border border-line bg-card text-muted hover:bg-sand"
-              }`}
-            >
+            <option key={r} value={r}>
               {r} km
-            </button>
+            </option>
           ))}
-        </div>
+        </select>
+        <button
+          type="button"
+          onClick={clear}
+          aria-label="Clear location"
+          className="ml-0.5 text-muted hover:text-clay"
+        >
+          ✕
+        </button>
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
-      <button
-        onClick={useMyLocation}
-        disabled={busy}
-        className="shrink-0 rounded-full border border-forest/30 bg-card px-4 py-2 text-sm font-medium text-forest transition-colors hover:bg-sand disabled:opacity-60"
-      >
-        📍 {busy ? "Locating…" : "Near me"}
-      </button>
-      <form onSubmit={submitManual} className="flex flex-1 gap-2">
-        <input
-          value={manual}
-          onChange={(e) => setManual(e.target.value)}
-          placeholder="or enter a neighbourhood / city"
-          className="w-full rounded-full border border-line bg-card px-3 py-2 text-sm outline-none focus:border-sage"
-        />
+    <div className="shrink-0">
+      <div className="flex items-center gap-2">
         <button
-          type="submit"
+          type="button"
+          onClick={useMyLocation}
           disabled={busy}
-          className="shrink-0 rounded-full bg-forest px-4 py-2 text-sm font-medium text-cream hover:bg-forest-deep disabled:opacity-60"
+          className="rounded-full border border-forest/30 bg-card px-4 py-2.5 text-sm font-medium text-forest transition-colors hover:bg-sand disabled:opacity-60"
         >
-          Go
+          📍 {busy ? "Locating…" : "Near me"}
         </button>
-      </form>
-      {error && <p className="text-xs text-clay">{error}</p>}
+        <button
+          type="button"
+          onClick={() => setShowManual((v) => !v)}
+          className="text-xs text-muted underline hover:text-ink"
+        >
+          type a place
+        </button>
+      </div>
+      {showManual && (
+        <form onSubmit={submitManual} className="mt-2 flex gap-2">
+          <input
+            value={manual}
+            onChange={(e) => setManual(e.target.value)}
+            placeholder="Neighbourhood or city"
+            className="w-44 rounded-full border border-line bg-card px-3 py-1.5 text-sm outline-none focus:border-sage"
+          />
+          <button
+            type="submit"
+            disabled={busy}
+            className="rounded-full bg-forest px-3 py-1.5 text-sm font-medium text-cream hover:bg-forest-deep disabled:opacity-60"
+          >
+            Go
+          </button>
+        </form>
+      )}
+      {error && <p className="mt-1 text-xs text-clay">{error}</p>}
     </div>
   );
 }
