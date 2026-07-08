@@ -68,9 +68,6 @@ export async function updateListing(
   if (missing.length > 0) {
     return { status: "error", message: `Please add: ${missing.join("; ")}.` };
   }
-  if (categorySlugs.length > 3) {
-    return { status: "error", message: "Please choose up to 3 categories." };
-  }
 
   const supabase = getSupabaseAdmin();
   if (!supabase) {

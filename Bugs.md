@@ -22,6 +22,7 @@
 
 ## Resolved
 
+- [x] 🟠 **Category picker let you tick more than 3, then blocked the submit.** *(Build 39)* The "up to 3" cap lived only in the server actions, so the form happily accepted more selections and then failed on submit (bit at least two testers). Per the July 6 call decision the cap is **removed entirely**: both `submitPractitioner` and `updateListing` now require only ≥ 1 category, and the form hint reads "choose all that apply."
 - [x] 🟠 **Instagram button went to a broken link.** *(Build 26)* A practitioner usually enters a handle (`@sarah` / `sarah`), and the contact button used `externalHref`, producing `https://sarah` (a dead link). Added `instagramUrl()` — normalizes a handle, `instagram.com/handle`, or a full URL into `https://instagram.com/<handle>`; used on the card + profile.
 - [x] 🟠 **Instagram-only listings were blocked.** *(Build 17)* The at-least-one-contact rule (app validation + DB `CHECK`) counted WhatsApp/Email/Website but **not** Instagram, while the add-practitioner form grouped all four as "at least one required" — so an Instagram-only submit failed. Instagram now counts, in both the validation and the constraint (migration `0003_instagram_contact.sql`).
 - [x] 🟠 **Practitioners could vanish from "near me".** *(Build 16)* `area` was optional, so a location-less (or ungeocodable) listing never got coordinates and dropped out of distance search. `area` is now required and entered via the type-ahead `AddressAutocomplete`, which pins area-level coords on submit.

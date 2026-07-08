@@ -4,6 +4,30 @@
 
 ---
 
+## v0.1.0 — Build 39 (2026-07-08)
+
+*First batch of action items from the July 6 feedback call with Curtis & Anat (transcript at the repo root). Builds clean; lint passes.*
+
+### Fixed
+- **Category cap removed** (call decision). The form let testers tick more than 3 categories and then blocked the submit ("Please choose up to 3 categories") — bit Josh and others. Both `submitPractitioner` and `updateListing` now require only **at least one** category, no maximum; the form hint reads "choose all that apply". Logged in `Bugs.md` → Resolved.
+
+### Added
+- **Category rail swipe affordance** (Anat's "arrows" feedback: testers assumed the visible categories were all there were). New client `ScrollRail` wrapper (`src/components/scroll-rail.tsx`): a soft edge fade + a round ‹ › chevron button on whichever side hides more content, hidden at the ends; tapping nudges the rail by ~70% of its width. Only the affordance is client-side — the rail's links stay server-rendered (`CategoryRail` keeps its `build` function prop, which can't cross the client boundary).
+- **Emoji auto-match for admin-added categories.** `KEYWORD_ICONS` in `category-rail.tsx` matches words in a category's name to an icon (e.g. "Voice Activation" → 🎤, "…Retreats" → ⛺), so new categories no longer render the neutral `✻` (now only a last resort). Seeded categories keep their hand-picked `CATEGORY_META` entries.
+- **10 new palette explorations (31–40, "Earthy heart")** on `/palette-explorations.html` (root + `public/` copies in sync; page now says 40 directions in four moods). Per the call: the middle path — mid-tone headers, neither the deep night of round one nor the pale tints, in heart-and-earth colors (terracotta, rose clay, cedar, ochre, olive, sage, stone, adobe, rosewood, moss). For choosing a direction only; no live reskin yet.
+
+### Changed
+- **Home is orientation-only** (Anat's feedback: the first page confused people with categories + practitioner previews). The ceremonial hero stays at full scale, now with exactly two doors in: a gold **"Find a practitioner"** button and the outline **"＋ Add your practice"** button (plus a quiet events link when `EVENTS_ENABLED`). The in-hero search, "Browse by need" rail, and directory peek were removed — search + rail already live on `/practitioners`. Home no longer fetches data (static page; `force-dynamic` dropped).
+
+### Docs
+- `Product.md` — form says category "(one or more)"; taxonomy cap note; Home description; **new open question §11.7: retreats parked** (no directory category — likely home is the events layer when it returns; WhatsApp channel as stopgap).
+- `Architecture.md` — join-table note, Home line in the app structure, §9 current-build blurb refreshed.
+- `Design.md` — §3 rail bullet (ScrollRail + keyword icons), §4 Home rewritten as orientation-only.
+- `Claude.md` — category conventions (no cap, keyword icons, ScrollRail/server-component constraint), `EVENTS_ENABLED` surface list.
+- `Bugs.md` — category-cap bug logged as Resolved (Build 39). `Readme.md`, `Changelog.md` → Build 39.
+
+---
+
 ## v0.1.0 — Build 38 (2026-07-02)
 
 *Removed every em dash from user-visible copy (69 of them), per Bhavna's editorial rule. Builds clean; lint passes.*

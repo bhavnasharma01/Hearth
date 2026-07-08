@@ -63,7 +63,7 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 - **`practitioners`** — the directory. `status` (`pending`/`live`/`hidden`/`rejected`), `auto_check`, `flag_count`, `is_member`, `accepting_clients`, `featured`, `source`, `search_vector`, `slug` (for `/p/slug`), and `manage_token` (a per-listing secret capability for the owner's edit link — **column-revoked from public roles**). DB `CHECK`: at least one of WhatsApp/email/website/Instagram.
 - **`categories`** — taxonomy table (seeded with 11), admin-extendable; `sort_order`, `active`.
-- **`practitioner_categories`** — many-to-many join (a practitioner holds up to ~3).
+- **`practitioner_categories`** — many-to-many join (a practitioner holds one or more; the 3-cap was removed in Build 39).
 - **`practitioner_services`** — the "what I offer" menu (`title`, optional `description`/`price_note`, `sort_order`), managed from the owner's `/manage` page. Public-read for live practitioners; service-role writes. *(Build 25, migration `0007`.)*
 - **`events`** — native events. `host_practitioner_id` (links to directory), `start_at`/`end_at`, `mode`, `cost_note`, `recurrence_rule` (RRULE), `status`, `source`, `external_id` (GCal dedupe), `search_vector`.
 - **`reports`** — polymorphic flagging (one of `practitioner_id`/`event_id`); `reporter_contact` for dedupe (a field, not a login); `reason`, `status`.
@@ -83,7 +83,7 @@ route group). Event pages exist but are **hidden** behind `EVENTS_ENABLED`.
 ```
 src/app
   layout.tsx                    # root layout (SiteHeader/Footer, fonts, metadata)
-  page.tsx                      # Home (peek at the directory)
+  page.tsx                      # Home (orientation only: two doors in)
   icon.svg                      # Hearth-flame favicon
   practitioners/page.tsx        # directory: search + filters + cards
   p/[slug]/page.tsx             # practitioner profile + their events
@@ -197,4 +197,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 22** (practitioner-only pilot: steward email alerts with recipients decoupled from admin access, report-a-practitioner everywhere, shareable/richer profiles, required geocoded location, Instagram-as-contact, and a private user-testing feedback board — with the Events layer built but hidden behind one flag; Builds 19 & 22 were documentation audits, Build 20 added the palette-review page).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 39** (practitioner-only pilot in user testing: editable listings via manage links, avatar uploads, services menus, steward email alerts, and a private feedback board — the Events layer is built but hidden behind one flag).

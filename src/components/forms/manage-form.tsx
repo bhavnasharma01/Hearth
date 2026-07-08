@@ -90,7 +90,7 @@ export function ManageForm({
       <fieldset>
         <legend className={labelCls}>
           Category <span className="text-clay">*</span>{" "}
-          <span className="font-normal text-muted">(choose up to 3)</span>
+          <span className="font-normal text-muted">(choose all that apply)</span>
         </legend>
         <div className="mt-2 flex flex-wrap gap-2">
           {categories.map((c) => (

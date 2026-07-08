@@ -58,7 +58,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 
 ## 5. Core experience
 
-**Home** — warm one-line welcome + a peek at both worlds (next few events, featured/just-added practitioners), each tapping into its full view. Two tabs: **Practitioners** and **Events**.
+**Home** — orientation only (July 6 call, Build 39): the warm hero says what Hearth is, then two doors in — **Find a practitioner** and **＋ Add your practice** (plus a quiet events link when that layer is on). Search, categories, and content previews live on the tabs themselves, so the first screen never competes for attention. Two tabs: **Practitioners** and **Events**.
 
 **Events tab** — default "Upcoming" card feed grouped *This week / Next week / Later*; cards show title, date/time, in-person/online + location, short description, cost note (e.g. "PWYC"), flyer, and a **View / Register** button. Search + filter by category/type, mode, date. Optional month-grid view. Prominent **➕ Add an event**.
 
@@ -77,7 +77,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 ## 7. Forms (what we ask)
 
 ### Practitioner "add yourself" form
-**Required (one screen):** Name · Category (up to 3) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins area-level coordinates so the listing reliably appears in "near me" — general neighbourhood/city, never a home address) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website/Instagram) · Community agreement.
+**Required (one screen):** Name · Category (one or more) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins area-level coordinates so the listing reliably appears in "near me" — general neighbourhood/city, never a home address) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website/Instagram) · Community agreement.
 **Optional enrichment:** Practice/business name · Longer bio · Photo/logo · Instagram · Website/booking link · Pricing note · Languages spoken · Keywords/offerings (search) · "Are you a community member?" (→ badge).
 *Deliberately not asked in v1:* credential/certification gating (trust-based, not certificate-based).
 
@@ -104,7 +104,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 
 Stored as a **table**, not hardcoded, so admins add categories without a developer. v1 seed (11):
 Bodywork & Massage · Somatic & Movement · Energy Healing · Manual & Physical Therapies · Mental & Emotional Wellbeing · Ceremony & Plant Medicine · Spiritual Guidance · Nutrition & Herbalism · Classes, Workshops & Facilitation · Creative & Expressive Arts · Conscious Business & Other.
-A practitioner may hold up to ~3.
+A practitioner may hold as many categories as apply — the old 3-cap was removed in Build 39 (July 6 call decision: the form let testers tick more than 3, then blocked the submit).
 
 ---
 
@@ -136,3 +136,4 @@ A practitioner may hold up to ~3.
 4. Brand — existing colours/logo from Anat & Curtis, or design from scratch?
 5. Initial admins — Bhavna + Anat + Curtis?
 6. Endorsements — park for v2 or rule out entirely?
+7. **Retreats — parked (July 6 call).** A real community need (people host retreats in Ontario and abroad) with no good home yet. Decided **against** a practitioner-directory category: a directory row can't carry dates, and seekers don't look for retreats in a directory (Anat's end-user argument). Likely home is the events layer when it returns; a WhatsApp retreats-only channel is the stopgap. Revisit when `EVENTS_ENABLED` flips back on.
