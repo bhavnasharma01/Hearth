@@ -26,7 +26,12 @@ export async function setPractitionerStatus(fd: FormData) {
   const id = str(fd, "id");
   const status = str(fd, "status");
   if (!id || !PRACTITIONER_STATUSES.includes(status)) return;
-  await sb.from("practitioners").update({ status }).eq("id", id);
+  const { error } = await sb.from("practitioners").update({ status }).eq("id", id);
+  if (error) {
+    // Don't fail silently — a swallowed error here looks like "Hide did nothing."
+    console.error("setPractitionerStatus:", error.message);
+    throw new Error(`Couldn't update the listing: ${error.message}`);
+  }
   revalidatePath("/admin/moderation");
   revalidatePath("/admin/listings");
   revalidatePath("/practitioners");
@@ -37,7 +42,11 @@ export async function setEventStatus(fd: FormData) {
   const id = str(fd, "id");
   const status = str(fd, "status");
   if (!id || !EVENT_STATUSES.includes(status)) return;
-  await sb.from("events").update({ status }).eq("id", id);
+  const { error } = await sb.from("events").update({ status }).eq("id", id);
+  if (error) {
+    console.error("setEventStatus:", error.message);
+    throw new Error(`Couldn't update the event: ${error.message}`);
+  }
   revalidatePath("/admin/moderation");
   revalidatePath("/admin/events");
   revalidatePath("/events");

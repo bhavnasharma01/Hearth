@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 40 (2026-07-08)
+
+*Admin "Hide" appeared not to work — diagnosed as a feedback/UX gap, not a data bug, and fixed the feedback. Builds clean; lint passes.*
+
+### Fixed
+- **Admin "Hide" gave no visible feedback on `/admin/listings`.** Reported as "Hide does nothing, Delete works." Confirmed by reproducing the exact service-role `update({ status: 'hidden' })` against the live DB — it persists correctly, and a hidden listing is already removed from the **public** directory (public reads are `status = 'live'` only). The confusion: on the admin screen a hidden row **stays** (so a steward can restore it) and only a small "LIVE → HIDDEN" label changed, whereas Delete removes the row — so Hide looked inert by comparison.
+  - `/admin/listings` now shows a **coloured status badge** (live / hidden / pending / rejected), **dims** hidden/rejected rows, and adds a summary line (*"N total · N live · N hidden. Hidden listings stay here so you can restore them, but they don't show in the public directory."*).
+  - `setPractitionerStatus` and `setEventStatus` now **surface DB errors** (log + throw) instead of swallowing them, so a genuine future failure can't masquerade as "the button did nothing."
+
+### Docs
+- `Bugs.md` — logged as Resolved (Build 40). `Readme.md`, `Changelog.md` → Build 40.
+
+---
+
 ## v0.1.0 — Build 39 (2026-07-08)
 
 *First batch of action items from the July 6 feedback call with Curtis & Anat (transcript at the repo root). Builds clean; lint passes.*
