@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 55 (2026-07-09)
+
+*The private edit link is no longer shown after adding a practice (accounts made it obsolete there), and the footer sheds its redundant links. Builds clean; lint passes.*
+
+### Changed
+- **Success screen: no more "your private edit link" box.** Since adding a practice requires sign-in (Build 47), every new listing is account-owned — so the screen now says *"Your listing is linked to your account. Update it anytime from My listing."* The manage token is **no longer returned to the client at all** (`submitPractitioner` keeps it server-side; `manageToken` dropped from `FormState`) — one less secret in the browser. Manage links still exist for pre-account listings, and admins can still copy them from `/admin/listings`.
+- **Footer: removed the link row** (Browse practitioners · Add your practice) added in Build 49 — it duplicated the header nav. Back to the calm sign-off: flame, gold rule, one warm line. Future footer candidates (an About page, community guidelines, a steward contact) wait until those destinations exist.
+
+### Docs
+- `Architecture.md` (owner-edit data flow), `Claude.md` (manage-token bullet: no longer surfaced publicly). `Readme.md`, `Changelog.md` → Build 55.
+
+---
+
 ## v0.1.0 — Build 54 (2026-07-09)
 
 *Accounts Phase A2: email/password sign-in, beside Google. Builds clean; lint passes.*

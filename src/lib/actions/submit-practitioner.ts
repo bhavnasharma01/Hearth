@@ -174,14 +174,15 @@ export async function submitPractitioner(
   revalidatePath("/practitioners");
   revalidatePath("/");
 
-  const manageToken = (inserted as { manage_token: string }).manage_token;
+  // Note: the listing's manage_token is deliberately NOT returned to the
+  // client. Submissions require sign-in, so the listing is account-owned and
+  // edited from /my-listing — no secret link to surface or lose (Build 55).
 
   if (status === "live") {
     return {
       status: "success",
       pendingReview: false,
       slug: inserted.slug,
-      manageToken,
       message: "You’re live in the directory! 🌿",
     };
   }
@@ -205,7 +206,6 @@ export async function submitPractitioner(
   return {
     status: "success",
     pendingReview: true,
-    manageToken,
     message:
       "Thank you. your listing was received and will appear right after a quick review.",
   };

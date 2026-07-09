@@ -45,22 +45,15 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
           </div>
         )}
 
-        {state.manageToken && (
-          <div className="mx-auto mt-5 max-w-sm rounded-xl border border-line bg-sand/40 p-4 text-left">
-            <p className="text-sm font-medium text-ink">
-              ✎ Your private edit link
-            </p>
-            <p className="mb-2 text-xs text-muted">
-              Bookmark this. It’s how you update your listing later (no account
-              needed). Keep it to yourself.
-            </p>
-            <ShareButton
-              url={siteUrl(`/manage/${state.manageToken}`)}
-              label="Copy edit link"
-              showUrl
-            />
-          </div>
-        )}
+        {/* The listing is linked to the signed-in account — editing happens
+            from "My listing", so no secret edit link to surface or lose. */}
+        <p className="mx-auto mt-5 max-w-sm text-sm text-muted">
+          Your listing is linked to your account. Update it anytime from{" "}
+          <Link href="/my-listing" className="text-forest underline">
+            My listing
+          </Link>
+          .
+        </p>
 
         <div className="mt-6 flex flex-wrap justify-center gap-3">
           {live && (

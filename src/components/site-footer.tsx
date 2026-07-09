@@ -1,6 +1,8 @@
-import Link from "next/link";
 import { Logo } from "@/components/logo";
 
+/** Calm sign-off only — no link row (it duplicated the header nav; Build 55).
+ *  Future candidates live in Design.md §4 notes: an About page, community
+ *  guidelines, or a steward contact — once those destinations exist. */
 export function SiteFooter() {
   return (
     <footer className="mt-16 bg-night text-on-night/80">
@@ -11,20 +13,6 @@ export function SiteFooter() {
           Made with care by our community, in a spirit of respect and mutual
           support.
         </p>
-        <nav className="mt-5 flex flex-wrap gap-x-6 gap-y-2 text-sm">
-          <Link
-            href="/practitioners"
-            className="text-on-night/60 transition-colors hover:text-on-night"
-          >
-            Browse practitioners
-          </Link>
-          <Link
-            href="/add-practitioner"
-            className="text-on-night/60 transition-colors hover:text-on-night"
-          >
-            Add your practice
-          </Link>
-        </nav>
       </div>
     </footer>
   );
