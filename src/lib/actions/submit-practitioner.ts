@@ -106,6 +106,22 @@ export async function submitPractitioner(
           { onConflict: "id", ignoreDuplicates: true },
         );
       if (!profileErr) owner_user_id = authUser.id;
+
+      // One listing per account (Build 56): a profile IS the person's page —
+      // extra offerings belong inside it (categories, services, keywords),
+      // not in duplicate listings. The add page shows a friendly gate for
+      // this; the check here is the backstop.
+      const { count } = await supabase
+        .from("practitioners")
+        .select("id", { count: "exact", head: true })
+        .eq("owner_user_id", authUser.id);
+      if ((count ?? 0) > 0) {
+        return {
+          status: "error",
+          message:
+            "Your account already has a listing. You can edit it anytime from My listing.",
+        };
+      }
     }
   }
 

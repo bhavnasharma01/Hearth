@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 56 (2026-07-09)
+
+*One listing per account, and My listing now shows everything an account owns. Builds clean; lint passes.*
+
+### Fixed
+- **An account could create unlimited listings, but My listing showed only the newest** — the rest were stranded (found in Bhavna's testing). `/my-listing` now lists **every** listing the account owns: exactly one goes straight to the editor as before; several show a chooser (name + status badge + View/Open), each opening the full editor + delete via `?listing=<id>` (owner-verified server-side). So stray duplicates from testing are now visible and removable.
+
+### Added — the one-listing-per-account rule
+- **Decided: one listing per account.** A listing is the person's page; more offerings belong inside it (unlimited categories, the services menu, keywords), not in duplicates. Future events attach to the same account as separate objects (`host_practitioner_id`), so this doesn't constrain the events layer.
+- Enforced twice: the **add page** shows a friendly gate ("You already have a listing → Edit my listing"; stewards handle a genuine second practice on request), and **`submitPractitioner`** rejects a second create as the backstop.
+- **Claims stay permissive** on purpose — claiming a duplicate is how you get to delete it.
+
+### Docs
+- `Product.md` (practitioner persona), `Claude.md` (accounts conventions). `Readme.md`, `Changelog.md` → Build 56.
+
+---
+
 ## v0.1.0 — Build 55 (2026-07-09)
 
 *The private edit link is no longer shown after adding a practice (accounts made it obsolete there), and the footer sheds its redundant links. Builds clean; lint passes.*

@@ -153,25 +153,37 @@ export async function getListingByManageToken(
 }
 
 /**
- * The listing owned by a member (accounts Phase B), any status, with
- * categories. Service-role read — only ever render this to the signed-in
- * owner (the /my-listing page checks the session first).
+ * ALL listings owned by a member, any status, with categories — newest first.
+ * The rule is one listing per account (enforced on create since Build 56), but
+ * earlier testing produced multiples, and a claim can add one deliberately —
+ * so the owner surface must show everything they own, not silently pick one.
+ * Service-role read — only ever render to the verified owner.
  */
-export async function getListingByOwner(
+export async function getListingsByOwner(
   userId: string,
-): Promise<PractitionerWithCategories | null> {
+): Promise<PractitionerWithCategories[]> {
   const supabase = getSupabaseAdmin();
-  if (!supabase) return null;
+  if (!supabase) return [];
 
   const { data, error } = await supabase
     .from("practitioners")
     .select(CATEGORY_JOIN)
     .eq("owner_user_id", userId)
-    .limit(1)
-    .maybeSingle();
+    .order("created_at", { ascending: false });
 
-  if (error || !data) return null;
-  return flattenCategories(data);
+  if (error || !data) return [];
+  return data.map(flattenCategories);
+}
+
+/** Does this account already own a listing? (One-per-account rule, Build 56.) */
+export async function ownerHasListing(userId: string): Promise<boolean> {
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return false;
+  const { count } = await supabase
+    .from("practitioners")
+    .select("id", { count: "exact", head: true })
+    .eq("owner_user_id", userId);
+  return (count ?? 0) > 0;
 }
 
 /**

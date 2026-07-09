@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getCategories } from "@/lib/data/categories";
+import { ownerHasListing } from "@/lib/data/practitioners";
 import { getSessionUser } from "@/lib/account";
 import { PractitionerForm } from "@/components/forms/practitioner-form";
 
@@ -42,6 +43,40 @@ export default async function AddPractitionerPage() {
           </Link>
           <p className="mt-5 text-xs text-muted">
             Browsing the directory never needs an account.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  // One listing per account: a profile is the person's page — more offerings
+  // belong inside it, not in a second listing.
+  if (await ownerHasListing(user.id)) {
+    return (
+      <div className="mx-auto max-w-2xl px-4 py-8">
+        <header className="mb-6">
+          <h1 className="font-display text-3xl font-semibold text-ink">
+            Add your practice
+          </h1>
+        </header>
+        <div className="rounded-[var(--radius-card)] border border-line bg-card p-8 text-center">
+          <p className="font-display text-xl text-ink">
+            You already have a listing
+          </p>
+          <p className="mx-auto mt-2 max-w-sm text-sm text-muted">
+            Each account holds one listing, your page in the directory. Add new
+            offerings to it (categories, services, keywords) instead of creating
+            a second one.
+          </p>
+          <Link
+            href="/my-listing"
+            className="mt-5 inline-block rounded-full bg-forest px-6 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
+          >
+            Edit my listing
+          </Link>
+          <p className="mt-5 text-xs text-muted">
+            Genuinely run a second, separate practice? Message the stewards and
+            they&rsquo;ll set it up.
           </p>
         </div>
       </div>

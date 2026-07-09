@@ -50,7 +50,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 
 - **The Seeker** — needs "a good osteopath / breathwork facilitator" occasionally; searches/filters and taps to contact someone trusted.
 - **The Browser** — opens Hearth to see "what's happening this week"; events are the habit-forming hook, directory is the discovery.
-- **The Practitioner** — signs in with Google, adds themselves in ~2 minutes, gets a shareable `/p/slug` profile to post in WhatsApp, and edits (or deletes) it anytime from **"My listing"** — no link to remember. Pre-account listings still work via their private `/manage/<token>` link, which doubles as a claim path.
+- **The Practitioner** — signs in (Google or email), adds themselves in ~2 minutes, gets a shareable `/p/slug` profile to post in WhatsApp, and edits (or deletes) it anytime from **"My listing"** — no link to remember. **One listing per account** (Build 56): the listing is the person's page; more offerings go inside it (categories, services, keywords), and stewards handle the rare genuine second practice on request. Pre-account listings still work via their private `/manage/<token>` link, which doubles as a claim path. Future events will attach to the same account (an event is a separate object linked via `host_practitioner_id`, not a second listing).
 - **The Host** — adds an event in ~2 minutes; if a listed practitioner, the event links to their profile.
 - **The Steward / Admin** (Bhavna initially; Anat & Curtis) — manages categories, reviews the small suspicious fraction, acts on flags. ~1 minute, only when pinged.
 
