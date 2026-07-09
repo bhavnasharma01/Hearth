@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 52 (2026-07-09)
+
+*10 more palettes: the white space of round three, with heart-and-earth colour brought back. Builds clean.*
+
+### Added
+- **Palettes 51–60, "Heart & earth, fresh (round four)"** on `/palette-explorations.html` (now 60 directions, six moods; root + `public/` in sync). Bhavna liked round three's white space but wants heart-and-earth themes that aren't dull — so: clean bright grounds, white cards, and **vivid warm accents**. The set: **Ember on white** (coral ember on gallery white), **Marigold** (festival gold + deep leaf), **Rosewood fresh** (raspberry rose on porcelain), **Terra & sky** (terracotta with sky-washed chips), **Fig & fern** (fruit purple + young green), **Saffron & oxblood** (spice-market heat), **Moss & poppy** (deep moss, one red heart), **Cacao & rose gold** (ceremony, brightened), **Clementine & juniper** (citrus + evergreen), **Garnet & birch** (jewel warmth, Nordic bones).
+- All applyable via the one-block palette system in `globals.css`.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 52.
+
+---
+
 ## v0.1.0 — Build 51 (2026-07-09)
 
 *10 more palette explorations in the opposite direction: cool, clean, fresh. Builds clean.*
