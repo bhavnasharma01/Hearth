@@ -115,11 +115,6 @@ export default async function MyListingPage() {
           >
             ＋ Add your practice
           </Link>
-          <p className="mt-4 text-xs text-muted">
-            Added yourself before accounts existed, under a different email?
-            Open your private edit link while signed in and you can link that
-            listing to this account there.
-          </p>
         </div>
       )}
     </div>

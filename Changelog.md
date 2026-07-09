@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 49 (2026-07-08)
+
+*Three pieces of Bhavna's feedback: menu without emojis, footer copy reworded + quiet links, My-listing empty state decluttered. Builds clean; lint passes.*
+
+### Changed
+- **Account menu: no more emoji glyphs.** The "✎ / ↪" icons in the avatar menu felt off-brand; the rows are now plain, quiet typography ("My listing", "Sign out" in clay) — the panel design carries itself without icons.
+- **Footer reworded** from "A volunteer-run community resource, offered in a spirit of respect, care, and mutual support" to **"Made with care by our community, in a spirit of respect and mutual support."** — keeps the warmth, drops the volunteer-run emphasis. Also added a quiet footer link row (**Browse practitioners · Add your practice**) so the footer earns its space.
+- **My-listing empty state simplified:** removed the "added yourself before accounts existed? open your private edit link…" paragraph — with account sign-in, new listings are always account-linked, and the email-match claim card covers the pre-account cases; the edge case didn't earn a permanent paragraph. (The claim-by-manage-link path still works; it's just not advertised here.)
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 49.
+
+---
+
 ## v0.1.0 — Build 48 (2026-07-08)
 
 *Account menu: fixed the popup that never closed, and restyled it as a real menu. Builds clean; lint passes.*

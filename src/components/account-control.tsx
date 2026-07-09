@@ -109,23 +109,23 @@ export function AccountControl() {
               <p className="truncate text-xs text-muted">{user.email}</p>
             )}
           </div>
+          {/* Plain text rows — no icons (Build 49 feedback: emoji glyphs felt
+              off-brand in a menu; quiet typography carries it). */}
           <nav className="p-1.5">
             <Link
               href="/my-listing"
               role="menuitem"
               onClick={() => setOpen(false)}
-              className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-ink transition-colors hover:bg-sand"
+              className="block rounded-xl px-3 py-2 text-sm text-ink transition-colors hover:bg-sand"
             >
-              <span aria-hidden className="text-muted">✎</span>
               My listing
             </Link>
             <button
               type="button"
               role="menuitem"
               onClick={signOut}
-              className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm text-clay transition-colors hover:bg-clay/10"
+              className="block w-full rounded-xl px-3 py-2 text-left text-sm text-clay transition-colors hover:bg-clay/10"
             >
-              <span aria-hidden>↪</span>
               Sign out
             </button>
           </nav>
