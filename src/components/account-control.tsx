@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
@@ -8,15 +8,21 @@ import type { User } from "@supabase/supabase-js";
 
 /**
  * The header's quiet account corner: a "Sign in" link when logged out, a small
- * avatar with a menu (signed-in-as + sign out) when logged in. Client-side on
- * purpose — reading the session via cookies() in the header would force every
- * page dynamic (the home page is static since Build 39). "My listing" joins
- * the menu in accounts Phase B.
+ * avatar with a menu when logged in. Client-side on purpose — reading the
+ * session via cookies() in the header would force every page dynamic (the home
+ * page is static since Build 39).
+ *
+ * The menu is a controlled popover (not <details>): it closes when you pick an
+ * item, click/tap anywhere else, or press Escape — a <details> dropdown stays
+ * open after navigation, which read as broken (Build 48 feedback). Styled as a
+ * menu panel (identity header + hover rows), not stacked pill buttons.
  */
 export function AccountControl() {
   const router = useRouter();
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
+  const [open, setOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const supabase = getSupabaseBrowser();
@@ -30,7 +36,29 @@ export function AccountControl() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
+  // Dismiss on outside click/tap and on Escape while the menu is open.
+  useEffect(() => {
+    if (!open) return;
+    function onPointerDown(e: MouseEvent | TouchEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setOpen(false);
+      }
+    }
+    function onKeyDown(e: KeyboardEvent) {
+      if (e.key === "Escape") setOpen(false);
+    }
+    document.addEventListener("mousedown", onPointerDown);
+    document.addEventListener("touchstart", onPointerDown);
+    document.addEventListener("keydown", onKeyDown);
+    return () => {
+      document.removeEventListener("mousedown", onPointerDown);
+      document.removeEventListener("touchstart", onPointerDown);
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [open]);
+
   async function signOut() {
+    setOpen(false);
     await getSupabaseBrowser().auth.signOut();
     router.refresh();
   }
@@ -55,31 +83,54 @@ export function AccountControl() {
   const safeAvatar = avatar && /^https?:\/\//.test(avatar) ? avatar : null;
 
   return (
-    <details className="relative">
-      <summary
-        className="flex h-8 w-8 cursor-pointer list-none items-center justify-center overflow-hidden rounded-full bg-gold/20 bg-cover bg-center text-sm font-semibold text-gold-soft ring-1 ring-gold/40 [&::-webkit-details-marker]:hidden"
-        style={safeAvatar ? { backgroundImage: `url(${JSON.stringify(safeAvatar)})` } : undefined}
+    <div ref={menuRef} className="relative">
+      <button
+        type="button"
+        onClick={() => setOpen((v) => !v)}
         aria-label="Account menu"
+        aria-haspopup="menu"
+        aria-expanded={open}
+        className={`flex h-8 w-8 cursor-pointer items-center justify-center overflow-hidden rounded-full bg-gold/20 bg-cover bg-center text-sm font-semibold text-gold-soft ring-1 transition-shadow ${
+          open ? "ring-2 ring-gold" : "ring-gold/40 hover:ring-gold/70"
+        }`}
+        style={safeAvatar ? { backgroundImage: `url(${JSON.stringify(safeAvatar)})` } : undefined}
       >
         {!safeAvatar && name.charAt(0).toUpperCase()}
-      </summary>
-      <div className="absolute right-0 z-30 mt-2 w-56 rounded-xl border border-line bg-card p-3 text-left shadow-lg">
-        <p className="truncate text-xs text-muted">Signed in as</p>
-        <p className="truncate text-sm font-medium text-ink">{name}</p>
-        <Link
-          href="/my-listing"
-          className="mt-3 block w-full rounded-full bg-forest px-3 py-1.5 text-center text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
+      </button>
+
+      {open && (
+        <div
+          role="menu"
+          className="absolute right-0 z-30 mt-2 w-60 overflow-hidden rounded-2xl border border-line bg-card shadow-xl"
         >
-          My listing
-        </Link>
-        <button
-          type="button"
-          onClick={signOut}
-          className="mt-2 w-full rounded-full border border-line px-3 py-1.5 text-sm text-clay transition-colors hover:bg-clay/10"
-        >
-          Sign out
-        </button>
-      </div>
-    </details>
+          <div className="border-b border-line px-4 py-3">
+            <p className="truncate text-sm font-medium text-ink">{name}</p>
+            {user.email && (
+              <p className="truncate text-xs text-muted">{user.email}</p>
+            )}
+          </div>
+          <nav className="p-1.5">
+            <Link
+              href="/my-listing"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="flex items-center gap-2.5 rounded-xl px-3 py-2 text-sm text-ink transition-colors hover:bg-sand"
+            >
+              <span aria-hidden className="text-muted">✎</span>
+              My listing
+            </Link>
+            <button
+              type="button"
+              role="menuitem"
+              onClick={signOut}
+              className="flex w-full items-center gap-2.5 rounded-xl px-3 py-2 text-left text-sm text-clay transition-colors hover:bg-clay/10"
+            >
+              <span aria-hidden>↪</span>
+              Sign out
+            </button>
+          </nav>
+        </div>
+      )}
+    </div>
   );
 }

@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 48 (2026-07-08)
+
+*Account menu: fixed the popup that never closed, and restyled it as a real menu. Builds clean; lint passes.*
+
+### Fixed
+- **The avatar popup stayed open after choosing an option** (and after clicking elsewhere). Cause: it was a native `<details>` element, which only toggles via its own summary. Rebuilt as a controlled popover that closes on **item selection, any outside click/tap, and Escape**, with proper menu semantics (`aria-haspopup`/`aria-expanded`/`role="menu"`).
+
+### Changed
+- **Menu aesthetics: panel, not pills** (Bhavna's feedback that stacked pill buttons read as form controls, not a menu). Now a modern account panel: an identity header (name + email) above quiet full-width **hover rows** ("✎ My listing", "↪ Sign out" in clay), rounded-2xl card, soft shadow. The avatar button gains a gold ring state while the menu is open.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 48.
+
+---
+
 ## v0.1.0 — Build 47 (2026-07-08)
 
 *Accounts Phase B: own, claim, edit, and delete your listing from your account. Builds clean; lint passes.*
