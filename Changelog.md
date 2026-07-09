@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 53 (2026-07-09)
+
+*Hearth has a real address: myhearthapp.ca. Builds clean.*
+
+### Changed
+- **Canonical URL is now `https://myhearthapp.ca`** — `siteUrl()` (`src/lib/url.ts`) defaults to it, so steward-alert emails, share/copy-link buttons, and manage links all use the real domain. `hearthto.vercel.app` keeps working as an alias. `.env.example`, `Readme.md`, and the Google Sign-In guide's URL section updated.
+
+### Added
+- **`documentation/Domain Setup.md`** — Bhavna's click-by-click guide, in dependency order: **Part 1** attach the domain in Vercel (+ DNS options; do this first, links already point at the new domain) → **Part 2** Supabase URL configuration (Google Cloud needs no change) → **Part 3** verify the domain in Resend + set `RESEND_FROM` (unlocks steward alerts to any inbox / multiple admins) → **Part 4** Supabase custom SMTP via Resend (the prerequisite for email/password sign-in, wait for the build).
+
+### Docs
+- Doc maps (`Readme.md`, `Claude.md`) + memory updated. `Readme.md`, `Changelog.md` → Build 53.
+
+---
+
 ## v0.1.0 — Build 52 (2026-07-09)
 
 *10 more palettes: the white space of round three, with heart-and-earth colour brought back. Builds clean.*

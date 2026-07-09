@@ -43,9 +43,10 @@ Use your **personal Google account**, no new Gmail needed. This creates a "proje
    - The panel shows a "Callback URL"; confirm it matches what you pasted into Google in Part 1 (it should be the `…supabase.co/auth/v1/callback` address above).
    - Save.
 4. Left menu → **Authentication** → **URL Configuration**:
-   - **Site URL:** `https://hearthto.vercel.app`
-   - **Redirect URLs**, add both:
+   - **Site URL:** `https://myhearthapp.ca`
+   - **Redirect URLs**, add all three:
      ```
+     https://myhearthapp.ca/**
      https://hearthto.vercel.app/**
      http://localhost:3000/**
      ```

@@ -24,7 +24,7 @@ export function firstParam(
  */
 export function siteUrl(path = ""): string {
   const base = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://hearthto.vercel.app"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://myhearthapp.ca"
   ).replace(/\/$/, "");
   if (!path) return base;
   return `${base}${path.startsWith("/") ? "" : "/"}${path}`;

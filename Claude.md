@@ -25,6 +25,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **`Design.md`** — visual system, mobile-first UX, components, what to avoid.
 - **`Hearth - Database Schema.md`** + **`.mermaid`** — the full data model & ER diagram. **The authoritative schema.**
 - **`Google Sign-In Setup.md`** — Bhavna's click-by-click config guide for public accounts Phase A (Google OAuth client + Supabase provider). **Ordering rule inside is load-bearing:** public sign-ups must stay OFF until migration `0008` de-privileges `authenticated` (v1 RLS treats any signed-in user as admin).
+- **`Domain Setup.md`** — Bhavna's click-by-click guide for **myhearthapp.ca** (bought 2026-07-09): Vercel domain attach + DNS → Supabase URL config → **Resend domain verification** (`RESEND_FROM`, lifts the one-inbox alert limit) → Supabase SMTP (prerequisite for email/password sign-in). `siteUrl()` defaults to https://myhearthapp.ca since Build 53; hearthto.vercel.app remains an alias.
 - **`planning-archive/`** — original planning docs (North Star, Product Brief, Implementation Spec, Proposals, Anat & Curtis's message). **Preserved for provenance only**; their content is assimilated into the living docs. Don't edit them; cite them.
 
 **Other (non-`.md`):**

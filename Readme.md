@@ -2,10 +2,10 @@
 
 *The lasting, searchable home for the practitioners and events that **our** community vouches for.*
 
-**🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
+**🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 52
-*(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
+**Version:** 0.1.0 · **Build:** 53
+*(Status: **deployed & live** at myhearthapp.ca. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
 
@@ -70,6 +70,7 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
     ├── Hearth - Database Schema.md      ← full table-by-table data model
     ├── Hearth - Database Schema.mermaid ← ER diagram
     ├── Google Sign-In Setup.md          ← accounts Phase A: config guide (Google OAuth + Supabase)
+    ├── Domain Setup.md                  ← myhearthapp.ca: Vercel, Supabase URLs, Resend, SMTP
     └── planning-archive/          ← original planning docs (preserved for provenance;
                                       assimilated into the living docs above)
 ```
