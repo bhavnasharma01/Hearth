@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 43 (2026-07-08)
+
+*Real fix for "Hide doesn't remove a listing from the live site." Builds clean; lint passes.*
+
+### Fixed
+- **Hidden practitioners still appeared on the public directory — for a signed-in admin.** Hiding set `status = 'hidden'` correctly (the button flips to Publish), but the listing stayed on `/practitioners` when viewed **while logged into the admin panel**. Root cause: `getPractitioners` (and `getEvents`) filtered status via **RLS only**, with no explicit `.eq("status","live")`. RLS is viewer-dependent — the public server client uses the anon key **plus the visitor's session cookie**, so a logged-in admin is `authenticated`, and the `practitioners_admin_all` policy (`for all to authenticated using (true)`) grants them **every** status. So an admin saw hidden/pending rows that a real (logged-out) visitor never did. Confirmed: the anon key correctly hides them; the admin-level view (service role) leaked them.
+  - Fix: both public reads now filter **`status = 'live'` explicitly in the query** (matching `getPractitionerBySlug`/`getEventsByHost`, which already did), so the public list is correct no matter who's viewing. RLS stays as the anon backstop. Verified the filtered query excludes the hidden row even for an admin-level viewer.
+  - The **Reports tab "Hide listing"** button was never broken — it calls the same (working) hide action. It looked inert for the same reason, and because the report card stays in the inbox until you separately click **Dismiss reports** (that split is intentional: hiding a listing and clearing its flags are distinct steward decisions).
+
+### Docs
+- `Security.md` (§3 — RLS is viewer-dependent; public reads filter status explicitly), `Claude.md` (two-clients gotcha), `Bugs.md` (logged as Resolved, 🔴). `Readme.md`, `Changelog.md` → Build 43.
+
+---
+
 ## v0.1.0 — Build 42 (2026-07-08)
 
 *Category chips now show whether they're selected, not just a colour change. Builds clean; lint passes.*

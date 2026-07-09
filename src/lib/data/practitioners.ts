@@ -41,8 +41,15 @@ const CATEGORY_JOIN =
 
 /**
  * Live practitioners matching the query, each with its categories.
- * RLS guarantees only `status = 'live'` rows are ever returned.
  * Returns [] until the DB is connected, so callers can render empty states.
+ *
+ * We filter `status = 'live'` **explicitly** — not just via RLS. RLS is viewer-
+ * dependent: a logged-in admin/steward (whose session cookie rides along on the
+ * anon-key server client) is `authenticated`, and the `practitioners_admin_all`
+ * policy grants them every status. Without this filter, an admin browsing the
+ * public directory would see hidden/pending listings that a real visitor can't —
+ * which reads as "Hide didn't work." The explicit filter makes the public list
+ * correct regardless of who's viewing; RLS remains the backstop for true anon.
  */
 export async function getPractitioners(
   query: PractitionerQuery = {},
@@ -53,6 +60,7 @@ export async function getPractitioners(
   let q = supabase
     .from("practitioners")
     .select(CATEGORY_JOIN)
+    .eq("status", "live")
     .order("featured", { ascending: false })
     .order("created_at", { ascending: false });
 

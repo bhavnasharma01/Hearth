@@ -25,8 +25,11 @@ const CATEGORY_JOIN =
 
 /**
  * Live events matching the query, each with its (optional) category, ordered by
- * start time. RLS guarantees only `status = 'live'` rows are returned.
- * Returns [] until the DB is connected.
+ * start time. Returns [] until the DB is connected.
+ *
+ * Filters `status = 'live'` **explicitly** (not just via RLS) — same reason as
+ * getPractitioners: RLS grants a logged-in admin every status, so relying on it
+ * alone would leak hidden/pending events into the public feed for admin viewers.
  */
 export async function getEvents(
   query: EventQuery = {},
@@ -37,6 +40,7 @@ export async function getEvents(
   let q = supabase
     .from("events")
     .select(CATEGORY_JOIN)
+    .eq("status", "live")
     .order("start_at", { ascending: true });
 
   if (query.upcomingOnly) q = q.gte("start_at", new Date().toISOString());
