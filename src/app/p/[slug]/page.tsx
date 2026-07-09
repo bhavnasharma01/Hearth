@@ -74,7 +74,7 @@ export default async function PractitionerProfile({
 
       {/* Header card */}
       <header className="mt-4 overflow-hidden rounded-[var(--radius-card)] border border-line bg-card">
-        <div className="h-16 bg-gradient-to-r from-night to-forest-deep sm:h-20" />
+        <div className="h-16 bg-gradient-to-r from-night to-night-2 sm:h-20" />
         <div className="px-5 pb-5 sm:px-6">
           <div className="-mt-10 flex items-end gap-4 sm:-mt-12">
             {safePhoto ? (

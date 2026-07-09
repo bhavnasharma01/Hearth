@@ -34,7 +34,7 @@ export function SiteHeader() {
                 className={`rounded-full px-3 py-1.5 transition-colors ${
                   isActive(item.href)
                     ? "bg-gold/15 text-gold-soft"
-                    : "text-cream/70 hover:bg-white/5 hover:text-cream"
+                    : "text-on-night/70 hover:bg-on-night/5 hover:text-on-night"
                 }`}
               >
                 {item.label}

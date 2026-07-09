@@ -44,6 +44,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **Linked layers** — wire `events.host_practitioner_id` so directory↔events cross-discovery works.
 - **Search is a DB feature** — use Postgres `search_vector`, not client-side filtering hacks.
 - **Mobile-first, calm aesthetic** — soft greens/whites, rounded cards (see `Design.md`). No Yelp-style ratings, no default month-grid calendar, no corporate vibes.
+- **Reskinning = swap one block in `src/app/globals.css`.** All colours are role tokens (`@theme`); components never hardcode hexes. The file has an ACTIVE PALETTE block + a library of full value-sets (original "rich & sacred" preserved there). **Currently live: "Rice paper" trial (Build 50).** Rules that keep palettes swappable: text on header/hero/footer/banners uses **`on-night`** (never `cream`, never `bg-white/5` overlays — use `bg-on-night/5`); text on gold fills uses **`on-gold`** (never `night`); `cream` = text on forest/clay fills only; gradients stay within the `night`/`night-2` pair; the flame reads `flame-*` tokens. Static exception: the favicon `src/app/icon.svg`.
 
 ---
 

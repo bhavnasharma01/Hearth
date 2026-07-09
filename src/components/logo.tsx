@@ -1,6 +1,7 @@
-/** Hearth flame mark + wordmark. The flame is antique gold with a brighter inner
- *  ember and a soft glow so it pops on the deep night header; the wordmark tone
- *  adapts to the surface ("light" on dark, "dark" on parchment). */
+/** Hearth flame mark + wordmark. The flame's gradient and glow come from the
+ *  palette's `flame-*` tokens (see globals.css) so a reskin recolours it; the
+ *  wordmark tone adapts to the surface ("light" = on a night surface, "dark" =
+ *  on parchment). */
 export function Logo({
   tone = "dark",
   className = "",
@@ -13,7 +14,7 @@ export function Logo({
       <Flame className="h-7 w-7" />
       <span
         className={`font-display text-[1.35rem] font-semibold tracking-tight ${
-          tone === "light" ? "text-cream" : "text-forest-deep"
+          tone === "light" ? "text-on-night" : "text-forest-deep"
         }`}
       >
         Hearth
@@ -25,14 +26,14 @@ export function Logo({
 export function Flame({ className = "" }: { className?: string }) {
   return (
     <span
-      className={`inline-block drop-shadow-[0_0_6px_rgba(224,196,128,0.6)] ${className}`}
+      className={`inline-block drop-shadow-[0_0_6px_var(--color-flame-glow)] ${className}`}
     >
       <svg viewBox="0 0 24 24" aria-hidden className="h-full w-full">
         <defs>
           <linearGradient id="hearth-flame" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0" stopColor="#f7e2a3" />
-            <stop offset="0.55" stopColor="#d4ad54" />
-            <stop offset="1" stopColor="#b6892b" />
+            <stop offset="0" stopColor="var(--color-flame-hi)" />
+            <stop offset="0.55" stopColor="var(--color-flame-mid)" />
+            <stop offset="1" stopColor="var(--color-flame-lo)" />
           </linearGradient>
         </defs>
         {/* outer flame */}
@@ -42,7 +43,7 @@ export function Flame({ className = "" }: { className?: string }) {
         />
         {/* brighter inner ember */}
         <path
-          fill="#fdf4d6"
+          fill="var(--color-flame-core)"
           opacity="0.9"
           d="M12.1 12.4c.45 1.2-.8 1.8-.8 3 0 1 .8 1.8 1.7 1.8s1.6-.85 1.35-1.9c-.2-.9-1.1-1.4-1.3-2.5-.3.8-.62.8-.92-.4z"
         />

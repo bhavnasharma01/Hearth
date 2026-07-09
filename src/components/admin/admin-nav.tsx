@@ -22,7 +22,7 @@ export function AdminNav({
             className={`rounded-full px-3 py-1 transition-colors ${
               active
                 ? "bg-gold/15 text-gold-soft"
-                : "text-cream/70 hover:bg-white/10 hover:text-cream"
+                : "text-on-night/70 hover:bg-on-night/10 hover:text-on-night"
             }`}
           >
             {n.label}

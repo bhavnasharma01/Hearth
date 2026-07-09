@@ -22,9 +22,11 @@
 
 ## 3. Visual system (starting point — refine with Anat & Curtis)
 
-> **Visual refresh under review (Build 20).** A palette exploration with **30 directions** across three moods (warm & grounded · unexpected · light & airy), each with a mini app mockup, lives at **`public/palette-explorations.html`** (served at `/palette-explorations.html`) and is being shared with reviewers. The tokens below **remain the live system** until a direction is chosen; once picked, we update this section + `globals.css` and a full token hand-off follows.
+> **Visual refresh under review.** A palette exploration with **40 directions** across four moods lives at **`public/palette-explorations.html`** (served at `/palette-explorations.html`). **Currently live (Build 50): a trial skin of "Rice paper" (#29)** — shoji daylight, bright warm whites, pale wood, green tea; japandi — applied across every surface (public, admin, forms, manage/my-listing) purely by swapping token values.
+>
+> **The palette system (how reskins work):** every colour in the app is a **role token** in `src/app/globals.css` (`@theme`) — components never hardcode hexes. The file holds one **ACTIVE PALETTE** block plus a **library** of full value-sets (the original "rich & sacred" is preserved there); switching skins = swapping the block. Two semantic tokens make palettes with *light* stage surfaces possible: **`on-night`** (text on the header/hero/footer "stage") and **`on-gold`** (text on gold fills) — components use those instead of assuming night is dark. The logo flame reads its gradient/glow from `flame-*` tokens. Known static exception: the favicon (`src/app/icon.svg`) keeps the old night/gold tile until a palette is final.
 
-- **Direction: "rich & sacred."** Warm parchment base, deep emerald + plum **jewel tones**, **antique gold** accents, and dramatic deep **"night"** surfaces for the hero/header/footer. Elevated and ceremonial, but still light and readable on a phone. Light-only (no dark mode). Tailwind v4 `@theme` tokens in `src/app/globals.css`:
+- **Original direction: "rich & sacred."** Warm parchment base, deep emerald + plum **jewel tones**, **antique gold** accents, and dramatic deep **"night"** surfaces for the hero/header/footer. Elevated and ceremonial, but still light and readable on a phone. Light-only (no dark mode). Its full value-set lives in the `globals.css` palette library. Historical token table (rich & sacred values):
 
   | Token | Hex | Use |
   |---|---|---|

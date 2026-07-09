@@ -15,13 +15,13 @@ export default function HomePage() {
           <p className="text-xs font-medium uppercase tracking-[0.22em] text-gold-soft">
             Our gathering place
           </p>
-          <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-cream sm:text-5xl">
+          <h1 className="mx-auto mt-4 max-w-2xl font-display text-4xl font-semibold leading-tight text-on-night sm:text-5xl">
             {EVENTS_ENABLED
               ? "A warm home for our community’s events and practitioners."
               : "A warm home for our community’s healers."}
           </h1>
           <div className="gold-rule mx-auto my-6 w-28" />
-          <p className="mx-auto max-w-xl text-base leading-relaxed text-cream/75">
+          <p className="mx-auto max-w-xl text-base leading-relaxed text-on-night/75">
             {EVENTS_ENABLED
               ? "Bodywork, breathwork, ceremony, counselling, and the gatherings where we meet."
               : "Bodywork, breathwork, ceremony, counselling. Find the right person for what you need."}
@@ -31,13 +31,13 @@ export default function HomePage() {
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
             <Link
               href="/practitioners"
-              className="w-full max-w-xs rounded-full bg-gold px-7 py-3 text-sm font-semibold text-night transition-colors hover:bg-gold-soft sm:w-auto"
+              className="w-full max-w-xs rounded-full bg-gold px-7 py-3 text-sm font-semibold text-on-gold transition-colors hover:bg-gold-soft sm:w-auto"
             >
               Find a practitioner
             </Link>
             <Link
               href="/add-practitioner"
-              className="w-full max-w-xs rounded-full border border-gold/40 px-7 py-3 text-sm font-medium text-cream transition-colors hover:bg-white/5 sm:w-auto"
+              className="w-full max-w-xs rounded-full border border-gold/40 px-7 py-3 text-sm font-medium text-on-night transition-colors hover:bg-on-night/5 sm:w-auto"
             >
               ＋ Add your practice
             </Link>
@@ -47,7 +47,7 @@ export default function HomePage() {
             <div className="mt-6">
               <Link
                 href="/events"
-                className="text-sm text-cream/75 transition-colors hover:text-cream"
+                className="text-sm text-on-night/75 transition-colors hover:text-on-night"
               >
                 See what’s happening →
               </Link>

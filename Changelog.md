@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 50 (2026-07-08)
+
+*Trial reskin: the whole app now wears "Rice paper" (#29), plus a palette system that makes the next swap a one-block change. Builds clean; lint passes.*
+
+### Added — the palette system (the reusable tool)
+- **`src/app/globals.css` restructured**: a documented role legend, one **ACTIVE PALETTE** `@theme` block, and a **palette library** (the original "rich & sacred" values preserved in full). Reskinning the entire app — public pages, admin panel, forms, feedback, manage/my-listing — is now literally swapping that one block.
+- **Two new semantic tokens** so palettes may make the "stage" (header/hero/footer/banners) dark *or* light: **`on-night`** (text/controls on stage surfaces — replaces the baked-in assumption that stage text is `cream`) and **`on-gold`** (text on gold fills — replaces `text-night` there). All `bg-white/5` hover overlays became `bg-on-night/5`, and stage gradients now stay within the `night`/`night-2` pair.
+- **The logo flame is tokenized** (`flame-hi/mid/lo/core/glow`) — a reskin recolours the mark too.
+
+### Changed — Rice paper trial skin (Build 50)
+- Applied **Rice paper** across the board: near-white warm page, white cards, shoji-tint header/hero/footer with warm-brown text, green-tea primary (`forest`), pale-wood accents (`gold`), japandi calm. Swaps touched only stage-text call-sites (header, footer, home hero, recruitment banner, profile header band, admin bar, account control, logo); everything else reskins via tokens alone.
+- **Known static exception:** the favicon (`src/app/icon.svg`) keeps the night/gold tile until a palette is final.
+
+### Docs
+- `Design.md` §3 rewritten (palette system + Rice paper trial; rich & sacred table kept as history), `Claude.md` (reskinning convention + the on-night/on-gold rules). `Readme.md`, `Changelog.md` → Build 50.
+
+---
+
 ## v0.1.0 — Build 49 (2026-07-08)
 
 *Three pieces of Bhavna's feedback: menu without emojis, footer copy reworded + quiet links, My-listing empty state decluttered. Builds clean; lint passes.*

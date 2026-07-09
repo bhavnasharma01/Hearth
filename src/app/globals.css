@@ -1,39 +1,96 @@
 @import "tailwindcss";
 
-/* Hearth design tokens — "rich & sacred" (see documentation/Design.md).
-   Warm parchment base, deep emerald + plum jewel tones, antique gold accents,
-   dramatic deep "night" surfaces for hero/header/footer. Light, readable on a
-   phone, but elevated and ceremonial. */
+/* ═══════════════════════════════════════════════════════════════════════
+   HEARTH PALETTE SYSTEM
+   Every colour in the app is one of these ROLE tokens — components never
+   hardcode hexes (the two exceptions: the Google-logo brand colours, and
+   the static favicon `src/app/icon.svg`). To reskin the entire app —
+   public pages, admin panel, forms, manage/my-listing, everything — swap
+   the values in the ACTIVE PALETTE block for a set from the LIBRARY below
+   (or a new one). Nothing else needs to change.
+
+   Roles:
+     parchment      page background
+     card           card / list surfaces
+     sand           subtle panels & chips
+     line           hairline borders
+     night/night-2  "stage" surfaces: header, hero, footer, banners
+     on-night       text & controls sitting on night surfaces
+                    (lets a palette make the stage dark OR light)
+     forest/-deep   primary actions & links (deep = hover/active)
+     cream          text on forest/clay fills
+     gold/gold-soft accents: eyebrows, links, active states, member mark
+                    (gold-soft must read on night surfaces; also gold-fill hover)
+     on-gold        text on gold fills
+     plum/-soft     secondary accent
+     sage           soft accent (focus borders etc.)
+     clay           errors / danger
+     ink/muted      body text / secondary text
+     flame-*        the logo flame gradient + glow
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ACTIVE PALETTE — "Rice paper" (exploration #29: shoji daylight, bright
+   warm whites, pale wood, green tea; japandi). Trial skin, Build 50. */
 @theme {
-  --color-parchment: #f3e9d2; /* page background (warm, rich) */
-  --color-sand: #ece0c6; /* subtle panels / chips */
-  --color-card: #fdf8ee; /* warm ivory card surfaces */
-  --color-line: #e4d8bd; /* warm hairline borders */
-  --color-cream: #f4ead6; /* light text/elements on dark surfaces */
+  --color-parchment: #fdfbf6;
+  --color-card: #ffffff;
+  --color-sand: #efe9dd;
+  --color-line: #e7dfcd;
+  --color-cream: #fdfbf6;
 
-  --color-night: #14342b; /* deep emerald — hero / header / footer */
-  --color-night-2: #102a23; /* deeper, for gradients */
+  --color-night: #f3ede1;
+  --color-night-2: #ebe2cf;
+  --color-on-night: #574936;
 
-  --color-forest: #1f5547; /* primary jewel emerald */
-  --color-forest-deep: #143a30; /* hover / active */
-  --color-sage: #7f9b8e; /* soft muted accent */
+  --color-forest: #737c56;
+  --color-forest-deep: #5c6444;
+  --color-sage: #b5bd9a;
 
-  --color-plum: #6d3557; /* secondary jewel accent */
-  --color-plum-soft: #8a5476;
+  --color-plum: #8a7157;
+  --color-plum-soft: #a58c72;
 
-  --color-gold: #c6a24a; /* antique gold accent */
-  --color-gold-soft: #dcc187; /* soft gold (on dark) */
+  --color-gold: #9c8155;
+  --color-gold-soft: #8a7150;
+  --color-on-gold: #fdfbf6;
 
-  --color-clay: #b4603f; /* terracotta — gentle error/warn */
+  --color-clay: #b0684a;
 
-  --color-ink: #2a211b; /* primary text */
-  --color-muted: #6e6253; /* secondary text */
+  --color-ink: #4a3e2f;
+  --color-muted: #8a7a63;
+
+  --color-flame-hi: #d9cca9;
+  --color-flame-mid: #b3a077;
+  --color-flame-lo: #8a7150;
+  --color-flame-core: #fbf7ec;
+  --color-flame-glow: rgba(154, 129, 85, 0.45);
 
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-nunito);
 
   --radius-card: 1rem;
 }
+
+/* ── PALETTE LIBRARY ──────────────────────────────────────────────────────
+   Paste a block's values into the ACTIVE PALETTE above to switch skins.
+
+   "Rich & sacred" (the original, Builds 20–49 — deep night surfaces,
+   jewel emerald + plum, antique gold):
+     --color-parchment: #f3e9d2;   --color-card: #fdf8ee;
+     --color-sand: #ece0c6;        --color-line: #e4d8bd;
+     --color-cream: #f4ead6;
+     --color-night: #14342b;       --color-night-2: #102a23;
+     --color-on-night: #f4ead6;
+     --color-forest: #1f5547;      --color-forest-deep: #143a30;
+     --color-sage: #7f9b8e;
+     --color-plum: #6d3557;        --color-plum-soft: #8a5476;
+     --color-gold: #c6a24a;        --color-gold-soft: #dcc187;
+     --color-on-gold: #14342b;
+     --color-clay: #b4603f;
+     --color-ink: #2a211b;         --color-muted: #6e6253;
+     --color-flame-hi: #f7e2a3;    --color-flame-mid: #d4ad54;
+     --color-flame-lo: #b6892b;    --color-flame-core: #fdf4d6;
+     --color-flame-glow: rgba(224, 196, 128, 0.6);
+   ──────────────────────────────────────────────────────────────────────── */
 
 html {
   height: 100%;
