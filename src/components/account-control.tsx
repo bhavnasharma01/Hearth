@@ -66,10 +66,16 @@ export function AccountControl() {
       <div className="absolute right-0 z-30 mt-2 w-56 rounded-xl border border-line bg-card p-3 text-left shadow-lg">
         <p className="truncate text-xs text-muted">Signed in as</p>
         <p className="truncate text-sm font-medium text-ink">{name}</p>
+        <Link
+          href="/my-listing"
+          className="mt-3 block w-full rounded-full bg-forest px-3 py-1.5 text-center text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
+        >
+          My listing
+        </Link>
         <button
           type="button"
           onClick={signOut}
-          className="mt-3 w-full rounded-full border border-line px-3 py-1.5 text-sm text-clay transition-colors hover:bg-clay/10"
+          className="mt-2 w-full rounded-full border border-line px-3 py-1.5 text-sm text-clay transition-colors hover:bg-clay/10"
         >
           Sign out
         </button>

@@ -93,6 +93,7 @@ src/app
   report/page.tsx               # report a listing (no login)
   signin/page.tsx               # member sign-in — Google OAuth (accounts Phase A)
   auth/callback/route.ts        # OAuth code → session exchange, then redirect
+  my-listing/page.tsx           # owner home: edit/claim/delete own listing (Phase B)
   feedback/page.tsx             # unlisted testing feedback (FEEDBACK_ENABLED → 404)
   manage/[token]/page.tsx       # owner edit page — private capability link (noindex)
   api/geocode/route.ts          # Nominatim autocomplete proxy
@@ -140,6 +141,7 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 - *Services menu — Phase 1c (Build 25):* a `practitioner_services` table (migration `0007`) + a dynamic **`ServicesEditor`** on the manage page (parallel-named rows zipped by `getAll`, replaced on save). Rendered as a **"What I offer"** section on `/p/[slug]`; the free-text keyword chips were relabelled **"Specialties"** to distinguish them. **Phase 1 (mini-site core) complete;** Phase 2 = solicited testimonials.
 
 - *Accounts Phase A (Build 46):* member sign-in with **Google** — `/signin` (+ `GoogleSignInButton`), `/auth/callback` (code → session), the header **`AccountControl`** (client-side session so static pages stay static), site-wide session refresh in `src/middleware.ts`, migration `0008` (drops the `*_admin_all` policies — `authenticated` no longer means admin — ties `users` to `auth.users`, self-access RLS, sign-up trigger), and `submitPractitioner` binding `owner_user_id` when the submitter is signed in. Phase B (claim + "My listing") comes next.
+- *Accounts Phase B (Build 47):* **`/my-listing`** (session-gated owner home) reusing the manage-page editor via the listing's own token; **claim flows** (session-email match on `/my-listing`, or "Link to my account" on `/manage/<token>` while signed in — both re-verified server-side, unowned listings only; `src/lib/actions/account.ts`); **owner delete** (`DeleteListing`, token-authorized, on both edit surfaces); **"Add your practice" now asks for sign-in first** (just-in-time gate; the listing binds to the account); "My listing" in the header account menu. Manage links keep working as the bridge for pre-account listings.
 
 **Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 

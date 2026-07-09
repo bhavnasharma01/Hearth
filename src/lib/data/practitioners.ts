@@ -153,6 +153,52 @@ export async function getListingByManageToken(
 }
 
 /**
+ * The listing owned by a member (accounts Phase B), any status, with
+ * categories. Service-role read — only ever render this to the signed-in
+ * owner (the /my-listing page checks the session first).
+ */
+export async function getListingByOwner(
+  userId: string,
+): Promise<PractitionerWithCategories | null> {
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("practitioners")
+    .select(CATEGORY_JOIN)
+    .eq("owner_user_id", userId)
+    .limit(1)
+    .maybeSingle();
+
+  if (error || !data) return null;
+  return flattenCategories(data);
+}
+
+/**
+ * An unowned listing whose contact email matches the member's sign-in email —
+ * the "this looks like yours, claim it?" candidate (accounts Phase B).
+ * Case-insensitive exact match; service-role read (the caller re-verifies
+ * before claiming — never trust a client-supplied id).
+ */
+export async function findClaimableByEmail(
+  email: string,
+): Promise<{ id: string; name: string; practice_name: string | null; slug: string } | null> {
+  if (!email) return null;
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return null;
+
+  const { data, error } = await supabase
+    .from("practitioners")
+    .select("id, name, practice_name, slug")
+    .is("owner_user_id", null)
+    .ilike("email", email)
+    .limit(1);
+
+  if (error || !data || data.length === 0) return null;
+  return data[0] as { id: string; name: string; practice_name: string | null; slug: string };
+}
+
+/**
  * A practitioner's services (the "what I offer" menu), ordered. Uses the anon
  * client by default (public read = live practitioners only); pass `useAdmin` for
  * the owner's manage page, which must see services on a not-yet-live listing.

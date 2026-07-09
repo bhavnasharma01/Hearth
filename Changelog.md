@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 47 (2026-07-08)
+
+*Accounts Phase B: own, claim, edit, and delete your listing from your account. Builds clean; lint passes.*
+
+### Added
+- **`/my-listing`** — the signed-in practitioner's home (also in the header avatar menu). Shows your listing in the full editor (reuses `ManageForm` by passing the listing's own token server-side — rendered only to the verified owner), a **"View your public profile"** link, and the delete option. Signed out → redirected to `/signin`.
+- **Claim flows** for pre-account listings (`src/lib/actions/account.ts`, all re-verified server-side, unowned listings only):
+  - On `/my-listing`: if an unowned listing's contact email matches your sign-in email, an **"Is this you?"** card offers one-tap claim (match re-derived from the session, never a client id).
+  - On `/manage/<token>`: signed-in visitors see **"Link to my account"** (holding the token already proves edit rights, so linking is a strict upgrade). Once linked, the page notes it and points to My listing.
+- **Owner delete** (`DeleteListing`) — the last open July 6 call item. A quiet danger zone on **both** edit surfaces (`/my-listing` and `/manage/<token>`) with an arm-then-confirm step; deletion is permanent (categories/services cascade) and lands on the directory. Token-authorized, same trust model as editing.
+- **"Add your practice" now asks for sign-in first** — the just-in-time login moment from the UX plan: a warm gate card (sign in → returned straight to the form), so every new listing binds to its owner's account from day one. Browsing stays accountless.
+
+### Docs
+- `Security.md` (§2 Phase B bullet), `Architecture.md` (structure + Phase B entry), `Product.md` (practitioner persona + pilot note), `Claude.md` (owner-edit section rewritten for the account era). `Readme.md`, `Changelog.md` → Build 47.
+
+---
+
 ## v0.1.0 — Build 46 (2026-07-08)
 
 *Accounts Phase A: member sign-in with Google. Builds clean; lint passes.*
