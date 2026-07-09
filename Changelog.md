@@ -4,6 +4,26 @@
 
 ---
 
+## v0.1.0 — Build 60 (2026-07-09)
+
+*Accounts Phase C: testimonials ("Kind words"), plus the Luma-style embedded map on profiles. Builds clean; lint passes.*
+
+### Added — testimonials (migration `0009` — run it in the Supabase SQL editor before testing)
+- **The model** (reconciles Bhavna's profile-page flow with the "no open reviews" North Star): any **signed-in member** writes a recommendation from a practitioner's profile, and it becomes public **only when the practitioner approves it** — visitor-initiated, owner-curated, positive-by-construction. No ratings, no reply threads.
+- **On the profile (`/p/[slug]`):** a **"Kind words"** card — approved testimonials with author names, plus a **♡ Recommend** button (empty state: "Be the first to recommend them"). The button is the sign-in gateway: signed-out visitors go through `/signin` and return.
+- **`/recommend?p=<slug>`** — the writing page (20–600 chars, name prefilled from the account, "X approves recommendations before they appear").
+- **`/my-practice`:** a **Recommendations** section for owners — pending ones with **Approve / No thanks**, approved ones with **Hide**.
+- **`/my-recommendations`** (avatar menu) — everything a member wrote, with status ("waiting for their approval" / "on their profile"), and a Remove button.
+- **Guardrails** (`submitTestimonial`): sign-in required · content-check hard-blocks links/promo · can't recommend your own practice · one per member per practitioner · target must be live. RLS: public read = approved-on-live only; all writes service-role with session verification (owner-ship checked for approve/hide, authorship for delete).
+
+### Added — profile map (Luma-style)
+- The **"Where & how"** card now embeds a **Google neighbourhood map** under the Location row (keyless embed, `mapsEmbedUrl()`, lazy-loaded, zoom fixed at neighbourhood level because practitioner coords are area-level by design — never a home address). Documented as the one deliberate third-party exception in `Security.md` §7.
+
+### Docs
+- `Product.md` (§6 trust model rewritten + pilot note), `Architecture.md` (table, routes), `Security.md` (§3 RLS + §7 privacy exception), `Claude.md` (testimonials section + migration list). `Readme.md`, `Changelog.md` → Build 60.
+
+---
+
 ## v0.1.0 — Build 59 (2026-07-09)
 
 *Category emoji matcher: gendered + community patterns (the "Men's/Women's Work snowflake" report). Builds clean; lint passes.*

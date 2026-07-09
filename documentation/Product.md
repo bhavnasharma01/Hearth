@@ -68,9 +68,9 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 
 ## 6. Trust & social-proof model (v1)
 
-- **Community-member badge only.** The "one of us" signal (`is_member`). **No public upvotes or written reviews** in v1 — reviews are moderation-heavy and can feel transactional, clashing with the warm, trust-bound ethos.
-- Trust = curation + member badge + quiet flagging.
-- *Future consideration (v2):* positive-only **endorsements** (thumbs-up), if the community wants it. Written reviews remain deliberately out of scope.
+- **Community-member badge** — the "one of us" signal (`is_member`).
+- **Testimonials ("Kind words"), shipped Build 60:** a signed-in member writes a recommendation from a practitioner's profile, and it appears **only after the practitioner approves it** — visitor-initiated, **owner-curated, positive-by-construction**. No ratings, no reply threads, no links (content-checked), one per member per practitioner, and you can't recommend yourself. This deliberately is NOT open reviews: the practitioner curates their own page, so the Yelp dynamic (public complaints, star anxiety) can't take hold; concerns still go through the private **report** flow.
+- Trust = curation + member badge + approved kind words + quiet flagging.
 
 ---
 
@@ -117,6 +117,7 @@ A practitioner may hold as many categories as apply — the old 3-cap was remove
 ## 10. Scope staging
 
 - **v1 — two layers, one home** *(current build):* Directory (add/browse/search/filter/profile/contact/member badge) · Events (native add/upcoming feed/filters/month view/seeded import) · moderation (auto-check + reporting) · admin panel · category management.
+  - **Pilot note (Build 60) — accounts Phase C: testimonials.** "Kind words" on profiles: member-written from the profile's ♡ Recommend button (which doubles as the sign-in gateway), practitioner-approved from **My practice**, tracked by authors under **My recommendations** (avatar menu). Model detail in §6. Also: profiles gained an embedded neighbourhood map + Get-directions (Build 58–60).
   - **Pilot note (Build 47) — accounts Phase B.** Practitioners now *own* their listing: **"My listing"** (header menu) edits it with no link to remember; **claiming** connects the ~6 pre-account listings (matched by sign-in email, or via the manage link while signed in); owners can **delete their own listing** (the last July 6 call item); and **"Add your practice" asks for sign-in first** — the just-in-time login moment. Manage links stay valid as the bridge.
   - **Pilot note (Build 46) — accounts Phase A.** The July 6 call surfaced that lost manage-links create real friction (Josh, Greg, Angela) and that the trust features we want (testimonials) need identity. Decisions: **Google-only sign-in for the pilot** (email/password waits for a verified domain), **claim-by-signing-in** for pre-account listings (Phase B), **solicited positive-only testimonials** (Phase C; §6 unchanged). Phase A ships `/signin`, the header account control, and owner-binding on signed-in submissions. The "no login" principle is deliberately *evolved, not abandoned*: consuming stays open; contributing authenticates.
   - **Pilot note (Build 14):** we're launching the **directory first** — the Events layer is fully built but **hidden behind the `EVENTS_ENABLED` flag** while we validate adoption of the defensible core with the community. This keeps the pilot focused ("strengthen the trusted home, don't just make it bigger") and events switch back on with one flag when we're ready. Reporting now covers **practitioners** end-to-end (link on every card + profile), and stewards get an **email** when a listing is held for review or crosses the 3-reporter flag threshold.

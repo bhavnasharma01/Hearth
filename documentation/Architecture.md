@@ -67,6 +67,7 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 - **`practitioner_services`** — the "what I offer" menu (`title`, optional `description`/`price_note`, `sort_order`), managed from the owner's `/manage` page. Public-read for live practitioners; service-role writes. *(Build 25, migration `0007`.)*
 - **`events`** — native events. `host_practitioner_id` (links to directory), `start_at`/`end_at`, `mode`, `cost_note`, `recurrence_rule` (RRULE), `status`, `source`, `external_id` (GCal dedupe), `search_vector`.
 - **`reports`** — polymorphic flagging (one of `practitioner_id`/`event_id`); `reporter_contact` for dedupe (a field, not a login); `reason`, `status`.
+- **`testimonials`** — member-written recommendations (Build 60, migration `0009`): `practitioner_id`, `author_user_id`, `author_name`, `body`, `status` (`pending`/`approved`/`hidden`), unique per (practitioner, author). Public read = **approved on live practitioners** only (RLS); all writes via service-role actions (`src/lib/actions/testimonials.ts`) — submit (signed-in, content-checked, not your own practice), owner approve/hide, author delete.
 - **`feedback`** — private user-testing feedback (Build 18, migration `0004`). `message`, `type` (bug/idea/confusing/praise/other), optional `context`/`submitter_name`/`submitter_contact`, and triage fields `status` (new/reviewing/planned/done/declined), `priority`, `admin_note`. Admin-only (RLS); public writes via a service-role action; never shown publicly.
 
 **`users` is live as of accounts Phase A (Build 46, migration `0008`):** `users.id` now references `auth.users(id)`; a profile row is auto-created on first sign-in (DB trigger, Google name/avatar captured); members can read/update their own row (RLS `auth.uid() = id`); a signed-in practice submission sets `practitioners.owner_user_id`. **Still dormant (v3):** `registrations` (RSVP/tickets).
@@ -93,7 +94,10 @@ src/app
   report/page.tsx               # report a listing (no login)
   signin/page.tsx               # member sign-in — Google OAuth (accounts Phase A)
   auth/callback/route.ts        # OAuth code → session exchange, then redirect
-  my-listing/page.tsx           # owner home: edit/claim/delete own listing (Phase B)
+  my-practice/page.tsx          # owner home: edit/claim/delete + approve kind words
+  my-listing/page.tsx           # → redirect to /my-practice (renamed Build 57)
+  recommend/page.tsx            # write a recommendation (sign-in gateway, Phase C)
+  my-recommendations/page.tsx   # what a member has written, with status
   feedback/page.tsx             # unlisted testing feedback (FEEDBACK_ENABLED → 404)
   manage/[token]/page.tsx       # owner edit page — private capability link (noindex)
   api/geocode/route.ts          # Nominatim autocomplete proxy

@@ -143,6 +143,25 @@ export function googleCalendarUrl(e: {
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
+/**
+ * A keyless Google Maps EMBED url (for an <iframe>). Zoom 13 ≈ neighbourhood
+ * level on purpose: practitioner coords are area-level (never a home address),
+ * so the map must read as "this part of town", not "this door".
+ */
+export function mapsEmbedUrl(
+  lat: number | null,
+  lng: number | null,
+  text: string | null,
+): string | null {
+  if (lat != null && lng != null) {
+    return `https://maps.google.com/maps?q=${lat},${lng}&z=13&output=embed`;
+  }
+  if (text) {
+    return `https://maps.google.com/maps?q=${encodeURIComponent(text)}&z=13&output=embed`;
+  }
+  return null;
+}
+
 /** A Google Maps *directions* link (opens the maps app in directions mode). */
 export function directionsUrl(
   lat: number | null,

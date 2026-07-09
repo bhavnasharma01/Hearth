@@ -128,3 +128,16 @@ export interface Feedback {
   created_at: string;
   updated_at: string;
 }
+
+export type TestimonialStatus = "pending" | "approved" | "hidden";
+
+/** A member-written recommendation, public only once the practitioner approves. */
+export interface Testimonial {
+  id: string;
+  practitioner_id: string;
+  author_user_id: string;
+  author_name: string;
+  body: string;
+  status: TestimonialStatus;
+  created_at: string;
+}

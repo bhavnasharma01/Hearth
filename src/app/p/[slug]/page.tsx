@@ -6,6 +6,7 @@ import {
   getPractitionerServices,
 } from "@/lib/data/practitioners";
 import { getEventsByHost } from "@/lib/data/events";
+import { getApprovedTestimonials } from "@/lib/data/testimonials";
 import { EventCard } from "@/components/event-card";
 import { ShareButton } from "@/components/share-button";
 import {
@@ -13,6 +14,7 @@ import {
   externalHref,
   formatMode,
   instagramUrl,
+  mapsEmbedUrl,
   whatsappLink,
 } from "@/lib/format";
 import { siteUrl } from "@/lib/url";
@@ -46,7 +48,10 @@ export default async function PractitionerProfile({
 
   // Events are hidden for the practitioner-only pilot (see @/lib/features).
   const events = EVENTS_ENABLED ? await getEventsByHost(p.id) : [];
-  const services = await getPractitionerServices(p.id);
+  const [services, testimonials] = await Promise.all([
+    getPractitionerServices(p.id),
+    getApprovedTestimonials(p.id),
+  ]);
   const label = (p.practice_name || p.name).trim();
   const initial = label ? label[0].toUpperCase() : "·";
   const safePhoto =
@@ -54,6 +59,7 @@ export default async function PractitionerProfile({
   // "Where & how" gets its own structured card (Build 58) — the old single
   // "area · mode · languages · pricing" line read as a jumble.
   const directions = directionsUrl(p.latitude, p.longitude, p.area);
+  const mapEmbed = mapsEmbedUrl(p.latitude, p.longitude, p.area);
   // "Offerings" chips from the free-text keywords field (comma/·-separated).
   const offerings = (p.keywords ?? "")
     .split(/[,·]/)
@@ -207,6 +213,21 @@ export default async function PractitionerProfile({
             </div>
           )}
         </dl>
+
+        {/* Embedded neighbourhood map (Luma-style). Lazy so it never slows the
+            page; zoom stays coarse because coords are area-level by design. */}
+        {p.area && mapEmbed && (
+          <div className="mt-4 overflow-hidden rounded-xl border border-line">
+            <iframe
+              title={`Map of ${p.area}`}
+              src={mapEmbed}
+              className="h-48 w-full sm:h-56"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+              allowFullScreen
+            />
+          </div>
+        )}
       </section>
 
       {/* What I offer (services menu) */}
@@ -232,6 +253,36 @@ export default async function PractitionerProfile({
           </ul>
         </section>
       )}
+
+      {/* Kind words — member-written, practitioner-approved (Phase C). The
+          Recommend button doubles as the sign-in gateway for new members. */}
+      <section className="mt-5 rounded-[var(--radius-card)] border border-line bg-card p-5 sm:p-6">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+          Kind words
+        </h2>
+        {testimonials.length > 0 ? (
+          <ul className="space-y-4">
+            {testimonials.map((t) => (
+              <li key={t.id}>
+                <p className="break-words leading-relaxed text-ink/90">
+                  &ldquo;{t.body}&rdquo;
+                </p>
+                <p className="mt-1 text-sm text-muted">— {t.author_name}</p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-sm text-muted">
+            Worked with {label}? Be the first to recommend them.
+          </p>
+        )}
+        <Link
+          href={`/recommend?p=${p.slug}`}
+          className="mt-4 inline-block rounded-full border border-line px-4 py-2 text-sm text-forest transition-colors hover:bg-sand"
+        >
+          ♡ Recommend {label}
+        </Link>
+      </section>
 
       {/* Get in touch */}
       <section className="mt-5 rounded-[var(--radius-card)] border border-line bg-card p-5 sm:p-6">

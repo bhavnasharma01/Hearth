@@ -9,8 +9,11 @@ import {
 } from "@/lib/data/practitioners";
 import { getCategories } from "@/lib/data/categories";
 import { claimListingByEmail } from "@/lib/actions/account";
+import { approveTestimonial, hideTestimonial } from "@/lib/actions/testimonials";
+import { getTestimonialsForOwner } from "@/lib/data/testimonials";
 import { ManageForm } from "@/components/forms/manage-form";
 import { DeleteListing } from "@/components/delete-listing";
+import { ActionButton } from "@/components/admin/action-button";
 import type { PractitionerWithCategories } from "@/lib/types/database";
 
 export const dynamic = "force-dynamic";
@@ -167,10 +170,12 @@ async function Editor({
   listing: PractitionerWithCategories;
   showBack: boolean;
 }) {
-  const [categories, services] = await Promise.all([
+  const [categories, services, testimonials] = await Promise.all([
     getCategories(),
     getPractitionerServices(listing.id, true),
+    getTestimonialsForOwner(listing.id),
   ]);
+  const pendingCount = testimonials.filter((t) => t.status === "pending").length;
   // manage_token is deliberately absent from the Practitioner TS type (it's a
   // secret; see Claude.md) but present on this service-role row. Passing it
   // here is safe: this page renders only to the verified owner.
@@ -200,6 +205,53 @@ async function Editor({
           View your public profile →
         </Link>
       </header>
+      {/* Recommendations moderation — kind words appear publicly only after
+          the owner approves them here (Phase C). */}
+      {testimonials.length > 0 && (
+        <section className="mb-6 rounded-[var(--radius-card)] border border-line bg-card p-5">
+          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+            Recommendations
+          </h2>
+          <p className="mt-1 text-sm text-muted">
+            {pendingCount > 0
+              ? `${pendingCount} waiting for your approval. Approved ones show on your profile.`
+              : "These show on your profile. Hide any you'd rather not display."}
+          </p>
+          <ul className="mt-3 divide-y divide-line">
+            {testimonials.map((t) => (
+              <li key={t.id} className="py-3 first:pt-0 last:pb-0">
+                <p className="break-words text-sm leading-relaxed text-ink/90">
+                  &ldquo;{t.body}&rdquo;
+                </p>
+                <div className="mt-2 flex flex-wrap items-center gap-2">
+                  <span className="text-sm text-muted">— {t.author_name}</span>
+                  <div className="ml-auto flex gap-2">
+                    {t.status === "pending" ? (
+                      <>
+                        <ActionButton
+                          action={approveTestimonial}
+                          fields={{ id: t.id }}
+                          variant="primary"
+                        >
+                          Approve
+                        </ActionButton>
+                        <ActionButton action={hideTestimonial} fields={{ id: t.id }}>
+                          No thanks
+                        </ActionButton>
+                      </>
+                    ) : (
+                      <ActionButton action={hideTestimonial} fields={{ id: t.id }}>
+                        Hide
+                      </ActionButton>
+                    )}
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
+
       <ManageForm
         listing={listing}
         categories={categories}

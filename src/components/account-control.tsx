@@ -120,6 +120,14 @@ export function AccountControl() {
             >
               My practice
             </Link>
+            <Link
+              href="/my-recommendations"
+              role="menuitem"
+              onClick={() => setOpen(false)}
+              className="block rounded-xl px-3 py-2 text-sm text-ink transition-colors hover:bg-sand"
+            >
+              My recommendations
+            </Link>
             <button
               type="button"
               role="menuitem"
