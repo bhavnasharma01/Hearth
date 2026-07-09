@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 44
+**Version:** 0.1.0 · **Build:** 45
 *(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
@@ -69,6 +69,7 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
     ├── Design.md                  ← design & UX overview (living)
     ├── Hearth - Database Schema.md      ← full table-by-table data model
     ├── Hearth - Database Schema.mermaid ← ER diagram
+    ├── Google Sign-In Setup.md          ← accounts Phase A: config guide (Google OAuth + Supabase)
     └── planning-archive/          ← original planning docs (preserved for provenance;
                                       assimilated into the living docs above)
 ```

@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 45 (2026-07-08)
+
+*Accounts (v2) decisions locked + the config guide for Phase A. Docs only; builds clean.*
+
+### Decided — public accounts (the July 6 call's big item)
+- **Login gates contributing, never consuming.** Browse/search/contact stay open with no account; sign-in is required to add a practice, edit a listing, or leave a testimonial.
+- **Google-only for the pilot.** Email/password is deferred until a domain is bought and verified in Resend (auth emails must deliver to any inbox; the onboarding sender can't, and `vercel.app` can't be domain-verified). Google OAuth sends no email, so it has no such dependency. The Google Cloud OAuth client is created under Bhavna's existing personal account (her new-Gmail phone cap is not a blocker).
+- **Existing listings: claim by signing in** (email match, manage-link fallback); manage links keep working as a bridge. **Testimonials: solicited + positive only** (per `Product.md §6`), not open reviews.
+- **UX shape:** a subtle header account control (Sign in ↔ avatar menu with "My listing") plus just-in-time sign-in at the point of action.
+
+### Added
+- **`documentation/Google Sign-In Setup.md`** — click-by-click config guide (Google Cloud OAuth client → Supabase provider → URL configuration), with the **load-bearing ordering rule**: public sign-ups stay OFF until migration `0008` de-privileges `authenticated` — v1 RLS (`*_admin_all` policies) treats any signed-in user as an admin, which was safe only while admins were the sole users who could sign in.
+
+### Docs
+- Doc maps updated (`Readme.md` repo layout, `Claude.md` document map). `Readme.md`, `Changelog.md` → Build 45.
+
+---
+
 ## v0.1.0 — Build 44 (2026-07-08)
 
 *"Hide listing" on the Reports page now gives clear feedback. Builds clean; lint passes.*
