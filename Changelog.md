@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 42 (2026-07-08)
+
+*Category chips now show whether they're selected, not just a colour change. Builds clean; lint passes.*
+
+### Changed
+- **Category picker: explicit selection marker.** The chips relied on colour-fill alone to show selection, which is ambiguous (a filled pill can read as a button, not a choice) and leans entirely on colour (an accessibility gap). Each chip now shows a marker: an unselected chip a muted **`＋`** ("tap to add"), a selected one a **`✓`** with the forest fill. Applied to **both** the add-practitioner form and the manage (owner/admin) edit form. The chip is still a real `<input type="checkbox">` — hidden and used as a `peer` so the marker reflects its `:checked` state — so nothing changed about how categories submit; this is purely the visual affordance. *(Kept chips over reverting to a checkbox grid: with the 3-category cap gone people may pick many, so the compact layout matters more, not less.)*
+
+### Docs
+- `Design.md` (§5 Forms — chip selection marker). `Readme.md`, `Changelog.md` → Build 42.
+
+---
+
 ## v0.1.0 — Build 41 (2026-07-08)
 
 *Admins can now edit any listing and hand back a lost edit link, straight from the admin panel. Builds clean; lint passes.*

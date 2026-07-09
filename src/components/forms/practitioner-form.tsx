@@ -117,9 +117,14 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
           {categories.map((c) => (
             <label
               key={c.id}
-              className="cursor-pointer rounded-full border border-line bg-card px-3 py-1.5 text-sm text-ink transition-colors has-[:checked]:border-forest has-[:checked]:bg-forest has-[:checked]:text-cream"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-card px-3 py-1.5 text-sm text-ink transition-colors has-[:checked]:border-forest has-[:checked]:bg-forest has-[:checked]:text-cream"
             >
-              <input type="checkbox" name="categories" value={c.slug} className="sr-only" />
+              {/* Real checkbox, used as a peer so the marker below can reflect
+                  its state: ＋ = tap to add, ✓ = chosen (removes the
+                  "is this selected or a button?" ambiguity of colour alone). */}
+              <input type="checkbox" name="categories" value={c.slug} className="peer sr-only" />
+              <span aria-hidden className="text-muted peer-checked:hidden">＋</span>
+              <span aria-hidden className="hidden peer-checked:inline">✓</span>
               {c.name}
             </label>
           ))}
