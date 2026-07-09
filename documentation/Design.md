@@ -111,4 +111,4 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 
 ## 8. Admin panel design
 
-Function over polish, but still calm and clear: simple lists with status badges, a moderation queue, a reports inbox with distinct-reporter counts, a feedback board, and straightforward category management. The **nav highlights the active tab** (`AdminNav`) so a steward always knows where they are. Optimized for "one steward, one minute, when pinged."
+Function over polish, but still calm and clear: simple lists with status badges, a moderation queue, a reports inbox with distinct-reporter counts (each card shows the target's status badge, and acting on a report — "Hide listing" — resolves it so the card clears, which is the steward's feedback that it worked), a feedback board, and straightforward category management. The **nav highlights the active tab** (`AdminNav`) so a steward always knows where they are. Optimized for "one steward, one minute, when pinged."

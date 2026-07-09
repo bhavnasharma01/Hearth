@@ -90,6 +90,34 @@ export async function deleteEvent(fd: FormData) {
   revalidatePath("/events");
 }
 
+/**
+ * Hide a reported listing AND resolve its open reports in one step (from the
+ * Reports inbox). Acting on a report *is* handling it, so the report is marked
+ * `actioned` and the card leaves the inbox — that disappearance is the steward's
+ * feedback that the hide took effect. (Plain "hide from the listings tab" stays
+ * separate via setPractitionerStatus; there the row remains so it's un-hideable.)
+ */
+export async function hideReportedListing(fd: FormData) {
+  const sb = await admin();
+  const type = str(fd, "type");
+  const id = str(fd, "id");
+  if (!id) return;
+  const table = type === "event" ? "events" : "practitioners";
+  const { error } = await sb.from(table).update({ status: "hidden" }).eq("id", id);
+  if (error) {
+    console.error("hideReportedListing:", error.message);
+    throw new Error(`Couldn't hide the listing: ${error.message}`);
+  }
+  const col = type === "event" ? "event_id" : "practitioner_id";
+  await sb.from("reports").update({ status: "actioned" }).eq(col, id).eq("status", "open");
+  if (type === "practitioner") {
+    await sb.from("practitioners").update({ flag_count: 0 }).eq("id", id);
+  }
+  revalidatePath("/admin/reports");
+  revalidatePath(type === "event" ? "/admin/events" : "/admin/listings");
+  revalidatePath(type === "event" ? "/events" : "/practitioners");
+}
+
 /** Resolve all open reports for a target (after a steward has acted/decided). */
 export async function dismissReports(fd: FormData) {
   const sb = await admin();

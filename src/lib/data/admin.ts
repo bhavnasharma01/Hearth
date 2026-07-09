@@ -135,6 +135,8 @@ export interface ReportGroup {
   type: "practitioner" | "event";
   id: string;
   label: string;
+  /** Current status of the reported target (so the inbox can show a badge). */
+  status: string | null;
   distinctReporters: number;
   reasons: string[];
   details: string[];
@@ -187,22 +189,25 @@ export async function listOpenReports(): Promise<ReportGroup[]> {
   const evtIds = [...groups.values()].filter((g) => g.type === "event").map((g) => g.id);
 
   const labels = new Map<string, string>();
+  const statuses = new Map<string, string>();
   if (pracIds.length) {
     const { data } = await sb
       .from("practitioners")
-      .select("id, name, practice_name")
+      .select("id, name, practice_name, status")
       .in("id", pracIds);
-    for (const p of data ?? [])
-      labels.set(
-        `practitioner:${(p as { id: string }).id}`,
-        (p as { practice_name: string | null; name: string }).practice_name ||
-          (p as { name: string }).name,
-      );
+    for (const p of data ?? []) {
+      const row = p as { id: string; name: string; practice_name: string | null; status: string };
+      labels.set(`practitioner:${row.id}`, row.practice_name || row.name);
+      statuses.set(`practitioner:${row.id}`, row.status);
+    }
   }
   if (evtIds.length) {
-    const { data } = await sb.from("events").select("id, title").in("id", evtIds);
-    for (const e of data ?? [])
-      labels.set(`event:${(e as { id: string }).id}`, (e as { title: string }).title);
+    const { data } = await sb.from("events").select("id, title, status").in("id", evtIds);
+    for (const e of data ?? []) {
+      const row = e as { id: string; title: string; status: string };
+      labels.set(`event:${row.id}`, row.title);
+      statuses.set(`event:${row.id}`, row.status);
+    }
   }
 
   return [...groups.values()]
@@ -210,6 +215,7 @@ export async function listOpenReports(): Promise<ReportGroup[]> {
       type: g.type,
       id: g.id,
       label: labels.get(`${g.type}:${g.id}`) ?? "(removed)",
+      status: statuses.get(`${g.type}:${g.id}`) ?? null,
       distinctReporters: g.contacts.size,
       reasons: [...g.reasons],
       details: g.details,

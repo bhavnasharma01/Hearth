@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 44 (2026-07-08)
+
+*"Hide listing" on the Reports page now gives clear feedback. Builds clean; lint passes.*
+
+### Changed
+- **Reports inbox: hiding a listing now resolves its report (and the card leaves the list).** Before, "Hide listing" hid the listing but the report stayed `open`, so the card didn't change — no signal the hide worked. Now it's a single combined action (`hideReportedListing`): it hides the target **and** marks the target's open reports `actioned`, so the card clears from the inbox — that disappearance is the feedback. `Dismiss` still clears flags without hiding (records `dismissed`). Copy updated to explain the two paths.
+- **Each report card shows the target's status badge** (live / hidden / pending), so if a reported listing is already hidden it's obvious, and the redundant "Hide listing" button is omitted for an already-hidden target.
+- The combined action also **surfaces DB errors** (it can't silently no-op) and revalidates the public + listings/events pages so the hide propagates everywhere at once.
+
+*(This is the Reports-side follow-up to Build 43, which fixed hidden listings still showing on the public site. The plain "Hide" on the Listings tab is unchanged — there the row stays so you can restore it.)*
+
+### Docs
+- `Architecture.md`, `Design.md` (admin reports inbox). `Readme.md`, `Changelog.md` → Build 44.
+
+---
+
 ## v0.1.0 — Build 43 (2026-07-08)
 
 *Real fix for "Hide doesn't remove a listing from the live site." Builds clean; lint passes.*
