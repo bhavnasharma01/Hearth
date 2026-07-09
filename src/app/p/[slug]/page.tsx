@@ -8,7 +8,13 @@ import {
 import { getEventsByHost } from "@/lib/data/events";
 import { EventCard } from "@/components/event-card";
 import { ShareButton } from "@/components/share-button";
-import { externalHref, formatMode, instagramUrl, whatsappLink } from "@/lib/format";
+import {
+  directionsUrl,
+  externalHref,
+  formatMode,
+  instagramUrl,
+  whatsappLink,
+} from "@/lib/format";
 import { siteUrl } from "@/lib/url";
 import { EVENTS_ENABLED } from "@/lib/features";
 
@@ -45,9 +51,9 @@ export default async function PractitionerProfile({
   const initial = label ? label[0].toUpperCase() : "·";
   const safePhoto =
     p.photo_url && /^https?:\/\//.test(p.photo_url) ? p.photo_url : null;
-  const meta = [p.area, formatMode(p.mode), p.languages, p.pricing_note]
-    .filter(Boolean)
-    .join("  ·  ");
+  // "Where & how" gets its own structured card (Build 58) — the old single
+  // "area · mode · languages · pricing" line read as a jumble.
+  const directions = directionsUrl(p.latitude, p.longitude, p.area);
   // "Offerings" chips from the free-text keywords field (comma/·-separated).
   const offerings = (p.keywords ?? "")
     .split(/[,·]/)
@@ -131,15 +137,14 @@ export default async function PractitionerProfile({
         </div>
       </header>
 
-      {/* About */}
+      {/* About — break-words so a pasted long URL can't overflow the phone edge. */}
       <section className="mt-5">
-        <p className="leading-relaxed text-ink">{p.description}</p>
+        <p className="break-words leading-relaxed text-ink">{p.description}</p>
         {p.bio && (
-          <p className="mt-3 whitespace-pre-line leading-relaxed text-ink/90">
+          <p className="mt-3 whitespace-pre-line break-words leading-relaxed text-ink/90">
             {p.bio}
           </p>
         )}
-        {meta && <p className="mt-3 text-sm text-muted">{meta}</p>}
 
         {offerings.length > 0 && (
           <div className="mt-4">
@@ -160,6 +165,50 @@ export default async function PractitionerProfile({
         )}
       </section>
 
+      {/* Where & how — location with directions, session mode, languages,
+          pricing: each on its own labelled row instead of one jumbled line. */}
+      <section className="mt-5 rounded-[var(--radius-card)] border border-line bg-card p-5 sm:p-6">
+        <h2 className="mb-3 text-xs font-semibold uppercase tracking-[0.18em] text-gold">
+          Where &amp; how
+        </h2>
+        <dl className="space-y-2.5 text-sm">
+          {p.area && (
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <dt className="w-24 shrink-0 text-muted">Location</dt>
+              <dd className="flex flex-wrap items-baseline gap-x-3 gap-y-1 break-words text-ink">
+                <span>{p.area}</span>
+                {directions && (
+                  <a
+                    href={directions}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-forest underline hover:text-forest-deep"
+                  >
+                    Get directions →
+                  </a>
+                )}
+              </dd>
+            </div>
+          )}
+          <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+            <dt className="w-24 shrink-0 text-muted">Sessions</dt>
+            <dd className="text-ink">{formatMode(p.mode)}</dd>
+          </div>
+          {p.languages && (
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <dt className="w-24 shrink-0 text-muted">Languages</dt>
+              <dd className="break-words text-ink">{p.languages}</dd>
+            </div>
+          )}
+          {p.pricing_note && (
+            <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
+              <dt className="w-24 shrink-0 text-muted">Pricing</dt>
+              <dd className="break-words text-ink">{p.pricing_note}</dd>
+            </div>
+          )}
+        </dl>
+      </section>
+
       {/* What I offer (services menu) */}
       {services.length > 0 && (
         <section className="mt-5 rounded-[var(--radius-card)] border border-line bg-card p-5 sm:p-6">
@@ -176,7 +225,7 @@ export default async function PractitionerProfile({
                   )}
                 </div>
                 {s.description && (
-                  <p className="mt-0.5 text-sm text-muted">{s.description}</p>
+                  <p className="mt-0.5 break-words text-sm text-muted">{s.description}</p>
                 )}
               </li>
             ))}
@@ -229,7 +278,7 @@ export default async function PractitionerProfile({
           href={`/report?type=practitioner&id=${p.id}`}
           className="text-xs text-muted underline hover:text-ink"
         >
-          Report this listing
+          Report this profile
         </Link>
       </div>
     </div>

@@ -6,24 +6,23 @@ import { FEEDBACK_ENABLED } from "@/lib/features";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Share feedback · Hearth",
-  // Unlisted testing page — keep it out of search results too.
+  title: "Support & feedback · Hearth",
+  // Keep it out of search results — it's for people already on Hearth.
   robots: { index: false, follow: false },
 };
 
 export default function FeedbackPage() {
-  // Unlisted link, gated for the testing phase — 404 once it's switched off.
+  // Gated by FEEDBACK_ENABLED (flip off → 404 and the footer link disappears).
   if (!FEEDBACK_ENABLED) notFound();
 
   return (
     <div className="mx-auto max-w-md px-4 py-8">
       <h1 className="font-display text-2xl font-semibold text-ink">
-        Help us shape Hearth
+        Support &amp; feedback
       </h1>
       <p className="mt-1 text-sm text-muted">
-        You’re one of the first to try Hearth. Thank you. Tell us anything: what
-        felt easy, what tripped you up, what’s missing. It goes straight to the
-        team and helps us decide what to build next.
+        Need a hand, spotted a problem, or have an idea? Tell us here. It goes
+        straight to the stewards, and it shapes what we build next.
       </p>
 
       <div className="mt-6">

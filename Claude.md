@@ -92,7 +92,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 
 ## Feedback (user-testing, Build 18)
 
-- **Private feedback channel for the testing phase.** Unlisted **`/feedback`** page (never in nav), gated by **`FEEDBACK_ENABLED`** (`src/lib/features.ts`) — on for testing, flip to `false` at public launch → 404. Share the link directly with testers.
+- **Now the "Support & feedback" channel (Build 58)** — no longer unlisted: a subtle footer link surfaces `/feedback` (the only footer link; hidden when the flag is off). Page + form reworded for support ("Need a hand…?", types relabelled, "other" doubles as "I need help"). Still gated by **`FEEDBACK_ENABLED`** (`src/lib/features.ts`) → flipping it off 404s the page *and* hides the footer link. The DB enum values (bug/idea/confusing/praise/other) are unchanged — only labels moved.
 - **Same trusted pattern as reports:** public submit via a **service-role** action (`src/lib/actions/submit-feedback.ts`) into the **`feedback`** table (migration `0004_feedback.sql`); **RLS admin-only** (no anon policy — anon can't read or write it). No content-check (feedback is never published).
 - **Admin board** at `/admin/feedback` (`src/app/admin/(protected)/feedback`): a **status-column kanban** (New / Looking into it / Planned / Done / Declined) rendered from `listFeedback()`; move status, set priority, add a private note, delete — via actions in `src/lib/actions/admin.ts` (`setFeedbackStatus`/`setFeedbackPriority`/`setFeedbackNote`/`deleteFeedback`, each `requireAdmin`). Dashboard shows a "new feedback" count (`getAdminOverview`).
 - **Run migration `0004_feedback.sql`** in Supabase before this ships, or inserts fail.

@@ -1,8 +1,10 @@
+import Link from "next/link";
 import { Logo } from "@/components/logo";
+import { FEEDBACK_ENABLED } from "@/lib/features";
 
-/** Calm sign-off only — no link row (it duplicated the header nav; Build 55).
- *  Future candidates live in Design.md §4 notes: an About page, community
- *  guidelines, or a steward contact — once those destinations exist. */
+/** Calm sign-off. The one link is Support & feedback (Build 58) — the footer is
+ *  its natural, subtle home (it exists nowhere else in the nav; header links
+ *  are deliberately not repeated here). Hidden when FEEDBACK_ENABLED is off. */
 export function SiteFooter() {
   return (
     <footer className="mt-16 bg-night text-on-night/80">
@@ -13,6 +15,16 @@ export function SiteFooter() {
           Made with care by our community, in a spirit of respect and mutual
           support.
         </p>
+        {FEEDBACK_ENABLED && (
+          <p className="mt-4 text-sm">
+            <Link
+              href="/feedback"
+              className="text-on-night/60 underline transition-colors hover:text-on-night"
+            >
+              Support &amp; feedback
+            </Link>
+          </p>
+        )}
       </div>
     </footer>
   );

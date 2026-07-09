@@ -143,6 +143,21 @@ export function googleCalendarUrl(e: {
   return `https://calendar.google.com/calendar/render?${params.toString()}`;
 }
 
+/** A Google Maps *directions* link (opens the maps app in directions mode). */
+export function directionsUrl(
+  lat: number | null,
+  lng: number | null,
+  text: string | null,
+): string | null {
+  if (lat != null && lng != null) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`;
+  }
+  if (text) {
+    return `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(text)}`;
+  }
+  return null;
+}
+
 /** A Google Maps link (opens the maps app on a phone) from coords or address text. */
 export function mapsUrl(
   lat: number | null,

@@ -8,11 +8,11 @@ const inputCls =
   "mt-1 w-full rounded-xl border border-line bg-card px-3 py-2 text-sm outline-none focus:border-sage";
 
 const TYPES = [
-  { value: "bug", label: "🐛 Something's broken" },
-  { value: "idea", label: "💡 An idea" },
-  { value: "confusing", label: "😕 Confusing" },
-  { value: "praise", label: "❤️ Love it" },
-  { value: "other", label: "💬 Other" },
+  { value: "bug", label: "Something's broken" },
+  { value: "other", label: "I need help" },
+  { value: "idea", label: "An idea" },
+  { value: "confusing", label: "Something's confusing" },
+  { value: "praise", label: "Some love" },
 ];
 
 export function FeedbackForm() {
@@ -49,7 +49,7 @@ export function FeedbackForm() {
 
       <fieldset>
         <legend className="block text-sm font-medium text-ink">
-          What kind of feedback?
+          What&rsquo;s this about?
         </legend>
         <div className="mt-2 flex flex-wrap gap-2">
           {TYPES.map((t, i) => (

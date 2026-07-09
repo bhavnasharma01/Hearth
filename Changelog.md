@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 58 (2026-07-09)
+
+*Profile page tidy-up + the feedback form becomes a surfaced Support & feedback channel. Builds clean; lint passes.*
+
+### Changed — practitioner profile (`/p/[slug]`)
+- **New "Where & how" card** replaces the jumbled one-liner (`area · mode · languages · pricing` all mashed together). Labelled rows: **Location** (area + a **"Get directions →"** link that opens Google Maps in directions mode, using the listing's area-level coords when present — new `directionsUrl()` in `format.ts`), **Sessions** (In person / Online / Both), **Languages**, **Pricing** — each only when present.
+- **Long-URL overflow fixed**: a pasted link in a description/bio/service blurb now wraps (`break-words`) instead of running past the phone's right edge.
+- "Report this **listing**" → "Report this **profile**" (a Build 57 vocabulary straggler).
+
+### Changed — Support & feedback (was the unlisted testing feedback form)
+- `/feedback` is reworded as **"Support & feedback"** ("Need a hand, spotted a problem, or have an idea? It goes straight to the stewards…"). Type chips relabelled — "I need help" now sits second (maps to the existing `other` enum value; **no migration needed**), emojis dropped from the chips.
+- **Surfaced subtly in the footer** — a single quiet "Support & feedback" link (the footer's only link; things in the header stay out of the footer). Hidden automatically when `FEEDBACK_ENABLED` is off, which also still 404s the page.
+
+### Docs
+- `Design.md` (§5 profile card), `Claude.md` (feedback section rewritten). `Readme.md`, `Changelog.md` → Build 58.
+
+---
+
 ## v0.1.0 — Build 57 (2026-07-09)
 
 *Vocabulary: your "practice", not your "listing". Builds clean; lint passes.*
