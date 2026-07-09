@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 41 (2026-07-08)
+
+*Admins can now edit any listing and hand back a lost edit link, straight from the admin panel. Builds clean; lint passes.*
+
+### Added
+- **Edit a listing from the admin panel.** Each row on `/admin/listings` gets an **Edit** button that opens `/manage/<token>` — the practitioner's own full editor — so a steward can fix a typo or change a contact without asking the owner. Reuses the existing manage page + `updateListing` action (which re-runs the content check), so there's **no separate admin edit form** to maintain.
+- **Copy someone's private edit link.** A **Copy edit link** button (`ShareButton`) on each row copies that listing's `/manage/<token>` URL, so when a practitioner loses their link (a recurring theme in the July 6 call), the steward can send it back instead of the owner deleting + re-adding.
+
+### Security
+- `listPractitionersAdmin` now selects the secret **`manage_token`** (service-role read). This is safe **only** because that read is rendered exclusively inside the auth-gated `/admin` area — the token is still column-revoked from `anon`/`authenticated` and never appears in a public/anon read. Documented the invariant in `Security.md` §3 and `Claude.md`.
+
+### Docs
+- `Security.md` (§3 manage-token bullet), `Architecture.md` (admin capabilities), `Claude.md` (admin panel section). `Readme.md`, `Changelog.md` → Build 41.
+
+---
+
 ## v0.1.0 — Build 40 (2026-07-08)
 
 *Admin "Hide" appeared not to work — diagnosed as a feedback/UX gap, not a data bug, and fixed the feedback. Builds clean; lint passes.*

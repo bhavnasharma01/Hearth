@@ -75,6 +75,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - To use it: set `ADMIN_EMAILS` (local + Vercel) and create the matching user in Supabase Auth (Dashboard → Authentication → Add user, auto-confirm). Keep public sign-ups disabled.
 - `src/middleware.ts` (matcher `/admin/:path*`) refreshes the session cookie.
 - Note: admin pages currently also render the public `SiteHeader`/`SiteFooter` (single root layout) — cosmetic, fine for now.
+- **Admin can edit any listing + hand back a lost edit link (Build 41).** `/admin/listings` surfaces each listing's **`manage_token`** — an **Edit** link → `/manage/<token>` (reuses the owner's full editor; no separate admin edit form) and a **Copy edit link** button (`ShareButton`) to send someone their own private link. `listPractitionersAdmin` selects `manage_token` (service-role; the column is revoked from `anon`/`authenticated` but service-role bypasses that) — this is **only** OK because that read is rendered exclusively inside the auth-gated `/admin` area. **Never add `manage_token` to a public/anon read.**
 
 ## Steward email alerts + pilot flags (Build 14)
 

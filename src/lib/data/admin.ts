@@ -64,6 +64,10 @@ export interface AdminPractitioner {
   featured: boolean;
   flag_count: number;
   created_at: string;
+  // The owner's private edit capability (a secret). Safe to read here because
+  // this function is service-role and only ever rendered inside the auth-gated
+  // /admin area — it must never be added to a public/anon read.
+  manage_token: string;
 }
 
 export async function listPractitionersAdmin(
@@ -73,7 +77,9 @@ export async function listPractitionersAdmin(
   if (!sb) return [];
   let q = sb
     .from("practitioners")
-    .select("id, name, practice_name, slug, status, featured, flag_count, created_at")
+    .select(
+      "id, name, practice_name, slug, status, featured, flag_count, created_at, manage_token",
+    )
     .order("created_at", { ascending: false });
   if (onlyStatus) q = q.eq("status", onlyStatus);
   const { data } = await q;

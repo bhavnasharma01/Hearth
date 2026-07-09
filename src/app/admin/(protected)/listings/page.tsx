@@ -6,6 +6,8 @@ import {
   deletePractitioner,
 } from "@/lib/actions/admin";
 import { ActionButton } from "@/components/admin/action-button";
+import { ShareButton } from "@/components/share-button";
+import { siteUrl } from "@/lib/url";
 
 export const dynamic = "force-dynamic";
 
@@ -35,7 +37,9 @@ export default async function ListingsAdminPage() {
       <p className="mt-1 mb-5 text-sm text-muted">
         {practitioners.length} total · {liveCount} live · {hiddenCount} hidden.
         Hidden listings stay here so you can restore them, but they don’t show in
-        the public directory.
+        the public directory. Use <strong>Edit</strong> to change a listing
+        yourself, or <strong>Copy edit link</strong> to send someone their own
+        private edit link.
       </p>
 
       {practitioners.length === 0 ? (
@@ -69,7 +73,22 @@ export default async function ListingsAdminPage() {
                     {p.flag_count > 0 ? <span>· {p.flag_count} flag(s)</span> : null}
                   </p>
                 </div>
-                <div className="ml-auto flex flex-wrap gap-2">
+                <div className="ml-auto flex flex-wrap items-center gap-2">
+                  {/* Edit reuses the owner's manage page — the same full editor,
+                      no separate admin edit form to maintain. */}
+                  <Link
+                    href={`/manage/${p.manage_token}`}
+                    className="rounded-full border border-line px-3 py-1 text-xs text-forest transition-colors hover:bg-sand"
+                  >
+                    Edit
+                  </Link>
+                  {/* Copy the practitioner's private edit link to send them (for
+                      when they've lost it). ShareButton copies + confirms. */}
+                  <ShareButton
+                    url={siteUrl(`/manage/${p.manage_token}`)}
+                    label="Copy edit link"
+                    className="text-xs"
+                  />
                   {isPublic ? (
                     <ActionButton action={setPractitionerStatus} fields={{ id: p.id, status: "hidden" }}>
                       Hide
