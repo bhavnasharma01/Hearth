@@ -6,7 +6,7 @@ import { firstParam } from "@/lib/url";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Report a listing · Hearth",
+  title: "Report a concern · Hearth",
 };
 
 async function getTargetLabel(
@@ -48,7 +48,7 @@ export default async function ReportPage({
   return (
     <div className="mx-auto max-w-md px-4 py-8">
       <h1 className="font-display text-2xl font-semibold text-ink">
-        Report a listing
+        Report a concern
       </h1>
       <p className="mt-1 text-sm text-muted">
         Help keep Hearth trustworthy. Flag anything that looks off.
@@ -60,7 +60,7 @@ export default async function ReportPage({
         ) : (
           <p className="rounded-xl border border-dashed border-line bg-card/60 p-6 text-sm text-muted">
             This report link is missing its target. Please use the “Report” link
-            on a specific listing or event.
+            on a specific profile or event.
           </p>
         )}
       </div>

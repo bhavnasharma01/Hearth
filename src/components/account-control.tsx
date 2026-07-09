@@ -113,12 +113,12 @@ export function AccountControl() {
               off-brand in a menu; quiet typography carries it). */}
           <nav className="p-1.5">
             <Link
-              href="/my-listing"
+              href="/my-practice"
               role="menuitem"
               onClick={() => setOpen(false)}
               className="block rounded-xl px-3 py-2 text-sm text-ink transition-colors hover:bg-sand"
             >
-              My listing
+              My practice
             </Link>
             <button
               type="button"

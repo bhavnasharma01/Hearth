@@ -38,7 +38,7 @@ export async function claimListingByToken(fd: FormData): Promise<void> {
     return;
   }
   revalidatePath(`/manage/${token}`);
-  revalidatePath("/my-listing");
+  revalidatePath("/my-practice");
 }
 
 /**
@@ -64,7 +64,7 @@ export async function claimListingByEmail(): Promise<void> {
     console.error("claimListingByEmail:", error.message);
     return;
   }
-  revalidatePath("/my-listing");
+  revalidatePath("/my-practice");
 }
 
 /**
@@ -87,6 +87,6 @@ export async function deleteListingByToken(fd: FormData): Promise<void> {
     return;
   }
   revalidatePath("/practitioners");
-  revalidatePath("/my-listing");
+  revalidatePath("/my-practice");
   redirect("/practitioners?removed=1");
 }

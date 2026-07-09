@@ -34,8 +34,8 @@ export default async function SignInPage({
           Sign in to Hearth
         </h1>
         <p className="mt-2 text-sm text-muted">
-          For practitioners and members: sign in to add your practice and manage
-          your listing.
+          For practitioners and members: sign in to add your practice and tend
+          it anytime.
         </p>
 
         {error && (

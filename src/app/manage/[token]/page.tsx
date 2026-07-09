@@ -14,7 +14,7 @@ import { DeleteListing } from "@/components/delete-listing";
 export const dynamic = "force-dynamic";
 
 export const metadata: Metadata = {
-  title: "Manage your listing · Hearth",
+  title: "Manage your practice · Hearth",
   // Private per-listing edit link — keep it out of search engines.
   robots: { index: false, follow: false },
 };
@@ -45,7 +45,7 @@ export default async function ManageListingPage({
     <div className="mx-auto max-w-2xl px-4 py-8">
       <header className="mb-6">
         <h1 className="font-display text-3xl font-semibold text-ink">
-          Manage your listing
+          Manage your practice
         </h1>
         <p className="mt-1 text-muted">
           Update anything about your Hearth profile below. This is your private
@@ -65,9 +65,9 @@ export default async function ManageListingPage({
             Make it yours
           </p>
           <p className="mt-2 text-sm text-ink">
-            You&rsquo;re signed in. Link this listing to your account and you can
-            edit it from <span className="font-medium">My listing</span> any
-            time, no link to remember.
+            You&rsquo;re signed in. Link this practice to your account and you
+            can edit it from <span className="font-medium">My practice</span>{" "}
+            any time, no link to remember.
           </p>
           <form action={claimListingByToken} className="mt-3">
             <input type="hidden" name="manage_token" value={token} />
@@ -84,8 +84,8 @@ export default async function ManageListingPage({
       {isOwner && (
         <p className="mb-6 rounded-xl border border-line bg-sand/40 px-4 py-3 text-sm text-muted">
           ✓ Linked to your account. You can also edit this any time from{" "}
-          <Link href="/my-listing" className="text-forest underline">
-            My listing
+          <Link href="/my-practice" className="text-forest underline">
+            My practice
           </Link>
           .
         </p>

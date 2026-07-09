@@ -40,10 +40,10 @@ export function ResetPasswordForm() {
           You&rsquo;re signed in with your new password.
         </p>
         <Link
-          href="/my-listing"
+          href="/my-practice"
           className="mt-5 inline-block rounded-full bg-forest px-6 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
         >
-          Go to My listing
+          Go to My practice
         </Link>
       </div>
     );

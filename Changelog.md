@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 57 (2026-07-09)
+
+*Vocabulary: your "practice", not your "listing". Builds clean; lint passes.*
+
+### Changed
+- **Member-facing copy now says "practice" everywhere** (Bhavna's catch: "listing" implies you can have several, contradicting the one-per-account rule, and clashing with "Add your practice"). The vocabulary is now three consistent layers, recorded in `Design.md` §3:
+  - **practice** = the thing you own and edit ("My practice", "Edit my practice", "Delete my practice", "Your practice is linked to your account", "Manage your practice" on the manage-link page).
+  - **profile** = its public page (`/p/slug`, "View your public profile" — unchanged).
+  - **listing** = steward/admin language only (the admin panel manages many, so it stays accurate there).
+- **Route renamed: `/my-listing` → `/my-practice`**, with a redirect (preserving the `?listing=` selection) so old links keep working. Header menu, success screens, gates, claim banners, and reset-password all point at the new route.
+- **`/report` retitled "Report a concern"** (was "Report a listing" — a viewer-facing surface shouldn't use admin vocabulary, and it covers events too when they return).
+
+### Docs
+- `Design.md` (§3 vocabulary rule), `Claude.md` (route + naming convention). `Readme.md`, `Changelog.md` → Build 57.
+
+---
+
 ## v0.1.0 — Build 56 (2026-07-09)
 
 *One listing per account, and My listing now shows everything an account owns. Builds clean; lint passes.*

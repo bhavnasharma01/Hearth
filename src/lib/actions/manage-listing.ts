@@ -184,6 +184,6 @@ export async function updateListing(
     status: "success",
     pendingReview: status !== "live",
     slug: listing.slug,
-    message: "Saved. Your listing has been updated. 🌿",
+    message: "Saved. Your practice has been updated. 🌿",
   };
 }

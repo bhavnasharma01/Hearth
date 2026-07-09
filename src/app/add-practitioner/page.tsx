@@ -32,8 +32,8 @@ export default async function AddPractitionerPage() {
         <div className="rounded-[var(--radius-card)] border border-line bg-card p-8 text-center">
           <p className="font-display text-xl text-ink">First, sign in</p>
           <p className="mx-auto mt-2 max-w-sm text-sm text-muted">
-            Your listing is linked to your account, so you can edit it any time
-            from &ldquo;My listing&rdquo;, with no edit link to keep track of.
+            Your practice is linked to your account, so you can edit it any time
+            from &ldquo;My practice&rdquo;, with no edit link to keep track of.
           </p>
           <Link
             href="/signin?next=/add-practitioner"
@@ -61,18 +61,18 @@ export default async function AddPractitionerPage() {
         </header>
         <div className="rounded-[var(--radius-card)] border border-line bg-card p-8 text-center">
           <p className="font-display text-xl text-ink">
-            You already have a listing
+            Your practice is already on Hearth
           </p>
           <p className="mx-auto mt-2 max-w-sm text-sm text-muted">
-            Each account holds one listing, your page in the directory. Add new
+            Each account holds one practice, your page in the directory. Add new
             offerings to it (categories, services, keywords) instead of creating
             a second one.
           </p>
           <Link
-            href="/my-listing"
+            href="/my-practice"
             className="mt-5 inline-block rounded-full bg-forest px-6 py-2.5 text-sm font-medium text-cream transition-colors hover:bg-forest-deep"
           >
-            Edit my listing
+            Edit my practice
           </Link>
           <p className="mt-5 text-xs text-muted">
             Genuinely run a second, separate practice? Message the stewards and

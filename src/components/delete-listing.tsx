@@ -13,7 +13,7 @@ export function DeleteListing({ token }: { token: string }) {
 
   return (
     <div className="mt-8 rounded-[var(--radius-card)] border border-clay/30 bg-clay/5 p-5">
-      <p className="text-sm font-medium text-ink">Remove your listing</p>
+      <p className="text-sm font-medium text-ink">Remove your practice</p>
       <p className="mt-1 text-xs text-muted">
         Takes your profile off Hearth entirely. This can&rsquo;t be undone, but
         you can always add yourself again later.
@@ -25,7 +25,7 @@ export function DeleteListing({ token }: { token: string }) {
           onClick={() => setArming(true)}
           className="mt-3 rounded-full border border-clay/50 px-4 py-1.5 text-sm text-clay transition-colors hover:bg-clay/10"
         >
-          Delete my listing
+          Delete my practice
         </button>
       ) : (
         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -43,7 +43,7 @@ export function DeleteListing({ token }: { token: string }) {
             onClick={() => setArming(false)}
             className="rounded-full border border-line px-4 py-1.5 text-sm text-ink transition-colors hover:bg-sand"
           >
-            Keep my listing
+            Keep my practice
           </button>
         </div>
       )}

@@ -119,7 +119,7 @@ export async function submitPractitioner(
         return {
           status: "error",
           message:
-            "Your account already has a listing. You can edit it anytime from My listing.",
+            "Your practice is already on Hearth. You can edit it anytime from My practice.",
         };
       }
     }
@@ -171,7 +171,7 @@ export async function submitPractitioner(
     console.error("submitPractitioner insert:", error?.message);
     return {
       status: "error",
-      message: "Something went wrong saving your listing. Please try again.",
+      message: "Something went wrong saving your practice. Please try again.",
     };
   }
 
@@ -223,6 +223,6 @@ export async function submitPractitioner(
     status: "success",
     pendingReview: true,
     message:
-      "Thank you. your listing was received and will appear right after a quick review.",
+      "Thank you. Your practice was received and will appear right after a quick review.",
   };
 }

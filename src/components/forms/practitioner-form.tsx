@@ -46,11 +46,11 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         )}
 
         {/* The listing is linked to the signed-in account — editing happens
-            from "My listing", so no secret edit link to surface or lose. */}
+            from "My practice", so no secret edit link to surface or lose. */}
         <p className="mx-auto mt-5 max-w-sm text-sm text-muted">
-          Your listing is linked to your account. Update it anytime from{" "}
-          <Link href="/my-listing" className="text-forest underline">
-            My listing
+          Your practice is linked to your account. Update it anytime from{" "}
+          <Link href="/my-practice" className="text-forest underline">
+            My practice
           </Link>
           .
         </p>
