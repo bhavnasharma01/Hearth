@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Logo } from "@/components/logo";
+import { AccountControl } from "@/components/account-control";
 import { EVENTS_ENABLED } from "@/lib/features";
 
 const NAV = [
@@ -24,21 +25,24 @@ export function SiteHeader() {
         <Link href="/" aria-label="Hearth home">
           <Logo tone="light" />
         </Link>
-        <nav className="flex items-center gap-1 text-sm">
-          {NAV.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className={`rounded-full px-3 py-1.5 transition-colors ${
-                isActive(item.href)
-                  ? "bg-gold/15 text-gold-soft"
-                  : "text-cream/70 hover:bg-white/5 hover:text-cream"
-              }`}
-            >
-              {item.label}
-            </Link>
-          ))}
-        </nav>
+        <div className="flex items-center gap-2">
+          <nav className="flex items-center gap-1 text-sm">
+            {NAV.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className={`rounded-full px-3 py-1.5 transition-colors ${
+                  isActive(item.href)
+                    ? "bg-gold/15 text-gold-soft"
+                    : "text-cream/70 hover:bg-white/5 hover:text-cream"
+                }`}
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
+          <AccountControl />
+        </div>
       </div>
     </header>
   );

@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://hearthto.vercel.app — auto-deploys from `main` via Vercel.
 
-**Version:** 0.1.0 · **Build:** 45
+**Version:** 0.1.0 · **Build:** 46
 *(Status: **deployed & live** at hearthto.vercel.app. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---
@@ -18,7 +18,7 @@ A free, **phone-first** community website with two layers in one home:
 
 The two are **linked**: an event can reference its host practitioner, and a practitioner's profile shows the events they host — so people who come for one discover the other.
 
-**Principles:** free & open to all · no login for the public (accounts modelled but dormant) · mobile-first · open posting, community-policed · low-maintenance for a non-technical steward to run.
+**Principles:** free & open to all · login gates contributing, never consuming (browse/contact with no account; Google sign-in for practitioners to own their listing) · mobile-first · open posting, community-policed · low-maintenance for a non-technical steward to run.
 
 > The full *why* lives in `documentation/Product.md` (North Star + product overview). Read that first.
 
@@ -87,8 +87,8 @@ calm empty states until the Supabase project is connected. Apply the schema by
 running the migrations in `supabase/migrations/` **in order** (`0001` schema +
 RLS + category seed → `0002` geocoding → `0003` Instagram-as-contact → `0004`
 feedback → `0005` manage-token + accepting-clients → `0006` avatars Storage
-bucket → `0007` services) against the Supabase project (SQL editor or the
-Supabase CLI).
+bucket → `0007` services → `0008` public accounts Phase A) against the
+Supabase project (SQL editor or the Supabase CLI).
 
 Seed the community events from the public calendar (no API key needed):
 

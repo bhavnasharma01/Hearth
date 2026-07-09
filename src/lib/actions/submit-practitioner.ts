@@ -2,6 +2,7 @@
 
 import { revalidatePath } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
+import { getSupabaseServer } from "@/lib/supabase/server";
 import { runContentCheck } from "@/lib/moderation/content-check";
 import { resolveCoordsFromForm } from "@/lib/geocode";
 import { uniquePractitionerSlug } from "@/lib/slug";
@@ -85,6 +86,29 @@ export async function submitPractitioner(
     return { status: "error", message: "Those categories weren’t recognized." };
   }
 
+  // If the submitter is signed in, bind the listing to their account (accounts
+  // Phase A) — it becomes theirs with no link to lose. Anonymous submissions
+  // still work exactly as before; the owner stays null until claimed.
+  let owner_user_id: string | null = null;
+  const authClient = await getSupabaseServer();
+  if (authClient) {
+    const { data: authData } = await authClient.auth.getUser();
+    const authUser = authData.user;
+    if (authUser) {
+      // Ensure the member's profile row exists (the FK target) — accounts
+      // created before the sign-up trigger (e.g. stewards) don't have one. If
+      // this fails for any reason, fall back to an unowned listing rather than
+      // blocking the submission.
+      const { error: profileErr } = await supabase
+        .from("users")
+        .upsert(
+          { id: authUser.id, email: authUser.email ?? null },
+          { onConflict: "id", ignoreDuplicates: true },
+        );
+      if (!profileErr) owner_user_id = authUser.id;
+    }
+  }
+
   // Content check decides instant-publish vs hold-for-review (server-side).
   const check = runContentCheck([description, bio, name, practice_name, keywords]);
   const status = check.result === "ok" ? "live" : "pending";
@@ -102,6 +126,7 @@ export async function submitPractitioner(
     .insert({
       name,
       practice_name,
+      owner_user_id,
       slug,
       description,
       bio,

@@ -69,7 +69,7 @@ Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 - **`reports`** — polymorphic flagging (one of `practitioner_id`/`event_id`); `reporter_contact` for dedupe (a field, not a login); `reason`, `status`.
 - **`feedback`** — private user-testing feedback (Build 18, migration `0004`). `message`, `type` (bug/idea/confusing/praise/other), optional `context`/`submitter_name`/`submitter_contact`, and triage fields `status` (new/reviewing/planned/done/declined), `priority`, `admin_note`. Admin-only (RLS); public writes via a service-role action; never shown publicly.
 
-**Modelled but dormant (v2/v3):** `users` (accounts), `registrations` (RSVP/tickets). Their FKs are nullable everywhere so the account layer switches on later without rework.
+**`users` is live as of accounts Phase A (Build 46, migration `0008`):** `users.id` now references `auth.users(id)`; a profile row is auto-created on first sign-in (DB trigger, Google name/avatar captured); members can read/update their own row (RLS `auth.uid() = id`); a signed-in practice submission sets `practitioners.owner_user_id`. **Still dormant (v3):** `registrations` (RSVP/tickets).
 
 **Provenance everywhere:** every practitioner/event carries `source` (`hearth_form`/`import`/`google_calendar`/`whatsapp`/`manual`), letting Hearth coexist with and gradually replace the old Google pipeline.
 
@@ -91,6 +91,8 @@ src/app
   add-practitioner/page.tsx     # native add form (required, geocoded area)
   add-event/page.tsx            # native add form (hidden: EVENTS_ENABLED → 404)
   report/page.tsx               # report a listing (no login)
+  signin/page.tsx               # member sign-in — Google OAuth (accounts Phase A)
+  auth/callback/route.ts        # OAuth code → session exchange, then redirect
   feedback/page.tsx             # unlisted testing feedback (FEEDBACK_ENABLED → 404)
   manage/[token]/page.tsx       # owner edit page — private capability link (noindex)
   api/geocode/route.ts          # Nominatim autocomplete proxy
@@ -136,6 +138,8 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 - *Editable listings — profiles-as-mini-sites, Phase 1a (Build 23):* a per-listing **manage link** (`/manage/<manage_token>`, migration `0005`) lets a practitioner **edit their own listing with no account** — the token is an unguessable capability (column-revoked from public roles), surfaced on the submission success screen. `getListingByManageToken` (service-role) loads it; `updateListing` (`src/lib/actions/manage-listing.ts`) saves, re-running the content-check. Added an **"accepting new clients"** toggle (shown on the profile). Foundation for the mini-site work and reused later for testimonial-request links.
 - *Photo uploads — Phase 1b (Build 24):* real avatar **uploads** replace URL-paste on both the add + manage forms. `AvatarUploader` (client) compresses on-device (canvas, ~512px JPEG, EXIF-aware) → `uploadAvatar` (service-role action) validates + stores in the public **`avatars`** Storage bucket (migration `0006`) → URL saved to `photo_url`. Compression keeps files ~100–200 KB (storage/egress ≈ $0 at community scale).
 - *Services menu — Phase 1c (Build 25):* a `practitioner_services` table (migration `0007`) + a dynamic **`ServicesEditor`** on the manage page (parallel-named rows zipped by `getAll`, replaced on save). Rendered as a **"What I offer"** section on `/p/[slug]`; the free-text keyword chips were relabelled **"Specialties"** to distinguish them. **Phase 1 (mini-site core) complete;** Phase 2 = solicited testimonials.
+
+- *Accounts Phase A (Build 46):* member sign-in with **Google** — `/signin` (+ `GoogleSignInButton`), `/auth/callback` (code → session), the header **`AccountControl`** (client-side session so static pages stay static), site-wide session refresh in `src/middleware.ts`, migration `0008` (drops the `*_admin_all` policies — `authenticated` no longer means admin — ties `users` to `auth.users`, self-access RLS, sign-up trigger), and `submitPractitioner` binding `owner_user_id` when the submitter is signed in. Phase B (claim + "My listing") comes next.
 
 **Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 

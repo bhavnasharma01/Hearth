@@ -4,6 +4,32 @@
 
 ---
 
+## v0.1.0 — Build 46 (2026-07-08)
+
+*Accounts Phase A: member sign-in with Google. Builds clean; lint passes.*
+
+### Added
+- **`/signin`** — a calm sign-in card with **Continue with Google** (`GoogleSignInButton`, Supabase OAuth) and honest copy ("Browsing Hearth never needs an account"). Already-signed-in visitors are forwarded to `?next=` (same-site paths only).
+- **`/auth/callback`** — exchanges the OAuth code for a session (sets the auth cookies) and forwards to `next`; failures land back on `/signin` with a gentle error.
+- **Header account control** (`AccountControl`) — "Sign in" when logged out; a small avatar (Google photo or initial) with a signed-in-as menu + Sign out when logged in. Deliberately **client-side**: reading the session server-side in the header would force every page dynamic (home is static since Build 39).
+- **Migration `0008_public_accounts.sql`** — the safety prerequisite for opening sign-ups:
+  - **Drops every `*_admin_all` policy** (practitioners, events, categories, join, reports, registrations, users, feedback, services). v1 treated `authenticated` as admin, safe only while admins were the only people who could sign in. Admin panel is unaffected (service role + `ADMIN_EMAILS` throughout).
+  - **Ties `users` to `auth.users`** (`id` FK), adds **self read/update** policies (`auth.uid() = id`), and a **sign-up trigger** that auto-creates the profile row (Google name + avatar) with an exception guard so a profile hiccup can never block sign-up.
+- **Owner binding on submit** — a signed-in "Add your practice" sets `owner_user_id` (ensuring the profile row exists first; falls back to unowned rather than blocking). Anonymous submissions unchanged.
+
+### Changed
+- **`src/middleware.ts`** now refreshes the session on **all** routes (was `/admin` only), excluding static assets — members carry sessions site-wide.
+
+### Bhavna's next steps (in order)
+1. Run migration `0008` in the Supabase SQL editor.
+2. Supabase → Authentication → Settings → turn **"Allow new users to sign up" ON** (Part 3 of the setup guide, now safe).
+3. Test on the live site: Sign in → Google → back to Hearth with your avatar in the header.
+
+### Docs
+- `Security.md` (§2 member sign-in + §3 de-privileged `authenticated`, Build 43 note updated), `Architecture.md` (structure, users live, Phase A entry), `Product.md` (principle evolved + pilot note), `Claude.md` (conventions + migration list), `Readme.md` (principles, migrations, Build 46), `Changelog.md`.
+
+---
+
 ## v0.1.0 — Build 45 (2026-07-08)
 
 *Accounts (v2) decisions locked + the config guide for Phase A. Docs only; builds clean.*
