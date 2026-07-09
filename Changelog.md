@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 51 (2026-07-09)
+
+*10 more palette explorations in the opposite direction: cool, clean, fresh. Builds clean.*
+
+### Added
+- **Palettes 41–50, "Cool & fresh (round three)"** on `/palette-explorations.html` (page now: 50 directions, five moods; root + `public/` copies in sync). Deliberately the opposite pole of everything before it — no cream, no candlelight, no earth: cool clean backgrounds, white cards, crisp modern accents. The set: **Glacier** (ice + sky blue), **Gallery white** (white/near-black/one vermilion dot), **Nordic slate**, **Mint fresh**, **Periwinkle air**, **Graphite & citron** (the one cool-dark header), **Sea salt** (navy + driftwood), **Lavender fog**, **Paper & ink** (pure-white editorial + cobalt), **Aqua glass**.
+- All are applyable via the Build 50 palette system (one-block swap in `globals.css`), including the light and white headers, thanks to the `on-night`/`on-gold` tokens.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 51.
+
+---
+
 ## v0.1.0 — Build 50 (2026-07-08)
 
 *Trial reskin: the whole app now wears "Rice paper" (#29), plus a palette system that makes the next swap a one-block change. Builds clean; lint passes.*
