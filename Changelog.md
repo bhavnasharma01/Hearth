@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 59 (2026-07-09)
+
+*Category emoji matcher: gendered + community patterns (the "Men's/Women's Work snowflake" report). Builds clean; lint passes.*
+
+### Fixed
+- **"Men's Work" and "Women's Work" showed the ✻ fallback** — the `KEYWORD_ICONS` matcher deliberately skipped gendered patterns when built (Build 39). Added: **women/sister → 🌙**, **men/brother → ⛰️** (word-bounded so "Mentorship" and "Shamanic" don't false-match), plus **circle/community/gathering → 🤝** and **couple/relationship/intimacy → 💞** while in there. Verified against trap cases.
+
+### Noted (no code)
+- **Branded auth emails are fully possible** — Supabase → Authentication → Email Templates accepts custom subject + full HTML per template (confirm signup, reset password, …), sent via the Resend SMTP already configured. Deliberately deferred until the palette is chosen; then Claude writes inline-styled branded templates and Bhavna pastes them into the dashboard.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 59.
+
+---
+
 ## v0.1.0 — Build 58 (2026-07-09)
 
 *Profile page tidy-up + the feedback form becomes a surfaced Support & feedback channel. Builds clean; lint passes.*
