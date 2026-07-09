@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 54 (2026-07-09)
+
+*Accounts Phase A2: email/password sign-in, beside Google. Builds clean; lint passes.*
+
+### Added
+- **Email + password on `/signin`** (`EmailSignInForm`, under an "or with email" divider below Google). Three modes in one calm form:
+  - **Sign in** (friendly error on a bad match).
+  - **Create an account** — name + email + password (min 6); Supabase sends a **confirmation link** (no made-up addresses), which lands via `/auth/callback` and signs the person in. The name flows into `user_metadata.full_name`, which the `0008` trigger writes to the profile row.
+  - **Forgot your password?** — sends a reset link → `/auth/callback` → **`/reset-password`** (new, session-gated, noindex): set a new password (`ResetPasswordForm`) with a "Go to My listing" success state. An expired/used link bounces to `/signin` with a specific, gentle message.
+- All auth emails send from the verified domain via Supabase custom SMTP through Resend.
+
+### Config (Bhavna, Domain Setup.md Part 4 — now unblocked)
+1. Supabase → Project Settings → Auth → enable **Custom SMTP** (host `smtp.resend.com`, port `465`, user `resend`, password = Resend API key, sender `alerts@myhearthapp.ca`).
+2. Authentication → Sign In / Providers → enable **Email** (keep **Confirm email ON**).
+3. Test: create an account with a non-Google email; try the reset flow.
+
+### Docs
+- `Security.md` (§2), `Claude.md` (accounts bullet), `Domain Setup.md` (Part 4 marked ready + test step), `Google Sign-In Setup.md` (superseded "leave alone" note). `Readme.md`, `Changelog.md` → Build 54.
+
+---
+
 ## v0.1.0 — Build 53 (2026-07-09)
 
 *Hearth has a real address: myhearthapp.ca. Builds clean.*

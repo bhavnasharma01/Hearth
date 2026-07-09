@@ -65,7 +65,7 @@ That's it for config. **No new Vercel environment variables**: the Google secret
 
 The admin panel stays exactly as safe as today: admin access is governed by the `ADMIN_EMAILS` allowlist, not by "is signed in" (see `Security.md §2`), so members signing in gains them nothing on `/admin`.
 
-**Leave alone:** the Email provider settings (email/password stays off until a domain is verified in Resend) and anything under SMTP.
+**Email provider + SMTP:** originally left off; as of Build 54 (email/password shipped) they're configured per `Domain Setup.md` Parts 3–4.
 
 ---
 

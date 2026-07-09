@@ -46,13 +46,14 @@
    ```
 6. **Redeploy** (Vercel → Deployments → ⋯ on the latest → Redeploy) so the new env vars take effect. Test: submit a junk practitioner listing with a spammy word, and the "held for review" alert should arrive from `alerts@myhearthapp.ca`.
 
-## Part 4: Supabase SMTP — wait until we build email/password
+## Part 4: Supabase SMTP — do this now (email/password shipped in Build 54)
 
-*Do this only when Claude says the email/password sign-in UI is ready to ship.*
+*The email/password sign-in UI is built; this config switches it on.*
 
 1. Supabase → **Project Settings** → **Authentication** (or Auth → Emails → SMTP settings): enable **Custom SMTP**.
 2. Values: Host `smtp.resend.com` · Port `465` · Username `resend` · Password = your **Resend API key** · Sender email `alerts@myhearthapp.ca` · Sender name `Hearth`.
-3. Then in Authentication → Sign In / Providers, the **Email** provider can be enabled, and sign-up verification + password-reset emails will deliver via Resend.
+3. Then in Authentication → Sign In / Providers, enable the **Email** provider (leave **"Confirm email" ON** — it's what stops made-up addresses from creating accounts). Sign-up confirmation + password-reset emails will deliver via Resend.
+4. Test on the live site: `/signin` → "Create an account" → the confirmation email should arrive from `alerts@myhearthapp.ca`; clicking it signs you in. Also try "Forgot your password?" end to end.
 
 ---
 
