@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 68 (2026-07-10)
+
+*Documentation audit (per /updatestructure): every living doc reconciled with the Builds 39–67 sprint; learnings + carry-forward captured. Docs only; builds clean.*
+
+### Changed — staleness swept from every living doc
+- **`Hearth - Database Schema.md`** (the authoritative schema, untouched all sprint): `users` marked **live** (auth-linked, trigger, self-RLS — `0008`), new **`testimonials`** entry (`0009`), design principle + v1/v2 staging rewritten for the account era.
+- **`Readme.md`**: status paragraph rewritten (www canonical, accounts, testimonials, Rice Paper trial, verified email domain); route list + palette-page note; **Scope at a glance** — v2 accounts marked shipped-early, "Next" = palette → launch → events.
+- **`Architecture.md`**: system diagram + Auth/stack rows + "Add a practice" data flow + key-properties updated from "public never logs in" to "no login to consume, accounts to contribute"; §9 → Build 68.
+- **`Security.md`**: §1 threat context rewritten for member auth (Hearth never stores passwords); §2 authorization-in-practice bullet (role enum governs nothing; ownership checks per-row) + the **www/subdomain allowlist gotcha**.
+- **`Product.md`**: form §7 notes the sign-in gate; §10 v2 marked ✅ shipped early; open questions — palette is *the* open decision, endorsements resolved as testimonials.
+- **`Design.md`**: palette note → 60 directions/six moods; new **Account surfaces** component entry (header menu panel, tabbed My practice, Kind words card).
+- **`Domain Setup.md` + `Google Sign-In Setup.md`**: URL configuration corrected to the **www** canonical with both-forms allowlist entries and the why.
+- **`Bugs.md`**: one-inbox alert limit → Resolved (domain verified); DNS outage + OAuth-homepage bugs logged as Resolved; new 🔵 watchlist item for **Resend caps + Supabase email rate limit** at launch.
+
+### Added — learnings & carry-forward
+- **`Claude.md` → "Learnings from the July 2026 sprint (Builds 39–67)"**: the debugging lessons worth their cost — www vs apex, the Porkbun nameserver rule, RLS viewer-dependence, plus-address testing, greylisting, env-var redeploys, email volume math, recurring UX findings, and "walk flows as a signed-out stranger."
+- **`Claude.md` → "Open items & carry-forward"** refreshed: palette decision (unlocks favicon + branded auth emails), initial admins, retreats parked, and a **pre-launch checklist** (rate-limit/honeypot, Supabase email rate limit, Resend watch, test-data cleanup, www continuity re-test).
+- Trust-signal convention updated (badge + approved testimonials), palette-page doc-map entry (60 directions + sync rule).
+
+---
+
 ## v0.1.0 — Build 67 (2026-07-10)
 
 *Root cause of the sign-in-lands-on-homepage bug found: the www subdomain. Builds clean; lint passes.*

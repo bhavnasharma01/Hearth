@@ -4,8 +4,8 @@
 
 **🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 67
-*(Status: **deployed & live** at myhearthapp.ca. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
+**Version:** 0.1.0 · **Build:** 68
+*(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; a trial **Rice Paper** skin on a one-block-swappable palette system; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
 
 ---
 
@@ -55,11 +55,12 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
 ├── package.json / next.config.ts / tsconfig.json …   ← Next.js project config
 ├── src/
 │   ├── app/                       ← App Router pages (Home, /practitioners, /p/[slug],
-│   │                                /feedback, /report, /admin, api routes)
+│   │                                /signin, /my-practice, /recommend, /my-recommendations,
+│   │                                /feedback, /report, /manage/[token], /admin, api routes)
 │   ├── components/                ← UI (header, footer, cards, forms, share button)
 │   └── lib/                       ← supabase clients, actions, data, auth, notify, geo…
 ├── public/                        ← static assets served at the site root
-│   └── palette-explorations.html  ← shareable palette-review page (temporary)
+│   └── palette-explorations.html  ← shareable palette-review page (60 directions; temporary)
 ├── supabase/
 │   └── migrations/                ← SQL schema, RLS, category seed (0001 → 0007)
 └── documentation/
@@ -112,6 +113,6 @@ npm run geocode             # backfill coordinates for events/practitioners with
 
 ## Scope at a glance
 
-- **v1 (current):** Directory + Events (native add, search/filter, profiles, seeded import), moderation, admin panel, category management. **Piloting practitioners only** — the Events layer is temporarily hidden behind the `EVENTS_ENABLED` flag (`src/lib/features.ts`); flip it to bring events back.
-- **v2:** member accounts, practitioner self-edit, optional positive-only endorsements.
+- **v1 (current):** Directory + Events (native add, search/filter, profiles, seeded import), moderation, admin panel, category management — **plus the account layer, shipped early during the pilot (July 2026):** member sign-in (Google + email/password), one owned practice per account with self-edit/delete/claim, and practitioner-approved **testimonials**. **Piloting practitioners only** — the Events layer is hidden behind the `EVENTS_ENABLED` flag (`src/lib/features.ts`); flip it to bring events back.
+- **Next:** final palette choice (then favicon + branded auth emails), launch, then events return.
 - **v3:** off-platform-payment registrations, education/blog.

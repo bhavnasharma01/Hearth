@@ -17,9 +17,11 @@
 
 ## Part 2: Tell Supabase about the new address
 
+> ⚠️ **The canonical host is `https://www.myhearthapp.ca`** — the apex redirects to it, so browsers are always on **www**. Allowlist globs (`/**`) match paths, **never subdomains**, so both forms must be listed. (Missing the www entry made OAuth sign-ins "succeed" onto the homepage — the July 10 continuity bug.)
+
 1. Supabase dashboard → **Authentication** → **URL Configuration**.
-2. **Site URL:** change to `https://myhearthapp.ca`.
-3. **Redirect URLs:** add `https://myhearthapp.ca/**` (keep `https://hearthto.vercel.app/**` and `http://localhost:3000/**`).
+2. **Site URL:** `https://www.myhearthapp.ca`.
+3. **Redirect URLs:** add **both** `https://www.myhearthapp.ca/**` and `https://myhearthapp.ca/**` (keep `https://hearthto.vercel.app/**` and `http://localhost:3000/**`).
 4. **Google Cloud needs no changes** — the OAuth callback points at Supabase's own address, which hasn't moved.
 5. Test: sign in with Google on `https://myhearthapp.ca`.
 

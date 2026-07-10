@@ -29,7 +29,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **`planning-archive/`** — original planning docs (North Star, Product Brief, Implementation Spec, Proposals, Anat & Curtis's message). **Preserved for provenance only**; their content is assimilated into the living docs. Don't edit them; cite them.
 
 **Other (non-`.md`):**
-- **`public/palette-explorations.html`** — a standalone, shareable page of **30 palette/design directions** with mini app mockups, served at `/palette-explorations.html` for reviewer feedback on the visual refresh. **Temporary** — remove once a direction is chosen. (A root copy `palette-explorations.html` is the source; only the `public/` copy is served.)
+- **`public/palette-explorations.html`** — a standalone, shareable page of **60 palette/design directions in six moods** with mini app mockups, served at `/palette-explorations.html` for choosing the final look. **Temporary** — remove once a direction is chosen. (The root copy is the source; edit it then `cp` to `public/` — keep both in sync.) The live site currently wears the **Rice Paper trial** via the one-block palette system in `globals.css`.
 - **`.env.example`** — the required-env template (now tracked; `.gitignore` has `!.env.example`). **`vercel.json`** — the daily-import Cron schedule.
 
 ---
@@ -38,7 +38,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 
 - **Database-backed** (Next.js + Supabase), **not** the old static-site/Google-Sheets plan. The archived Implementation Spec describes that superseded approach — read it for context, but the living docs win.
 - **Login gates contributing, never consuming (accounts Phase A, Build 46).** Browsing/search/contact/report never require an account. Members can sign in with **Google** (`/signin` → `/auth/callback`; header `AccountControl`, client-side so static pages stay static); a signed-in practice submission binds `owner_user_id`. **`authenticated` ≠ admin anymore:** migration `0008` dropped every `*_admin_all` policy — admin power is service-role + `ADMIN_EMAILS` only, and any new table's RLS must never grant blanket rights to `authenticated`. `users` is live (auto-created on first sign-in via DB trigger; self read/update RLS); `registrations` stays dormant. **Email/password shipped (Build 54, `EmailSignInForm` on `/signin`):** sign in / create account (confirm-email link) / forgot password → reset link → `/reset-password` (session-gated `ResetPasswordForm`); requires the Supabase **Email provider ON + custom SMTP via Resend** (`Domain Setup.md` Parts 3–4; domain `myhearthapp.ca` verified 2026-07-09). Testimonials are Phase C (solicited + positive only).
-- **Trust signal = community-member badge only.** No public upvotes or written reviews in v1.
+- **Trust signals = member badge + practitioner-approved testimonials.** "Kind words" are member-written but publish only on the practitioner's approval (Build 60) — still **no open reviews, no ratings** (`Product.md §6`).
 - **Status is server-controlled.** Never trust `status`/`auto_check` from the client. Public submissions go `live` (clean) or `pending` (suspicious) via the server-side content check.
 - **RLS is the backstop** — public read = `status = live` only; public may insert submissions/reports but not update/delete. Write/verify policies before any public write path ships.
 - **Provenance everywhere** — set `source` (and `external_id` for imports) on every practitioner/event row.
@@ -132,11 +132,28 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **Submissions** go through server actions (`src/lib/actions/submit-*.ts`) used with React `useActionState`. The action sets `status`/`auto_check` from `runContentCheck` — clean → `live`, suspicious → `pending`. Both clients return `null` when env is unset so the app builds/runs without Supabase.
 - Event times: forms use `datetime-local`; `src/lib/datetime.ts` converts the entered wall time (America/Toronto) to a UTC ISO before storage.
 
-## Open questions (track resolutions here)
+## Learnings from the July 2026 sprint (Builds 39–67)
 
-1. ~~v1 = Directory + Events together~~ **Confirmed** (native events chosen).
-2. ~~Event taxonomy~~ **Resolved:** events reuse the practitioner `categories` table via `events.category_id` (shared taxonomy; same chips on both tabs).
-3. ~~Seed import — which Google Calendar?~~ **Resolved:** "Conscious Events TO Calendar" (`consciouseventsto@gmail.com`, `America/Toronto`). *Still need:* confirm publicly API-readable + the 2026-01-01-forward window.
-4. Brand — using a soft-green/cream default (see `documentation/Design.md`); confirm or supply Anat & Curtis's colours/logo to reskin.
-5. Initial admins — Bhavna + Anat + Curtis? (needed when wiring admin auth.)
-6. Endorsements — park for v2 or rule out entirely?
+*Operational lessons that cost real debugging time — check these FIRST when symptoms match.*
+
+- **`www.myhearthapp.ca` is the canonical host** (the apex 308-redirects to it). Any service that registers URLs (Supabase redirect allowlist, Google OAuth, future webhooks) must include the **www** form — a `/**` glob matches paths, **never subdomains**. Symptom of getting this wrong: OAuth sign-in "succeeds" but lands on the homepage (Supabase rejected the redirect and fell back to the Site URL, and the browser client silently completed the session there — `/auth/callback` never runs, so server-side fallbacks can't help).
+- **DNS lives at Porkbun; never switch nameservers to Vercel.** The one-time switch abandoned the whole Porkbun zone (site + Resend records) and took the domain dark (July 10 outage). Diagnosis pattern that found it: `dig +trace` (delegation vs. zone), `whois` (registry status), and querying `@1.1.1.1` to bypass poisoned local caches.
+- **RLS is viewer-dependent.** The public server client carries the visitor's session cookie, so what "the public site shows" differs for a signed-in admin/member. Public reads must filter `status='live'` explicitly (never trust RLS alone), and **spot-check public surfaces in an incognito window**. Any new table's RLS must never grant blanket rights to `authenticated` (that's the pre-`0008` trap).
+- **Testing auth flows without more inboxes:** Gmail **plus-addressing** (`user+anything@gmail.com`) gives unlimited fresh identities that deliver to one inbox. Supabase sends **no email** when sign-up hits an existing address (anti-enumeration) — "no confirmation email" for a known address is by design. New sending domains get **greylisted** (Resend stuck on "Sent" ≠ broken; big providers deliver fast, small hosts defer then retry).
+- **Vercel env vars need a redeploy** to take effect; a `git commit --allow-empty && push` is the quick trigger. When a push doesn't appear in Vercel, check commit timestamps before assuming breakage.
+- **Email volume math:** everything (Supabase auth mail via SMTP, steward alerts, member notifications) rides ONE Resend account — free tier 100/day, 3,000/month, each recipient counts separately; Google sign-ins cost zero. Supabase's own Auth "emails per hour" rate limit throttles before Resend does.
+- **UX findings that repeat:** native `<details>` menus don't close on selection — use a controlled popover; selected-state chips need an explicit marker (✓/＋), not colour alone; a moderation action whose only feedback is elsewhere reads as broken (make the card leave the list, badge the counts, deep-link emails to the exact tab); user-pasted URLs appear in ANY free-text field (Linkify at display time, `break-words` everywhere).
+- **Feature flows must be walked as a signed-out stranger** before calling them done: the gaps found this sprint (invisible pending approvals for multi-listing owners, sign-in landing on home) were all "second persona" bugs the builder's own state hid.
+
+---
+
+## Open items & carry-forward (track resolutions here)
+
+1. ~~v1 = Directory + Events together~~ **Confirmed** (native events chosen; events currently flag-hidden).
+2. ~~Event taxonomy~~ **Resolved:** events reuse the practitioner `categories` table via `events.category_id`.
+3. ~~Seed import~~ **Resolved:** "Conscious Events TO Calendar" via public iCal, 2026-01-01 forward.
+4. **Palette decision — THE open item.** 60 directions live at `/palette-explorations.html`; the site wears a **Rice Paper trial** meanwhile. Choosing unlocks three parked follow-ups: **favicon** cut-over (`src/app/icon.svg`), **branded Supabase auth-email templates** (Claude writes inline-styled HTML, Bhavna pastes into Authentication → Email Templates), and Design.md §3 token-table refresh.
+5. Initial admins — add Anat + Curtis to `ADMIN_EMAILS` (+ optionally `NOTIFY_EMAILS`, now safe since the domain is verified) when Bhavna is ready.
+6. ~~Endorsements~~ **Resolved as testimonials** (Build 60): member-written, practitioner-approved, positive-by-construction.
+7. **Retreats** — parked; likely home is the events layer when it returns (`Product.md §11.7`).
+8. **Pre-launch checklist:** rate-limit/honeypot on public writes (`Bugs.md` 🟠); bump Supabase Auth email rate limit (~100/hr) for announcement day; watch the Resend dashboard (free tier: 100/day, 3,000/month; Google sign-ins cost zero emails); Bhavna deletes her leftover test listings/accounts; re-test sign-in continuity end-to-end on **www**.

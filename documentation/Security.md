@@ -6,7 +6,7 @@
 
 ## 1. Threat context
 
-Hearth is a **public, no-login** community resource for a ~550-person trust-based community. There are no member passwords to steal (the public never authenticates), and all directory data is **public by design** (it exists to be found). So the security focus is **not** confidentiality of user accounts — it's:
+Hearth is a community resource for a ~550-person trust-based community: **browsing needs no account**, while contributing (adding a practice, testimonials) uses member sign-in (Google OAuth, or email/password whose credentials Supabase manages — Hearth never stores passwords). All directory data is **public by design** (it exists to be found). The security focus is:
 
 1. **Abuse resistance** — spam listings, fake/malicious submissions, flag-brigading.
 2. **Data integrity** — only `live` content is shown; writes are controlled.
@@ -24,7 +24,8 @@ Hearth is a **public, no-login** community resource for a ~550-person trust-base
   - **Authorization = an `ADMIN_EMAILS` allowlist**, not merely "is authenticated." Even a logged-in non-allowlisted user is bounced. *(Who receives steward **alert emails** is a separate `NOTIFY_EMAILS` list — see §6 — so moderation access and email recipients are configured independently.)*
   - **All admin reads/writes use the service-role client**, and every admin mutation calls `requireAdmin()` first — admin power never comes from RLS. Since migration `0008` the broad `authenticated` policies are **gone entirely** (see §3). Public sign-ups are **enabled** for member accounts (Phase A); that gains a member nothing on `/admin`, which is allowlist-gated.
   - `src/middleware.ts` refreshes the session cookie on `/admin` navigation (recommended `@supabase/ssr` pattern).
-- **Authorization = roles.** The `users.role` enum (`member`/`practitioner`/`steward`/`admin`) governs privilege. In v1 only `steward`/`admin` accounts exist; `member`/`practitioner` accounts arrive in v2.
+- **Authorization in practice:** members exist (accounts Phase A+) but hold **no elevated rights** — ownership checks are per-row (`owner_user_id`, `author_user_id`, re-verified server-side in actions), and admin power comes solely from the `ADMIN_EMAILS` allowlist + service role. The `users.role` enum stays `member` for everyone and governs nothing yet.
+- **URL registration gotcha (July 2026):** the canonical host is **`https://www.myhearthapp.ca`** — any allowlist (Supabase redirect URLs etc.) must include the **www** form; `/**` globs match paths, never subdomains. Getting it wrong makes OAuth "succeed" onto the homepage.
 
 ---
 

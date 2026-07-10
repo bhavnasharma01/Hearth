@@ -20,8 +20,9 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
                        ┌─────────────────────────────────┐
    Practitioner ─add─▶  │                                 │
    Host         ─add─▶  │   Hearth — Next.js (App Router) │ ─▶ Community
-   Seeker  ─browse/────▶ │   • public site (NO login)      │    (phone-first
-            report      │   • admin panel (Supabase Auth) │     web)
+   Seeker  ─browse/────▶ │   • browse/report: no login     │    (phone-first
+            report      │   • contribute: member sign-in  │     web)
+   Member  ─sign in─▶   │   • admin panel (allowlist)     │
    Admin    ─sign in─▶  │   • server actions / route       │
                        │     handlers for writes          │
                        └────────────────┬─────────────────┘
@@ -48,7 +49,7 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
 | Framework | **Next.js (App Router)** + React + TypeScript | Server Components for reads; Server Actions / Route Handlers for writes. |
 | Styling | **Tailwind CSS** | Implements the calm "soft greens/whites" system (see `Design.md`). |
 | Database | **Supabase Postgres** | Holds the v1 schema; RLS-enforced. |
-| Auth | **Supabase Auth** | **Admins only.** Public never logs in. |
+| Auth | **Supabase Auth** | **Members** (Google OAuth + email/password) for contributing; browsing needs no account. Admin = `ADMIN_EMAILS` allowlist. |
 | File storage | **Supabase Storage** | Practitioner photos, event flyers; external-URL fallback supported by the schema. |
 | Search | **Postgres full-text** (`tsvector` / `search_vector`) | Search is a DB feature, not a client hack. |
 | Hosting | **Vercel** (Cloudflare Pages alt) | Free tier. |
@@ -154,7 +155,7 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 ## 6. Data flow
 
 - **Public read** — Server Components query Supabase for `status = live` rows (RLS enforces this even if a query forgets). Search/filter compiled to Postgres full-text + category/mode/date predicates. Recurring events (stored one row per occurrence) are collapsed to one next-occurrence row per series for display (`collapseSeries`).
-- **Public submit** — Server Action validates → runs the **content check** → inserts with `status = live` (clean) or `status = pending` (suspicious) → on a hold, **emails the stewards** (`src/lib/notify.ts`, to `ADMIN_EMAILS`). No account required.
+- **Add a practice** — requires sign-in (the just-in-time gate on `/add-practitioner`); the Server Action validates → runs the **content check** → inserts with `status = live` (clean) or `status = pending` (suspicious), binding `owner_user_id` — one practice per account — → on a hold, **emails the stewards**. Reporting stays accountless.
 - **Report** — Server Action inserts a `reports` row keyed by `reporter_contact`; the dedup routine recounts **distinct** reporters; crossing **3** **emails the stewards** once (same `notify.ts` path). Flags never auto-hide.
 - **Feedback (testing)** — the unlisted `/feedback` page (gated by `FEEDBACK_ENABLED`) posts to a service-role action (`submitFeedback`) that inserts a `feedback` row (`status = 'new'`); stewards triage it on the `/admin/feedback` status board. Not public, no content-check (never published).
 - **Owner edit** — the primary path is **`/my-listing`** (session-gated; new listings bind to the account at submit, so no secret link is surfaced anymore — Build 55). The manage link `/manage/<manage_token>` remains as the bridge for pre-account listings (and the admin panel can copy it); the token resolves via the **service-role** client (`getListingByManageToken`), and `updateListing` saves the changes. On edit the content-check re-runs — a live listing that trips it is quietly held for review + stewards notified, so neither path can sneak spam live.
@@ -197,7 +198,7 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 8. Key architectural properties
 
-- **No-login-first, accounts-later** — nullable user FKs mean v2 accounts bolt on cleanly.
+- **No-login to consume, accounts to contribute** — the original nullable-FK design let the account layer bolt on mid-pilot with zero rework (exactly as planned).
 - **Search-native** — `search_vector` columns make search a first-class DB capability.
 - **Linked layers** — `events.host_practitioner_id` enforces directory↔events cross-discovery in the data model.
 - **Provenance & dedupe** — `source` + `external_id` enable clean coexistence with / migration off the Google pipeline.
@@ -207,4 +208,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 39** (practitioner-only pilot in user testing: editable listings via manage links, avatar uploads, services menus, steward email alerts, and a private feedback board — the Events layer is built but hidden behind one flag).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 68** (practitioner-only pilot on myhearthapp.ca with the full account layer: member sign-in, owned practices, testimonials; Rice Paper trial skin; events still behind one flag).

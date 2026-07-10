@@ -77,6 +77,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 ## 7. Forms (what we ask)
 
 ### Practitioner "add yourself" form
+*(Since accounts Phase B: reached after sign-in — the listing binds to the account, so it's editable from "My practice" forever, one per account.)*
 **Required (one screen):** Name · Category (one or more) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins area-level coordinates so the listing reliably appears in "near me" — general neighbourhood/city, never a home address) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website/Instagram) · Community agreement.
 **Optional enrichment:** Practice/business name · Longer bio · Photo/logo · Instagram · Website/booking link · Pricing note · Languages spoken · Keywords/offerings (search) · "Are you a community member?" (→ badge).
 *Deliberately not asked in v1:* credential/certification gating (trust-based, not certificate-based).
@@ -126,7 +127,7 @@ A practitioner may hold as many categories as apply — the old 3-cap was remove
   - **Pilot note (Build 24) — profiles as mini-sites, Phase 1b:** real **photo uploads** (avatar) on the add + manage forms — compressed on-device and stored in Supabase Storage (replacing the paste-a-link stopgap). Kept intentionally to a single avatar (warmth per KB; ~$0), gallery deferred until there's demand. **Next:** a **services menu** (1c), then Phase 2 **testimonials**.
   - **Pilot note (Build 23) — profiles as mini-sites, Phase 1a:** listings are now **editable without an account** via a private "manage your listing" link (`/manage/<token>`, shown on the success screen) — the foundation that lets practitioners *tend* their page over time. Added an **"accepting new clients"** toggle. This is a deliberate v1 evolution: we keep "no public login," but a **secret capability link** gives owners self-edit now (cleanly upgrades to real `owner_user_id` accounts in v2). **Next:** a compressed **avatar upload** (1b) and a **services menu** (1c) — with the same link later powering **testimonial requests** (Phase 2). *(Reviews stay out; testimonials will be solicited + positive — see §6.)*
   - **Pilot note (Build 15):** richer, more shareable practitioner profiles — a header card, an Offerings row, a "Get in touch" card, a **Share/copy-link** button, and a **photo/logo** field on the add form. Public copy was also made **more honest**: we dropped "our community *trusts / vouches for*" (anyone can post in the open directory, so it over-claimed vetting) — the `✦ member` badge stays the real trust signal. **Next up:** profiles as mini-websites — real photo **uploads** (Supabase Storage), a small **gallery**, and a fuller profile redesign.
-- **v2 — accounts & richer trust:** member sign-in · practitioner claim & self-edit (`owner_user_id`) · optional positive-only endorsements · richer notifications.
+- **v2 — accounts & richer trust: ✅ shipped early, during the v1 pilot (July 2026, Builds 46–63):** member sign-in (Google + email/password) · practitioner claim & self-edit/delete (`owner_user_id`, "My practice") · testimonials (practitioner-approved "Kind words") · notification emails. What remains v2-flavoured: flipping events back on.
 - **v3 — registrations & education:** off-platform-payment RSVP/registrations (cash/e-transfer + uploaded proof; lean on Luma for real ticketing) · education/blog ("What is Kundalini yoga?" + curated resources).
 
 ---
@@ -136,7 +137,7 @@ A practitioner may hold as many categories as apply — the old 3-cap was remove
 1. Confirm **v1 = Directory + Events together** (implied by choosing native events).
 2. Event taxonomy — reuse practitioner categories as event types, or a small dedicated list?
 3. ~~Seed import~~ **Done (Build 5):** imported from the public iCal feed of "Conscious Events TO Calendar" (no API key), 2026-01-01 forward — 553 events (229 upcoming).
-4. Brand — existing colours/logo from Anat & Curtis, or design from scratch?
-5. Initial admins — Bhavna + Anat + Curtis?
-6. Endorsements — park for v2 or rule out entirely?
+4. **Brand/palette — the live open decision.** 60 explorations at `/palette-explorations.html`; the site wears a Rice Paper trial meanwhile. The pick unlocks the favicon + branded auth emails.
+5. Initial admins — add Anat + Curtis to `ADMIN_EMAILS` (and optionally `NOTIFY_EMAILS`) when ready.
+6. ~~Endorsements~~ **Resolved (Build 60):** testimonials — member-written, practitioner-approved, positive-by-construction (§6).
 7. **Retreats — parked (July 6 call).** A real community need (people host retreats in Ontario and abroad) with no good home yet. Decided **against** a practitioner-directory category: a directory row can't carry dates, and seekers don't look for retreats in a directory (Anat's end-user argument). Likely home is the events layer when it returns; a WhatsApp retreats-only channel is the stopgap. Revisit when `EVENTS_ENABLED` flips back on.

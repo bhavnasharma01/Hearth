@@ -11,20 +11,20 @@
 - **Two layers, one home.** Practitioners and events are linked (`events.host_practitioner_id`), so an event run by someone in the directory surfaces the practitioner, and vice versa. This is the "discover one through the other" value, enforced in the data model.
 - **Provenance everywhere.** Every practitioner and event carries a `source` field (`hearth_form`, `google_calendar`, `whatsapp`, `manual`). This is what lets Hearth *coexist with and gradually replace* the existing Google pipeline — we can import from Nayla's calendar, tag it, and dedupe via `external_id`.
 - **Moderation, not gatekeeping.** Mirrors the spec's model: open posting → auto-check → instant publish → community reporting → human decides. Captured via `status`, `auto_check`, and the `reports` table with reporter de-duplication.
-- **No-login first, accounts later.** Submitting and reporting never require an account (`reporter_contact`, `attendee_email` are plain fields). The `users` table and the `owner_user_id` / `submitted_by_user_id` foreign keys are nullable, so the account layer can switch on later without reworking anything.
+- **No-login to consume; accounts for contributing** *(evolved July 2026 — the original "no-login first, accounts later" design paid off: the layer switched on without rework)*. Browsing and reporting never require an account (`reporter_contact` stays a plain field). Since migration `0008`, `users` is **live**: `users.id` references `auth.users(id)`, a trigger creates the profile row on first sign-in, and `practitioners.owner_user_id` binds listings to accounts. Adding a practice and writing testimonials require sign-in.
 - **Search-native.** Practitioners and events carry a `search_vector` (Postgres full-text), so search/filter is a database feature, not a hack.
 
 ---
 
 ## Tables
 
-### `users` — accounts (future member layer)
+### `users` — member accounts (LIVE since migration `0008`, Build 46)
 
-Nullable everywhere it's referenced, so v1 can ship with zero accounts. With Supabase this pairs with the managed `auth.users`; this is effectively the profile table.
+The profile table paired with Supabase's managed `auth.users`. Since `0008`: `id` is a **FK to `auth.users(id)`** (on delete cascade), a DB trigger (`handle_new_user`) auto-creates the row on first sign-in (capturing Google name/avatar), and RLS lets a member read/update **their own** row (`auth.uid() = id`). Sign-in methods: Google OAuth + email/password (Supabase Auth). Admin access is still governed by the `ADMIN_EMAILS` allowlist, never by this table's `role` (which stays `member` for now).
 
 | Field | Type | Notes |
 |---|---|---|
-| id | uuid PK | |
+| id | uuid PK, FK → auth.users | trigger-populated on sign-up (`0008`) |
 | email | text, unique | |
 | display_name | text | |
 | phone | text | WhatsApp number, optional |
@@ -174,8 +174,8 @@ Modelled now so the "register from within Hearth" idea has a home, but **not** n
 
 ## What's needed for v1 vs. later
 
-- **v1 (directory, the unique core):** `practitioners`, `categories`, `practitioner_categories`, `reports`. Events can keep flowing through Nayla's Google Calendar and simply be *read* by the site — so `events` need not be populated by Hearth yet.
-- **v2 (accounts + Hearth-native events):** turn on `users`, populate `events` from a native form (with `source` import from the Google calendar during transition), enable practitioner self-edit via `owner_user_id`.
+- **v1 (directory, the unique core):** `practitioners`, `categories`, `practitioner_categories`, `reports` — plus, added during the pilot: `feedback` (0004), `practitioner_services` (0007), and the whole account layer (`users` live via 0008, `testimonials` via 0009). Events are imported (`events` populated by the calendar import) but publicly hidden behind `EVENTS_ENABLED`.
+- **v2 (events return):** flip `EVENTS_ENABLED`; native event form already built. *(The originally-planned v2 accounts work shipped early — July 2026.)*
 - **v3 (registration/tickets):** `registrations`, only if the community wants it and only in the off-platform-payment shape above.
 
 ---
@@ -191,4 +191,6 @@ Modelled now so the "register from within Hearth" idea has a home, but **not** n
 
 7. **Owner-edit via `manage_token` (Build 23, migration `0005_manage_and_status.sql`).** `practitioners.manage_token` (uuid, unique) is a **secret capability** powering the no-account edit link `/manage/<token>`. It is **column-revoked from the `anon`/`authenticated` roles** so a public `select *` can't leak it; only the service-role reads it. Same migration adds `accepting_clients` (boolean, default true). Cleanly upgrades to real `owner_user_id` accounts in v2.
 
+10. **`testimonials` table (Build 60, migration `0009_testimonials.sql`).** Member-written recommendations, public only after the practitioner approves: `practitioner_id` FK, `author_user_id` FK → users, `author_name`, `body`, `status` (`pending`/`approved`/`hidden`), `created_at`; **unique (practitioner_id, author_user_id)**. RLS: public read = `approved` on **live** practitioners only; no anon/authenticated write policies — submit/approve/hide/delete are service-role actions with session verification (`src/lib/actions/testimonials.ts`).
+9. **Accounts Phase A (Build 46, migration `0008_public_accounts.sql`).** Dropped every `*_admin_all` policy (`authenticated` no longer means admin — prerequisite for public sign-ups); `users.id` now FKs `auth.users(id)`; self read/update RLS on `users`; `handle_new_user` trigger creates the profile row on sign-up.
 6. **`feedback` table (Build 18, migration `0004_feedback.sql`).** A private user-testing channel — not part of the public product. Columns: `message` (req), `type` (`bug`/`idea`/`confusing`/`praise`/`other`), optional `context` / `submitter_name` / `submitter_contact`, plus steward triage fields `status` (`new`/`reviewing`/`planned`/`done`/`declined`), `priority` (`low`/`medium`/`high`, nullable), `admin_note`, and `created_at`/`updated_at`. **RLS: admin-only** (no anon policy); public inserts go through a service-role action. Submitted via the unlisted `/feedback` link (gated by `FEEDBACK_ENABLED`), triaged on the `/admin/feedback` board.
