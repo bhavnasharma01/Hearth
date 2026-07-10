@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 64
+**Version:** 0.1.0 · **Build:** 65
 *(Status: **deployed & live** at myhearthapp.ca. Currently running a **practitioner-only pilot** — the Events layer is built but hidden behind one flag (`src/lib/features.ts`) and can be switched back on any time. Live today: browse + submit practitioners (with a photo/logo + a **required, type-ahead location** so they reliably show in "📍 near me"), **richer shareable profiles** with a Share/copy-link button, the Hearth-flame favicon, report/flagging on every listing, **email alerts to stewards** (Resend or Gmail SMTP) when a listing is held for review or crosses the report threshold, and a full **admin panel** (moderation, reports, listings/events management, categories).)*
 
 ---

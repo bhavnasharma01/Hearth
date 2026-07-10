@@ -213,7 +213,9 @@ export default async function PractitionerProfile({
           {p.pricing_note && (
             <div className="flex flex-wrap items-baseline gap-x-3 gap-y-1">
               <dt className="w-24 shrink-0 text-muted">Pricing</dt>
-              <dd className="break-words text-ink">{p.pricing_note}</dd>
+              <dd className="break-words text-ink">
+                <Linkify text={p.pricing_note} />
+              </dd>
             </div>
           )}
         </dl>
@@ -246,7 +248,9 @@ export default async function PractitionerProfile({
                 <div className="flex items-baseline justify-between gap-3">
                   <span className="font-medium text-ink">{s.title}</span>
                   {s.price_note && (
-                    <span className="shrink-0 text-sm text-forest">{s.price_note}</span>
+                    <span className="text-sm text-forest">
+                      <Linkify text={s.price_note} />
+                    </span>
                   )}
                 </div>
                 {s.description && (

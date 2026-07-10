@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 65 (2026-07-10)
+
+*Linkify reaches the pricing fields. Builds clean; lint passes.*
+
+### Fixed
+- **A URL in the Pricing field wasn't clickable** (found on a live profile with a booking link in pricing). `Linkify` now also covers the **"Where & how" Pricing row** and the **price note on "What I offer" service rows** (which also lost its `shrink-0` so a pasted URL wraps instead of forcing the row wide).
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 65.
+
+---
+
 ## v0.1.0 — Build 64 (2026-07-10)
 
 *URLs pasted into profile text are now tappable links. Builds clean; lint passes.*
