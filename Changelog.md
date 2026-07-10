@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 74 (2026-07-10)
+
+*Search finds what profiles actually contain; the whole practitioner tile is tappable. Builds clean; lint passes.*
+
+### Fixed — search (migration `0010` — run it in the Supabase SQL editor)
+- **Searching a category name found nothing unless the practitioner had typed it** (Bhavna's report). Root cause: the search vector was a *generated column*, which can't see other tables — so **categories, services, and bio** were all invisible to search.
+- New: a **trigger-maintained, weighted vector** — name/practice (A) → categories + keywords (B) → description + services (C) → bio/area/languages (D) — auto-refreshed on practitioner writes, category links, service edits, and admin category renames, with a full backfill in the migration. `practitioner_search_vector()` is the single source of truth for what's searchable.
+- **Prefix matching:** `getPractitioners` now builds sanitized `term:*` tsqueries — "mass" finds massage; stemming still applies; user input can't inject tsquery syntax.
+
+### Changed
+- **The whole practitioner tile opens the profile** (was name-only — a mis-tap magnet on phones). Stretched-link pattern: the name link's `::after` covers the card with a gentle hover wash, while Message/Email/Website/Instagram/Report remain their own tap targets; keyboards still get exactly one tab stop per card.
+
+### Docs
+- `Claude.md` (search convention rewritten + migration list), `Design.md` (card bullet), `Readme.md` (migration list). `Readme.md`, `Changelog.md` → Build 74.
+
+---
+
 ## v0.1.0 — Build 73 (2026-07-10)
 
 *THE BRAND SHIPS: Clementine & Juniper + the heart-flame, everywhere, with AODA (WCAG 2.0 AA) accessibility built in. Builds clean; lint passes.*

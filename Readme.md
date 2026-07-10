@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 73
+**Version:** 0.1.0 · **Build:** 74
 *(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; the final **Clementine & Juniper** identity with the **heart-flame** mark (AODA-minded WCAG-AA contrast, skip-link, visible focus, reduced-motion support) on a one-block-swappable palette system; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
 
 ---
@@ -91,7 +91,8 @@ running the migrations in `supabase/migrations/` **in order** (`0001` schema +
 RLS + category seed → `0002` geocoding → `0003` Instagram-as-contact → `0004`
 feedback → `0005` manage-token + accepting-clients → `0006` avatars Storage
 bucket → `0007` services → `0008` public accounts Phase A → `0009`
-testimonials) against the Supabase project (SQL editor or the Supabase CLI).
+testimonials → `0010` comprehensive search) against the Supabase project
+(SQL editor or the Supabase CLI).
 
 Seed the community events from the public calendar (no API key needed):
 

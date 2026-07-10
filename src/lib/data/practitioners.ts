@@ -67,11 +67,25 @@ export async function getPractitioners(
   if (query.mode) q = q.eq("mode", query.mode);
   if (query.featuredOnly) q = q.eq("featured", true);
   if (query.search && query.search.trim()) {
-    // Postgres full-text search over the generated search_vector.
-    q = q.textSearch("search_vector", query.search.trim(), {
-      type: "websearch",
-      config: "english",
-    });
+    // Postgres full-text search over the trigger-maintained search_vector
+    // (migration 0010: name/practice + categories/keywords + description/
+    // services + bio/area/languages, weighted). Terms become PREFIX matches
+    // ("mass" finds massage) and are sanitized to bare words — user input
+    // never reaches tsquery syntax.
+    const terms = query.search
+      .trim()
+      .toLowerCase()
+      .replace(/[^\p{L}\p{N}\s]/gu, " ")
+      .split(/\s+/)
+      .filter(Boolean)
+      .slice(0, 8);
+    if (terms.length > 0) {
+      q = q.textSearch(
+        "search_vector",
+        terms.map((t) => `${t}:*`).join(" & "),
+        { config: "english" },
+      );
+    }
   }
   if (query.limit) q = q.limit(query.limit);
 

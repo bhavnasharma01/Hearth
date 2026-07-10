@@ -17,13 +17,20 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
     p.distance_km != null ? formatDistance(p.distance_km) : null;
 
   return (
-    <div className="px-4 py-3.5">
+    // Stretched-link pattern: the name link's ::after covers the whole tile,
+    // so anywhere on the card opens the profile — while the contact buttons
+    // and Report link (positioned `relative`, later in the DOM) stay their own
+    // tap targets. One tab stop for keyboards, no nested-link soup.
+    <div className="relative px-4 py-3.5 transition-colors hover:bg-sand/40">
       <div className="flex items-start gap-3">
         <Avatar p={p} />
         <div className="min-w-0 flex-1">
           <div className="flex items-center gap-2">
             <h3 className="truncate font-medium text-ink">
-              <Link href={`/p/${p.slug}`} className="hover:text-forest hover:underline">
+              <Link
+                href={`/p/${p.slug}`}
+                className="hover:text-forest hover:underline after:absolute after:inset-0 after:content-['']"
+              >
                 {p.practice_name || p.name}
               </Link>
             </h3>
@@ -50,7 +57,7 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
         </div>
       </div>
 
-      <div className="mt-2.5 flex flex-wrap items-center gap-2 pl-[3.75rem]">
+      <div className="relative mt-2.5 flex flex-wrap items-center gap-2 pl-[3.75rem]">
         {p.whatsapp && (
           <Contact href={whatsappLink(p.whatsapp)} label="Message" primary />
         )}
