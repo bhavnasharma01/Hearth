@@ -81,6 +81,8 @@ All user input is treated as untrusted: validated server-side, parameterized in 
 
 ## 7. Privacy
 
+> These commitments are public at **`/privacy`** (`src/app/privacy/page.tsx`, linked in the footer; also the privacy-policy URL for Google's OAuth brand verification). **Keep that page and this section in sync.**
+
 - Directory/event data is **public by design** — practitioners consent by submitting (the community agreement checkbox).
 - **Reporter contact** is collected only for dedupe, stored privately, never displayed.
 - **No tracking, no ads, no third-party analytics** beyond what's strictly needed; nothing that profiles visitors. *(One deliberate exception since Build 60: practitioner profiles embed a lazy-loaded Google **neighbourhood map** — third-party content Google may set cookies on — because "how do I get there" is core user value. The zoom stays area-level; coords are never a home address.)*

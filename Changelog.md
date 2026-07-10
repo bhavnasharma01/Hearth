@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 76 (2026-07-10)
+
+*A real privacy page — needed by Google's brand verification, deserved by the community. Builds clean; lint passes.*
+
+### Added
+- **`/privacy`** — a plain-language, honest privacy policy in Hearth's voice (static page, footer-linked next to Support & feedback): what's collected (account, public-by-choice listings, recommendations, private reporter contacts, support messages), what never happens (no ads/trackers/selling; "near me" never stored; direct contact bypasses Hearth), cookies (sign-in only + the Google-map embed exception), infrastructure (Supabase/Vercel/Resend), and the person's choices (edit/delete practice, remove recommendations, account deletion via support). Mirrors `Security.md` §7, which now cross-references it with a keep-in-sync note.
+- Purpose-built to unblock **Google OAuth brand verification** (the disabled Verify button wants a privacy-policy URL): Bhavna pastes `https://www.myhearthapp.ca/privacy` + the home page URL into the consent screen and submits.
+
+### Docs
+- `Security.md` (§7 cross-reference), `Google Sign-In Setup.md` (verification troubleshooting entry). `Readme.md`, `Changelog.md` → Build 76.
+
+---
+
 ## v0.1.0 — Build 75 (2026-07-10)
 
 *Docs: why Google's consent screen shows the Supabase project domain, and the fix ladder. Docs only; builds clean.*

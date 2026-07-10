@@ -15,16 +15,22 @@ export function SiteFooter() {
           Made with care by our community, in a spirit of respect and mutual
           support.
         </p>
-        {FEEDBACK_ENABLED && (
-          <p className="mt-4 text-sm">
+        <p className="mt-4 flex flex-wrap gap-x-5 gap-y-1 text-sm">
+          {FEEDBACK_ENABLED && (
             <Link
               href="/feedback"
               className="text-on-night-deep/80 underline transition-colors hover:text-on-night-deep"
             >
               Support &amp; feedback
             </Link>
-          </p>
-        )}
+          )}
+          <Link
+            href="/privacy"
+            className="text-on-night-deep/80 underline transition-colors hover:text-on-night-deep"
+          >
+            Privacy
+          </Link>
+        </p>
       </div>
     </footer>
   );
