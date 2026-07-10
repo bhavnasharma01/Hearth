@@ -10,11 +10,8 @@
 
 1. Vercel dashboard → the **Hearth** project → **Settings** → **Domains**.
 2. **Add** `myhearthapp.ca`. When offered, also add `www.myhearthapp.ca` and accept Vercel's suggestion to redirect it to the apex.
-3. What happens next depends on where you bought the domain:
-   - **Bought through Vercel:** nothing else to do; it just works.
-   - **Bought at a registrar** (GoDaddy, Namecheap, a .ca registrar, etc.), pick one:
-     - **Recommended: move DNS to Vercel.** At the registrar, set the domain's **nameservers** to `ns1.vercel-dns.com` and `ns2.vercel-dns.com`. Then all future DNS records (including Resend's in Part 3) are managed in one place: Vercel → Domains → myhearthapp.ca → DNS Records.
-     - **Or add two records at the registrar:** an **A record** for `@` → `76.76.21.21`, and a **CNAME** for `www` → `cname.vercel-dns.com`.
+3. **DNS lives at Porkbun (the registrar) — this is the settled decision.** Add the records Vercel shows for the domain (an **A record** for `@` and a **CNAME** for `www`, using the exact values from Vercel's dashboard) in Porkbun → Domain → DNS Records. All other records (Resend's in Part 3, DMARC, future ones) also go there.
+   - ⚠️ **Never switch the domain's nameservers to Vercel** (`ns1/ns2.vercel-dns.com`). Doing so abandons the entire Porkbun zone — site records AND email records — and unless Vercel's own DNS zone is fully set up first, the domain goes dark. *This exact switch caused the July 10 outage (site unreachable, email records gone); reverting to Porkbun's default nameservers fixed it.*
 4. Wait for the domain to show **Valid Configuration** in Vercel (minutes with Vercel DNS; nameserver changes can take up to a few hours). HTTPS certificates are automatic.
 5. Test: open `https://myhearthapp.ca` — you should see Hearth. The old `hearthto.vercel.app` keeps working as an alias.
 

@@ -4,6 +4,8 @@ import { revalidatePath } from "next/cache";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getSessionUser, ensureProfileRow } from "@/lib/account";
 import { runContentCheck } from "@/lib/moderation/content-check";
+import { sendEmail } from "@/lib/notify";
+import { siteUrl } from "@/lib/url";
 import type { FormState } from "./types";
 
 /**
@@ -61,7 +63,7 @@ export async function submitTestimonial(
   // Target must be a live practitioner, and not the author's own.
   const { data: target } = await sb
     .from("practitioners")
-    .select("id, slug, owner_user_id, status")
+    .select("id, slug, name, practice_name, email, owner_user_id, status")
     .eq("id", practitionerId)
     .maybeSingle();
   if (!target || target.status !== "live") {
@@ -90,6 +92,48 @@ export async function submitTestimonial(
     }
     console.error("submitTestimonial:", error.message);
     return { status: "error", message: "Something went wrong. Please try again." };
+  }
+
+  // Tell the practitioner so the recommendation doesn't wait unseen. Recipient:
+  // the owner account's email when the practice is claimed; otherwise the
+  // listing's contact email, with a nudge to claim (which is the only way to
+  // approve). sendEmail never throws — a failed email never blocks the send.
+  const label = target.practice_name || target.name;
+  let recipient: string | null = null;
+  let emailLines: string[] = [];
+  if (target.owner_user_id) {
+    const { data: ownerRow } = await sb
+      .from("users")
+      .select("email")
+      .eq("id", target.owner_user_id)
+      .maybeSingle();
+    recipient = (ownerRow as { email: string | null } | null)?.email ?? target.email;
+    emailLines = [
+      `${author_name} wrote you a recommendation on Hearth:`,
+      "",
+      `“${body}”`,
+      "",
+      `It appears on your profile only after you approve it. Review it here:`,
+      siteUrl("/my-practice"),
+    ];
+  } else if (target.email) {
+    recipient = target.email;
+    emailLines = [
+      `${author_name} wrote a recommendation for ${label} on Hearth:`,
+      "",
+      `“${body}”`,
+      "",
+      `Recommendations appear on your profile only after you approve them.`,
+      `To approve it, sign in and claim your practice page:`,
+      siteUrl("/signin?next=/my-practice"),
+    ];
+  }
+  if (recipient) {
+    await sendEmail({
+      to: [recipient],
+      subject: `Someone recommended ${label} on Hearth 🌿`,
+      body: emailLines.join("\n"),
+    });
   }
 
   revalidatePath(`/p/${target.slug}`);

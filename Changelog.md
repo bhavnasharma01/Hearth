@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 61 (2026-07-10)
+
+*Practitioners get an email when someone recommends them; the DNS-outage lesson is written into the domain guide. Builds clean; lint passes.*
+
+### Added
+- **"Someone recommended you" email.** On a successful testimonial submission, the practitioner is emailed the kind words plus the approve link (`/my-practice`). Recipient logic: the **owner account's email** when the practice is claimed; otherwise the **listing's contact email** with a sign-in-and-claim nudge (turning an unapprovable recommendation into an adoption prompt). Sent via the single email path; a failed email never blocks the submission. **No change to migration `0009`** — run it as-is.
+- **`sendEmail()`** in `src/lib/notify.ts` — the one outgoing-email function (any recipient); `notifyAdmins` is now a thin wrapper. Same transports (Resend preferred / Gmail SMTP / console fallback), same never-throws guarantee.
+
+### Fixed — docs (the July 10 outage)
+- **`Domain Setup.md` Part 1 rewritten:** DNS lives at Porkbun, records only; the "move nameservers to Vercel" option is replaced with an explicit ⚠️ never-do-this note — that switch abandoned the Porkbun zone (site + Resend records) and took the domain dark; reverting nameservers fixed it.
+
+### Docs
+- `Claude.md` (single-email-path note). `Readme.md`, `Changelog.md` → Build 61.
+
+---
+
 ## v0.1.0 — Build 60 (2026-07-09)
 
 *Accounts Phase C: testimonials ("Kind words"), plus the Luma-style embedded map on profiles. Builds clean; lint passes.*

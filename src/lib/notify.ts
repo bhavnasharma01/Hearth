@@ -53,6 +53,40 @@ export interface AdminNotification {
   body: string;
 }
 
+export interface EmailMessage extends AdminNotification {
+  to: string[];
+}
+
+/**
+ * The ONE outgoing-email function (Build 61) — steward alerts and member
+ * notifications (e.g. "someone recommended you") both go through here, so
+ * transports stay in a single place. Same guarantees as always: uses whichever
+ * transport is configured, logs to the console when none is, never throws.
+ */
+export async function sendEmail({
+  to,
+  subject,
+  body,
+}: EmailMessage): Promise<{ sent: boolean; reason?: string }> {
+  if (to.length === 0) {
+    console.warn(`sendEmail: no recipients; skipped "${subject}"`);
+    return { sent: false, reason: "no-recipients" };
+  }
+
+  if (process.env.RESEND_API_KEY) {
+    return sendViaResend(to, subject, body);
+  }
+  if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
+    return sendViaGmail(to, subject, body);
+  }
+
+  // Nothing configured — log so the message is at least visible in dev/logs.
+  console.warn(
+    `sendEmail (no email provider configured, logging only) → ${to.join(", ")}\n${subject}\n${body}`,
+  );
+  return { sent: false, reason: "not-configured" };
+}
+
 export async function notifyAdmins({
   subject,
   body,
@@ -64,19 +98,7 @@ export async function notifyAdmins({
     );
     return { sent: false, reason: "no-recipients" };
   }
-
-  if (process.env.RESEND_API_KEY) {
-    return sendViaResend(to, subject, body);
-  }
-  if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-    return sendViaGmail(to, subject, body);
-  }
-
-  // Nothing configured — log so the alert is at least visible in dev/logs.
-  console.warn(
-    `notifyAdmins (no email provider configured, logging only) → ${to.join(", ")}\n${subject}\n${body}`,
-  );
-  return { sent: false, reason: "not-configured" };
+  return sendEmail({ to, subject, body });
 }
 
 async function sendViaResend(
