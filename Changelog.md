@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 63 (2026-07-10)
+
+*My practice gets tabs: editing and recommendations no longer share one long page. Builds clean; lint passes.*
+
+### Changed
+- **`/my-practice` is now tabbed:** **Edit practice** | **Recommendations** (with a gold count pip when any await approval). Bhavna's feedback after the first live approval: the moderation list stacked on top of the full edit form reads clunky, and with many kind words it would only get worse. Each concern now has its own view (`?view=recommendations`), scaling independently; the Recommendations tab also gets a proper empty state.
+- **The notification email deep-links straight to the Recommendations tab** (`/my-practice?listing=<id>&view=recommendations`) — from inbox to Approve in one tap.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 63.
+
+---
+
 ## v0.1.0 — Build 62 (2026-07-10)
 
 *First live testimonial test: pending recommendations were invisible to multi-listing owners. Fixed. Builds clean; lint passes.*

@@ -42,12 +42,12 @@ const STATUS_BADGE: Record<string, string> = {
 export default async function MyPracticePage({
   searchParams,
 }: {
-  searchParams: Promise<{ listing?: string }>;
+  searchParams: Promise<{ listing?: string; view?: string }>;
 }) {
   const user = await getSessionUser();
   if (!user) redirect("/signin?next=/my-practice");
 
-  const { listing: listingParam } = await searchParams;
+  const { listing: listingParam, view } = await searchParams;
   const listings = await getListingsByOwner(user.id);
 
   // Which listing to edit: the ?listing= selection (must be owned), or the
@@ -57,7 +57,13 @@ export default async function MyPracticePage({
     (listings.length === 1 ? listings[0] : null);
 
   if (selected) {
-    return <Editor listing={selected} showBack={listings.length > 1} />;
+    return (
+      <Editor
+        listing={selected}
+        showBack={listings.length > 1}
+        view={view === "recommendations" ? "recommendations" : "edit"}
+      />
+    );
   }
 
   if (listings.length > 1) {
@@ -180,9 +186,11 @@ export default async function MyPracticePage({
 async function Editor({
   listing,
   showBack,
+  view,
 }: {
   listing: PractitionerWithCategories;
   showBack: boolean;
+  view: "edit" | "recommendations";
 }) {
   const [categories, services, testimonials] = await Promise.all([
     getCategories(),
@@ -194,6 +202,16 @@ async function Editor({
   // secret; see Claude.md) but present on this service-role row. Passing it
   // here is safe: this page renders only to the verified owner.
   const token = (listing as unknown as { manage_token: string }).manage_token;
+
+  // Tab targets — recommendations live on their own view so a long list never
+  // buries the edit form (and vice versa).
+  const base = `/my-practice?listing=${listing.id}`;
+  const tabCls = (active: boolean) =>
+    `rounded-full px-4 py-1.5 text-sm transition-colors ${
+      active
+        ? "bg-forest font-medium text-cream"
+        : "border border-line text-ink hover:bg-sand"
+    }`;
 
   return (
     <div className="mx-auto max-w-2xl px-4 py-8">
@@ -209,70 +227,87 @@ async function Editor({
         <h1 className="font-display text-3xl font-semibold text-ink">
           {listing.practice_name || listing.name}
         </h1>
-        <p className="mt-1 text-muted">
-          Linked to your account. Update anything below, any time.
-        </p>
         <Link
           href={`/p/${listing.slug}`}
           className="mt-2 inline-block text-sm text-gold hover:underline"
         >
           View your public profile →
         </Link>
-      </header>
-      {/* Recommendations moderation — kind words appear publicly only after
-          the owner approves them here (Phase C). */}
-      {testimonials.length > 0 && (
-        <section className="mb-6 rounded-[var(--radius-card)] border border-line bg-card p-5">
-          <h2 className="text-xs font-semibold uppercase tracking-[0.18em] text-gold">
-            Recommendations
-          </h2>
-          <p className="mt-1 text-sm text-muted">
-            {pendingCount > 0
-              ? `${pendingCount} waiting for your approval. Approved ones show on your profile.`
-              : "These show on your profile. Hide any you'd rather not display."}
-          </p>
-          <ul className="mt-3 divide-y divide-line">
-            {testimonials.map((t) => (
-              <li key={t.id} className="py-3 first:pt-0 last:pb-0">
-                <p className="break-words text-sm leading-relaxed text-ink/90">
-                  &ldquo;{t.body}&rdquo;
-                </p>
-                <div className="mt-2 flex flex-wrap items-center gap-2">
-                  <span className="text-sm text-muted">— {t.author_name}</span>
-                  <div className="ml-auto flex gap-2">
-                    {t.status === "pending" ? (
-                      <>
-                        <ActionButton
-                          action={approveTestimonial}
-                          fields={{ id: t.id }}
-                          variant="primary"
-                        >
-                          Approve
-                        </ActionButton>
-                        <ActionButton action={hideTestimonial} fields={{ id: t.id }}>
-                          No thanks
-                        </ActionButton>
-                      </>
-                    ) : (
-                      <ActionButton action={hideTestimonial} fields={{ id: t.id }}>
-                        Hide
-                      </ActionButton>
-                    )}
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
 
-      <ManageForm
-        listing={listing}
-        categories={categories}
-        services={services}
-        token={token}
-      />
-      <DeleteListing token={token} />
+        <nav className="mt-4 flex flex-wrap gap-2">
+          <Link href={base} className={tabCls(view === "edit")}>
+            Edit practice
+          </Link>
+          <Link
+            href={`${base}&view=recommendations`}
+            className={tabCls(view === "recommendations")}
+          >
+            Recommendations
+            {pendingCount > 0 && (
+              <span className="ml-1.5 rounded-full bg-gold px-1.5 py-0.5 text-[10px] font-bold text-on-gold">
+                {pendingCount}
+              </span>
+            )}
+          </Link>
+        </nav>
+      </header>
+
+      {view === "recommendations" ? (
+        /* Kind words appear publicly only after the owner approves them (Phase C). */
+        <section className="rounded-[var(--radius-card)] border border-line bg-card p-5">
+          <p className="text-sm text-muted">
+            {testimonials.length === 0
+              ? "When someone recommends you, it appears here for your approval."
+              : pendingCount > 0
+                ? `${pendingCount} waiting for your approval. Approved ones show on your profile.`
+                : "These show on your profile. Hide any you'd rather not display."}
+          </p>
+          {testimonials.length > 0 && (
+            <ul className="mt-3 divide-y divide-line">
+              {testimonials.map((t) => (
+                <li key={t.id} className="py-3 first:pt-0 last:pb-0">
+                  <p className="break-words text-sm leading-relaxed text-ink/90">
+                    &ldquo;{t.body}&rdquo;
+                  </p>
+                  <div className="mt-2 flex flex-wrap items-center gap-2">
+                    <span className="text-sm text-muted">— {t.author_name}</span>
+                    <div className="ml-auto flex gap-2">
+                      {t.status === "pending" ? (
+                        <>
+                          <ActionButton
+                            action={approveTestimonial}
+                            fields={{ id: t.id }}
+                            variant="primary"
+                          >
+                            Approve
+                          </ActionButton>
+                          <ActionButton action={hideTestimonial} fields={{ id: t.id }}>
+                            No thanks
+                          </ActionButton>
+                        </>
+                      ) : (
+                        <ActionButton action={hideTestimonial} fields={{ id: t.id }}>
+                          Hide
+                        </ActionButton>
+                      )}
+                    </div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </section>
+      ) : (
+        <>
+          <ManageForm
+            listing={listing}
+            categories={categories}
+            services={services}
+            token={token}
+          />
+          <DeleteListing token={token} />
+        </>
+      )}
     </div>
   );
 }
