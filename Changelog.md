@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 75 (2026-07-10)
+
+*Docs: why Google's consent screen shows the Supabase project domain, and the fix ladder. Docs only; builds clean.*
+
+### Noted
+- **Google sign-in headlines `…supabase.co` instead of "Hearth"** — Google displays the OAuth redirect's domain (the Supabase project) when consent-screen branding is incomplete. Free fix recorded in `Google Sign-In Setup.md` troubleshooting (app name, support email, **authorized domain `myhearthapp.ca`**, publish to production). Full removal of the supabase.co string requires a **Supabase custom domain** (Pro $25/mo + $10/mo) — deferred as a deliberate cost decision.
+
+### Docs
+- `Google Sign-In Setup.md` (troubleshooting entry). `Readme.md`, `Changelog.md` → Build 75.
+
+---
+
 ## v0.1.0 — Build 74 (2026-07-10)
 
 *Search finds what profiles actually contain; the whole practitioner tile is tappable. Builds clean; lint passes.*
