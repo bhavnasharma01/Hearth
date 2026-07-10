@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 70 (2026-07-10)
+
+*Logo & favicon directions added to the decision page — differentiating from the other "Hearth" app's flame mark. Builds clean.*
+
+### Context
+- Bhavna found **hearthapp.ca** — an existing "Hearth"-branded app with a similar flame logo and warm palette (possibly the London-Ontario community app Curtis mentioned on the July 6 call — he's confirming). Decision so far: the **name stays** (common word; the concern is the *mark*), so the flame logo/favicon must be replaced with something ownable, chosen together with the palette.
+
+### Added
+- **"Logo & favicon directions"** section on `/palette-explorations.html`: five inline-SVG marks, each shown large, as a wordmark lockup, and — the key test — **as a 16px-style favicon tile in three finalist palettes (F1/F3/F4)**:
+  - **L1 The Hearth arch** *(recommendation)* — a fireplace opening with a fire inside: the literal hearth + the "warm front door"; nobody's plain flame comes with a fireplace around it.
+  - **L2 The heart-flame** — a heart holding a flame cutout (the heart·earth·hearth wordplay made visible).
+  - **L3 The Gathering** *(community-first alternative)* — six points circling a flame: people around a fire.
+  - **L4 Embers rising** — hearthstone bowl + lifting sparks; the most modern.
+  - **L5 The lantern** — carried warmth; the seeker's mark.
+- Each card carries a why + an honest risk note; page lede updated (logo + palette are one decision).
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 70.
+
+---
+
 ## v0.1.0 — Build 69 (2026-07-10)
 
 *The palette page gets a decision layer: five finalists with app + email mockups. Builds clean.*

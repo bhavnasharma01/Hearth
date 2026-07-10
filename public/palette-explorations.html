@@ -39,6 +39,13 @@ footer { margin-top: 60px; text-align: center; color: #8a7d69; font-size: 13px; 
 .duo > div { flex: 1; min-width: 0; }
 .mlabel { font-size: 10px; letter-spacing: 1.2px; color: #8a7d69; margin: 0 0 5px; text-transform: uppercase; }
 .finnote { font-size: 12.5px; color: #6e6253; line-height: 1.55; margin-top: 10px; }
+/* Logo direction cards */
+.logoGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+.markRow { display: flex; align-items: center; gap: 18px; background: #faf6ec; border: 1px solid #eee5d0; border-radius: 10px; padding: 14px; }
+.lockup { display: flex; align-items: center; gap: 8px; font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 21px; color: #2a211b; }
+.tiles { display: flex; gap: 10px; margin-top: 12px; align-items: center; }
+.tile { width: 36px; height: 36px; border-radius: 9px; display: flex; align-items: center; justify-content: center; }
+.tlabel { font-size: 10px; color: #8a7d69; margin-left: 2px; }
 @media (max-width: 640px) { h1 { font-size: 30px; } body { padding: 24px 12px 60px; } }
 </style>
 </head>
@@ -47,7 +54,7 @@ footer { margin-top: 60px; text-align: center; color: #8a7d69; font-size: 13px; 
 <header class="page">
   <div class="flame">&#9650;</div>
   <h1>Hearth — palette explorations</h1>
-  <p class="lede">Start with the <strong>five finalists</strong> below — full directions with an app and an email mockup each, built for deciding. The 60 exploration cards that led here follow after.</p>
+  <p class="lede">Start with the <strong>five palette finalists</strong> and the <strong>five logo &amp; favicon directions</strong> below — built for deciding together (each logo is shown as a favicon tile in the finalist palettes). The 60 exploration cards that led here follow after.</p>
   <p class="hint">Any finalist can be worn by the whole live site within minutes — pick two, wear each for a day, and the decision makes itself.</p>
 </header>
 
@@ -267,6 +274,125 @@ footer { margin-top: 60px; text-align: center; color: #8a7d69; font-size: 13px; 
   </div>
   <div class="sws"><div class="swi"><div class="swc" style="background:#b97e1e;"></div><span class="swl">#b97e1e</span></div><div class="swi"><div class="swc" style="background:#c96d5f;"></div><span class="swl">#c96d5f</span></div><div class="swi"><div class="swc" style="background:#e3b563;"></div><span class="swl">#e3b563</span></div><div class="swi"><div class="swc" style="background:#f7e8c9;"></div><span class="swl">#f7e8c9</span></div><div class="swi"><div class="swc" style="background:#fefcf7;border:1px solid #e3dccb;"></div><span class="swl">#fefcf7</span></div></div>
   <p class="finnote"><strong>Firelight rather than fire:</strong> everything glows a little. Closest in feeling to the original parchment warmth while staying bright. Risk: amber buttons carry less punch than ember/green ones; also verify the honey tints hold up on dim phone screens.</p>
+</div>
+
+  </div>
+</section>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="m-arch" viewBox="0 0 24 24">
+      <path d="M5.2 19V11a6.8 6.8 0 0 1 13.6 0v8" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M3.4 19h17.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <path d="M12 16.6c-1.5 0-2.6-1-2.6-2.4 0-1.6 1.4-2.2 2.6-4.4 1.2 2.2 2.6 2.8 2.6 4.4 0 1.4-1.1 2.4-2.6 2.4z" fill="currentColor"/>
+    </symbol>
+    <symbol id="m-heart" viewBox="0 0 24 24">
+      <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12 20.4C6.6 16 4 12.8 4 9.6 4 7.1 5.9 5.3 8.3 5.3c1.5 0 2.8.7 3.7 1.9.9-1.2 2.2-1.9 3.7-1.9 2.4 0 4.3 1.8 4.3 4.3 0 3.2-2.6 6.4-8 10.8zM12 15.8c1.3 0 2.3-.9 2.3-2.2 0-1.4-1.2-2-2.3-3.9-1.1 1.9-2.3 2.5-2.3 3.9 0 1.3 1 2.2 2.3 2.2z"/>
+    </symbol>
+    <symbol id="m-circle" viewBox="0 0 24 24">
+      <path d="M12 15.3c-1.3 0-2.3-.9-2.3-2.2 0-1.4 1.2-2 2.3-3.9 1.1 1.9 2.3 2.5 2.3 3.9 0 1.3-1 2.2-2.3 2.2z" fill="currentColor"/>
+      <circle cx="20" cy="12" r="1.5" fill="currentColor"/><circle cx="16" cy="18.9" r="1.5" fill="currentColor"/><circle cx="8" cy="18.9" r="1.5" fill="currentColor"/><circle cx="4" cy="12" r="1.5" fill="currentColor"/><circle cx="8" cy="5.1" r="1.5" fill="currentColor"/><circle cx="16" cy="5.1" r="1.5" fill="currentColor"/>
+    </symbol>
+    <symbol id="m-ember" viewBox="0 0 24 24">
+      <path d="M4.8 14.6h14.4a7.2 7.2 0 0 1-14.4 0z" fill="currentColor"/>
+      <circle cx="12" cy="4.8" r="1.9" fill="currentColor"/><circle cx="8.6" cy="8.8" r="1.3" fill="currentColor"/><circle cx="15.3" cy="7.6" r="1.1" fill="currentColor"/>
+    </symbol>
+    <symbol id="m-lantern" viewBox="0 0 24 24">
+      <path d="M9.6 7.6V6a2.4 2.4 0 0 1 4.8 0v1.6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+      <rect x="7" y="7.6" width="10" height="11.6" rx="2.6" fill="none" stroke="currentColor" stroke-width="1.9"/>
+      <path d="M12 16.4c-1.2 0-2.1-.8-2.1-2 0-1.3 1.1-1.8 2.1-3.5 1 1.7 2.1 2.2 2.1 3.5 0 1.2-.9 2-2.1 2z" fill="currentColor"/>
+    </symbol>
+  </defs>
+</svg>
+
+<section>
+  <h2>Logo &amp; favicon directions</h2>
+  <p class="gintro">The other Hearth owns "a flame silhouette" — so these five own something richer. Judge each three ways: does it still read at favicon size (the small tiles, shown in finalist palettes F1 / F3 / F4)? does it say <em>hearth</em>? is it clearly not their mark? Recommendation: <strong>L1 the Hearth arch</strong> (the fireplace itself — the most "hearth" and the most ownable), with <strong>L3 the Gathering</strong> as the community-first alternative.</p>
+  <div class="logoGrid">
+
+<div class="fin">
+  <div class="num">L1</div>
+  <h3>The Hearth arch</h3>
+  <p class="tag">A fireplace opening with a small fire inside — the literal hearth, and the warm front door.</p>
+  <div class="markRow">
+    <svg width="56" height="56" viewBox="0 0 24 24" style="color:#2a211b"><use href="#m-arch"/></svg>
+    <span class="lockup"><svg width="26" height="26" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-arch"/></svg>Hearth</span>
+  </div>
+  <div class="tiles">
+    <span class="tile" style="background:#fdfcf9;border:1px solid #ece4d9;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-arch"/></svg></span>
+    <span class="tile" style="background:#2e4a3d;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#d9982f"><use href="#m-arch"/></svg></span>
+    <span class="tile" style="background:#efece7;border:1px solid #e0dbd2;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#c2502e"><use href="#m-arch"/></svg></span>
+    <span class="tlabel">as favicon in F1 · F3 · F4</span>
+  </div>
+  <p class="finnote"><strong>Why it's the recommendation:</strong> nobody else's flame comes with a fireplace around it — instantly distinct, still warm, and the arch doubles as a doorway (the "warm front door" from the product's own North Star). Geometrically simple, so it stays crisp at 16px.</p>
+</div>
+
+<div class="fin">
+  <div class="num">L2</div>
+  <h3>The heart-flame</h3>
+  <p class="tag">A heart whose centre holds a flame — the wordplay made visible (heart · earth · hearth).</p>
+  <div class="markRow">
+    <svg width="56" height="56" viewBox="0 0 24 24" style="color:#2a211b"><use href="#m-heart"/></svg>
+    <span class="lockup"><svg width="26" height="26" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-heart"/></svg>Hearth</span>
+  </div>
+  <div class="tiles">
+    <span class="tile" style="background:#fdfcf9;border:1px solid #ece4d9;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-heart"/></svg></span>
+    <span class="tile" style="background:#2e4a3d;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#d9982f"><use href="#m-heart"/></svg></span>
+    <span class="tile" style="background:#efece7;border:1px solid #e0dbd2;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#c2502e"><use href="#m-heart"/></svg></span>
+    <span class="tlabel">as favicon in F1 · F3 · F4</span>
+  </div>
+  <p class="finnote"><strong>The most emotional option</strong> — it carries the founding conversation (Curtis spotting heart + earth in the name). Risk: hearts are common in wellness branding; ours earns its place only through the flame cutout, so it must never be simplified to a plain heart.</p>
+</div>
+
+<div class="fin">
+  <div class="num">L3</div>
+  <h3>The Gathering</h3>
+  <p class="tag">A circle of people around a fire, abstracted to six points and a flame. What Hearth actually is.</p>
+  <div class="markRow">
+    <svg width="56" height="56" viewBox="0 0 24 24" style="color:#2a211b"><use href="#m-circle"/></svg>
+    <span class="lockup"><svg width="26" height="26" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-circle"/></svg>Hearth</span>
+  </div>
+  <div class="tiles">
+    <span class="tile" style="background:#fdfcf9;border:1px solid #ece4d9;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-circle"/></svg></span>
+    <span class="tile" style="background:#2e4a3d;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#d9982f"><use href="#m-circle"/></svg></span>
+    <span class="tile" style="background:#efece7;border:1px solid #e0dbd2;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#c2502e"><use href="#m-circle"/></svg></span>
+    <span class="tlabel">as favicon in F1 · F3 · F4</span>
+  </div>
+  <p class="finnote"><strong>The community-first alternative</strong> — says "gathering place" louder than any flame could, and no competitor in this space uses it. Risk: at 16px the dots get small; it needs the favicon drawn slightly bolder than the display version.</p>
+</div>
+
+<div class="fin">
+  <div class="num">L4</div>
+  <h3>Embers rising</h3>
+  <p class="tag">A hearthstone bowl with sparks lifting off — warmth in motion, hope, things beginning.</p>
+  <div class="markRow">
+    <svg width="56" height="56" viewBox="0 0 24 24" style="color:#2a211b"><use href="#m-ember"/></svg>
+    <span class="lockup"><svg width="26" height="26" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-ember"/></svg>Hearth</span>
+  </div>
+  <div class="tiles">
+    <span class="tile" style="background:#fdfcf9;border:1px solid #ece4d9;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-ember"/></svg></span>
+    <span class="tile" style="background:#2e4a3d;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#d9982f"><use href="#m-ember"/></svg></span>
+    <span class="tile" style="background:#efece7;border:1px solid #e0dbd2;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#c2502e"><use href="#m-ember"/></svg></span>
+    <span class="tlabel">as favicon in F1 · F3 · F4</span>
+  </div>
+  <p class="finnote"><strong>The most modern of the five</strong> — geometric, calm, ages well. Reads beautifully as a favicon (big simple shapes). Risk: the least literal; some people will see a sunrise or a cauldron before they see embers — which may be fine.</p>
+</div>
+
+<div class="fin">
+  <div class="num">L5</div>
+  <h3>The lantern</h3>
+  <p class="tag">A lantern with a small flame — carried warmth, and the act of finding someone.</p>
+  <div class="markRow">
+    <svg width="56" height="56" viewBox="0 0 24 24" style="color:#2a211b"><use href="#m-lantern"/></svg>
+    <span class="lockup"><svg width="26" height="26" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-lantern"/></svg>Hearth</span>
+  </div>
+  <div class="tiles">
+    <span class="tile" style="background:#fdfcf9;border:1px solid #ece4d9;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#b5452c"><use href="#m-lantern"/></svg></span>
+    <span class="tile" style="background:#2e4a3d;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#d9982f"><use href="#m-lantern"/></svg></span>
+    <span class="tile" style="background:#efece7;border:1px solid #e0dbd2;"><svg width="22" height="22" viewBox="0 0 24 24" style="color:#c2502e"><use href="#m-lantern"/></svg></span>
+    <span class="tlabel">as favicon in F1 · F3 · F4</span>
+  </div>
+  <p class="finnote"><strong>The seeker's mark</strong> — a lantern is what you carry when looking for someone, which is literally the directory's job. Distinct and friendly. Risk: lanterns lean "cottage/camping" for some viewers, and the fine strokes need thickening at favicon size.</p>
 </div>
 
   </div>
