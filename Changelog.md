@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 72 (2026-07-10)
+
+*The F6 + heart-flame dress rehearsal: a full brand preview page. Builds clean.*
+
+### Added
+- **`/brand-preview.html`** (root source + `public/` copy, like the palette page): every key surface wearing **Clementine & Juniper with the chosen heart-flame**, for the Greg conversation and the final call.
+  - **Six app screens** in phone frames: Home (orientation hero + deep-juniper footer), Directory (search, category rail with the Women's 🌙, rows, deep recruitment banner), Profile (header card, Where & how with map, Kind words + ♡ Recommend), Sign in (Google + email), My practice (tabs + pending approval card), Admin (juniper bar, status badges).
+  - **All three transactional emails** as inbox-style cards with real copy: **Confirm your email**, **Reset your password**, **Someone recommended you** — white bodies, heart-flame lockup, clementine rule, juniper button, "Sent with care from Hearth · myhearthapp.ca" footer. These become the Supabase templates on confirmation.
+  - The two-tone rule stated on-page: juniper carries (buttons, links, ink, deep stage), clementine sparks (mark, ✦, eyebrows) and never paints a big surface.
+- Cross-link from the exploration page's hint line. `Readme.md` repo layout notes both preview pages.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 72.
+
+---
+
 ## v0.1.0 — Build 71 (2026-07-10)
 
 *Logo decided: the heart-flame. Clementine & juniper joins the palette finalists. Builds clean.*

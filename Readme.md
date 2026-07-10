@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 71
+**Version:** 0.1.0 · **Build:** 72
 *(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; a trial **Rice Paper** skin on a one-block-swappable palette system; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
 
 ---
@@ -60,7 +60,8 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
 │   ├── components/                ← UI (header, footer, cards, forms, share button)
 │   └── lib/                       ← supabase clients, actions, data, auth, notify, geo…
 ├── public/                        ← static assets served at the site root
-│   └── palette-explorations.html  ← shareable palette-review page (60 directions; temporary)
+│   ├── palette-explorations.html  ← shareable palette-review page (60 directions; temporary)
+│   └── brand-preview.html         ← F6 + heart-flame dress rehearsal: app screens + emails (temporary)
 ├── supabase/
 │   └── migrations/                ← SQL schema, RLS, category seed (0001 → 0007)
 └── documentation/
