@@ -23,8 +23,10 @@ export function firstParam(
  * to the production domain. Pass a path to get an absolute URL to it.
  */
 export function siteUrl(path = ""): string {
+  // www is the canonical host (the apex 308-redirects to it) — link straight
+  // there so email links skip the hop.
   const base = (
-    process.env.NEXT_PUBLIC_SITE_URL || "https://myhearthapp.ca"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://www.myhearthapp.ca"
   ).replace(/\/$/, "");
   if (!path) return base;
   return `${base}${path.startsWith("/") ? "" : "/"}${path}`;

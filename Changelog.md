@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 67 (2026-07-10)
+
+*Root cause of the sign-in-lands-on-homepage bug found: the www subdomain. Builds clean; lint passes.*
+
+### Root cause (config — Bhavna's fix)
+- The site's **canonical host is `https://www.myhearthapp.ca`** (the apex 308-redirects to it), so browsers are on www. The Google `redirectTo` is therefore `https://www.myhearthapp.ca/auth/callback?...` — and the Supabase allowlist only had `https://myhearthapp.ca/**`, which **does not match the www subdomain** (globs cover paths, not subdomains). Supabase discarded the return address, fell back to the Site URL (homepage), and the browser client silently completed the login there — signed in, wrong page, and our `/auth/callback` (with the Build 66 cookie fallback) never ran at all.
+- **Fix in Supabase → Authentication → URL Configuration:** add `https://www.myhearthapp.ca/**` to Redirect URLs, and set Site URL to `https://www.myhearthapp.ca`.
+
+### Changed
+- `siteUrl()` default (and `.env.example`) now point at the canonical **www** host, so email links skip the apex→www redirect hop.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 67.
+
+---
+
 ## v0.1.0 — Build 66 (2026-07-10)
 
 *Sign-in continuity: land back where you were, not on the homepage. Builds clean; lint passes.*
