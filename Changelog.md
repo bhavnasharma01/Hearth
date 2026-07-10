@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 71 (2026-07-10)
+
+*Logo decided: the heart-flame. Clementine & juniper joins the palette finalists. Builds clean.*
+
+### Decided
+- **The mark is L2, the heart-flame** ✓ — a heart holding a flame cutout (the heart·earth·hearth wordplay made visible). Marked chosen on the exploration page; the old single-flame mark will not ship (hearthapp.ca similarity). Final refined SVG + favicon cut ship together with the palette decision.
+- **Palette consult moves to Greg** (Bhavna's call); Anat & Curtis sit this one out.
+
+### Added
+- **F6 Clementine & juniper** added to the finalists (Bhavna's lean, promoted from round-four #59): full decision-grade card — app + email mockups, swatches, and a why/risk note (clementine heart + juniper earth = a genuine two-tone identity; clementine stays a pure accent, juniper carries buttons; differentiation from the other warm-toned Hearth rides on the mark + juniper, not the orange).
+- The chosen heart-flame's favicon tiles extended with **F6 light & deep** treatments (clementine-on-white and peach-on-juniper).
+
+### Docs
+- `Claude.md` open-items #4 rewritten (logo locked, palette open, the combined brand-ship build defined). `Readme.md`, `Changelog.md` → Build 71.
+
+---
+
 ## v0.1.0 — Build 70 (2026-07-10)
 
 *Logo & favicon directions added to the decision page — differentiating from the other "Hearth" app's flame mark. Builds clean.*
