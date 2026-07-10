@@ -29,40 +29,56 @@
      flame-*        the logo flame gradient + glow
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* ACTIVE PALETTE — "Rice paper" (exploration #29: shoji daylight, bright
-   warm whites, pale wood, green tea; japandi). Trial skin, Build 50. */
+/* ACTIVE PALETTE — "Clementine & Juniper" (finalist F6 + the heart-flame mark;
+   CHOSEN 2026-07-10). The two-tone rule: JUNIPER CARRIES (buttons, links, ink,
+   the deep stage) and CLEMENTINE SPARKS (the mark, member ✦, eyebrows) —
+   clementine never paints a big surface.
+
+   Two stage pairs (new in this palette): `night` is the LIGHT peach stage
+   (header, hero, profile band) and `night-deep` is the JUNIPER stage (footer,
+   recruitment banner, admin bar) — each with its own on-* text token.
+
+   AODA/WCAG-AA contrast notes (checked): ink 11:1+, muted 5.2:1, forest links
+   7.5:1, gold (burnt-clementine TEXT accent) 5.2:1 on white; pure clementine
+   (#ef6c33, 3.1:1) is reserved for the MARK and large graphics only, never
+   small text; gold-deep 4.8:1 on the juniper stage; on-gold 4.8:1 on gold. */
 @theme {
-  --color-parchment: #fdfbf6;
+  --color-parchment: #fdf9f5;
   --color-card: #ffffff;
-  --color-sand: #efe9dd;
-  --color-line: #e7dfcd;
-  --color-cream: #fdfbf6;
+  --color-sand: #f9e7d9;
+  --color-line: #eedfd2;
+  --color-cream: #f2f7f4;
 
-  --color-night: #f3ede1;
-  --color-night-2: #ebe2cf;
-  --color-on-night: #574936;
+  --color-night: #fff3ec;
+  --color-night-2: #ffe8da;
+  --color-on-night: #22392f;
 
-  --color-forest: #737c56;
-  --color-forest-deep: #5c6444;
-  --color-sage: #b5bd9a;
+  --color-night-deep: #2f5d4c;
+  --color-night-deep-2: #24493b;
+  --color-on-night-deep: #f2ede4;
 
-  --color-plum: #8a7157;
-  --color-plum-soft: #a58c72;
+  --color-forest: #2f5d4c;
+  --color-forest-deep: #24493b;
+  --color-sage: #5d8a72;
 
-  --color-gold: #9c8155;
-  --color-gold-soft: #8a7150;
-  --color-on-gold: #fdfbf6;
+  --color-plum: #8a4a2b;
+  --color-plum-soft: #a86b47;
 
-  --color-clay: #b0684a;
+  --color-gold: #b54e1e;
+  --color-gold-soft: #9c4416;
+  --color-gold-deep: #f7c5a5;
+  --color-on-gold: #fff4ec;
 
-  --color-ink: #4a3e2f;
-  --color-muted: #8a7a63;
+  --color-clay: #b04328;
 
-  --color-flame-hi: #d9cca9;
-  --color-flame-mid: #b3a077;
-  --color-flame-lo: #8a7150;
-  --color-flame-core: #fbf7ec;
-  --color-flame-glow: rgba(154, 129, 85, 0.45);
+  --color-ink: #22392f;
+  --color-muted: #5f7168;
+
+  --color-flame-hi: #f2a172;
+  --color-flame-mid: #ef6c33;
+  --color-flame-lo: #c14e1d;
+  --color-flame-core: #fff4ee;
+  --color-flame-glow: rgba(239, 108, 51, 0.35);
 
   --font-display: var(--font-fraunces);
   --font-sans: var(--font-nunito);
@@ -72,6 +88,25 @@
 
 /* ── PALETTE LIBRARY ──────────────────────────────────────────────────────
    Paste a block's values into the ACTIVE PALETTE above to switch skins.
+   (Older palettes predate the night-deep pair — when reviving one, set
+   night-deep to its night values and gold-deep to its gold-soft.)
+
+   "Rice paper" (trial skin, Builds 50–72 — shoji daylight, japandi):
+     --color-parchment: #fdfbf6;   --color-card: #ffffff;
+     --color-sand: #efe9dd;        --color-line: #e7dfcd;
+     --color-cream: #fdfbf6;
+     --color-night: #f3ede1;       --color-night-2: #ebe2cf;
+     --color-on-night: #574936;
+     --color-forest: #737c56;      --color-forest-deep: #5c6444;
+     --color-sage: #b5bd9a;
+     --color-plum: #8a7157;        --color-plum-soft: #a58c72;
+     --color-gold: #9c8155;        --color-gold-soft: #8a7150;
+     --color-on-gold: #fdfbf6;
+     --color-clay: #b0684a;
+     --color-ink: #4a3e2f;         --color-muted: #8a7a63;
+     --color-flame-hi: #d9cca9;    --color-flame-mid: #b3a077;
+     --color-flame-lo: #8a7150;    --color-flame-core: #fbf7ec;
+     --color-flame-glow: rgba(154, 129, 85, 0.45);
 
    "Rich & sacred" (the original, Builds 20–49 — deep night surfaces,
    jewel emerald + plum, antique gold):
@@ -119,4 +154,40 @@ h3,
     var(--color-gold) 50%,
     transparent
   );
+}
+
+/* ── Accessibility (AODA / WCAG AA) ── */
+
+/* A visible focus indicator everywhere, for keyboard users. */
+:focus-visible {
+  outline: 2px solid var(--color-forest);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Skip link: hidden until focused, then a clear jump to the content. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  background: var(--color-forest);
+  color: var(--color-cream);
+  padding: 0.6rem 1.2rem;
+  border-radius: 0 0 0.75rem 0;
+  font-size: 0.875rem;
+}
+.skip-link:focus {
+  left: 0;
+}
+
+/* Respect reduced-motion preferences. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }

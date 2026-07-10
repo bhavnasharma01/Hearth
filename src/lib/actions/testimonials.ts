@@ -5,6 +5,7 @@ import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { getSessionUser, ensureProfileRow } from "@/lib/account";
 import { runContentCheck } from "@/lib/moderation/content-check";
 import { sendEmail } from "@/lib/notify";
+import { brandedEmailHtml } from "@/lib/email-html";
 import { siteUrl } from "@/lib/url";
 import type { FormState } from "./types";
 
@@ -101,6 +102,10 @@ export async function submitTestimonial(
   const label = target.practice_name || target.name;
   let recipient: string | null = null;
   let emailLines: string[] = [];
+  let ctaUrl = "";
+  let ctaLabel = "";
+  let intro = "";
+  let fine = "";
   if (target.owner_user_id) {
     const { data: ownerRow } = await sb
       .from("users")
@@ -108,33 +113,33 @@ export async function submitTestimonial(
       .eq("id", target.owner_user_id)
       .maybeSingle();
     recipient = (ownerRow as { email: string | null } | null)?.email ?? target.email;
-    emailLines = [
-      `${author_name} wrote you a recommendation on Hearth:`,
-      "",
-      `“${body}”`,
-      "",
-      `It appears on your profile only after you approve it. Review it here:`,
-      // Deep-link the exact listing's Recommendations tab so the owner lands
-      // directly on the approval list.
-      siteUrl(`/my-practice?listing=${target.id}&view=recommendations`),
-    ];
+    // Deep-link the exact listing's Recommendations tab so the owner lands
+    // directly on the approval list.
+    ctaUrl = siteUrl(`/my-practice?listing=${target.id}&view=recommendations`);
+    ctaLabel = "Review & approve";
+    intro = `${author_name} wrote you a recommendation on Hearth.`;
+    fine = "You choose what shows on your page — approve it, or quietly decline.";
+    emailLines = [intro, "", `“${body}”`, "", `Review it here: ${ctaUrl}`];
   } else if (target.email) {
     recipient = target.email;
-    emailLines = [
-      `${author_name} wrote a recommendation for ${label} on Hearth:`,
-      "",
-      `“${body}”`,
-      "",
-      `Recommendations appear on your profile only after you approve them.`,
-      `To approve it, sign in and claim your practice page:`,
-      siteUrl("/signin?next=/my-practice"),
-    ];
+    ctaUrl = siteUrl("/signin?next=/my-practice");
+    ctaLabel = "Sign in & claim your page";
+    intro = `${author_name} wrote a recommendation for ${label} on Hearth. It appears on your profile only after you approve it — sign in and claim your practice page to review it.`;
+    fine = "Claiming takes a minute and makes the page yours to tend anytime.";
+    emailLines = [intro, "", `“${body}”`, "", ctaUrl];
   }
   if (recipient) {
     await sendEmail({
       to: [recipient],
       subject: `Someone recommended ${label} on Hearth 🌿`,
       body: emailLines.join("\n"),
+      html: brandedEmailHtml({
+        heading: "Kind words are waiting",
+        paragraphs: [intro],
+        quote: { text: body, attribution: author_name },
+        cta: { label: ctaLabel, url: ctaUrl },
+        fine,
+      }),
     });
   }
 

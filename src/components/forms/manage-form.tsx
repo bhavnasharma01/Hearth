@@ -96,7 +96,7 @@ export function ManageForm({
           {categories.map((c) => (
             <label
               key={c.id}
-              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-card px-3 py-1.5 text-sm text-ink transition-colors has-[:checked]:border-forest has-[:checked]:bg-forest has-[:checked]:text-cream"
+              className="inline-flex cursor-pointer items-center gap-1.5 rounded-full border border-line bg-card px-3 py-1.5 text-sm text-ink transition-colors has-[:checked]:border-forest has-[:checked]:bg-forest has-[:checked]:text-cream has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-forest"
             >
               {/* Real checkbox as a peer so the marker reflects its state:
                   ＋ = tap to add, ✓ = chosen. */}

@@ -22,8 +22,9 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-20 border-b border-gold/20 bg-night/95 backdrop-blur">
       <div className="mx-auto flex max-w-5xl items-center justify-between px-4 py-3">
+        {/* The header sits on the LIGHT stage in this palette — dark wordmark. */}
         <Link href="/" aria-label="Hearth home">
-          <Logo tone="light" />
+          <Logo tone="dark" />
         </Link>
         <div className="flex items-center gap-2">
           <nav className="flex items-center gap-1 text-sm">

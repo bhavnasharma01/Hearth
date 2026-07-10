@@ -22,7 +22,7 @@
 
 ## 3. Visual system (starting point — refine with Anat & Curtis)
 
-> **Visual refresh under review.** A palette exploration with **60 directions** across six moods lives at **`public/palette-explorations.html`** (served at `/palette-explorations.html`). **Currently live (Build 50): a trial skin of "Rice paper" (#29)** — shoji daylight, bright warm whites, pale wood, green tea; japandi — applied across every surface (public, admin, forms, manage/my-listing) purely by swapping token values.
+> **DECIDED (2026-07-10, live since Build 73): "Clementine & Juniper" (finalist F6) with the heart-flame mark (L2).** The two-tone rule: **juniper carries** (buttons, links, ink, the deep stage) and **clementine sparks** (the mark, member ✦, eyebrows) — clementine never paints a big surface. Two stage pairs: `night` = the light peach stage (header, hero, profile band), `night-deep` = juniper (footer, recruitment banner, admin bar). **AODA/WCAG-AA:** all text pairings ≥4.5:1 (pure clementine `#ef6c33` is 3.1:1 and therefore reserved for the mark/large graphics; text accents use burnt clementine `--color-gold #b54e1e`, 5.2:1); global `:focus-visible` outline, a skip-link, chip inputs with visible focus rings, `prefers-reduced-motion` respected. Active tokens live in `globals.css`; the exploration pages (`/palette-explorations.html`, `/brand-preview.html`) are historical and removable.
 >
 > **The palette system (how reskins work):** every colour in the app is a **role token** in `src/app/globals.css` (`@theme`) — components never hardcode hexes. The file holds one **ACTIVE PALETTE** block plus a **library** of full value-sets (the original "rich & sacred" is preserved there); switching skins = swapping the block. Two semantic tokens make palettes with *light* stage surfaces possible: **`on-night`** (text on the header/hero/footer "stage") and **`on-gold`** (text on gold fills) — components use those instead of assuming night is dark. The logo flame reads its gradient/glow from `flame-*` tokens. Known static exception: the favicon (`src/app/icon.svg`) keeps the old night/gold tile until a palette is final.
 
@@ -43,7 +43,7 @@
   | `clay` | `#b4603f` | gentle error/warn |
   | `ink` / `muted` | `#2a211b` / `#6e6253` | text |
 
-  Gold is used sparingly — eyebrows, the flame mark, thin `.gold-rule` dividers, active states, "view all" links, and the member mark. A **crafted SVG flame** wordmark (`src/components/logo.tsx`) replaces the emoji — a gold-gradient flame with a brighter inner ember and a soft glow (`drop-shadow`) so it pops on the deep night header. The same flame is the **browser-tab favicon** (`src/app/icon.svg`) — gold flame on a rounded deep-"night" tile so it reads on any browser theme.
+  *(Historical — superseded by Clementine & Juniper above.)* **The mark (since Build 73): the heart-flame** — a heart holding a flame-shaped cutout (`src/components/logo.tsx`, clementine gradient via the `flame-*` tokens, soft glow). The identity lives in that cutout: **never simplify it to a plain heart.** The favicon (`src/app/icon.svg`) is the heart-flame in peach on a rounded juniper tile, readable on light and dark browser chrome. `.gold-rule` dividers, eyebrows, links, and the member ✦ use burnt clementine (`gold`).
 
 - **Type:** **Fraunces** (warm display serif) for headings + **Nunito Sans** for body — loaded via `next/font`.
 

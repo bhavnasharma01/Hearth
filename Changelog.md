@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 73 (2026-07-10)
+
+*THE BRAND SHIPS: Clementine & Juniper + the heart-flame, everywhere, with AODA (WCAG 2.0 AA) accessibility built in. Builds clean; lint passes.*
+
+### Changed — the identity (final)
+- **Palette:** `globals.css` ACTIVE block is now **Clementine & Juniper** (Rice Paper moved to the library). Two-tone rule enforced in tokens: juniper carries (buttons/links/ink/deep stage), clementine sparks (mark, ✦, eyebrows). **New: a second stage pair** — `night` (light peach: header, hero, profile band) and `night-deep` (juniper: footer, recruitment banner, admin bar) with `on-night-deep` + `gold-deep` — the two-stage depth from the approved preview. Home's primary button switched to juniper; header wordmark to dark tone (light stage); admin/footer/banner rerouted to the deep pair.
+- **The mark:** `logo.tsx` now draws the **heart-flame** (heart with a flame cutout, clementine gradient + soft glow; comment warns: never simplify to a plain heart). **Favicon** (`icon.svg`): peach heart-flame on a rounded juniper tile.
+- **Emails, all three kinds branded:**
+  - `src/lib/email-html.ts` — shared inline-styled, table-based branded template (juniper button, clementine rule, footer), AA-checked colours, always paired with a plain-text part.
+  - `sendEmail`/both transports accept an optional `html` part; the **recommendation email** now sends the branded design (quote block + Review & approve deep link; claim-nudge variant for unowned listings).
+  - **`documentation/email-templates/`** — paste-ready Supabase templates for **Confirm signup** and **Reset password** (+ README with install steps). *(Bhavna: ~4 min to paste in.)*
+
+### Added — accessibility (AODA / WCAG 2.0 AA)
+- **Contrast engineered into the tokens** (documented in `globals.css` + `Design.md`): ink 11:1, muted 5.2:1, links 7.5:1, text-accent gold (burnt clementine) 5.2:1; pure clementine (3.1:1) reserved for the mark/large graphics; deep-stage pairings ≥4.5:1 (eyebrows there use `gold-deep`, 4.8:1).
+- **Global `:focus-visible` outline** (juniper, offset) for keyboard users; **skip-to-content link** in the root layout (`#main` landmark); **visible focus rings on chip-style inputs** (category chips on add/manage forms, feedback type chips — previously `sr-only` inputs gave no focus cue); **`prefers-reduced-motion`** respected globally; emails keep real text + fallback copy links.
+
+### Docs
+- `Design.md` §3 rewritten as the decided system; `Claude.md` (reskin invariants incl. the hardcoded-hex email/favicon exceptions; open-item #4 resolved); `Readme.md` status + scope; memory updated. `Readme.md`, `Changelog.md` → Build 73.
+
+---
+
 ## v0.1.0 — Build 72 (2026-07-10)
 
 *The F6 + heart-flame dress rehearsal: a full brand preview page. Builds clean.*

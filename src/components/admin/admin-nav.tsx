@@ -21,8 +21,8 @@ export function AdminNav({
             href={n.href}
             className={`rounded-full px-3 py-1 transition-colors ${
               active
-                ? "bg-gold/15 text-gold-soft"
-                : "text-on-night/70 hover:bg-on-night/10 hover:text-on-night"
+                ? "bg-gold-deep/20 font-semibold text-gold-deep"
+                : "text-on-night-deep/80 hover:bg-on-night-deep/10 hover:text-on-night-deep"
             }`}
           >
             {n.label}

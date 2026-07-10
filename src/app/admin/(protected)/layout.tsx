@@ -25,11 +25,11 @@ export default async function AdminLayout({
 
   return (
     <div className="min-h-full">
-      <div className="bg-night text-on-night">
+      <div className="bg-night-deep text-on-night-deep">
         <div className="mx-auto flex max-w-5xl flex-wrap items-center gap-x-4 gap-y-2 px-4 py-3">
-          <span className="font-display text-lg text-on-night">Hearth admin</span>
+          <span className="font-display text-lg text-on-night-deep">Hearth admin</span>
           <AdminNav items={NAV} />
-          <span className="ml-auto flex items-center gap-3 text-xs text-on-night/60">
+          <span className="ml-auto flex items-center gap-3 text-xs text-on-night-deep/80">
             {user.email}
             <SignOutButton />
           </span>

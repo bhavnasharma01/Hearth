@@ -55,6 +55,9 @@ export interface AdminNotification {
 
 export interface EmailMessage extends AdminNotification {
   to: string[];
+  /** Optional branded HTML part (see src/lib/email-html.ts). The plain-text
+   *  `body` is always sent alongside it — accessibility + client fallback. */
+  html?: string;
 }
 
 /**
@@ -67,6 +70,7 @@ export async function sendEmail({
   to,
   subject,
   body,
+  html,
 }: EmailMessage): Promise<{ sent: boolean; reason?: string }> {
   if (to.length === 0) {
     console.warn(`sendEmail: no recipients; skipped "${subject}"`);
@@ -74,10 +78,10 @@ export async function sendEmail({
   }
 
   if (process.env.RESEND_API_KEY) {
-    return sendViaResend(to, subject, body);
+    return sendViaResend(to, subject, body, html);
   }
   if (process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD) {
-    return sendViaGmail(to, subject, body);
+    return sendViaGmail(to, subject, body, html);
   }
 
   // Nothing configured — log so the message is at least visible in dev/logs.
@@ -105,6 +109,7 @@ async function sendViaResend(
   to: string[],
   subject: string,
   body: string,
+  html?: string,
 ): Promise<{ sent: boolean; reason?: string }> {
   const from = process.env.RESEND_FROM || DEFAULT_RESEND_FROM;
   try {
@@ -114,7 +119,7 @@ async function sendViaResend(
         Authorization: `Bearer ${process.env.RESEND_API_KEY}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ from, to, subject, text: body }),
+      body: JSON.stringify({ from, to, subject, text: body, ...(html ? { html } : {}) }),
     });
     if (!res.ok) {
       const detail = await res.text().catch(() => "");
@@ -132,6 +137,7 @@ async function sendViaGmail(
   to: string[],
   subject: string,
   body: string,
+  html?: string,
 ): Promise<{ sent: boolean; reason?: string }> {
   const user = process.env.GMAIL_USER!;
   // App passwords are shown by Google with spaces ("abcd efgh ijkl mnop"); Gmail
@@ -149,6 +155,7 @@ async function sendViaGmail(
       to,
       subject,
       text: body,
+      ...(html ? { html } : {}),
     });
     return { sent: true };
   } catch (error) {

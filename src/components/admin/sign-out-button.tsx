@@ -13,7 +13,7 @@ export function SignOutButton() {
   return (
     <button
       onClick={signOut}
-      className="text-xs text-on-night/70 underline hover:text-on-night"
+      className="text-xs text-on-night-deep/80 underline hover:text-on-night-deep"
     >
       Sign out
     </button>

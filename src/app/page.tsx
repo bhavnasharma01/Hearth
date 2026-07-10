@@ -29,9 +29,10 @@ export default function HomePage() {
 
           {/* The two doors in: seekers and practitioners. */}
           <div className="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+            {/* Juniper carries the primary action (F6 two-tone rule). */}
             <Link
               href="/practitioners"
-              className="w-full max-w-xs rounded-full bg-gold px-7 py-3 text-sm font-semibold text-on-gold transition-colors hover:bg-gold-soft sm:w-auto"
+              className="w-full max-w-xs rounded-full bg-forest px-7 py-3 text-sm font-semibold text-cream transition-colors hover:bg-forest-deep sm:w-auto"
             >
               Find a practitioner
             </Link>

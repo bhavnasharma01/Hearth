@@ -31,8 +31,14 @@ export default function RootLayout({
       className={`${fraunces.variable} ${nunito.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">
+        {/* AODA: keyboard users can jump straight past the navigation. */}
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         <SiteHeader />
-        <main className="flex-1">{children}</main>
+        <main id="main" className="flex-1">
+          {children}
+        </main>
         <SiteFooter />
       </body>
     </html>

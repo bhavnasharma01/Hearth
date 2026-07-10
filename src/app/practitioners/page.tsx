@@ -179,14 +179,14 @@ export default async function PractitionersPage({
       {/* Recruitment moment — after someone has seen the community, invite them in.
           The gradient stays within the night pair so any palette (dark or light
           stage) renders coherently. */}
-      <section className="mt-10 overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-night to-night-2 px-6 py-9 text-center">
-        <p className="text-xs font-medium uppercase tracking-[0.22em] text-gold-soft">
+      <section className="mt-10 overflow-hidden rounded-[1.5rem] bg-gradient-to-br from-night-deep to-night-deep-2 px-6 py-9 text-center">
+        <p className="text-xs font-medium uppercase tracking-[0.22em] text-gold-deep">
           Offer your gifts
         </p>
-        <h2 className="mx-auto mt-2 max-w-md font-display text-2xl font-semibold text-on-night">
+        <h2 className="mx-auto mt-2 max-w-md font-display text-2xl font-semibold text-on-night-deep">
           Are you a practitioner?
         </h2>
-        <p className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-on-night/75">
+        <p className="mx-auto mt-1.5 max-w-md text-sm leading-relaxed text-on-night-deep/85">
           It takes about two minutes, and you get a shareable profile page.
         </p>
         <Link

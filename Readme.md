@@ -4,8 +4,8 @@
 
 **🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 72
-*(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; a trial **Rice Paper** skin on a one-block-swappable palette system; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
+**Version:** 0.1.0 · **Build:** 73
+*(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; the final **Clementine & Juniper** identity with the **heart-flame** mark (AODA-minded WCAG-AA contrast, skip-link, visible focus, reduced-motion support) on a one-block-swappable palette system; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
 
 ---
 
@@ -115,5 +115,5 @@ npm run geocode             # backfill coordinates for events/practitioners with
 ## Scope at a glance
 
 - **v1 (current):** Directory + Events (native add, search/filter, profiles, seeded import), moderation, admin panel, category management — **plus the account layer, shipped early during the pilot (July 2026):** member sign-in (Google + email/password), one owned practice per account with self-edit/delete/claim, and practitioner-approved **testimonials**. **Piloting practitioners only** — the Events layer is hidden behind the `EVENTS_ENABLED` flag (`src/lib/features.ts`); flip it to bring events back.
-- **Next:** final palette choice (then favicon + branded auth emails), launch, then events return.
+- **Next:** launch (brand is final: Clementine & Juniper + heart-flame, Build 73), then events return.
 - **v3:** off-platform-payment registrations, education/blog.
