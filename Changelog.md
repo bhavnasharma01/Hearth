@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 62 (2026-07-10)
+
+*First live testimonial test: pending recommendations were invisible to multi-listing owners. Fixed. Builds clean; lint passes.*
+
+### Fixed
+- **A pending recommendation was hidden if the owner account holds several listings** (Bhavna's test: the recommendation sat pending on "New listing" but `/my-practice` showed the multi-listing chooser, which had no approval UI and no hint anything was waiting). Two fixes:
+  - The **chooser rows now show a gold badge** — "N recommendation(s) to approve" — via `getPendingTestimonialCounts()`, so waiting kind words are visible at a glance.
+  - The **notification email now deep-links the exact listing** (`/my-practice?listing=<id>`), landing the owner directly in the right editor's approval section instead of the generic page.
+- Verified against live data: the testimonial itself was stored correctly (pending, right target) — the flow worked; the visibility didn't.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 62.
+
+---
+
 ## v0.1.0 — Build 61 (2026-07-10)
 
 *Practitioners get an email when someone recommends them; the DNS-outage lesson is written into the domain guide. Builds clean; lint passes.*

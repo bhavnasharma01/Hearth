@@ -114,7 +114,9 @@ export async function submitTestimonial(
       `“${body}”`,
       "",
       `It appears on your profile only after you approve it. Review it here:`,
-      siteUrl("/my-practice"),
+      // Deep-link the exact listing so multi-listing owners land on the right
+      // editor (the plain /my-practice chooser hid the approval UI).
+      siteUrl(`/my-practice?listing=${target.id}`),
     ];
   } else if (target.email) {
     recipient = target.email;

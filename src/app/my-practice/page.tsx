@@ -10,7 +10,10 @@ import {
 import { getCategories } from "@/lib/data/categories";
 import { claimListingByEmail } from "@/lib/actions/account";
 import { approveTestimonial, hideTestimonial } from "@/lib/actions/testimonials";
-import { getTestimonialsForOwner } from "@/lib/data/testimonials";
+import {
+  getTestimonialsForOwner,
+  getPendingTestimonialCounts,
+} from "@/lib/data/testimonials";
 import { ManageForm } from "@/components/forms/manage-form";
 import { DeleteListing } from "@/components/delete-listing";
 import { ActionButton } from "@/components/admin/action-button";
@@ -58,6 +61,11 @@ export default async function MyPracticePage({
   }
 
   if (listings.length > 1) {
+    // Badge each row with waiting recommendations — without this, kind words
+    // were invisible to multi-listing owners (the July 10 test finding).
+    const pendingByListing = await getPendingTestimonialCounts(
+      listings.map((l) => l.id),
+    );
     return (
       <div className="mx-auto max-w-2xl px-4 py-8">
         <header className="mb-6">
@@ -75,7 +83,7 @@ export default async function MyPracticePage({
             <li key={l.id} className="flex flex-wrap items-center gap-2 px-4 py-3">
               <div className="min-w-0">
                 <p className="font-medium text-ink">{l.practice_name || l.name}</p>
-                <p className="mt-0.5 text-xs">
+                <p className="mt-0.5 flex flex-wrap gap-1.5 text-xs">
                   <span
                     className={`rounded-full px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide ${
                       STATUS_BADGE[l.status] ?? "bg-line/60 text-muted"
@@ -83,6 +91,12 @@ export default async function MyPracticePage({
                   >
                     {l.status}
                   </span>
+                  {(pendingByListing[l.id] ?? 0) > 0 && (
+                    <span className="rounded-full bg-gold/15 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-gold">
+                      {pendingByListing[l.id]} recommendation
+                      {pendingByListing[l.id] === 1 ? "" : "s"} to approve
+                    </span>
+                  )}
                 </p>
               </div>
               <div className="ml-auto flex gap-2">

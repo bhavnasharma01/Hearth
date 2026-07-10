@@ -36,6 +36,29 @@ export async function getTestimonialsForOwner(
   return (data as Testimonial[]) ?? [];
 }
 
+/**
+ * Pending-approval counts per practitioner, for the My-practice chooser badges
+ * (an owner with several listings must be able to SEE where kind words wait).
+ * Service-role read; caller has verified ownership.
+ */
+export async function getPendingTestimonialCounts(
+  practitionerIds: string[],
+): Promise<Record<string, number>> {
+  const counts: Record<string, number> = {};
+  if (practitionerIds.length === 0) return counts;
+  const supabase = getSupabaseAdmin();
+  if (!supabase) return counts;
+  const { data } = await supabase
+    .from("testimonials")
+    .select("practitioner_id")
+    .in("practitioner_id", practitionerIds)
+    .eq("status", "pending");
+  for (const row of (data as { practitioner_id: string }[]) ?? []) {
+    counts[row.practitioner_id] = (counts[row.practitioner_id] ?? 0) + 1;
+  }
+  return counts;
+}
+
 export interface MyTestimonial extends Testimonial {
   practitioner: { name: string; practice_name: string | null; slug: string } | null;
 }
