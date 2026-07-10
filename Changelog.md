@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 64 (2026-07-10)
+
+*URLs pasted into profile text are now tappable links. Builds clean; lint passes.*
+
+### Added
+- **`Linkify` (`src/components/linkify.tsx`)** — renders free text with any `http(s)://` or `www.` URL as a real, safe link: display-time detection (so every **existing** profile benefits, no data change), no HTML injection (text split into React elements, never `dangerouslySetInnerHTML`), `target="_blank"` + `rel="noopener noreferrer nofollow"` (user content), trailing sentence punctuation kept out of the link, `break-all` so long URLs wrap.
+- Applied on the **profile page**: description, bio, and service blurbs (where a Spotify or website link pasted into text was showing as dead text). Directory **cards deliberately keep plain text** — they're clamped one-line rows for scanning; the profile is where people engage.
+
+### Docs
+- `Design.md` (§5 profile bullet). `Readme.md`, `Changelog.md` → Build 64.
+
+---
+
 ## v0.1.0 — Build 63 (2026-07-10)
 
 *My practice gets tabs: editing and recommendations no longer share one long page. Builds clean; lint passes.*

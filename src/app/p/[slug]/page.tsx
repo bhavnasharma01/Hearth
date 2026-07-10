@@ -8,6 +8,7 @@ import {
 import { getEventsByHost } from "@/lib/data/events";
 import { getApprovedTestimonials } from "@/lib/data/testimonials";
 import { EventCard } from "@/components/event-card";
+import { Linkify } from "@/components/linkify";
 import { ShareButton } from "@/components/share-button";
 import {
   directionsUrl,
@@ -143,12 +144,15 @@ export default async function PractitionerProfile({
         </div>
       </header>
 
-      {/* About — break-words so a pasted long URL can't overflow the phone edge. */}
+      {/* About — Linkify makes pasted URLs (Spotify, sites, …) tappable;
+          break-words keeps long ones from overflowing the phone edge. */}
       <section className="mt-5">
-        <p className="break-words leading-relaxed text-ink">{p.description}</p>
+        <p className="break-words leading-relaxed text-ink">
+          <Linkify text={p.description} />
+        </p>
         {p.bio && (
           <p className="mt-3 whitespace-pre-line break-words leading-relaxed text-ink/90">
-            {p.bio}
+            <Linkify text={p.bio} />
           </p>
         )}
 
@@ -246,7 +250,9 @@ export default async function PractitionerProfile({
                   )}
                 </div>
                 {s.description && (
-                  <p className="mt-0.5 break-words text-sm text-muted">{s.description}</p>
+                  <p className="mt-0.5 break-words text-sm text-muted">
+                    <Linkify text={s.description} />
+                  </p>
                 )}
               </li>
             ))}
