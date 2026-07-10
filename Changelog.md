@@ -4,6 +4,21 @@
 
 ---
 
+## v0.1.0 — Build 66 (2026-07-10)
+
+*Sign-in continuity: land back where you were, not on the homepage. Builds clean; lint passes.*
+
+### Fixed
+- **Signing in mid-flow (e.g. tapping ♡ Recommend while signed out) dropped people on the homepage** instead of returning them to what they were doing. Likely root cause is config — landing on the homepage *signed in* is the signature of Supabase discarding a `redirectTo` that isn't on its **Redirect URLs allowlist** and falling back to the Site URL. **Bhavna to verify:** Supabase → Authentication → URL Configuration → Redirect URLs contains exactly `https://myhearthapp.ca/**`.
+- **Code hardening shipped regardless (belt & suspenders):**
+  - The Google sign-in button stashes `next` in a **short-lived cookie** (10 min, single-use) in addition to the callback URL; `/auth/callback` reads the query first, then the cookie — continuity survives even if the query is lost across the OAuth round-trip.
+  - The header **"Sign in" link now carries the current page** as `next` (was a bare `/signin`), so even a spontaneous sign-in returns you to the page you were reading.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 66.
+
+---
+
 ## v0.1.0 — Build 65 (2026-07-10)
 
 *Linkify reaches the pricing fields. Builds clean; lint passes.*

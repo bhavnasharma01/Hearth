@@ -15,6 +15,10 @@ export function GoogleSignInButton({ next = "/" }: { next?: string }) {
   async function signIn() {
     setBusy(true);
     setError(null);
+    // Belt & suspenders for continuity: `next` rides the callback URL, AND a
+    // short-lived cookie — so even if the query is lost across the OAuth
+    // round-trip, /auth/callback still knows where to land the person.
+    document.cookie = `hearth_next=${encodeURIComponent(next)}; path=/; max-age=600; samesite=lax`;
     const { error } = await getSupabaseBrowser().auth.signInWithOAuth({
       provider: "google",
       options: {

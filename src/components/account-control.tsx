@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { getSupabaseBrowser } from "@/lib/supabase/client";
 import type { User } from "@supabase/supabase-js";
 
@@ -19,6 +19,7 @@ import type { User } from "@supabase/supabase-js";
  */
 export function AccountControl() {
   const router = useRouter();
+  const pathname = usePathname();
   const [user, setUser] = useState<User | null>(null);
   const [ready, setReady] = useState(false);
   const [open, setOpen] = useState(false);
@@ -67,9 +68,16 @@ export function AccountControl() {
   if (!ready) return <span aria-hidden className="inline-block h-8 w-8" />;
 
   if (!user) {
+    // Carry the current page as `next` so signing in returns you to where you
+    // were, not the homepage (continuity — the signin page itself is excluded
+    // so we never loop back into it).
+    const next =
+      pathname && pathname !== "/signin"
+        ? `?next=${encodeURIComponent(pathname)}`
+        : "";
     return (
       <Link
-        href="/signin"
+        href={`/signin${next}`}
         className="rounded-full px-3 py-1.5 text-sm text-on-night/70 transition-colors hover:bg-on-night/5 hover:text-on-night"
       >
         Sign in
