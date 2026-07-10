@@ -29,6 +29,16 @@ p.gintro { color: #6e6253; font-size: 15px; margin: 10px 0 22px; max-width: 720p
 .swc { height: 26px; border-radius: 6px; }
 .swl { font-size: 9.5px; color: #8a7d69; font-family: ui-monospace, Menlo, monospace; display: block; margin-top: 3px; }
 footer { margin-top: 60px; text-align: center; color: #8a7d69; font-size: 13px; }
+/* Finalists — bigger, decision-grade cards with app + email mockups */
+.finGrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 22px; }
+@media (max-width: 480px) { .finGrid { grid-template-columns: 1fr; } }
+.fin { background: #fffdf7; border: 2px solid #d9c9a6; border-radius: 16px; padding: 20px; position: relative; }
+.fin h3 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 22px; }
+.fin .tag { min-height: 0; }
+.duo { display: flex; gap: 10px; margin-top: 4px; }
+.duo > div { flex: 1; min-width: 0; }
+.mlabel { font-size: 10px; letter-spacing: 1.2px; color: #8a7d69; margin: 0 0 5px; text-transform: uppercase; }
+.finnote { font-size: 12.5px; color: #6e6253; line-height: 1.55; margin-top: 10px; }
 @media (max-width: 640px) { h1 { font-size: 30px; } body { padding: 24px 12px 60px; } }
 </style>
 </head>
@@ -37,9 +47,230 @@ footer { margin-top: 60px; text-align: center; color: #8a7d69; font-size: 13px; 
 <header class="page">
   <div class="flame">&#9650;</div>
   <h1>Hearth — palette explorations</h1>
-  <p class="lede">60 design directions for Hearth's next look, grouped into six moods. Each card shows a miniature of the app — header, practitioner card, buttons — plus the five core colors.</p>
-  <p class="hint">Reviewing? Just reply with the numbers you like (e.g. "15 and 27") — blends welcome too.</p>
+  <p class="lede">Start with the <strong>five finalists</strong> below — full directions with an app and an email mockup each, built for deciding. The 60 exploration cards that led here follow after.</p>
+  <p class="hint">Any finalist can be worn by the whole live site within minutes — pick two, wear each for a day, and the decision makes itself.</p>
 </header>
+
+<section>
+  <h2>The finalists</h2>
+  <p class="gintro">The lesson of 60 cards: the strong-looking palettes paint the big surfaces dark (heavy), the gentle ones fade away (too light). The way out, used by the best consumer apps: a near-neutral canvas, dark warm ink, and ONE confident accent doing the identity work — in the app, the email, and the favicon. Five ways to do that, each shown as an app screen and a notification email.</p>
+  <div class="finGrid">
+
+<div class="fin">
+  <div class="num">F1</div>
+  <h3>Ember &amp; ivory</h3>
+  <p class="tag">The recommendation. White-space calm, and the hearth is literally lit: one ember accent carrying everything.</p>
+  <div class="duo">
+    <div>
+      <p class="mlabel">The app</p>
+      <div class="mock" style="border-color:#ece4d9">
+        <div style="background:#faf4ee;padding:12px 14px 14px;">
+          <span style="color:#d96a44;font-size:13px;">&#9650;</span>
+          <span style="color:#3a2d24;font-family:'Fraunces',Georgia,serif;font-size:16px;">Hearth</span>
+          <div style="color:#b5452c;font-size:10px;letter-spacing:1.6px;margin-top:5px;">OUR COMMUNITY</div>
+        </div>
+        <div style="background:#fdfcf9;padding:12px;">
+          <div style="background:#ffffff;border:1px solid #ece4d9;border-radius:9px;padding:9px 11px;">
+            <div style="font-size:13px;color:#2e2620;font-weight:600;">Maya R. <span style="color:#b5452c;font-size:11px;font-weight:400;">&#10022; member</span></div>
+            <div style="font-size:11px;color:#7d6f63;margin-top:2px;">Breathwork &middot; Annex &middot; In person</div>
+          </div>
+          <div style="margin-top:9px;display:flex;gap:6px;">
+            <span style="background:#b5452c;color:#fff4ee;font-size:11px;padding:5px 14px;border-radius:99px;">Message</span>
+            <span style="background:#f6e3da;color:#2e2620;font-size:11px;padding:5px 12px;border-radius:99px;">Yoga</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="mlabel">The email</p>
+      <div class="mock" style="border-color:#ece4d9">
+        <div style="background:#ffffff;padding:12px 12px 14px;text-align:center;">
+          <div><span style="color:#d96a44;font-size:14px;">&#9650;</span> <span style="color:#3a2d24;font-family:'Fraunces',Georgia,serif;font-size:15px;">Hearth</span></div>
+          <div style="height:1px;background:linear-gradient(to right,transparent,#d96a44,transparent);margin:8px 18px;"></div>
+          <div style="font-size:12px;color:#2e2620;font-weight:600;">Someone recommended you 🌿</div>
+          <div style="font-size:10.5px;color:#7d6f63;margin-top:4px;line-height:1.5;">&ldquo;Maya's breathwork sessions changed my year&hellip;&rdquo;</div>
+          <span style="display:inline-block;background:#b5452c;color:#fff4ee;font-size:10.5px;padding:5px 16px;border-radius:99px;margin-top:9px;">Review &amp; approve</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sws"><div class="swi"><div class="swc" style="background:#b5452c;"></div><span class="swl">#b5452c</span></div><div class="swi"><div class="swc" style="background:#d96a44;"></div><span class="swl">#d96a44</span></div><div class="swi"><div class="swc" style="background:#82896a;"></div><span class="swl">#82896a</span></div><div class="swi"><div class="swc" style="background:#f6e3da;"></div><span class="swl">#f6e3da</span></div><div class="swi"><div class="swc" style="background:#fdfcf9;border:1px solid #e3dccb;"></div><span class="swl">#fdfcf9</span></div></div>
+  <p class="finnote"><strong>Why it fits every signal:</strong> the white space you loved (round 3), heart-and-earth without dullness (round 4), no heavy headers (Anat), and the strongest name-fit of all — the flame mark in live ember. Sage green plays support (member/success moments). Favicon: ember flame on ivory.</p>
+</div>
+
+<div class="fin">
+  <div class="num">F2</div>
+  <h3>Terra stage</h3>
+  <p class="tag">The bolder cousin: same white canvas, but the stage moments (hero, banners, email header) wear mid terracotta.</p>
+  <div class="duo">
+    <div>
+      <p class="mlabel">The app</p>
+      <div class="mock" style="border-color:#eadfd3">
+        <div style="background:#b0603f;padding:12px 14px 14px;">
+          <span style="color:#f2c9a8;font-size:13px;">&#9650;</span>
+          <span style="color:#fdf2ea;font-family:'Fraunces',Georgia,serif;font-size:16px;">Hearth</span>
+          <div style="color:#f2c9a8;font-size:10px;letter-spacing:1.6px;margin-top:5px;">OUR COMMUNITY</div>
+        </div>
+        <div style="background:#fcfaf7;padding:12px;">
+          <div style="background:#ffffff;border:1px solid #eadfd3;border-radius:9px;padding:9px 11px;">
+            <div style="font-size:13px;color:#33281f;font-weight:600;">Maya R. <span style="color:#a04f30;font-size:11px;font-weight:400;">&#10022; member</span></div>
+            <div style="font-size:11px;color:#82715f;margin-top:2px;">Breathwork &middot; Annex &middot; In person</div>
+          </div>
+          <div style="margin-top:9px;display:flex;gap:6px;">
+            <span style="background:#a04f30;color:#fdf2ea;font-size:11px;padding:5px 14px;border-radius:99px;">Message</span>
+            <span style="background:#f2e2d8;color:#33281f;font-size:11px;padding:5px 12px;border-radius:99px;">Yoga</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="mlabel">The email</p>
+      <div class="mock" style="border-color:#eadfd3">
+        <div style="background:#b0603f;padding:9px;text-align:center;">
+          <span style="color:#f2c9a8;font-size:13px;">&#9650;</span> <span style="color:#fdf2ea;font-family:'Fraunces',Georgia,serif;font-size:14px;">Hearth</span>
+        </div>
+        <div style="background:#ffffff;padding:10px 12px 14px;text-align:center;">
+          <div style="font-size:12px;color:#33281f;font-weight:600;">Someone recommended you 🌿</div>
+          <div style="font-size:10.5px;color:#82715f;margin-top:4px;line-height:1.5;">&ldquo;Maya's breathwork sessions changed my year&hellip;&rdquo;</div>
+          <span style="display:inline-block;background:#a04f30;color:#fdf2ea;font-size:10.5px;padding:5px 16px;border-radius:99px;margin-top:9px;">Review &amp; approve</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sws"><div class="swi"><div class="swc" style="background:#b0603f;"></div><span class="swl">#b0603f</span></div><div class="swi"><div class="swc" style="background:#a04f30;"></div><span class="swl">#a04f30</span></div><div class="swi"><div class="swc" style="background:#7d9aa8;"></div><span class="swl">#7d9aa8</span></div><div class="swi"><div class="swc" style="background:#f2e2d8;"></div><span class="swl">#f2e2d8</span></div><div class="swi"><div class="swc" style="background:#fcfaf7;border:1px solid #e3dccb;"></div><span class="swl">#fcfaf7</span></div></div>
+  <p class="finnote"><strong>The middle register, literally:</strong> the stage is neither near-black nor pale — it's clay at mid strength (your "not so dark, not so light" ask, answered head-on). Strong brand recall in the inbox. Risk: terracotta headers are having a moment in wellness apps — less unique than F1.</p>
+</div>
+
+<div class="fin">
+  <div class="num">F3</div>
+  <h3>Forest &amp; flame, aired out</h3>
+  <p class="tag">Continuity: keeps Hearth's green-and-gold soul, but the green lightens two steps and the body goes white-airy.</p>
+  <div class="duo">
+    <div>
+      <p class="mlabel">The app</p>
+      <div class="mock" style="border-color:#e3e2d6">
+        <div style="background:#2e4a3d;padding:12px 14px 14px;">
+          <span style="color:#d9982f;font-size:13px;">&#9650;</span>
+          <span style="color:#f3efe4;font-family:'Fraunces',Georgia,serif;font-size:16px;">Hearth</span>
+          <div style="color:#d9982f;font-size:10px;letter-spacing:1.6px;margin-top:5px;">OUR COMMUNITY</div>
+        </div>
+        <div style="background:#fbfaf6;padding:12px;">
+          <div style="background:#ffffff;border:1px solid #e3e2d6;border-radius:9px;padding:9px 11px;">
+            <div style="font-size:13px;color:#26302a;font-weight:600;">Maya R. <span style="color:#a3742e;font-size:11px;font-weight:400;">&#10022; member</span></div>
+            <div style="font-size:11px;color:#6e7a70;margin-top:2px;">Breathwork &middot; Annex &middot; In person</div>
+          </div>
+          <div style="margin-top:9px;display:flex;gap:6px;">
+            <span style="background:#35674f;color:#f0f5f0;font-size:11px;padding:5px 14px;border-radius:99px;">Message</span>
+            <span style="background:#e7ede6;color:#26302a;font-size:11px;padding:5px 12px;border-radius:99px;">Yoga</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="mlabel">The email</p>
+      <div class="mock" style="border-color:#e3e2d6">
+        <div style="background:#2e4a3d;padding:9px;text-align:center;">
+          <span style="color:#d9982f;font-size:13px;">&#9650;</span> <span style="color:#f3efe4;font-family:'Fraunces',Georgia,serif;font-size:14px;">Hearth</span>
+        </div>
+        <div style="background:#ffffff;padding:10px 12px 14px;text-align:center;">
+          <div style="font-size:12px;color:#26302a;font-weight:600;">Someone recommended you 🌿</div>
+          <div style="font-size:10.5px;color:#6e7a70;margin-top:4px;line-height:1.5;">&ldquo;Maya's breathwork sessions changed my year&hellip;&rdquo;</div>
+          <span style="display:inline-block;background:#35674f;color:#f0f5f0;font-size:10.5px;padding:5px 16px;border-radius:99px;margin-top:9px;">Review &amp; approve</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sws"><div class="swi"><div class="swc" style="background:#2e4a3d;"></div><span class="swl">#2e4a3d</span></div><div class="swi"><div class="swc" style="background:#35674f;"></div><span class="swl">#35674f</span></div><div class="swi"><div class="swc" style="background:#d9982f;"></div><span class="swl">#d9982f</span></div><div class="swi"><div class="swc" style="background:#e7ede6;"></div><span class="swl">#e7ede6</span></div><div class="swi"><div class="swc" style="background:#fbfaf6;border:1px solid #e3dccb;"></div><span class="swl">#fbfaf6</span></div></div>
+  <p class="finnote"><strong>For keeping the identity people have already seen:</strong> the original's ceremony without its weight — the green is noticeably lighter than the old near-black night, and the cream body is gone in favour of airy white. If Anat still finds this header heavy, F1/F2 remain.</p>
+</div>
+
+<div class="fin">
+  <div class="num">F4</div>
+  <h3>Stone &amp; ember</h3>
+  <p class="tag">Anat's Morning Fog, un-bored: quiet warm greys everywhere, then one ember spark to make it hearth.</p>
+  <div class="duo">
+    <div>
+      <p class="mlabel">The app</p>
+      <div class="mock" style="border-color:#e5e1da">
+        <div style="background:#efece7;padding:12px 14px 14px;">
+          <span style="color:#c2502e;font-size:13px;">&#9650;</span>
+          <span style="color:#3c362f;font-family:'Fraunces',Georgia,serif;font-size:16px;">Hearth</span>
+          <div style="color:#c2502e;font-size:10px;letter-spacing:1.6px;margin-top:5px;">OUR COMMUNITY</div>
+        </div>
+        <div style="background:#fafaf8;padding:12px;">
+          <div style="background:#ffffff;border:1px solid #e5e1da;border-radius:9px;padding:9px 11px;">
+            <div style="font-size:13px;color:#332e28;font-weight:600;">Maya R. <span style="color:#c2502e;font-size:11px;font-weight:400;">&#10022; member</span></div>
+            <div style="font-size:11px;color:#8a8378;margin-top:2px;">Breathwork &middot; Annex &middot; In person</div>
+          </div>
+          <div style="margin-top:9px;display:flex;gap:6px;">
+            <span style="background:#4a453f;color:#f6f4f1;font-size:11px;padding:5px 14px;border-radius:99px;">Message</span>
+            <span style="background:#eae6df;color:#332e28;font-size:11px;padding:5px 12px;border-radius:99px;">Yoga</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="mlabel">The email</p>
+      <div class="mock" style="border-color:#e5e1da">
+        <div style="background:#ffffff;padding:12px 12px 14px;text-align:center;">
+          <div><span style="color:#c2502e;font-size:14px;">&#9650;</span> <span style="color:#3c362f;font-family:'Fraunces',Georgia,serif;font-size:15px;">Hearth</span></div>
+          <div style="height:1px;background:linear-gradient(to right,transparent,#c2502e,transparent);margin:8px 18px;"></div>
+          <div style="font-size:12px;color:#332e28;font-weight:600;">Someone recommended you 🌿</div>
+          <div style="font-size:10.5px;color:#8a8378;margin-top:4px;line-height:1.5;">&ldquo;Maya's breathwork sessions changed my year&hellip;&rdquo;</div>
+          <span style="display:inline-block;background:#4a453f;color:#f6f4f1;font-size:10.5px;padding:5px 16px;border-radius:99px;margin-top:9px;">Review &amp; approve</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sws"><div class="swi"><div class="swc" style="background:#4a453f;"></div><span class="swl">#4a453f</span></div><div class="swi"><div class="swc" style="background:#c2502e;"></div><span class="swl">#c2502e</span></div><div class="swi"><div class="swc" style="background:#a39c92;"></div><span class="swl">#a39c92</span></div><div class="swi"><div class="swc" style="background:#eae6df;"></div><span class="swl">#eae6df</span></div><div class="swi"><div class="swc" style="background:#fafaf8;border:1px solid #e3dccb;"></div><span class="swl">#fafaf8</span></div></div>
+  <p class="finnote"><strong>The most understated finalist:</strong> galleries-and-linen calm where the ember flame is the only saturated thing on screen — maximum sophistication, minimum noise. Risk: greys can read cool in poor light; the warmth must come from type and photography.</p>
+</div>
+
+<div class="fin">
+  <div class="num">F5</div>
+  <h3>Golden hour</h3>
+  <p class="tag">Warmth without brown: pale honey light, deep amber ink, a rose heart. The gentlest of the five.</p>
+  <div class="duo">
+    <div>
+      <p class="mlabel">The app</p>
+      <div class="mock" style="border-color:#eee2c9">
+        <div style="background:#fbf3e4;padding:12px 14px 14px;">
+          <span style="color:#c96d5f;font-size:13px;">&#9650;</span>
+          <span style="color:#5c3d16;font-family:'Fraunces',Georgia,serif;font-size:16px;">Hearth</span>
+          <div style="color:#b97e1e;font-size:10px;letter-spacing:1.6px;margin-top:5px;">OUR COMMUNITY</div>
+        </div>
+        <div style="background:#fefcf7;padding:12px;">
+          <div style="background:#ffffff;border:1px solid #eee2c9;border-radius:9px;padding:9px 11px;">
+            <div style="font-size:13px;color:#3a2f1d;font-weight:600;">Maya R. <span style="color:#b97e1e;font-size:11px;font-weight:400;">&#10022; member</span></div>
+            <div style="font-size:11px;color:#8c7c5f;margin-top:2px;">Breathwork &middot; Annex &middot; In person</div>
+          </div>
+          <div style="margin-top:9px;display:flex;gap:6px;">
+            <span style="background:#b97e1e;color:#fdf6e8;font-size:11px;padding:5px 14px;border-radius:99px;">Message</span>
+            <span style="background:#f7e8c9;color:#3a2f1d;font-size:11px;padding:5px 12px;border-radius:99px;">Yoga</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div>
+      <p class="mlabel">The email</p>
+      <div class="mock" style="border-color:#eee2c9">
+        <div style="background:#fbf3e4;padding:9px;text-align:center;">
+          <span style="color:#c96d5f;font-size:13px;">&#9650;</span> <span style="color:#5c3d16;font-family:'Fraunces',Georgia,serif;font-size:14px;">Hearth</span>
+        </div>
+        <div style="background:#ffffff;padding:10px 12px 14px;text-align:center;">
+          <div style="font-size:12px;color:#3a2f1d;font-weight:600;">Someone recommended you 🌿</div>
+          <div style="font-size:10.5px;color:#8c7c5f;margin-top:4px;line-height:1.5;">&ldquo;Maya's breathwork sessions changed my year&hellip;&rdquo;</div>
+          <span style="display:inline-block;background:#b97e1e;color:#fdf6e8;font-size:10.5px;padding:5px 16px;border-radius:99px;margin-top:9px;">Review &amp; approve</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="sws"><div class="swi"><div class="swc" style="background:#b97e1e;"></div><span class="swl">#b97e1e</span></div><div class="swi"><div class="swc" style="background:#c96d5f;"></div><span class="swl">#c96d5f</span></div><div class="swi"><div class="swc" style="background:#e3b563;"></div><span class="swl">#e3b563</span></div><div class="swi"><div class="swc" style="background:#f7e8c9;"></div><span class="swl">#f7e8c9</span></div><div class="swi"><div class="swc" style="background:#fefcf7;border:1px solid #e3dccb;"></div><span class="swl">#fefcf7</span></div></div>
+  <p class="finnote"><strong>Firelight rather than fire:</strong> everything glows a little. Closest in feeling to the original parchment warmth while staying bright. Risk: amber buttons carry less punch than ember/green ones; also verify the honey tints hold up on dim phone screens.</p>
+</div>
+
+  </div>
+</section>
 
 <section>
   <h2>Warm & grounded</h2>

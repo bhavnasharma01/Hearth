@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 69 (2026-07-10)
+
+*The palette page gets a decision layer: five finalists with app + email mockups. Builds clean.*
+
+### Added
+- **"The finalists" section at the top of `/palette-explorations.html`** — Bhavna's honest feedback: 60 cards produced browsing, not a decision ("light too light, dark too dark"), and the choice must also cover **emails** and branding. Each finalist is a fully-considered direction shown as a **larger app mockup + a notification-email mockup side by side**, with a why-it-fits note and honest risk:
+  - **F1 Ember & ivory** (the recommendation): white-space canvas, one live-ember accent, deep warm-brown ink — synthesizes every collected signal (white space, heart-and-earth, no heavy headers, strongest name-fit).
+  - **F2 Terra stage**: same canvas, mid-terracotta stage moments — the literal middle register.
+  - **F3 Forest & flame, aired out**: identity continuity — the green lightened two steps, white body.
+  - **F4 Stone & ember**: Morning-Fog quiet + one ember spark.
+  - **F5 Golden hour**: pale honey light, amber ink, rose heart.
+- Page lede/hint rewritten around the decision process: pick two finalists → wear each live for a day (one-block palette swap) → decide.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 69.
+
+---
+
 ## v0.1.0 — Build 68 (2026-07-10)
 
 *Documentation audit (per /updatestructure): every living doc reconciled with the Builds 39–67 sprint; learnings + carry-forward captured. Docs only; builds clean.*
