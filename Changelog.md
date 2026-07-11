@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 83 (2026-07-11)
+
+*Brand round three: warmth restored to the mark; T3 rejected, T2 on trial. Builds clean.*
+
+### Changed
+- **V1 retired the same day it was locked** (recorded honestly on the page): in full context the green heart lost the mark's charm. Diagnosis: a heart must stay warm — differentiation moves to a two-tone warm story or the lockup.
+- **T3 rejected** — the directory-card names (set in the *body* font, Albert Sans) were the specific offender, pointing to a warmer body face.
+- **`/brand-preview.html` re-rendered:** screens + emails now wear **W1** (ember-red heart + clementine fire) and **T2 (Lora + Karla)**. New **"Logo — round three"** section: **W1** (recommendation — hearts are red, fire is orange), **W2** (all-clementine with cream flame, the Build 73 beloved), **W3** (warm mark + juniper wordmark — lockup differentiation). Verdicts pending on W and T before the one-shot rollout.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 83.
+
+---
+
 ## v0.1.0 — Build 82 (2026-07-11)
 
 *V1 mark locked; the preview now shows the full candidate identity (V1 + T3) for the final yes/no. Builds clean.*
