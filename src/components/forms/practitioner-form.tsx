@@ -147,12 +147,12 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
       <Field
         label="Your area"
         required
-        hint="A neighbourhood or city. This is how people find you in “near me.” Pick a suggestion so it pins reliably. Use your general area, not your home address."
+        hint="This is how people find you in “near me.” Go as specific as a street address or as general as your city, whatever you’re comfortable sharing. Pick a suggestion so it pins reliably."
       >
         <AddressAutocomplete
           name="area"
           required
-          placeholder="Start typing a neighbourhood or city…"
+          placeholder="Start typing an address, neighbourhood, or city…"
           inputClassName={inputCls}
         />
       </Field>

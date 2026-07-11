@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 86 (2026-07-11)
+
+*Location wording: the area field now welcomes any precision ("whatever you're comfortable sharing") instead of warning "not your home address". Copy + docs only; the logic already supported both ends. Builds clean.*
+
+### Changed
+- **Area field hints rewritten** on both the add form (`practitioner-form.tsx`) and the editor (`manage-form.tsx`): "Go as specific as a street address or as general as your city, whatever you're comfortable sharing." The old "not your home address" call-out is gone; the soft framing keeps the privacy nudge without implying a rule. Placeholders now read "Start typing an address, neighbourhood, or city…".
+- **`/privacy` page updated to match** (it promised "never a street address", which would have become untrue): your location is whatever you chose to share, and the profile map always stays neighbourhood-zoom.
+- **Docs reconciled** (`Security.md` §7, `Product.md` §7 form spec, `Claude.md` near-me section, schema doc `latitude/longitude` row, plus the comments in `submit-practitioner.ts` and `format.ts`): the invariant is no longer "coords are never a home address" but "precision is the practitioner's choice; the map embed stays z=13 so a precise pin never reads as a door".
+
+### Verified, not changed
+- **No logic change was needed:** `AddressAutocomplete` already accepts any specificity (picked suggestion pins exact coords; free text geocodes on submit via `resolveCoordsFromForm`), and `mapsEmbedUrl` already fixes the profile map at neighbourhood zoom regardless of pin precision. Only the copy was steering people vague.
+
+---
+
 ## v0.1.0 — Build 85 (2026-07-11)
 
 *Documentation audit (per /updatestructure): everything since Build 68 reconciled — the brand arc, search, privacy, and the auth-link fix. Docs only; builds clean.*

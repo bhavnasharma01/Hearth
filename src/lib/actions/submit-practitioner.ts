@@ -132,9 +132,10 @@ export async function submitPractitioner(
   const slug = await uniquePractitionerSlug(supabase, name);
 
   // Coordinates for "near me": prefer the precise pin the autocomplete captured
-  // when they picked a suggestion, else geocode the typed area (coarse — a
-  // neighbourhood/city, never a home address). Area is required, so a listing
-  // won't silently vanish from "near me" for lack of a location.
+  // when they picked a suggestion, else geocode the typed area. Area can be as
+  // specific (street address) or as general (city) as the member chose to
+  // share; the profile map stays neighbourhood-zoom either way. Area is
+  // required, so a listing won't silently vanish from "near me".
   const geo = await resolveCoordsFromForm(formData, area);
 
   const { data: inserted, error } = await supabase

@@ -78,7 +78,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 
 ### Practitioner "add yourself" form
 *(Since accounts Phase B: reached after sign-in — the listing binds to the account, so it's editable from "My practice" forever, one per account.)*
-**Required (one screen):** Name · Category (one or more) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins area-level coordinates so the listing reliably appears in "near me" — general neighbourhood/city, never a home address) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website/Instagram) · Community agreement.
+**Required (one screen):** Name · Category (one or more) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins coordinates so the listing reliably appears in "near me"; as specific as a street address or as general as a city, whatever the practitioner is comfortable sharing; the profile map stays neighbourhood-zoom either way) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website/Instagram) · Community agreement.
 **Optional enrichment:** Practice/business name · Longer bio · Photo/logo · Instagram · Website/booking link · Pricing note · Languages spoken · Keywords/offerings (search) · "Are you a community member?" (→ badge).
 *Deliberately not asked in v1:* credential/certification gating (trust-based, not certificate-based).
 

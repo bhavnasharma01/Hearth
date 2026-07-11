@@ -135,13 +135,13 @@ export function ManageForm({
       <Field
         label="Your area"
         required
-        hint="Neighbourhood or city. How people find you in “near me.” Not your home address."
+        hint="How people find you in “near me.” As specific as a street address or as general as your city, whatever you’re comfortable sharing."
       >
         <AddressAutocomplete
           name="area"
           required
           defaultValue={listing.area ?? ""}
-          placeholder="Start typing a neighbourhood or city…"
+          placeholder="Start typing an address, neighbourhood, or city…"
           inputClassName={inputCls}
         />
       </Field>

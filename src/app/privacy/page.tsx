@@ -33,8 +33,10 @@ export default function PrivacyPage() {
           <li>
             <strong>Your practice listing</strong>: everything on it (name,
             description, area, contact details, photo, services) is public
-            because you chose to publish it. Your location is an area, like a
-            neighbourhood, never a street address.
+            because you chose to publish it. Your location is whatever you
+            chose to share, from a street address to just your city, and the
+            map on your profile always stays zoomed to the neighbourhood
+            level.
           </li>
           <li>
             <strong>Recommendations you write</strong>: your words and the name

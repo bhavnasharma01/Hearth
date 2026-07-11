@@ -145,8 +145,9 @@ export function googleCalendarUrl(e: {
 
 /**
  * A keyless Google Maps EMBED url (for an <iframe>). Zoom 13 ≈ neighbourhood
- * level on purpose: practitioner coords are area-level (never a home address),
- * so the map must read as "this part of town", not "this door".
+ * level on purpose: practitioners share their location at whatever precision
+ * they're comfortable with (street address to city), so the map must read as
+ * "this part of town", not "this door", even when the pin is precise.
  */
 export function mapsEmbedUrl(
   lat: number | null,

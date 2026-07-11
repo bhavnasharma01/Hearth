@@ -43,7 +43,7 @@ The profile table paired with Supabase's managed `auth.users`. Since `0008`: `id
 | slug | text, unique | for a shareable profile URL, e.g. `/p/jane-smith` |
 | description | text, required | ~300 chars, "what you offer" |
 | area | text | e.g. "Oakville", "Toronto + online" |
-| latitude / longitude | double precision | **added Build 7** — geocoded from `area` (coarse/area-level, not a home address) for "near me" |
+| latitude / longitude | double precision | **added Build 7** — geocoded from `area` (as precise as the member chose to share, Build 86; profile map stays neighbourhood-zoom) for "near me" |
 | geocoded_at | timestamptz | when coordinates were last set |
 | mode | enum | `in_person` / `online` / `both` |
 | whatsapp | text | at least one contact required (app-level rule) |
