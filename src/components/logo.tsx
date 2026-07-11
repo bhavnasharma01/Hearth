@@ -12,10 +12,11 @@ export function Logo({
   className?: string;
 }) {
   return (
+    // Mark bumped 28px → 34px (Build 84) — presence without shouting.
     <span className={`flex items-center gap-2 ${className}`}>
-      <Flame className="h-7 w-7" />
+      <Flame className="h-[2.125rem] w-[2.125rem]" />
       <span
-        className={`font-display text-[1.35rem] font-semibold tracking-tight ${
+        className={`font-display text-[1.45rem] font-semibold tracking-tight ${
           tone === "light" ? "text-on-night-deep" : "text-ink"
         }`}
       >

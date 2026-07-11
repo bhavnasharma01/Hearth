@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
-import { Fraunces, Nunito_Sans } from "next/font/google";
+import { Zilla_Slab, Source_Sans_3 } from "next/font/google";
 import "./globals.css";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
 
-const fraunces = Fraunces({
-  variable: "--font-fraunces",
+// T7 (chosen 2026-07-11): Zilla Slab headings — sturdy craft-workshop warmth —
+// with Source Sans 3 body. Replaced Fraunces + Nunito Sans (the Fraunces
+// pairing had become the signature of AI-built wellness apps).
+const zillaSlab = Zilla_Slab({
+  variable: "--font-display-src",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
   display: "swap",
 });
 
-const nunito = Nunito_Sans({
-  variable: "--font-nunito",
+const sourceSans = Source_Sans_3({
+  variable: "--font-sans-src",
   subsets: ["latin"],
   display: "swap",
 });
@@ -28,7 +32,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${fraunces.variable} ${nunito.variable} h-full`}
+      className={`${zillaSlab.variable} ${sourceSans.variable} h-full`}
     >
       <body className="flex min-h-full flex-col">
         {/* AODA: keyboard users can jump straight past the navigation. */}

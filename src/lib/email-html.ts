@@ -69,6 +69,7 @@ export function brandedEmailHtml({
     <tr><td align="center">
       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="max-width:480px;background:#ffffff;border:1px solid ${LINE};border-radius:14px;">
         <tr><td style="padding:26px 24px;text-align:center;font-family:Georgia,'Times New Roman',serif;">
+          <img src="https://www.myhearthapp.ca/email-logo.png" width="36" height="36" alt="" style="display:block;margin:0 auto 6px;border:0;">
           <div style="font-size:20px;font-weight:700;color:${INK};">Hearth</div>
           <div style="height:1px;background:linear-gradient(to right,transparent,${CLEM},transparent);margin:12px 32px;"></div>
           <h1 style="margin:10px 0 0;font-size:20px;font-weight:600;color:${INK};font-family:Georgia,'Times New Roman',serif;">${escapeHtml(heading)}</h1>

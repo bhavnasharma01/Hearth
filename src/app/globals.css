@@ -80,8 +80,10 @@
   --color-flame-core: #fff4ee;
   --color-flame-glow: rgba(239, 108, 51, 0.35);
 
-  --font-display: var(--font-fraunces);
-  --font-sans: var(--font-nunito);
+  /* T7 (Build 84): Zilla Slab display + Source Sans 3 body — the faces are
+     defined in layout.tsx; these vars are the only indirection. */
+  --font-display: var(--font-display-src);
+  --font-sans: var(--font-sans-src);
 
   --radius-card: 1rem;
 }

@@ -45,7 +45,8 @@
 
   *(Historical — superseded by Clementine & Juniper above.)* **The mark (since Build 73): the heart-flame** — a heart holding a flame-shaped cutout (`src/components/logo.tsx`, clementine gradient via the `flame-*` tokens, soft glow). The identity lives in that cutout: **never simplify it to a plain heart.** The favicon (`src/app/icon.svg`) is the heart-flame in peach on a rounded juniper tile, readable on light and dark browser chrome. `.gold-rule` dividers, eyebrows, links, and the member ✦ use burnt clementine (`gold`).
 
-- **Type:** **Fraunces** (warm display serif) for headings + **Nunito Sans** for body — loaded via `next/font`.
+- **Type (final, Build 84): Zilla Slab** (sturdy craft-workshop slab serif) for headings + **Source Sans 3** for body — loaded via `next/font` (`layout.tsx`; `globals.css` maps them to `--font-display`/`--font-sans`). Replaced Fraunces + Nunito Sans: the Fraunces pairing had become the signature of AI-built wellness apps (the competing Hearth wears it too). Chosen after live trials of Marcellus + Albert Sans (rejected: cold card names) and Lora + Karla.
+- **The mark (final):** the production heart-flame unchanged — clementine gradient, flame cutout — at **34px** in the header (was 28). Standalone assets: `public/logo.svg` (exact match) and `public/email-logo.png` (144px raster for email clients, which strip SVG). A green two-tone variant (V1) was tried and retired the same day: a heart must stay warm.
 
 ### Mobile patterns (the heart of the redesign)
 

@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 84 (2026-07-11)
+
+*THE BRAND CLOSES: T7 typography shipped, the beloved mark kept (slightly larger), logo assets saved, logo in every email. Builds clean; lint passes.*
+
+### Decided & shipped
+- **Typeface = T7: Zilla Slab (headings) + Source Sans 3 (body)** across app and admin — `layout.tsx` via `next/font`, mapped through `--font-display-src`/`--font-sans-src` in `globals.css`. (Journey recorded: Fraunces retired as the AI-wellness-app signature; Marcellus + Albert Sans rejected on card names; Lora + Karla trialled; Zilla Slab won.)
+- **The mark stays exactly as in production** (clementine-gradient heart-flame with the cutout) — V1's green retired for charm reasons — now **34px** in the header (was 28) with the wordmark up a notch.
+- **Standalone assets:** `public/logo.svg` (exact production mark, gradient baked in, guard comments) and `public/email-logo.png` (144px raster generated via sharp — email clients strip SVG).
+- **The logo now appears in all three emails:** `email-html.ts` (recommendation email) and both Supabase templates gained the hosted PNG above the wordmark (`alt=""` — the text follows). **Bhavna: re-paste both templates one more time** (README notes why).
+- `/brand-preview.html` finalized as the historical record (screens re-rendered in T7 + production mark; W-round marked resolved).
+
+### Docs
+- `Design.md` (type + mark finals), `Claude.md` (font wiring + asset regeneration notes), `email-templates/README.md`. `Readme.md`, `Changelog.md` → Build 84.
+
+---
+
 ## v0.1.0 — Build 83 (2026-07-11)
 
 *Brand round three: warmth restored to the mark; T3 rejected, T2 on trial. Builds clean.*
