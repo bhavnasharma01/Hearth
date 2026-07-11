@@ -334,13 +334,24 @@ export default async function PractitionerProfile({
         </section>
       )}
 
-      <div className="mt-6">
-        <Link
-          href={`/report?type=practitioner&id=${p.id}`}
-          className="text-xs text-muted underline hover:text-ink"
-        >
-          Report this profile
-        </Link>
+      {/* The quiet trust footnote: the disclaimer's point-of-action echo lives
+          here, where a seeker decides to reach out (Build 87). */}
+      <div className="mt-6 space-y-1.5">
+        <p className="text-xs text-muted">
+          Practitioners on Hearth describe themselves; listings aren&rsquo;t
+          vetted or endorsed.{" "}
+          <Link href="/disclaimer" className="underline hover:text-ink">
+            Our disclaimer
+          </Link>
+        </p>
+        <p>
+          <Link
+            href={`/report?type=practitioner&id=${p.id}`}
+            className="text-xs text-muted underline hover:text-ink"
+          >
+            Report this profile
+          </Link>
+        </p>
       </div>
     </div>
   );

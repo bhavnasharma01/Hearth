@@ -94,6 +94,7 @@ src/app
   add-event/page.tsx            # native add form (hidden: EVENTS_ENABLED → 404)
   report/page.tsx               # report a concern (no login)
   privacy/page.tsx              # public privacy policy (mirrors Security.md §7)
+  disclaimer/page.tsx           # public disclaimer (not vetted/endorsed; independence; as-is)
   signin/page.tsx               # member sign-in — Google OAuth (accounts Phase A)
   auth/callback/route.ts        # OAuth (Google) code → session exchange
   auth/confirm/route.ts         # email links (confirm/reset): token_hash → verifyOtp
@@ -152,6 +153,7 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 
 - *Search overhaul (Build 74, migration `0010`):* the practitioner `search_vector` became a **trigger-maintained weighted vector** covering name/practice (A), categories + keywords (B), description + services (C), bio/area/languages (D) — refreshed on practitioner writes, category links, service edits, and category renames; `getPractitioners` issues sanitized prefix tsqueries. Directory cards became fully tappable (stretched-link).
 - *Brand + polish (Builds 73–84):* the final identity — **Clementine & Juniper** palette (two stage pairs), the **heart-flame** mark (34px header; `public/logo.svg` + `public/email-logo.png`), **Zilla Slab + Source Sans 3** type, branded emails with the logo, AODA/AA accessibility (skip-link, focus-visible, chip focus rings, reduced motion) — plus `/privacy` (Build 76) and the `token_hash` email-link fix (`/auth/confirm`, Build 77).
+- *Disclaimer (Build 87):* a public **`/disclaimer`** page (community directory, not vetting; practitioners are independent; not medical advice; offered as-is), linked as the footer's third quiet link, echoed by a muted footnote at the bottom of every practitioner profile, and referenced by the add form's strengthened community agreement (accuracy + own-responsibility).
 
 **Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 
@@ -213,4 +215,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 85** (practitioner-only pilot on www.myhearthapp.ca, launch-ready: full account layer, testimonials, comprehensive search, the final Clementine & Juniper / heart-flame / Zilla Slab identity, branded emails, privacy page; events still behind one flag).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 87** (practitioner-only pilot on www.myhearthapp.ca, launch-ready: full account layer, testimonials, comprehensive search, the final Clementine & Juniper / heart-flame / Zilla Slab identity, branded emails, privacy + disclaimer pages; events still behind one flag).

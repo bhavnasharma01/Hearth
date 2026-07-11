@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 87 (2026-07-11)
+
+*Site disclaimer (Anat & Curtis's ask): a plain-language /disclaimer page so the stewards can't be read as vetting, endorsing, or being liable for what's offered on the site. Builds clean.*
+
+### Added
+- **`/disclaimer` page** (`src/app/disclaimer/page.tsx`, same calm Section style as `/privacy`): a directory not an endorsement (practitioners write their own listings; the badge and kind words are community signals, not vetting); practitioners are independent (sessions, payments, outcomes are between you and them); not medical or professional advice (talk to a doctor; in an emergency call 911); events and outside links are third-party; offered as-is by volunteers with liability disclaimed to the extent the law allows; and "if something seems wrong, report it" (the `/feedback` link is flag-gated like the footer's). Written to already cover events, so nothing changes when that layer returns.
+- **Footer gains its third quiet link: Disclaimer** (next to Privacy; `SiteFooter`). Design.md's footer rule updated from two links to three.
+- **Point-of-action echo on every profile**: `/p/[slug]` now ends with a muted footnote, "Practitioners on Hearth describe themselves; listings aren't vetted or endorsed", linking the disclaimer, sitting above the existing Report link.
+- **Strengthened community agreement** on the add form: practitioners now also agree "What I share here is accurate, and the services I offer are my own responsibility", with the disclaimer linked (opens in a new tab so the half-filled form isn't lost).
+
+### Notes
+- The wording is a solid standard foundation but not lawyer-reviewed; if liability stays a live concern as Hearth grows, have a lawyer skim `/disclaimer` (noted in `Product.md` §6).
+- Docs updated: `Product.md` §6 (disclaimer joins the trust model) + §7 (agreement wording), `Design.md` §4 footer + §5 profile, `Architecture.md` (route map, built-so-far, §9 → Build 87), `Claude.md` (footer note), `Readme.md` status line.
+
+---
+
 ## v0.1.0 — Build 86 (2026-07-11)
 
 *Location wording: the area field now welcomes any precision ("whatever you're comfortable sharing") instead of warning "not your home address". Copy + docs only; the logic already supported both ends. Builds clean.*

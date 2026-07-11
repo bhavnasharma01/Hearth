@@ -2,9 +2,9 @@ import Link from "next/link";
 import { Logo } from "@/components/logo";
 import { FEEDBACK_ENABLED } from "@/lib/features";
 
-/** Calm sign-off. The one link is Support & feedback (Build 58) — the footer is
- *  its natural, subtle home (it exists nowhere else in the nav; header links
- *  are deliberately not repeated here). Hidden when FEEDBACK_ENABLED is off. */
+/** Calm sign-off plus the quiet links whose destinations exist nowhere else in
+ *  the nav (header links are deliberately not repeated here): Support &
+ *  feedback (hidden when FEEDBACK_ENABLED is off), Privacy, and Disclaimer. */
 export function SiteFooter() {
   return (
     <footer className="mt-16 bg-night-deep text-on-night-deep/80">
@@ -29,6 +29,12 @@ export function SiteFooter() {
             className="text-on-night-deep/80 underline transition-colors hover:text-on-night-deep"
           >
             Privacy
+          </Link>
+          <Link
+            href="/disclaimer"
+            className="text-on-night-deep/80 underline transition-colors hover:text-on-night-deep"
+          >
+            Disclaimer
           </Link>
         </p>
       </div>

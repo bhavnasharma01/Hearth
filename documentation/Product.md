@@ -71,6 +71,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 - **Community-member badge** — the "one of us" signal (`is_member`).
 - **Testimonials ("Kind words"), shipped Build 60:** a signed-in member writes a recommendation from a practitioner's profile, and it appears **only after the practitioner approves it** — visitor-initiated, **owner-curated, positive-by-construction**. No ratings, no reply threads, no links (content-checked), one per member per practitioner, and you can't recommend yourself. This deliberately is NOT open reviews: the practitioner curates their own page, so the Yelp dynamic (public complaints, star anxiety) can't take hold; concerns still go through the private **report** flow.
 - Trust = curation + member badge + approved kind words + quiet flagging.
+- **Honesty is part of the trust model (Build 87): a site-wide disclaimer.** A plain-language **`/disclaimer`** page (footer link on every page) says what Hearth is and isn't: practitioners write their own listings; Hearth doesn't vet, verify, or endorse; practitioners are independent; nothing here is medical or professional advice; the site is offered as-is by volunteers. Each practitioner profile ends with a quiet "practitioners describe themselves" footnote linking it, and the add-form community agreement has practitioners own their listing's accuracy and responsibility for their services. This continues the Build 15 honest-copy stance (dropping "our community vouches for") and protects the stewards from liability for what's offered on the site. *(Not lawyer-reviewed; a solid standard foundation to hand a lawyer if that's ever wanted.)*
 
 ---
 
@@ -78,7 +79,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 
 ### Practitioner "add yourself" form
 *(Since accounts Phase B: reached after sign-in — the listing binds to the account, so it's editable from "My practice" forever, one per account.)*
-**Required (one screen):** Name · Category (one or more) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins coordinates so the listing reliably appears in "near me"; as specific as a street address or as general as a city, whatever the practitioner is comfortable sharing; the profile map stays neighbourhood-zoom either way) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website/Instagram) · Community agreement.
+**Required (one screen):** Name · Category (one or more) · Short description (~300 chars) · **Area/location** (type-ahead autocomplete that pins coordinates so the listing reliably appears in "near me"; as specific as a street address or as general as a city, whatever the practitioner is comfortable sharing; the profile map stays neighbourhood-zoom either way) · Mode (in person/online/both) · At least one contact (WhatsApp/Email/Website/Instagram) · Community agreement (good faith + accuracy + own-responsibility, linking the disclaimer since Build 87).
 **Optional enrichment:** Practice/business name · Longer bio · Photo/logo · Instagram · Website/booking link · Pricing note · Languages spoken · Keywords/offerings (search) · "Are you a community member?" (→ badge).
 *Deliberately not asked in v1:* credential/certification gating (trust-based, not certificate-based).
 

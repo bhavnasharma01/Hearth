@@ -227,7 +227,17 @@ export function PractitionerForm({ categories }: { categories: Category[] }) {
         <input type="checkbox" name="agreement" required className="mt-1" />
         <span>
           I offer this in good faith and agree to the community’s spirit of
-          respect and care. <span className="text-clay">*</span>
+          respect and care. What I share here is accurate, and the services I
+          offer are my own responsibility (see our{" "}
+          <a
+            href="/disclaimer"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-forest underline"
+          >
+            disclaimer
+          </a>
+          ). <span className="text-clay">*</span>
         </span>
       </label>
 
