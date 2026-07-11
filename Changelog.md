@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 81 (2026-07-11)
+
+*Logo refinement round two — differentiation via colour strategy, not size. Builds clean.*
+
+### Added
+- **"Logo refinement — round two"** on `/brand-preview.html` (the heart-flame still felt too close to the other Hearth's warm mark). Framing: their territory is "warm flame"; ours is **the green earth holding the fire**. Four options, each with light + deep favicon tiles:
+  - **V1 Two-tone** *(recommendation, juniper border)* — juniper heart + clementine flame (filled, not cutout): a green mark is instantly not-a-flame-app, and it diagrams the name (heart, earth, fire).
+  - **V2 Juniper monochrome** — the chosen cutout mark in green; quiet, but the flame reads as a keyhole.
+  - **V3 Open heart (outline) + fire** — hand-drawn hearth; needs a bolder favicon cut.
+  - **V4 The Gathering, two-tone** — full concept fallback (community dots + fire); loses the heart wordplay.
+- **Size answered:** header mark grows 28→34px in the next build regardless of option (side-by-side demo on the page).
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 81.
+
+---
+
 ## v0.1.0 — Build 80 (2026-07-11)
 
 *The wordmark gallery: "Hearth" + the heart-flame in every candidate typeface. Builds clean.*
