@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 80 (2026-07-11)
+
+*The wordmark gallery: "Hearth" + the heart-flame in every candidate typeface. Builds clean.*
+
+### Added
+- **"The wordmark in each typeface"** on `/brand-preview.html`: the heart-flame + "Hearth" lockup rendered in all ten candidates plus current Fraunces for reference — each shown on **both** surfaces the wordmark actually lives on (light peach header, deep juniper footer). T6 Eczar and T7 Zilla Slab cards carry the juniper recommendation border.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 80.
+
+---
+
 ## v0.1.0 — Build 79 (2026-07-11)
 
 *Typeface round two: five pairings with genuinely different bone structure (T1 was fairly called out as Fraunces' cousin). Builds clean.*
