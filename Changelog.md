@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 79 (2026-07-11)
+
+*Typeface round two: five pairings with genuinely different bone structure (T1 was fairly called out as Fraunces' cousin). Builds clean.*
+
+### Added
+- **T6–T10 on `/brand-preview.html`** — Bhavna spotted the anchoring bias (Young Serif ≈ Fraunces in a hat); the new five deliberately span silhouettes Fraunces-world doesn't touch:
+  - **T6 Eczar + Mulish** *(differentiation pick)* — sharp ceremonial serif with Devanagari roots; earthy AND fiery, unused in the space.
+  - **T7 Zilla Slab + Source Sans 3** *(co-pick)* — sturdy craft-workshop slab; excellent phone legibility.
+  - **T8 BioRhyme + Karla** — wide letterpress quirk; the boldest personality.
+  - **T9 Libre Caslon + Albert Sans** — true old-book Caslon; candlelit and classical.
+  - **T10 Petrona + Figtree** — organic contemporary serif; the subtlest shift.
+- Section intro rewritten to own the bias call-out and re-point the recommendation (T6 or T7 for real differentiation).
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 79.
+
+---
+
 ## v0.1.0 — Build 78 (2026-07-11)
 
 *Typeface directions added to the brand preview — Fraunces is every AI-built wellness app's font, including the other Hearth. Builds clean.*
