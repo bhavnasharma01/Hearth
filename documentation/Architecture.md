@@ -92,7 +92,8 @@ src/app
   events/page.tsx               # upcoming feed  (hidden: EVENTS_ENABLED → 404)
   add-practitioner/page.tsx     # native add form (required, geocoded area)
   add-event/page.tsx            # native add form (hidden: EVENTS_ENABLED → 404)
-  report/page.tsx               # report a listing (no login)
+  report/page.tsx               # report a concern (no login)
+  privacy/page.tsx              # public privacy policy (mirrors Security.md §7)
   signin/page.tsx               # member sign-in — Google OAuth (accounts Phase A)
   auth/callback/route.ts        # OAuth (Google) code → session exchange
   auth/confirm/route.ts         # email links (confirm/reset): token_hash → verifyOtp
@@ -148,6 +149,9 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 
 - *Accounts Phase A (Build 46):* member sign-in with **Google** — `/signin` (+ `GoogleSignInButton`), `/auth/callback` (code → session), the header **`AccountControl`** (client-side session so static pages stay static), site-wide session refresh in `src/middleware.ts`, migration `0008` (drops the `*_admin_all` policies — `authenticated` no longer means admin — ties `users` to `auth.users`, self-access RLS, sign-up trigger), and `submitPractitioner` binding `owner_user_id` when the submitter is signed in. Phase B (claim + "My listing") comes next.
 - *Accounts Phase B (Build 47):* **`/my-listing`** (session-gated owner home) reusing the manage-page editor via the listing's own token; **claim flows** (session-email match on `/my-listing`, or "Link to my account" on `/manage/<token>` while signed in — both re-verified server-side, unowned listings only; `src/lib/actions/account.ts`); **owner delete** (`DeleteListing`, token-authorized, on both edit surfaces); **"Add your practice" now asks for sign-in first** (just-in-time gate; the listing binds to the account); "My listing" in the header account menu. Manage links keep working as the bridge for pre-account listings.
+
+- *Search overhaul (Build 74, migration `0010`):* the practitioner `search_vector` became a **trigger-maintained weighted vector** covering name/practice (A), categories + keywords (B), description + services (C), bio/area/languages (D) — refreshed on practitioner writes, category links, service edits, and category renames; `getPractitioners` issues sanitized prefix tsqueries. Directory cards became fully tappable (stretched-link).
+- *Brand + polish (Builds 73–84):* the final identity — **Clementine & Juniper** palette (two stage pairs), the **heart-flame** mark (34px header; `public/logo.svg` + `public/email-logo.png`), **Zilla Slab + Source Sans 3** type, branded emails with the logo, AODA/AA accessibility (skip-link, focus-visible, chip focus rings, reduced motion) — plus `/privacy` (Build 76) and the `token_hash` email-link fix (`/auth/confirm`, Build 77).
 
 **Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 
@@ -209,4 +213,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 68** (practitioner-only pilot on myhearthapp.ca with the full account layer: member sign-in, owned practices, testimonials; Rice Paper trial skin; events still behind one flag).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 85** (practitioner-only pilot on www.myhearthapp.ca, launch-ready: full account layer, testimonials, comprehensive search, the final Clementine & Juniper / heart-flame / Zilla Slab identity, branded emails, privacy page; events still behind one flag).

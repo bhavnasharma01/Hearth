@@ -75,6 +75,7 @@ Phone-first, inspired by apps that do this well (Luma for events). The goals: **
 - **Events** — "Upcoming" feed grouped by time → cards → event detail; optional month grid.
 - **Add flows** — `Add your practice`, `Add an event` (prominent), `Report a listing` (subtle).
 - Two clear top-level tabs (Practitioners / Events) + Home. Nothing else competes for attention.
+- **Footer** — the calm sign-off (flame, gold rule, one warm line) plus exactly two quiet links whose destinations exist nowhere else: **Support & feedback** (flag-gated) and **Privacy**. Header links are never repeated there.
 
 ---
 

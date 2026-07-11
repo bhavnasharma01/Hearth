@@ -4,8 +4,8 @@
 
 **🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 84
-*(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; the final **Clementine & Juniper** identity with the **heart-flame** mark (AODA-minded WCAG-AA contrast, skip-link, visible focus, reduced-motion support) on a one-block-swappable palette system; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
+**Version:** 0.1.0 · **Build:** 85
+*(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; the final **Clementine & Juniper** identity — heart-flame mark, **Zilla Slab + Source Sans 3** type, branded emails with the logo, AODA-minded WCAG-AA accessibility (skip-link, visible focus, reduced motion) — on a one-block-swappable palette system; **comprehensive search** (categories, services, bio, prefix matching); a public **/privacy** page; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
 
 ---
 
@@ -34,7 +34,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 | Auth | Supabase Auth — **admins only** |
 | Storage | Supabase Storage (photos, flyers) |
 | Search | Postgres full-text (`tsvector`) |
-| Email | Steward alerts via Resend **or** Gmail SMTP (`nodemailer`) |
+| Email | One Resend account (verified `myhearthapp.ca` domain) carries everything: steward alerts + member notifications (branded HTML, `src/lib/email-html.ts`) via `notify.ts`, and Supabase auth emails via custom SMTP; Gmail SMTP remains a fallback transport |
 | Hosting | Vercel (free tier) |
 | Event seed | Public iCal feed via `node-ical` (no API key) |
 
@@ -60,8 +60,10 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
 │   ├── components/                ← UI (header, footer, cards, forms, share button)
 │   └── lib/                       ← supabase clients, actions, data, auth, notify, geo…
 ├── public/                        ← static assets served at the site root
-│   ├── palette-explorations.html  ← shareable palette-review page (60 directions; temporary)
-│   └── brand-preview.html         ← F6 + heart-flame dress rehearsal: app screens + emails (temporary)
+│   ├── logo.svg                   ← the heart-flame mark (standalone asset)
+│   ├── email-logo.png             ← raster logo for emails (clients strip SVG)
+│   ├── palette-explorations.html  ← how the brand was chosen (historical; removable)
+│   └── brand-preview.html         ← the brand dress rehearsals (historical; removable)
 ├── supabase/
 │   └── migrations/                ← SQL schema, RLS, category seed (0001 → 0007)
 └── documentation/
@@ -73,6 +75,7 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
     ├── Hearth - Database Schema.mermaid ← ER diagram
     ├── Google Sign-In Setup.md          ← accounts Phase A: config guide (Google OAuth + Supabase)
     ├── Domain Setup.md                  ← myhearthapp.ca: Vercel, Supabase URLs, Resend, SMTP
+    ├── email-templates/                 ← paste-ready Supabase auth emails (+ README)
     └── planning-archive/          ← original planning docs (preserved for provenance;
                                       assimilated into the living docs above)
 ```

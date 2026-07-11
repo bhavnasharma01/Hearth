@@ -29,7 +29,8 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **`planning-archive/`** — original planning docs (North Star, Product Brief, Implementation Spec, Proposals, Anat & Curtis's message). **Preserved for provenance only**; their content is assimilated into the living docs. Don't edit them; cite them.
 
 **Other (non-`.md`):**
-- **`public/palette-explorations.html`** — a standalone, shareable page of **60 palette/design directions in six moods** with mini app mockups, served at `/palette-explorations.html` for choosing the final look. **Temporary** — remove once a direction is chosen. (The root copy is the source; edit it then `cp` to `public/` — keep both in sync.) The live site currently wears the **Rice Paper trial** via the one-block palette system in `globals.css`.
+- **`public/palette-explorations.html` + `public/brand-preview.html`** — the pages the brand was chosen on (60 palette directions; logo/typeface rounds with app + email mockups). **Historical since Build 84 — the identity is final** (F6 Clementine & Juniper · heart-flame · Zilla Slab + Source Sans 3); both pages are removable whenever Bhavna is done sharing them. (Root copies are the sources; `cp` to `public/` to publish.) Standalone brand assets: `public/logo.svg` + `public/email-logo.png`.
+- **`documentation/email-templates/`** — paste-ready Supabase auth email HTML (confirm + reset, with the logo image and `token_hash` links) + a README with install steps and the reskin/hardcoded-hex caveats.
 - **`.env.example`** — the required-env template (now tracked; `.gitignore` has `!.env.example`). **`vercel.json`** — the daily-import Cron schedule.
 
 ---
@@ -145,6 +146,14 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 - **UX findings that repeat:** native `<details>` menus don't close on selection — use a controlled popover; selected-state chips need an explicit marker (✓/＋), not colour alone; a moderation action whose only feedback is elsewhere reads as broken (make the card leave the list, badge the counts, deep-link emails to the exact tab); user-pasted URLs appear in ANY free-text field (Linkify at display time, `break-words` everywhere).
 - **Feature flows must be walked as a signed-out stranger** before calling them done: the gaps found this sprint (invisible pending approvals for multi-listing owners, sign-in landing on home) were all "second persona" bugs the builder's own state hid.
 
+*From the brand + auth sprint (Builds 69–84, July 10–11):*
+
+- **Supabase email links must use the `token_hash` + server-side `verifyOtp` pattern (`/auth/confirm`), never `{{ .ConfirmationURL }}`/PKCE** — PKCE links silently require the same browser that requested the email, and reset emails are exactly the emails people open elsewhere. This broke every password reset until Build 77.
+- **Postgres generated columns can't see other tables** — that's why search missed categories/services/bio until the trigger-maintained vector (`0010`). If a "generated" field ever needs joined data, it needs triggers.
+- **Email clients strip SVG images** — emails need hosted PNG (`public/email-logo.png`, regenerate via `sharp` from `logo.svg`), and can't load web fonts (templates use Georgia/Helvetica stacks by design).
+- **Google OAuth brand chain** (each step gates the next): consent-screen branding needs *verification* → verification needs a privacy-policy URL (`/privacy`) + home page → home page needs **Search Console domain ownership** (TXT at Porkbun) → adding a *logo* triggers a longer review. Sign-in works throughout; only the display name waits.
+- **Brand decisions stick when made on full-context previews, not swatches** — and they legitimately flip there too (V1's green heart was locked and retired the same day: *a heart must stay warm*; T3 died on the directory-card body font). Cheap full renders beat debate.
+
 ---
 
 ## Open items & carry-forward (track resolutions here)
@@ -152,7 +161,7 @@ Hearth is a free, phone-first community hub: a **practitioner directory** (the d
 1. ~~v1 = Directory + Events together~~ **Confirmed** (native events chosen; events currently flag-hidden).
 2. ~~Event taxonomy~~ **Resolved:** events reuse the practitioner `categories` table via `events.category_id`.
 3. ~~Seed import~~ **Resolved:** "Conscious Events TO Calendar" via public iCal, 2026-01-01 forward.
-4. ~~Brand decision~~ **✓ RESOLVED (Build 73): Clementine & Juniper + the heart-flame**, shipped across app, admin, favicon, and emails with AODA/AA contrast. Remaining stub: Bhavna pastes the two Supabase auth templates (`documentation/email-templates/`, ~4 min) and can then delete the two temporary preview pages (`palette-explorations.html`, `brand-preview.html`) whenever she's done sharing them.
+4. ~~Brand decision~~ **✓ FULLY SHIPPED (Builds 73–84): Clementine & Juniper · heart-flame mark (34px, assets saved) · Zilla Slab + Source Sans 3 · logo in all three emails · AODA/AA.** Remaining stubs: Bhavna re-pastes the two Supabase templates **at the Build 84 version** (logo image added — check whether done), the two preview pages can be deleted when she's done sharing, and **Google OAuth brand verification** is pending (Search Console domain verification + review; sign-in works meanwhile, consent screen shows the raw Supabase domain until approval).
 5. Initial admins — add Anat + Curtis to `ADMIN_EMAILS` (+ optionally `NOTIFY_EMAILS`, now safe since the domain is verified) when Bhavna is ready.
 6. ~~Endorsements~~ **Resolved as testimonials** (Build 60): member-written, practitioner-approved, positive-by-construction.
 7. **Retreats** — parked; likely home is the events layer when it returns (`Product.md §11.7`).

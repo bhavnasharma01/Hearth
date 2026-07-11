@@ -22,6 +22,8 @@
 
 ## Resolved
 
+- [x] 🔴 **Password-reset email links always failed ("sign-in could not be completed").** *(Build 77)* The links used Supabase's PKCE `ConfirmationURL` flow, which silently requires the same browser that requested the email — reset emails are precisely the emails opened elsewhere. Fixed with the `token_hash` + server-side `verifyOtp` pattern (`/auth/confirm`); both email templates re-issued.
+- [x] 🟠 **Search couldn't find practitioners by category, service, or bio.** *(Build 74, migration `0010`)* The search vector was a generated column, which can't see other tables. Replaced with a trigger-maintained weighted vector (name/practice → categories+keywords → description+services → bio/area/languages) + prefix matching ("mass" finds massage).
 - [x] 🔵 **Steward alerts reached only one inbox.** *(July 9, config)* Resolved by verifying `myhearthapp.ca` in Resend + `RESEND_FROM` — alerts now deliver to any `NOTIFY_EMAILS` recipient from the Hearth domain.
 - [x] 🔴 **myhearthapp.ca went dark (July 10 DNS outage).** Nameservers had been switched to Vercel, abandoning the Porkbun zone (site + email records) with no Vercel zone serving. Reverted to Porkbun's default nameservers; guide rewritten with a never-switch warning (`Domain Setup.md` Part 1).
 - [x] 🟠 **OAuth sign-in landed on the homepage instead of returning to the flow.** *(Build 66–67 + config)* The canonical host is **www**; the Supabase redirect allowlist only had the apex, so Supabase fell back to the Site URL. Fixed by adding `https://www.myhearthapp.ca/**` + Site URL to www; code hardening added (cookie-stashed `next`, header sign-in carries the current page).

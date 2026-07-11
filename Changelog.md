@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 85 (2026-07-11)
+
+*Documentation audit (per /updatestructure): everything since Build 68 reconciled — the brand arc, search, privacy, and the auth-link fix. Docs only; builds clean.*
+
+### Changed — staleness swept
+- **`Readme.md`**: Email stack row rewritten (one Resend account carries alerts + member notifications + auth SMTP); repo layout gains `logo.svg`, `email-logo.png`, `email-templates/`, and marks both preview pages historical; status paragraph now mentions T7 type, branded emails, comprehensive search, and `/privacy`.
+- **`Claude.md`**: the palette-page doc-map entry (still calling the site "Rice Paper trial") rewritten as historical; `email-templates/` added to the doc map; open-item #4 updated to fully-shipped with the true remaining stubs (Build 84 template re-paste check, preview-page cleanup, **Google brand verification pending**).
+- **`Architecture.md`**: `/privacy` added to the route map; two "Built so far" entries for the search overhaul (Build 74) and the brand + polish arc (73–84); §9 current-build blurb → Build 85 "launch-ready".
+- **`Product.md`**: open question #4 (brand) marked resolved with the differentiation rationale; profile description in §5 gains Where & how + Kind words.
+- **`Design.md`**: footer documented in the IA (sign-off + exactly two links).
+- **`Bugs.md`**: two resolved entries added — the PKCE reset-link failure (Build 77) and search missing categories/services/bio (Build 74).
+- **`Google Sign-In Setup.md`**: the Search Console domain-ownership fix (previously only in chat) captured in troubleshooting.
+
+### Added — learnings
+- **`Claude.md` learnings extended** with the July 10–11 sprint: the `token_hash`/PKCE email-link rule, generated-columns-can't-join, email clients strip SVG + web fonts, the Google OAuth brand-verification chain, and "brand decisions stick when made on full-context previews".
+
+---
+
 ## v0.1.0 — Build 84 (2026-07-11)
 
 *THE BRAND CLOSES: T7 typography shipped, the beloved mark kept (slightly larger), logo assets saved, logo in every email. Builds clean; lint passes.*

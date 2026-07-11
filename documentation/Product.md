@@ -62,7 +62,7 @@ The two are **linked**: an event can reference its host practitioner, and a prac
 
 **Events tab** — default "Upcoming" card feed grouped *This week / Next week / Later*; cards show title, date/time, in-person/online + location, short description, cost note (e.g. "PWYC"), flyer, and a **View / Register** button. Search + filter by category/type, mode, date. Optional month-grid view. Prominent **➕ Add an event**.
 
-**Practitioners tab** — search (name/practice/description/keywords) + category chips + In person/Online/Both filter. Cards: name/practice, category tags, description, area + mode, **Community-member badge**, photo, and contact buttons (*Message on WhatsApp* via `wa.me`, Email, Website, Instagram). Each card opens a **profile page** (`/p/slug`) with full bio, categories, contacts, and **upcoming events this person hosts**. Prominent **➕ Add your practice**; subtle **Report a listing**.
+**Practitioners tab** — search (name/practice/description/keywords) + category chips + In person/Online/Both filter. Cards: name/practice, category tags, description, area + mode, **Community-member badge**, photo, and contact buttons (*Message on WhatsApp* via `wa.me`, Email, Website, Instagram). Each card opens a **profile page** (`/p/slug`) with full bio, categories, contacts, a Where & how card (location + map + directions), services, **"Kind words"** (approved recommendations + the ♡ Recommend gateway), and **upcoming events this person hosts**. Prominent **➕ Add your practice**; subtle **Report a listing**.
 
 ---
 
@@ -137,7 +137,7 @@ A practitioner may hold as many categories as apply — the old 3-cap was remove
 1. Confirm **v1 = Directory + Events together** (implied by choosing native events).
 2. Event taxonomy — reuse practitioner categories as event types, or a small dedicated list?
 3. ~~Seed import~~ **Done (Build 5):** imported from the public iCal feed of "Conscious Events TO Calendar" (no API key), 2026-01-01 forward — 553 events (229 upcoming).
-4. **Brand/palette — the live open decision.** 60 explorations at `/palette-explorations.html`; the site wears a Rice Paper trial meanwhile. The pick unlocks the favicon + branded auth emails.
+4. ~~Brand/palette~~ **✓ RESOLVED (Builds 73–84):** the full identity shipped — **Clementine & Juniper** palette, the **heart-flame** mark, **Zilla Slab + Source Sans 3** type, branded emails, favicon. Chosen deliberately against the other "Hearth" app's look (warm flame mark, Fraunces type) after finding hearthapp.ca; the name itself stays (common word; the mark and look differentiate).
 5. Initial admins — add Anat + Curtis to `ADMIN_EMAILS` (and optionally `NOTIFY_EMAILS`) when ready.
 6. ~~Endorsements~~ **Resolved (Build 60):** testimonials — member-written, practitioner-approved, positive-by-construction (§6).
 7. **Retreats — parked (July 6 call).** A real community need (people host retreats in Ontario and abroad) with no good home yet. Decided **against** a practitioner-directory category: a directory row can't carry dates, and seekers don't look for retreats in a directory (Anat's end-user argument). Likely home is the events layer when it returns; a WhatsApp retreats-only channel is the stopgap. Revisit when `EVENTS_ENABLED` flips back on.
