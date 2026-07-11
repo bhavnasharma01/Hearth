@@ -42,7 +42,9 @@ export default async function SignInPage({
           <p className="mt-4 rounded-xl border border-clay/40 bg-clay/10 px-4 py-3 text-sm text-clay">
             {error === "reset"
               ? "That reset link has expired or was already used. Request a fresh one below with “Forgot your password?”"
-              : "Sign-in didn’t complete. Please try again."}
+              : error === "confirm"
+                ? "That confirmation link has expired or was already used. Try signing in below — or create the account again for a fresh link."
+                : "Sign-in didn’t complete. Please try again."}
           </p>
         )}
 

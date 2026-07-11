@@ -11,7 +11,8 @@
 
 ## Notes
 
-- `{{ .ConfirmationURL }}` is Supabase's variable — leave it exactly as written; Supabase fills in the real link.
+- **Links use `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=…`** (NOT `{{ .ConfirmationURL }}`). This is deliberate: the token_hash is verified server-side by `/auth/confirm`, so the link **works from any browser or device** — `ConfirmationURL`'s PKCE flow silently required the email to be opened in the same browser that requested it, which broke password resets (July 11). Leave the variables exactly as written.
+- **If you pasted an earlier version of these templates, re-paste both** — the link format changed in Build 77.
 - The other templates (Magic link, Change email, Invite) aren't used by Hearth today; their defaults are fine.
 - The **recommendation email** is NOT a Supabase template — the app sends it itself (`src/lib/email-html.ts` builds the same design; a plain-text part always accompanies it).
 - **Reskin note:** email clients can't read the app's CSS tokens, so the palette hexes are hardcoded in these files and in `src/lib/email-html.ts` — a future palette change must update both (flagged in `Claude.md`).

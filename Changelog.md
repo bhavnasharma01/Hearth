@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 77 (2026-07-11)
+
+*Password-reset (and confirm) email links now work from any browser or device. Builds clean; lint passes.*
+
+### Fixed
+- **The reset-password email link always failed with "sign-in could not be completed."** Root cause: the link used Supabase's PKCE `ConfirmationURL` flow, which requires a secret cookie from **the same browser that requested the reset** — and reset emails are precisely the emails people open elsewhere (mail-app browsers, other devices). Signup confirmations shared the fragility.
+- Fix (Supabase's recommended server-side pattern): new **`/auth/confirm`** route — email links carry a **`token_hash`** verified server-side (`verifyOtp`), valid from anywhere; allowed types whitelisted; same-site `next` forwarding; expired/used links land on `/signin` with a purpose-matched message (new "confirm" copy added). `/auth/callback` remains OAuth-only.
+- **Both email templates updated** to `{{ .SiteURL }}/auth/confirm?token_hash={{ .TokenHash }}&type=signup|recovery&next=…` (button + fallback link). **Bhavna: re-paste both templates** into Supabase → Authentication → Email Templates (README updated with the why).
+
+### Docs
+- `Architecture.md` (routes), `Claude.md` (accounts bullet: token_hash flow), `email-templates/README.md`. `Readme.md`, `Changelog.md` → Build 77.
+
+---
+
 ## v0.1.0 — Build 76 (2026-07-10)
 
 *A real privacy page — needed by Google's brand verification, deserved by the community. Builds clean; lint passes.*

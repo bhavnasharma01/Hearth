@@ -94,7 +94,8 @@ src/app
   add-event/page.tsx            # native add form (hidden: EVENTS_ENABLED → 404)
   report/page.tsx               # report a listing (no login)
   signin/page.tsx               # member sign-in — Google OAuth (accounts Phase A)
-  auth/callback/route.ts        # OAuth code → session exchange, then redirect
+  auth/callback/route.ts        # OAuth (Google) code → session exchange
+  auth/confirm/route.ts         # email links (confirm/reset): token_hash → verifyOtp
   my-practice/page.tsx          # owner home: edit/claim/delete + approve kind words
   my-listing/page.tsx           # → redirect to /my-practice (renamed Build 57)
   recommend/page.tsx            # write a recommendation (sign-in gateway, Phase C)
