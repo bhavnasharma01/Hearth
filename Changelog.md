@@ -4,6 +4,24 @@
 
 ---
 
+## v0.1.0 — Build 78 (2026-07-11)
+
+*Typeface directions added to the brand preview — Fraunces is every AI-built wellness app's font, including the other Hearth. Builds clean.*
+
+### Added
+- **"Typeface directions"** on `/brand-preview.html`: five pairings rendered live in the F6 palette (hero sample + body text + UI elements + honest risk note each):
+  - **T1 Young Serif + Figtree** *(recommendation)* — hand-baked storybook headline warmth nobody else in the space wears; crisp friendly body.
+  - **T2 Lora + Karla** — literary calm, the safest gorgeous choice.
+  - **T3 Marcellus + Albert Sans** — inscriptional, the most ceremonial.
+  - **T4 Cormorant Garamond + Work Sans** — high-contrast elegance (thin-on-phones risk).
+  - **T5 Bricolage Grotesque + Public Sans** — the serif-free modern break.
+- Context recorded honestly: Fraunces + soft-sans is the signature of tasteful AI-generated wellness sites; differentiation argument mirrors the logo decision. The swap, once chosen, is a three-line `next/font` change (`layout.tsx` + the two font variables).
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 78.
+
+---
+
 ## v0.1.0 — Build 77 (2026-07-11)
 
 *Password-reset (and confirm) email links now work from any browser or device. Builds clean; lint passes.*
