@@ -4,6 +4,25 @@
 
 ---
 
+## v0.1.0 — Build 82 (2026-07-11)
+
+*V1 mark locked; the preview now shows the full candidate identity (V1 + T3) for the final yes/no. Builds clean.*
+
+### Decided
+- **✓ V1 locked** — the two-tone mark: juniper heart holding the clementine flame ("the earth holds the fire"), slightly larger across surfaces.
+
+### Added
+- **`public/logo.svg`** — the standalone V1 asset (with never-simplify / never-single-tone guard comments), shareable at `/logo.svg`.
+- **`/brand-preview.html` re-rendered as the final candidate identity:** all six app screens + all three emails now wear the locked V1 mark (bigger: 23px app bars, 30px emails, deep-stage variant on juniper) AND **candidate typeface T3 (Marcellus headings + Albert Sans body)** — the visual Bhavna requested before giving T3 a yes/no. Refinement section marked V1-locked.
+
+### Held (deliberately)
+- The across-the-board implementation (logo.tsx two-tone + 34px header, favicon, email templates gaining the hosted logo image, font swap) ships as **one batch after Bhavna's T3 verdict**.
+
+### Docs
+- `Readme.md`, `Changelog.md` → Build 82.
+
+---
+
 ## v0.1.0 — Build 81 (2026-07-11)
 
 *Logo refinement round two — differentiation via colour strategy, not size. Builds clean.*

@@ -27,17 +27,17 @@
 body { font-family: 'Nunito Sans', system-ui, sans-serif; background: #f4efe9; color: #2a211b; padding: 40px 20px 80px; }
 .wrap { max-width: 1180px; margin: 0 auto; }
 header.page { text-align: center; margin-bottom: 30px; }
-h1 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 36px; margin: 8px 0; color: var(--ink); }
+h1 { font-family: 'Marcellus', Georgia, serif; font-weight: 600; font-size: 36px; margin: 8px 0; color: var(--ink); }
 p.lede { color: #6e6253; font-size: 15px; max-width: 660px; margin: 0 auto; line-height: 1.6; }
-h2 { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 26px; border-bottom: 2px solid #e2d5c3; padding-bottom: 10px; margin-top: 52px; color: var(--ink); }
+h2 { font-family: 'Marcellus', Georgia, serif; font-weight: 600; font-size: 26px; border-bottom: 2px solid #e2d5c3; padding-bottom: 10px; margin-top: 52px; color: var(--ink); }
 p.gintro { color: #6e6253; font-size: 14.5px; margin: 10px 0 24px; max-width: 720px; line-height: 1.6; }
 .phones { display: flex; flex-wrap: wrap; gap: 26px; justify-content: center; }
 .slot { text-align: center; }
 .slabel { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: #8a7d69; margin-bottom: 8px; }
-.phone { width: 302px; border-radius: 26px; border: 1px solid #e6d9cb; background: var(--ground); overflow: hidden; box-shadow: 0 10px 34px rgba(70,45,20,.10); text-align: left; }
+.phone { font-family: 'Albert Sans', 'Nunito Sans', sans-serif; width: 302px; border-radius: 26px; border: 1px solid #e6d9cb; background: var(--ground); overflow: hidden; box-shadow: 0 10px 34px rgba(70,45,20,.10); text-align: left; }
 /* shared app pieces */
 .appbar { background: var(--stage); padding: 11px 14px; display: flex; align-items: center; gap: 7px; border-bottom: 1px solid #f4e3d6; }
-.appbar .wordmark { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 16.5px; color: var(--ink); }
+.appbar .wordmark { font-family: 'Marcellus', Georgia, serif; font-weight: 600; font-size: 16.5px; color: var(--ink); }
 .appbar .right { margin-left: auto; display: flex; align-items: center; gap: 8px; font-size: 11px; color: var(--muted); }
 .avatar-dot { width: 22px; height: 22px; border-radius: 99px; background: var(--chip); color: #8a4a20; font-size: 11px; font-weight: 700; display: flex; align-items: center; justify-content: center; box-shadow: 0 0 0 1.5px var(--clem-soft); }
 .btn { display: inline-block; border-radius: 99px; font-size: 11.5px; padding: 7px 16px; }
@@ -56,9 +56,9 @@ p.gintro { color: #6e6253; font-size: 14.5px; margin: 10px 0 24px; max-width: 72
 .email { width: 340px; }
 .efrom { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; color: #8a7d69; margin-bottom: 3px; }
 .esubj { font-size: 13px; font-weight: 700; color: #3c342c; margin-bottom: 8px; }
-.ecard { background: #ffffff; border: 1px solid #e6d9cb; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 22px rgba(70,45,20,.08); }
+.ecard { font-family: 'Albert Sans', 'Nunito Sans', sans-serif; background: #ffffff; border: 1px solid #e6d9cb; border-radius: 12px; overflow: hidden; box-shadow: 0 6px 22px rgba(70,45,20,.08); }
 .ebody { padding: 22px 20px; text-align: center; }
-.ehead { font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 18px; color: var(--ink); margin-top: 12px; }
+.ehead { font-family: 'Marcellus', Georgia, serif; font-weight: 600; font-size: 18px; color: var(--ink); margin-top: 12px; }
 .etext { font-size: 12.5px; color: #6b7a72; line-height: 1.6; margin-top: 7px; }
 .equote { background: var(--stage); border-radius: 10px; padding: 12px 14px; font-size: 12.5px; color: var(--ink); font-style: italic; line-height: 1.55; margin-top: 12px; }
 .ebtn { display: inline-block; background: var(--deep); color: #eef7f3; font-size: 12.5px; font-weight: 600; border-radius: 99px; padding: 10px 26px; margin-top: 16px; }
@@ -72,13 +72,21 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
   <symbol id="hf" viewBox="0 0 24 24">
     <path fill="currentColor" fill-rule="evenodd" clip-rule="evenodd" d="M12 20.4C6.6 16 4 12.8 4 9.6 4 7.1 5.9 5.3 8.3 5.3c1.5 0 2.8.7 3.7 1.9.9-1.2 2.2-1.9 3.7-1.9 2.4 0 4.3 1.8 4.3 4.3 0 3.2-2.6 6.4-8 10.8zM12 15.8c1.3 0 2.3-.9 2.3-2.2 0-1.4-1.2-2-2.3-3.9-1.1 1.9-2.3 2.5-2.3 3.9 0 1.3 1 2.2 2.3 2.2z"/>
   </symbol>
+  <symbol id="hfv1" viewBox="0 0 24 24">
+    <path fill="#2f5d4c" d="M12 20.4C6.6 16 4 12.8 4 9.6 4 7.1 5.9 5.3 8.3 5.3c1.5 0 2.8.7 3.7 1.9.9-1.2 2.2-1.9 3.7-1.9 2.4 0 4.3 1.8 4.3 4.3 0 3.2-2.6 6.4-8 10.8z"/>
+    <path fill="#ef6c33" d="M12 15.8c1.3 0 2.3-.9 2.3-2.2 0-1.4-1.2-2-2.3-3.9-1.1 1.9-2.3 2.5-2.3 3.9 0 1.3 1 2.2 2.3 2.2z"/>
+  </symbol>
+  <symbol id="hfv1d" viewBox="0 0 24 24">
+    <path fill="#f2ede4" d="M12 20.4C6.6 16 4 12.8 4 9.6 4 7.1 5.9 5.3 8.3 5.3c1.5 0 2.8.7 3.7 1.9.9-1.2 2.2-1.9 3.7-1.9 2.4 0 4.3 1.8 4.3 4.3 0 3.2-2.6 6.4-8 10.8z"/>
+    <path fill="#ef6c33" d="M12 15.8c1.3 0 2.3-.9 2.3-2.2 0-1.4-1.2-2-2.3-3.9-1.1 1.9-2.3 2.5-2.3 3.9 0 1.3 1 2.2 2.3 2.2z"/>
+  </symbol>
 </defs></svg>
 
 <div class="wrap">
 <header class="page">
-  <svg width="34" height="34" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg>
+  <svg width="36" height="36" viewBox="0 0 24 24"><use href="#hfv1"/></svg>
   <h1>Clementine &amp; Juniper + the heart-flame</h1>
-  <p class="lede">The full dress rehearsal: every key app screen and all three transactional emails wearing finalist <strong>F6</strong> with the chosen <strong>L2 heart-flame</strong>. Preview only — the live site still wears the Rice Paper trial.</p>
+  <p class="lede">The full dress rehearsal, updated July 11: every screen and email now wears <strong>F6 + the LOCKED V1 mark</strong> (juniper heart, clementine fire, slightly larger) and <strong>candidate typeface T3 (Marcellus + Albert Sans)</strong> — awaiting Bhavna's yes/no on T3 before the one-shot rollout. Preview only.</p>
 </header>
 
 <h2>The app</h2>
@@ -90,14 +98,14 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="slabel">Home</p>
     <div class="phone">
       <div class="appbar">
-        <svg width="19" height="19" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg>
+        <svg width="23" height="23" viewBox="0 0 24 24"><use href="#hfv1"/></svg>
         <span class="wordmark">Hearth</span>
         <span class="right"><span>Practitioners</span><span style="color:#b9aa9c">·</span><span>Sign in</span></span>
       </div>
       <div style="padding:14px;">
         <div style="background:linear-gradient(to bottom, var(--stage), var(--stage-2)); border-radius:18px; padding:30px 18px; text-align:center;">
           <div class="eyebrow">OUR GATHERING PLACE</div>
-          <div style="font-family:'Fraunces',Georgia,serif; font-weight:600; font-size:22px; color:var(--ink); line-height:1.25; margin-top:9px;">A warm home for our community&rsquo;s healers.</div>
+          <div style="font-family:'Marcellus',Georgia,serif; font-weight:600; font-size:22px; color:var(--ink); line-height:1.25; margin-top:9px;">A warm home for our community&rsquo;s healers.</div>
           <div class="rule" style="margin:13px 40px;"></div>
           <div style="font-size:11.5px; color:#7d6f5f; line-height:1.55;">Bodywork, breathwork, ceremony, counselling. Find the right person for what you need.</div>
           <div style="margin-top:16px; display:flex; flex-direction:column; gap:8px; align-items:center;">
@@ -108,8 +116,8 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
       </div>
       <div class="deepfoot">
         <div style="display:flex;align-items:center;gap:6px;">
-          <svg width="15" height="15" viewBox="0 0 24 24" style="color:var(--clem-soft)"><use href="#hf"/></svg>
-          <span style="font-family:'Fraunces',Georgia,serif;color:#f2ede4;font-size:13px;">Hearth</span>
+          <svg width="18" height="18" viewBox="0 0 24 24"><use href="#hfv1d"/></svg>
+          <span style="font-family:'Marcellus',Georgia,serif;color:#f2ede4;font-size:13px;">Hearth</span>
         </div>
         <div style="font-size:9.5px;color:rgba(242,237,228,.75);margin-top:6px;line-height:1.5;">Made with care by our community, in a spirit of respect and mutual support.</div>
       </div>
@@ -121,12 +129,12 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="slabel">Directory</p>
     <div class="phone">
       <div class="appbar">
-        <svg width="19" height="19" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg>
+        <svg width="23" height="23" viewBox="0 0 24 24"><use href="#hfv1"/></svg>
         <span class="wordmark">Hearth</span>
         <span class="right"><span class="avatar-dot">B</span></span>
       </div>
       <div style="padding:12px 14px;">
-        <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16px;color:var(--ink);">Find a practitioner</div>
+        <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:16px;color:var(--ink);">Find a practitioner</div>
         <div style="display:flex;gap:7px;margin-top:9px;">
           <div style="flex:1;background:var(--card);border:1px solid var(--line);border-radius:99px;padding:7px 12px;font-size:11px;color:#a09184;">What are you looking for?…</div>
           <div style="width:30px;height:30px;border-radius:99px;background:var(--deep);color:#eef7f3;display:flex;align-items:center;justify-content:center;font-size:12px;">🔍</div>
@@ -161,7 +169,7 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
         </div>
         <div style="background:linear-gradient(135deg, var(--deep), var(--deep-2)); border-radius:14px; padding:16px; text-align:center; margin-top:12px;">
           <div class="eyebrow" style="color:var(--clem-soft);">OFFER YOUR GIFTS</div>
-          <div style="font-family:'Fraunces',Georgia,serif;color:#f2ede4;font-size:14.5px;margin-top:5px;">Are you a practitioner?</div>
+          <div style="font-family:'Marcellus',Georgia,serif;color:#f2ede4;font-size:14.5px;margin-top:5px;">Are you a practitioner?</div>
           <span class="btn btn-clem btn-sm" style="margin-top:9px;">Add your practice</span>
         </div>
       </div>
@@ -173,7 +181,7 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="slabel">Profile</p>
     <div class="phone">
       <div class="appbar">
-        <svg width="19" height="19" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg>
+        <svg width="23" height="23" viewBox="0 0 24 24"><use href="#hfv1"/></svg>
         <span class="wordmark">Hearth</span>
         <span class="right"><span class="avatar-dot">B</span></span>
       </div>
@@ -181,8 +189,8 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
         <div class="cardbox" style="overflow:hidden;">
           <div style="height:34px;background:linear-gradient(to right, var(--stage-2), var(--stage));"></div>
           <div style="padding:0 12px 12px;">
-            <div style="width:52px;height:52px;border-radius:14px;background:var(--chip);margin-top:-22px;display:flex;align-items:center;justify-content:center;font-family:'Fraunces',Georgia,serif;font-size:22px;color:#8a4a20;box-shadow:0 0 0 3px #fff;">M</div>
-            <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:16px;color:var(--ink);margin-top:7px;">Maya Rivers</div>
+            <div style="width:52px;height:52px;border-radius:14px;background:var(--chip);margin-top:-22px;display:flex;align-items:center;justify-content:center;font-family:'Marcellus',Georgia,serif;font-size:22px;color:#8a4a20;box-shadow:0 0 0 3px #fff;">M</div>
+            <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:16px;color:var(--ink);margin-top:7px;">Maya Rivers</div>
             <div style="font-size:10px;margin-top:2px;"><span style="color:var(--clem);font-weight:700;">✦ Community member</span> &nbsp;<span style="color:var(--deep);font-weight:700;">✓ Taking new clients</span></div>
             <div style="margin-top:7px;display:flex;gap:4px;"><span class="chippill">Breathwork</span><span class="chippill">Somatic</span></div>
             <div style="margin-top:9px;display:flex;gap:6px;"><span class="btn btn-primary btn-sm">Message on WhatsApp</span><span class="btn btn-outline btn-sm" style="color:var(--deep);">Share</span></div>
@@ -209,12 +217,12 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="slabel">Sign in</p>
     <div class="phone">
       <div class="appbar">
-        <svg width="19" height="19" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg>
+        <svg width="23" height="23" viewBox="0 0 24 24"><use href="#hfv1"/></svg>
         <span class="wordmark">Hearth</span>
       </div>
       <div style="padding:22px 18px 26px;">
         <div class="cardbox" style="padding:18px 16px;">
-          <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:17px;color:var(--ink);">Sign in to Hearth</div>
+          <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:17px;color:var(--ink);">Sign in to Hearth</div>
           <div style="font-size:10.5px;color:var(--muted);margin-top:4px;line-height:1.5;">For practitioners and members: sign in to add your practice and tend it anytime.</div>
           <div style="margin-top:13px;border:1px solid var(--line);border-radius:99px;padding:8px;display:flex;align-items:center;justify-content:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--ink);">
             <svg viewBox="0 0 48 48" width="14" height="14"><path fill="#EA4335" d="M24 9.5c3.5 0 6.7 1.2 9.2 3.6l6.9-6.9C35.9 2.4 30.5 0 24 0 14.6 0 6.5 5.4 2.6 13.2l8 6.2C12.4 13.7 17.7 9.5 24 9.5z"/><path fill="#4285F4" d="M47 24.6c0-1.6-.2-3.1-.4-4.6H24v9h12.9c-.6 3-2.3 5.5-4.8 7.2l7.7 6c4.5-4.2 7.2-10.4 7.2-17.6z"/><path fill="#FBBC05" d="M10.5 28.6c-.5-1.5-.8-3-.8-4.6s.3-3.1.8-4.6l-8-6.2C.9 16.5 0 20.1 0 24s.9 7.5 2.6 10.8l7.9-6.2z"/><path fill="#34A853" d="M24 48c6.5 0 11.9-2.1 15.9-5.8l-7.7-6c-2.2 1.5-4.9 2.3-8.2 2.3-6.3 0-11.6-4.2-13.5-9.9l-8 6.2C6.5 42.6 14.6 48 24 48z"/></svg>
@@ -238,12 +246,12 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="slabel">My practice</p>
     <div class="phone">
       <div class="appbar">
-        <svg width="19" height="19" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg>
+        <svg width="23" height="23" viewBox="0 0 24 24"><use href="#hfv1"/></svg>
         <span class="wordmark">Hearth</span>
         <span class="right"><span class="avatar-dot">M</span></span>
       </div>
       <div style="padding:14px;">
-        <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:18px;color:var(--ink);">Maya Rivers</div>
+        <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:18px;color:var(--ink);">Maya Rivers</div>
         <div style="font-size:10.5px;color:var(--clem);margin-top:3px;">View your public profile →</div>
         <div style="display:flex;gap:7px;margin-top:11px;">
           <span class="btn btn-sm" style="border:1px solid var(--line);color:var(--ink);">Edit practice</span>
@@ -267,15 +275,15 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <div class="phone">
       <div style="background:var(--deep);padding:10px 13px;">
         <div style="display:flex;align-items:center;gap:6px;">
-          <svg width="15" height="15" viewBox="0 0 24 24" style="color:var(--clem-soft)"><use href="#hf"/></svg>
-          <span style="font-family:'Fraunces',Georgia,serif;color:#f2ede4;font-size:13px;">Hearth admin</span>
+          <svg width="18" height="18" viewBox="0 0 24 24"><use href="#hfv1d"/></svg>
+          <span style="font-family:'Marcellus',Georgia,serif;color:#f2ede4;font-size:13px;">Hearth admin</span>
         </div>
         <div style="display:flex;gap:5px;margin-top:8px;font-size:9px;color:rgba(242,237,228,.75);">
           <span>Dashboard</span><span>Moderation</span><span style="background:rgba(239,108,51,.25);color:#ffd9c2;border-radius:99px;padding:1px 8px;">Practitioners</span><span>Reports</span>
         </div>
       </div>
       <div style="padding:13px 14px;">
-        <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);">Practitioners</div>
+        <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);">Practitioners</div>
         <div style="font-size:9.5px;color:var(--muted);margin-top:2px;">6 total · 5 live · 1 hidden.</div>
         <div class="cardbox" style="margin-top:10px;">
           <div style="padding:9px 11px;border-bottom:1px solid var(--line);">
@@ -302,8 +310,8 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="esubj">Confirm your email · Hearth</p>
     <div class="ecard">
       <div class="ebody">
-        <div><svg width="26" height="26" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg></div>
-        <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);margin-top:2px;">Hearth</div>
+        <div><svg width="30" height="30" viewBox="0 0 24 24"><use href="#hfv1"/></svg></div>
+        <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);margin-top:2px;">Hearth</div>
         <div class="rule" style="margin:12px 40px;"></div>
         <div class="ehead">Welcome to Hearth 🌿</div>
         <div class="etext">One tap to finish creating your account, and your practice page will be yours to tend anytime.</div>
@@ -319,8 +327,8 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="esubj">Reset your password · Hearth</p>
     <div class="ecard">
       <div class="ebody">
-        <div><svg width="26" height="26" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg></div>
-        <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);margin-top:2px;">Hearth</div>
+        <div><svg width="30" height="30" viewBox="0 0 24 24"><use href="#hfv1"/></svg></div>
+        <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);margin-top:2px;">Hearth</div>
         <div class="rule" style="margin:12px 40px;"></div>
         <div class="ehead">Set a new password</div>
         <div class="etext">Tap below and choose a new password. If you didn&rsquo;t ask for this, ignore this email — nothing will change.</div>
@@ -336,8 +344,8 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
     <p class="esubj">Someone recommended Maya Rivers on Hearth 🌿</p>
     <div class="ecard">
       <div class="ebody">
-        <div><svg width="26" height="26" viewBox="0 0 24 24" style="color:var(--clem)"><use href="#hf"/></svg></div>
-        <div style="font-family:'Fraunces',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);margin-top:2px;">Hearth</div>
+        <div><svg width="30" height="30" viewBox="0 0 24 24"><use href="#hfv1"/></svg></div>
+        <div style="font-family:'Marcellus',Georgia,serif;font-weight:600;font-size:15px;color:var(--ink);margin-top:2px;">Hearth</div>
         <div class="rule" style="margin:12px 40px;"></div>
         <div class="ehead">Kind words are waiting</div>
         <div class="equote">&ldquo;Maya&rsquo;s breathwork sessions changed my year. I arrived carrying grief and left with breath.&rdquo;<br><span style="font-style:normal;color:var(--muted);font-size:11px;">— Priya S.</span></div>
@@ -508,7 +516,7 @@ footer { margin-top: 56px; text-align: center; color: #8a7d69; font-size: 13px; 
 </div>
 
 <h2>Logo refinement — round two (differentiation)</h2>
-<p class="gintro">The concern: a solid warm flame-heart still lives near the other Hearth's mark. The lever is COLOUR STRATEGY, not size: their territory is &ldquo;warm flame&rdquo;; ours can be <strong>the green earth holding the fire</strong>. Four options, each with favicon tiles. <strong>Recommendation: V1</strong> — juniper heart, clementine flame: maximum distance while keeping the chosen concept.</p>
+<p class="gintro">The concern: a solid warm flame-heart still lives near the other Hearth's mark. The lever is COLOUR STRATEGY, not size: their territory is &ldquo;warm flame&rdquo;; ours can be <strong>the green earth holding the fire</strong>. Four options, each with favicon tiles. <strong>✓ V1 LOCKED (July 11)</strong> — juniper heart, clementine flame; the standalone asset lives at <code>/logo.svg</code>.</p>
 <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;">
 
 <div class="fin" style="padding:16px;border-color:#2f5d4c;">
