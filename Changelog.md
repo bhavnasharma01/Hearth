@@ -4,6 +4,22 @@
 
 ---
 
+## v0.1.0 — Build 92 (2026-07-11)
+
+*QR cards, round two: practitioner recruitment leads (supply-first adoption strategy), and the seeker card stops overclaiming "no account needed". Builds clean.*
+
+### Changed
+- **`qr-card.html` is now four pages, two audiences, practitioners first.** Pages 1–2: a recruitment postcard + 8-up hand-outs ("Are you a practitioner? … Add your practice once, in about two minutes, and the page is yours to tend anytime"; fine print "free · one-time setup · edit anytime") with a **new scan-verified QR straight to `/add-practitioner`**. Pages 3–4: the seeker postcard + hand-outs, with the fine print corrected from "no account needed" to **"free · browse without an account"** (adding a practice does need an account; the old line overclaimed). Print-dialog page ranges let Bhavna print only the audience she needs; the four-page PDF proof was re-verified.
+- **New standalone assets:** `public/qr-add-practice.svg` + `.png` (1200px), decode-verified like the first pair.
+
+### Decided
+- **Adoption strategy: supply first** (Bhavna, July 11) — recruit practitioners before marketing to seekers; a thin directory wastes the one first impression a seeker gives. The pitch leans on the ask being one-time and small. Recorded in `Product.md §10` (Build 92 pilot note); the card ordering embodies it.
+
+### Notes
+- Docs: `Product.md` §10, `Claude.md` doc map (incl. the "never claim 'no account' unqualified" copy rule), `Readme.md` layout + build, `Architecture.md` §9 → Build 92.
+
+---
+
 ## v0.1.0 — Build 91 (2026-07-11)
 
 *Stone & Ember dress rehearsal (Anat's review request): F4 rendered across the real screens and emails, with a live toggle to the current identity so the comparison is honest. Review page only; the shipped identity is unchanged.*
