@@ -4,6 +4,18 @@
 
 ---
 
+## v0.1.0 — Build 89 (2026-07-11)
+
+*The flame burns: candidate B from the round-five rethink ships. The heart stays; its cutout is now a true flame (asymmetric, flicked tip, side tongue), so the blood-drop read is gone. Plus the 🌿 leaves the confirm email. Builds clean.*
+
+### Changed
+- **All four logo assets swapped together** to the redrawn flame: `src/components/logo.tsx` (header + footer mark), `public/logo.svg` (standalone), `public/email-logo.png` (regenerated via `sharp` at 144px; every email picks it up automatically since all three load the hosted PNG), and `src/app/icon.svg` (favicon). Verified by render at 128px and 16px before shipping. The heart path, sizes, gradient, glow, and `flame-*` token wiring are untouched, so reskins behave exactly as before.
+- **`confirm-signup.html`: removed the 🌿 after "Welcome to Hearth"** (Bhavna's call; it also sat oddly next to a clementine identity). Reset template and the recommendation email had no leaf; their HTML is unchanged.
+- **Action for Bhavna:** re-paste **`confirm-signup.html`** in Supabase (Authentication → Email Templates → Confirm signup) to drop the leaf. No re-paste needed for the logo itself; the hosted PNG updates on deploy. The reset template needs nothing.
+- Docs: `Design.md` §3 (the cutout must stay a TRUE flame + the Build 89 redraw note), `Claude.md` (open item #4 resolved, `logo-rethink.html` marked historical), `Architecture.md` §9 → Build 89.
+
+---
+
 ## v0.1.0 — Build 88 (2026-07-11)
 
 *Logo rethink, round five: a member read the heart's flame cutout as a drop of blood. Diagnosis and candidates rendered; no mark changed yet (decision pending).*
