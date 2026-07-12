@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 91 (2026-07-11)
+
+*Stone & Ember dress rehearsal (Anat's review request): F4 rendered across the real screens and emails, with a live toggle to the current identity so the comparison is honest. Review page only; the shipped identity is unchanged.*
+
+### Added
+- **`stone-ember-preview.html`** (root source + `public/` copy, live at `/stone-ember-preview.html`): the F4 "Stone & Ember" palette (stone charcoal carries, ember `#c2502e` sparks) dressed over Home, the directory, a profile, the footer's deep stage, and both emails (confirm + recommendation), with a **sticky toggle that flips the identical screens to Clementine & Juniper** (deep-linkable via `?palette=stone|clem`). Layout, type, and the Build 89 heart-flame are constant; only the role tokens change, mirroring how a real reskin works. Both states screenshot-verified.
+- The page carries F4's own original risk note ("greys can read cool in poor light") and a "fair test" note (compare on a phone, outdoors and in dim light), per the good-faith review framing.
+
+### Notes
+- **Nothing shipped changed** — the live identity remains F6 Clementine & Juniper. If the room ever chooses F4, the swap is the `globals.css` ACTIVE PALETTE block plus the usual hardcoded-hex assets (favicon, logo files, email hexes).
+- Docs: `Claude.md` doc map, `Architecture.md` §9 → Build 91, `Readme.md` build number.
+
+---
+
 ## v0.1.0 — Build 90 (2026-07-11)
 
 *Printable QR cards for events: scan at the table, land on the directory. The QR is branded and machine-verified to decode. Builds clean.*

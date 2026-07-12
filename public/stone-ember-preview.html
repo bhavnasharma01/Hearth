@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Hearth · Stone &amp; Ember dress rehearsal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet" />
+<style>
+  /* Role tokens — the toggle swaps the whole set, exactly how the real app reskins. */
+  body, body.clem {
+    --bg:#fdf9f5; --card:#ffffff; --sand:#f9e7d9; --line:#eedfd2;
+    --night:#fff3ec; --night2:#ffe8da; --on-night:#22392f;
+    --deep:#2f5d4c; --deep2:#24493b; --on-deep:#f2ede4;
+    --primary:#2f5d4c; --primary-deep:#24493b; --accent:#b54e1e;
+    --ink:#22392f; --muted:#5f7168;
+    --f-hi:#f2a172; --f-mid:#ef6c33; --f-lo:#c14e1d;
+    --glow:rgba(239,108,51,.35); --email-bg:#f4efe9;
+  }
+  body.stone {
+    --bg:#fafaf8; --card:#ffffff; --sand:#eae6df; --line:#e5e1da;
+    --night:#efece7; --night2:#e5e0d8; --on-night:#3c362f;
+    --deep:#4a453f; --deep2:#3b3731; --on-deep:#f6f4f1;
+    --primary:#4a453f; --primary-deep:#332e28; --accent:#c2502e;
+    --ink:#332e28; --muted:#8a8378;
+    --f-hi:#d98f66; --f-mid:#c2502e; --f-lo:#9c3d20;
+    --glow:rgba(194,80,46,.30); --email-bg:#f1efec;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--bg); color:var(--ink);
+         font-family:"Source Sans 3",Helvetica,Arial,sans-serif; line-height:1.5;
+         transition:background .25s; }
+  .wrap { max-width:1120px; margin:0 auto; padding:38px 20px 90px; }
+  .eyebrow { font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); font-weight:600; }
+  h1 { font-family:"Zilla Slab",Georgia,serif; font-size:36px; margin:.2em 0 .25em; }
+  h2 { font-family:"Zilla Slab",Georgia,serif; font-size:22px; margin:2.4em 0 .6em; }
+  .lede { max-width:64ch; color:var(--muted); font-size:16px; }
+  .toggle { position:sticky; top:12px; z-index:50; display:inline-flex; gap:4px; margin-top:16px;
+            background:var(--card); border:1px solid var(--line); border-radius:99px; padding:4px;
+            box-shadow:0 4px 16px rgba(0,0,0,.07); }
+  .toggle button { border:0; border-radius:99px; padding:8px 18px; font:600 13.5px "Source Sans 3",sans-serif;
+                   background:transparent; color:var(--muted); cursor:pointer; }
+  .toggle button.on { background:var(--primary); color:#fff; }
+  .phones { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:26px; align-items:start; }
+  .phoneLabel { text-align:center; font-size:13px; color:var(--muted); margin:10px 0 0; }
+  .phone { border:1px solid var(--line); border-radius:26px; overflow:hidden; background:var(--bg);
+           box-shadow:0 6px 24px rgba(0,0,0,.06); }
+  .appbar { background:var(--night); padding:12px 16px; display:flex; align-items:center; gap:7px; }
+  .appbar .word { font-family:"Zilla Slab",Georgia,serif; font-size:19px; font-weight:600; color:var(--ink); }
+  .appbar .signin { margin-left:auto; font-size:12px; color:var(--muted); }
+  .mark { width:30px; height:30px; filter:drop-shadow(0 0 6px var(--glow)); }
+  .goldrule { height:2px; border-radius:2px; margin:14px auto;
+              background:linear-gradient(to right,transparent,var(--accent),transparent); }
+
+  /* Home */
+  .hero { background:linear-gradient(to bottom,var(--night),var(--night2)); margin:12px; border-radius:18px;
+          padding:34px 20px 30px; text-align:center; }
+  .hero .eb { font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--accent); font-weight:500; }
+  .hero h3 { font-family:"Zilla Slab",Georgia,serif; font-size:23px; line-height:1.25; margin:10px 8px 0; color:var(--on-night); font-weight:600; }
+  .hero .goldrule { width:90px; }
+  .hero p { font-size:13px; color:var(--on-night); opacity:.75; margin:0 6px; }
+  .btn { display:block; border-radius:99px; padding:10px 0; font-size:13px; font-weight:600; margin:9px 22px 0; }
+  .btn.primary { background:var(--primary); color:#fff; }
+  .btn.outline { border:1px solid color-mix(in srgb, var(--accent) 40%, transparent); color:var(--on-night); font-weight:500; }
+
+  /* Directory */
+  .pad { padding:12px; }
+  .findbar { display:flex; gap:8px; }
+  .search { flex:1; background:var(--card); border:1px solid var(--line); border-radius:99px; padding:9px 14px;
+            font-size:12.5px; color:var(--muted); }
+  .pin { width:36px; height:36px; border-radius:99px; background:var(--card); border:1px solid var(--line);
+         display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .rail { display:flex; gap:16px; margin:12px 2px 4px; font-size:10.5px; color:var(--muted);
+          text-align:center; overflow:hidden; }
+  .rail div { min-width:52px; }
+  .rail .ico { font-size:17px; display:block; margin-bottom:2px; }
+  .rail .active { color:var(--ink); font-weight:600; border-bottom:2px solid var(--primary); padding-bottom:3px; }
+  .rows { background:var(--card); border:1px solid var(--line); border-radius:14px; margin-top:10px; }
+  .row { padding:11px 12px; display:flex; gap:10px; }
+  .row + .row { border-top:1px solid var(--line); }
+  .avatar { width:38px; height:38px; border-radius:99px; background:var(--sand); color:var(--primary);
+            font-family:"Zilla Slab",Georgia,serif; font-size:17px; display:flex; align-items:center;
+            justify-content:center; flex:none; border:1.5px solid var(--accent); }
+  .row b { font-size:13.5px; }
+  .row .mem { color:var(--accent); font-size:11px; font-weight:400; }
+  .row .desc { font-size:11.5px; color:var(--muted); margin-top:1px; }
+  .row .meta { font-size:11px; color:var(--muted); margin-top:2px; }
+  .row .acts { display:flex; gap:5px; margin-top:6px; }
+  .chip { border-radius:99px; font-size:10.5px; padding:4px 11px; }
+  .chip.go { background:var(--primary); color:#fff; }
+  .chip.soft { border:1px solid var(--line); color:var(--primary); }
+  .recruit { margin-top:12px; border-radius:14px; padding:16px 14px; text-align:center;
+             background:linear-gradient(135deg,var(--deep),var(--deep2)); color:var(--on-deep); }
+  .recruit b { font-family:"Zilla Slab",Georgia,serif; font-size:15px; font-weight:600; }
+  .recruit .btn { background:var(--on-deep); color:var(--deep); display:inline-block; padding:7px 18px; margin:9px 0 0; font-size:12px; }
+
+  /* Profile */
+  .band { height:52px; background:linear-gradient(to right,var(--night),var(--night2)); }
+  .pcard { background:var(--card); border:1px solid var(--line); border-radius:16px; margin:12px; overflow:hidden; }
+  .pbody { padding:0 14px 14px; }
+  .pavatar { width:64px; height:64px; border-radius:16px; background:var(--sand); color:var(--primary-deep);
+             font-family:"Zilla Slab",Georgia,serif; font-size:28px; display:flex; align-items:center;
+             justify-content:center; margin-top:-26px; border:3px solid var(--card); }
+  .pname { font-family:"Zilla Slab",Georgia,serif; font-size:19px; font-weight:600; margin-top:8px; }
+  .signals { font-size:11.5px; margin-top:2px; }
+  .signals .m { color:var(--accent); font-weight:600; }
+  .signals .t { color:var(--primary); font-weight:600; margin-left:10px; }
+  .cats { display:flex; gap:5px; margin-top:8px; }
+  .cats span { background:var(--sand); border-radius:99px; font-size:10.5px; padding:3px 10px; color:var(--muted); }
+  .pacts { display:flex; gap:6px; margin-top:12px; }
+  .card2 { background:var(--card); border:1px solid var(--line); border-radius:16px; margin:0 12px 12px; padding:13px 14px; }
+  .card2 h4 { margin:0 0 8px; font-size:10px; letter-spacing:.18em; text-transform:uppercase; color:var(--accent); }
+  .kv { display:flex; font-size:12px; margin-top:5px; }
+  .kv dt { width:72px; color:var(--muted); flex:none; }
+  .kv dd { margin:0; }
+  .kv .dir { color:var(--primary); font-weight:600; text-decoration:underline; margin-left:8px; }
+  .quote { font-size:12px; font-style:italic; color:var(--ink); }
+  .attr { font-size:11px; color:var(--muted); margin-top:3px; }
+  .rec { display:inline-block; border:1px solid var(--line); border-radius:99px; padding:6px 14px;
+         font-size:11.5px; color:var(--primary); margin-top:10px; }
+
+  /* Footer strip */
+  .footmock { background:linear-gradient(135deg,var(--deep),var(--deep2)); border-radius:18px; padding:26px 26px 22px; color:var(--on-deep); }
+  .footmock .word { font-family:"Zilla Slab",Georgia,serif; font-size:20px; font-weight:600; }
+  .footmock .goldrule { margin:14px 0; width:180px; background:linear-gradient(to right,transparent,var(--f-mid),transparent); }
+  .footmock p { font-size:13.5px; opacity:.85; margin:0 0 12px; }
+  .footmock a { color:var(--on-deep); opacity:.85; font-size:13px; margin-right:18px; text-decoration:underline; }
+
+  /* Emails */
+  .emails { display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:26px; }
+  .emailStage { background:var(--email-bg); border-radius:18px; padding:22px 14px; }
+  .email { max-width:340px; margin:0 auto; background:#fff; border:1px solid var(--line); border-radius:14px;
+           text-align:center; overflow:hidden; }
+  .email .in { padding:20px 18px; }
+  .email .word { font-family:Georgia,serif; font-size:17px; font-weight:700; }
+  .email h5 { font-family:Georgia,serif; font-size:16px; font-weight:600; margin:10px 0 0; }
+  .email p { font-size:12px; color:var(--muted); line-height:1.6; margin:7px 0 0; }
+  .email .q { background:var(--night); border-radius:10px; padding:10px 12px; margin-top:10px; text-align:left; }
+  .email .q p { margin:0; color:var(--ink); font-style:italic; }
+  .email .q .a { font-style:normal; color:var(--muted); font-size:11px; margin-top:4px; }
+  .email .cta { display:inline-block; background:var(--primary); color:#fff; border-radius:99px;
+                padding:9px 24px; font-size:12px; font-weight:700; margin-top:13px; }
+  .email .fine { font-size:10px; color:#9a948b; margin-top:12px; }
+  .email .foot { border-top:1px solid var(--line); padding:9px; font-size:10px; color:#9a948b; }
+  .email .hair { height:1px; background:linear-gradient(to right,transparent,var(--f-mid),transparent); margin:10px 26px; }
+
+  .note { background:var(--night); border:1px solid var(--line); border-radius:14px; padding:15px 19px;
+          font-size:14.5px; max-width:74ch; margin-top:14px; }
+</style>
+</head>
+<body class="stone">
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="var(--f-hi)"/><stop offset="0.55" stop-color="var(--f-mid)"/><stop offset="1" stop-color="var(--f-lo)"/>
+    </linearGradient>
+    <symbol id="hf" viewBox="0 0 24 24">
+      <path fill="url(#fg)" fill-rule="evenodd" d="M12 20.4C6.6 16 4 12.8 4 9.6 4 7.1 5.9 5.3 8.3 5.3c1.5 0 2.8.7 3.7 1.9.9-1.2 2.2-1.9 3.7-1.9 2.4 0 4.3 1.8 4.3 4.3 0 3.2-2.6 6.4-8 10.8zM12 16.4c-1.45 0-2.5-.95-2.5-2.35 0-.95.5-1.7 1.05-2.5.55-.8 1.05-1.75.85-2.95 1.15 1.05 1.75 2.2 1.6 3.4.6-.3.95-.85 1-1.65.5 1.1.5 2.5.5 3.7 0 1.4-1.05 2.35-2.5 2.35z"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <div class="eyebrow">Dress rehearsal · July 11, 2026</div>
+  <h1>Stone &amp; Ember, at full size</h1>
+  <p class="lede">
+    F4 from the palette explorations ("quiet warm greys everywhere, then one ember spark"), rendered
+    across the real screens and emails so it can be judged the same way the current identity was:
+    in context, not on swatches. Use the toggle to flip the exact same screens between the two
+    palettes. Everything else (layout, type, the heart-flame mark) is identical.
+  </p>
+  <div class="toggle" role="tablist">
+    <button id="bStone" class="on" onclick="setPalette('stone')">Stone &amp; Ember (F4)</button>
+    <button id="bClem" onclick="setPalette('clem')">Clementine &amp; Juniper (current)</button>
+  </div>
+
+  <h2>The app</h2>
+  <div class="phones">
+    <div>
+      <div class="phone">
+        <div class="appbar"><svg class="mark"><use href="#hf"/></svg><span class="word">Hearth</span><span class="signin">Sign in</span></div>
+        <div class="hero">
+          <div class="eb">Our gathering place</div>
+          <h3>A warm home for our community&rsquo;s healers.</h3>
+          <div class="goldrule"></div>
+          <p>Bodywork, breathwork, ceremony, counselling. Find the right person for what you need.</p>
+          <div class="btn primary">Find a practitioner</div>
+          <div class="btn outline">＋ Add your practice</div>
+        </div>
+        <div style="height:14px"></div>
+      </div>
+      <p class="phoneLabel">Home</p>
+    </div>
+
+    <div>
+      <div class="phone">
+        <div class="appbar"><svg class="mark"><use href="#hf"/></svg><span class="word">Hearth</span><span class="signin">Sign in</span></div>
+        <div class="pad">
+          <div class="findbar"><div class="search">🔍 What do you need a hand with?</div><div class="pin">📍</div></div>
+          <div class="rail">
+            <div class="active"><span class="ico">🤲</span>Bodywork</div>
+            <div><span class="ico">🧘</span>Somatic</div>
+            <div><span class="ico">✨</span>Energy</div>
+            <div><span class="ico">🌱</span>Nutrition</div>
+            <div><span class="ico">🎨</span>Creative</div>
+          </div>
+          <div class="rows">
+            <div class="row">
+              <div class="avatar">M</div>
+              <div><b>Maya R.</b> <span class="mem">✦ member</span>
+                <div class="desc">Breathwork for grief, grounding, and beginnings.</div>
+                <div class="meta">Bodywork &amp; Massage · Annex · In person</div>
+                <div class="acts"><span class="chip go">Message</span><span class="chip soft">Email</span><span class="chip soft">Instagram</span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="avatar">J</div>
+              <div><b>Josh T.</b>
+                <div class="desc">Thai massage and deep tissue, house calls welcome.</div>
+                <div class="meta">Bodywork &amp; Massage · Leslieville · Both</div>
+                <div class="acts"><span class="chip go">Message</span><span class="chip soft">Website</span></div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="avatar">A</div>
+              <div><b>Angela P.</b> <span class="mem">✦ member</span>
+                <div class="desc">Somatic counselling, trauma-informed, sliding scale.</div>
+                <div class="meta">Mental &amp; Emotional Wellbeing · Online</div>
+                <div class="acts"><span class="chip go">Message</span><span class="chip soft">Email</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="recruit"><b>Are you a practitioner?</b><br><span style="font-size:11.5px;opacity:.85">Join the people this community turns to.</span><br><span class="btn">Add your practice</span></div>
+        </div>
+      </div>
+      <p class="phoneLabel">Directory · /practitioners</p>
+    </div>
+
+    <div>
+      <div class="phone">
+        <div class="appbar"><svg class="mark"><use href="#hf"/></svg><span class="word">Hearth</span><span class="signin">Sign in</span></div>
+        <div class="pcard">
+          <div class="band"></div>
+          <div class="pbody">
+            <div class="pavatar">M</div>
+            <div class="pname">Maya R.</div>
+            <div class="signals"><span class="m">✦ Community member</span><span class="t">✓ Taking new clients</span></div>
+            <div class="cats"><span>Bodywork &amp; Massage</span><span>Somatic &amp; Movement</span></div>
+            <div class="pacts"><span class="chip go" style="padding:6px 14px;">Message on WhatsApp</span><span class="chip soft" style="padding:6px 14px;">Share</span></div>
+          </div>
+        </div>
+        <div class="card2">
+          <h4>Where &amp; how</h4>
+          <dl style="margin:0">
+            <div class="kv"><dt>Location</dt><dd>The Annex, Toronto <span class="dir">Get directions →</span></dd></div>
+            <div class="kv"><dt>Sessions</dt><dd>In person &amp; online</dd></div>
+            <div class="kv"><dt>Pricing</dt><dd>$120 / session · sliding scale</dd></div>
+          </dl>
+        </div>
+        <div class="card2">
+          <h4>Kind words</h4>
+          <p class="quote">&ldquo;Maya&rsquo;s breathwork sessions changed my year. I arrived in pieces and left with somewhere to put them.&rdquo;</p>
+          <p class="attr">— Dana K.</p>
+          <span class="rec">♡ Recommend Maya</span>
+        </div>
+        <div style="height:12px"></div>
+      </div>
+      <p class="phoneLabel">Profile · /p/maya-r</p>
+    </div>
+  </div>
+
+  <h2>The footer (the deep stage)</h2>
+  <div class="footmock">
+    <svg class="mark" style="width:34px;height:34px"><use href="#hf"/></svg>
+    <span class="word" style="margin-left:8px">Hearth</span>
+    <div class="goldrule" style="margin-left:0"></div>
+    <p>Made with care by our community, in a spirit of respect and mutual support.</p>
+    <a>Support &amp; feedback</a><a>Privacy</a><a>Disclaimer</a>
+  </div>
+
+  <h2>The emails</h2>
+  <div class="emails">
+    <div class="emailStage">
+      <div class="email">
+        <div class="in">
+          <svg class="mark" style="width:34px;height:34px"><use href="#hf"/></svg>
+          <div class="word">Hearth</div>
+          <div class="hair"></div>
+          <h5>Welcome to Hearth</h5>
+          <p>One tap to finish creating your account, and your practice page will be yours to tend anytime.</p>
+          <span class="cta">Confirm my email</span>
+          <p class="fine">This link expires in 24 hours. Didn&rsquo;t create an account? You can safely ignore this email.</p>
+        </div>
+        <div class="foot">Sent with care from Hearth · myhearthapp.ca</div>
+      </div>
+      <p class="phoneLabel">Confirm signup</p>
+    </div>
+    <div class="emailStage">
+      <div class="email">
+        <div class="in">
+          <svg class="mark" style="width:34px;height:34px"><use href="#hf"/></svg>
+          <div class="word">Hearth</div>
+          <div class="hair"></div>
+          <h5>Someone recommended you</h5>
+          <p>Dana K. wrote you a kind word. It stays private until you approve it.</p>
+          <div class="q"><p>&ldquo;Maya&rsquo;s breathwork sessions changed my year&hellip;&rdquo;</p><p class="a">— Dana K.</p></div>
+          <span class="cta">Review &amp; approve</span>
+        </div>
+        <div class="foot">Sent with care from Hearth · myhearthapp.ca</div>
+      </div>
+      <p class="phoneLabel">Recommendation ("kind words")</p>
+    </div>
+  </div>
+
+  <h2>Notes for the review</h2>
+  <div class="note">
+    <b>What F4's own exploration card said:</b> "The most understated finalist: galleries-and-linen calm
+    where the ember flame is the only saturated thing on screen. Maximum sophistication, minimum noise.
+    Risk: greys can read cool in poor light; the warmth must come from type and photography."
+  </div>
+  <div class="note">
+    <b>What stays the same in both palettes:</b> the layouts, Zilla Slab + Source Sans 3, and the
+    heart-flame mark (which recolours itself to each palette's flame tokens, exactly as a real reskin
+    would). The app is built so switching is one block in one file, so if Stone &amp; Ember wins the
+    room, adopting it is small work; the hand-updated pieces are the favicon, the logo files, and the
+    email hexes.
+  </div>
+  <div class="note">
+    <b>A fair test:</b> look at both on your phone, outdoors and in dim light, before deciding.
+    Toggle, don't recall. The screens are identical twins; only the clothes change.
+  </div>
+</div>
+
+<script>
+  function setPalette(p) {
+    document.body.className = p;
+    document.getElementById("bStone").classList.toggle("on", p === "stone");
+    document.getElementById("bClem").classList.toggle("on", p === "clem");
+  }
+  const q = new URLSearchParams(location.search).get("palette");
+  if (q === "clem" || q === "stone") setPalette(q);
+</script>
+</body>
+</html>
