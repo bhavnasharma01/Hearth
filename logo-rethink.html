@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex" />
+<title>Hearth · logo rethink: the flame, not the drop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600&family=Source+Sans+3:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --parchment:#fdf9f5; --card:#ffffff; --line:#eedfd2; --ink:#22392f;
+    --muted:#5f7168; --gold:#b54e1e; --night:#fff3ec; --night2:#ffe8da;
+    --juniper:#2f5d4c; --juniper2:#24493b; --on-deep:#f2ede4;
+  }
+  * { box-sizing:border-box; }
+  body { margin:0; background:var(--parchment); color:var(--ink);
+         font-family:"Source Sans 3",Helvetica,Arial,sans-serif; line-height:1.55; }
+  .wrap { max-width:1060px; margin:0 auto; padding:40px 20px 80px; }
+  .eyebrow { font-size:12px; letter-spacing:.18em; text-transform:uppercase; color:var(--gold); font-weight:600; }
+  h1 { font-family:"Zilla Slab",Georgia,serif; font-size:38px; margin:.2em 0 .3em; }
+  h2 { font-family:"Zilla Slab",Georgia,serif; font-size:24px; margin:2.2em 0 .5em; }
+  p.lede { max-width:62ch; color:var(--muted); font-size:17px; }
+  .rule { height:2px; width:110px; background:var(--gold); opacity:.65; border-radius:2px; margin:18px 0 6px; }
+  .grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(320px,1fr)); gap:22px; margin-top:22px; }
+  .cardBox { background:var(--card); border:1px solid var(--line); border-radius:16px; padding:20px; position:relative; }
+  .pick { position:absolute; top:14px; right:14px; background:var(--gold); color:#fff4ec;
+          font-size:11px; font-weight:600; letter-spacing:.08em; text-transform:uppercase;
+          padding:4px 10px; border-radius:99px; }
+  .cardBox h3 { font-family:"Zilla Slab",Georgia,serif; font-size:19px; margin:0 0 2px; }
+  .story { color:var(--muted); font-size:14px; min-height:3.2em; margin:0 0 14px; }
+  .stages { display:flex; gap:10px; }
+  .stage { flex:1; border-radius:12px; display:flex; align-items:center; justify-content:center; height:150px; }
+  .stage.light { background:linear-gradient(160deg,var(--night),var(--night2)); }
+  .stage.deep  { background:linear-gradient(160deg,var(--juniper),var(--juniper2)); }
+  .stage svg { width:104px; height:104px; filter:drop-shadow(0 0 6px rgba(239,108,51,.35)); }
+  .headerMock { margin-top:10px; background:var(--night); border:1px solid var(--line); border-radius:10px;
+                padding:10px 14px; display:flex; align-items:center; gap:8px; }
+  .headerMock svg { width:34px; height:34px; filter:drop-shadow(0 0 6px rgba(239,108,51,.35)); }
+  .headerMock b { font-family:"Zilla Slab",Georgia,serif; font-size:23px; font-weight:600; letter-spacing:-.01em; }
+  .favRow { margin-top:10px; display:flex; align-items:center; gap:10px; }
+  .favRow .tile { background:var(--juniper); display:flex; align-items:center; justify-content:center; }
+  .t32 { width:32px; height:32px; border-radius:7px; } .t32 svg { width:26px; height:26px; }
+  .t16 { width:16px; height:16px; border-radius:4px; } .t16 svg { width:13px; height:13px; }
+  .favRow span { font-size:12px; color:var(--muted); }
+  ul.pc { font-size:13.5px; padding-left:18px; margin:12px 0 0; }
+  ul.pc li { margin:3px 0; } ul.pc .plus::marker { color:var(--juniper); } ul.pc .minus::marker { color:#b04328; }
+  .verdict { margin-top:12px; font-size:14px; border-top:1px dashed var(--line); padding-top:10px; }
+  .verdict b { color:var(--gold); }
+  .note { background:var(--night); border:1px solid var(--line); border-radius:14px; padding:16px 20px;
+          font-size:15px; max-width:72ch; margin-top:26px; }
+</style>
+</head>
+<body>
+<!-- Shared gradient + masks, referenced by every mark on the page. -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f2a172"/><stop offset="0.55" stop-color="#ef6c33"/><stop offset="1" stop-color="#c14e1d"/>
+    </linearGradient>
+    <mask id="mOld">
+      <rect width="24" height="24" fill="white"/>
+      <g transform="translate(7.4 8.6) scale(0.4)">
+        <path d="M12 2c.7 3.2-1.6 4.8-3 6.5C7.4 10.4 6 12.2 6 14.8 6 18.2 8.7 21 12 21s6-2.8 6-6.2c0-2.1-1-3.7-2.2-5.2-.6 2-1.9 2.6-2.6 2.2C14.3 11 15 8.6 12 2z" fill="black"/>
+        <path d="M12.1 12.4c.45 1.2-.8 1.8-.8 3 0 1 .8 1.8 1.7 1.8s1.6-.85 1.35-1.9c-.2-.9-1.1-1.4-1.3-2.5-.3.8-.62.8-.92-.4z" fill="white"/>
+      </g>
+    </mask>
+    <mask id="mOldFlat">
+      <rect width="24" height="24" fill="white"/>
+      <path d="M12 2c.7 3.2-1.6 4.8-3 6.5C7.4 10.4 6 12.2 6 14.8 6 18.2 8.7 21 12 21s6-2.8 6-6.2c0-2.1-1-3.7-2.2-5.2-.6 2-1.9 2.6-2.6 2.2C14.3 11 15 8.6 12 2z"
+            transform="translate(7.4 8.6) scale(0.4)" fill="black"/>
+    </mask>
+  </defs>
+</svg>
+
+<div class="wrap">
+  <div class="eyebrow">Logo rethink · round five · July 11, 2026</div>
+  <h1>The flame, not the drop</h1>
+  <div class="rule"></div>
+  <p class="lede">
+    A member read the flame cutout in our heart as a drop of blood. Looking at the geometry, they
+    have a point: the current cutout is a perfectly symmetric teardrop, and symmetry is what makes
+    droplets read as droplets. Real flames are asymmetric: they lean, flick, and split into tongues.
+    So the fix may not be abandoning the heart at all, just teaching the cutout to actually burn.
+    Every candidate below is shown on both stages, in the header at true size (34px), and at favicon
+    sizes, because that is where marks live or die.
+  </p>
+
+  <div class="grid" id="cards"></div>
+
+  <h2>Notes from the exploration</h2>
+  <div class="note">
+    <b>A fireplace surround was tried and set aside:</b> drawing the heart as an outline (the hearth
+    frame) with a flame and mantel bar inside got busy fast. At 34px the three elements fight, and the
+    stroked heart plus bar made an odd double-chin at the bottom point. The hearth-bar idea survives in
+    candidate C in a calmer form.
+  </div>
+  <div class="note">
+    <b>On bringing the old flame back (candidate G):</b> it is a lovely mark, but it was retired for a
+    reason that has not changed: the other Hearth app (hearthapp.ca) wears a warm standalone flame, and
+    ours would sit a coin-flip away from it. The heart is our differentiation, and the heart·hearth·earth
+    wordplay is the brand story. Recommendation: keep the heart, fix the flame inside it.
+  </div>
+  <div class="note">
+    <b>Shipping whichever wins is one small build:</b> the mark lives in four places
+    (<code>logo.tsx</code>, <code>logo.svg</code>, <code>email-logo.png</code>, the favicon
+    <code>icon.svg</code>), all updated together. Nothing else in the identity moves: palette, type,
+    and layout stay exactly as they are.
+  </div>
+</div>
+
+<script>
+  const HEART = "M12 20.4C6.6 16 4 12.8 4 9.6 4 7.1 5.9 5.3 8.3 5.3c1.5 0 2.8.7 3.7 1.9.9-1.2 2.2-1.9 3.7-1.9 2.4 0 4.3 1.8 4.3 4.3 0 3.2-2.6 6.4-8 10.8z";
+  const DROP = "M12 15.8c1.3 0 2.3-.9 2.3-2.2 0-1.4-1.2-2-2.3-3.9-1.1 1.9-2.3 2.5-2.3 3.9 0 1.3 1 2.2 2.3 2.2z";
+  const FLAME = "M12 16.4c-1.45 0-2.5-.95-2.5-2.35 0-.95.5-1.7 1.05-2.5.55-.8 1.05-1.75.85-2.95 1.15 1.05 1.75 2.2 1.6 3.4.6-.3.95-.85 1-1.65.5 1.1.5 2.5.5 3.7 0 1.4-1.05 2.35-2.5 2.35z";
+  const FLAME_UP = FLAME.replace("M12 16.4", "M12 15.5");
+  const BAR = "M10.4 16.35h3.2a.52.52 0 0 1 .52.52.52.52 0 0 1-.52.52h-3.2a.52.52 0 0 1-.52-.52.52.52 0 0 1 .52-.52z";
+  const OLD_FLAME = "M12 2c.7 3.2-1.6 4.8-3 6.5C7.4 10.4 6 12.2 6 14.8 6 18.2 8.7 21 12 21s6-2.8 6-6.2c0-2.1-1-3.7-2.2-5.2-.6 2-1.9 2.6-2.6 2.2C14.3 11 15 8.6 12 2z";
+  const OLD_EMBER = "M12.1 12.4c.45 1.2-.8 1.8-.8 3 0 1 .8 1.8 1.7 1.8s1.6-.85 1.35-1.9c-.2-.9-1.1-1.4-1.3-2.5-.3.8-.62.8-.92-.4z";
+
+  // fill = gradient (stages/header) or flat peach (favicon tiles)
+  const marks = {
+    A: (f) => `<path fill="${f}" fill-rule="evenodd" d="${HEART}${DROP}"/>`,
+    B: (f) => `<path fill="${f}" fill-rule="evenodd" d="${HEART}${FLAME}"/>`,
+    C: (f) => `<path fill="${f}" fill-rule="evenodd" d="${HEART}${FLAME_UP}${BAR}"/>`,
+    D: (f) => `<path fill="${f}" d="${HEART}"/><path fill="${f === "#f7c5a5" ? "#24493b" : "#fff4ee"}" d="${FLAME}"/>`,
+    E: (f, flat) => `<path fill="${f}" d="${HEART}" mask="url(#${flat ? "mOldFlat" : "mOld"})"/>`,
+    G: (f, flat) => `<path fill="${f}" d="${OLD_FLAME}"/>` + (flat ? "" : `<path fill="#fff4ee" opacity="0.9" d="${OLD_EMBER}"/>`),
+  };
+
+  const cards = [
+    { k:"B", pick:true, name:"B · The true flame",
+      story:"The same beloved heart, but the cutout is redrawn as an actual flame: it leans, the tip flicks, and a second tongue licks up the right side. Asymmetry is what makes fire read as fire.",
+      pros:["The smallest possible change: everything else about the identity stays","Reads as flame at every size, even 16px","The cutout stays, so the mark keeps its negative-space cleverness"],
+      cons:["Still abstract: nobody will see a fireplace in it (they will feel warmth, which may be enough)"],
+      verdict:"<b>Our pick.</b> The blood-drop problem was never the heart, it was the symmetric drop. This fixes exactly that and nothing else." },
+    { k:"C", name:"C · Fire in the hearth",
+      story:"The flame lifts slightly and a small bar glows beneath it: fire sitting in the hearth. The most literal telling of the name that still fits in 24 pixels.",
+      pros:["Tells the actual Hearth story: a fire kept in a home","Still one clean silhouette; works as a cutout"],
+      cons:["The bar starts to blur at 16px favicon size","A touch busier than B at header size"],
+      verdict:"The storyteller. If we want the name made visible, this is the one; check the 16px tile before choosing." },
+    { k:"D", name:"D · The lit heart",
+      story:"No cutout: the flame is painted in warm cream on the heart, like a candle seen through a window. The soft version.",
+      pros:["Warmest of the set; the cream flame glows","Very forgiving at small sizes"],
+      cons:["Loses the negative-space cutout that made the mark clever","On the peach header, cream-on-clementine is lower contrast than a true hole"],
+      verdict:"Lovely and safe. Choose it if the cutouts still feel too sharp-edged." },
+    { k:"E", name:"E · The old flame comes home",
+      story:"Our original retired flame, ember and all, living on as the cutout inside the heart. The story writes itself: the first fire, kept.",
+      pros:["Continuity: the pilot-era flame survives inside the new mark","The floating ember is a charming detail at large sizes"],
+      cons:["The ember vanishes below 32px, so small sizes lose the point of it","Most intricate silhouette of the set"],
+      verdict:"The sentimental one. Beautiful big, ordinary small." },
+    { k:"A", name:"A · Current mark (for comparison)",
+      story:"What ships today: the heart with the symmetric teardrop cutout. Shown so the fix can be judged against it honestly.",
+      pros:["Already loved in every other way: size, colour, glow"],
+      cons:["The symmetric cutout reads as a drop of blood to at least one member, and once seen it is hard to unsee"],
+      verdict:"The baseline. Keeping it means accepting that some people will see the drop." },
+    { k:"G", name:"G · The retired flame, standalone",
+      story:"The pre-heart mark, shown for the bring-it-back question. A fine flame, but it was retired because the other Hearth app also wears one.",
+      pros:["Already drawn, already proven at small sizes"],
+      cons:["Collides with the other Hearth app's flame mark: the exact reason it was retired","Drops the heart, and with it our differentiation and the heart·hearth wordplay"],
+      verdict:"Recommend against. The reason it left has not changed." },
+  ];
+
+  const el = document.getElementById("cards");
+  el.innerHTML = cards.map(c => {
+    const grad = marks[c.k]("url(#g)", false);
+    const flat = marks[c.k]("#f7c5a5", true);
+    const svg = (body) => `<svg viewBox="0 0 24 24" aria-hidden="true">${body}</svg>`;
+    return `<div class="cardBox">
+      ${c.pick ? '<div class="pick">Our pick</div>' : ""}
+      <h3>${c.name}</h3>
+      <p class="story">${c.story}</p>
+      <div class="stages">
+        <div class="stage light">${svg(grad)}</div>
+        <div class="stage deep">${svg(grad)}</div>
+      </div>
+      <div class="headerMock">${svg(grad)}<b>Hearth</b></div>
+      <div class="favRow">
+        <div class="tile t32">${svg(flat)}</div>
+        <div class="tile t16">${svg(flat)}</div>
+        <span>favicon at 32px and 16px</span>
+      </div>
+      <ul class="pc">
+        ${c.pros.map(p => `<li class="plus">${p}</li>`).join("")}
+        ${c.cons.map(p => `<li class="minus">${p}</li>`).join("")}
+      </ul>
+      <div class="verdict">${c.verdict}</div>
+    </div>`;
+  }).join("");
+</script>
+</body>
+</html>

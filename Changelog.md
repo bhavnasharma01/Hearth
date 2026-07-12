@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 88 (2026-07-11)
+
+*Logo rethink, round five: a member read the heart's flame cutout as a drop of blood. Diagnosis and candidates rendered; no mark changed yet (decision pending).*
+
+### Added
+- **`logo-rethink.html`** (root source + `public/` copy): the exploration page for the flame-cutout fix. Diagnosis: the current cutout is a perfectly symmetric teardrop, and symmetry is what makes droplets read as droplets; real flames lean, flick, and split into tongues. Six candidates, each rendered on both stages, in the header at true size (34px), and at 32px/16px favicon tiles, with pros/cons and verdicts: **B "the true flame"** (same heart, cutout redrawn as an asymmetric flame — our pick), **C "fire in the hearth"** (flame over a small hearth bar), **D "the lit heart"** (positive cream flame, no cutout), **E "the old flame comes home"** (the retired pilot flame, ember and all, as the cutout), **A** the current mark for honest comparison, and **G** the retired standalone flame (recommended against: the other Hearth app's flame collision is why it was retired). A stroked "fireplace surround" concept was tried and set aside as busy (noted on the page).
+- Candidates were iterated against rendered contact sheets (sharp) before publishing, per the "cheap full renders beat debate" lesson.
+
+### Notes
+- **No production asset changed** — `logo.tsx`, `logo.svg`, `email-logo.png`, and `icon.svg` still carry the current mark. When a winner is chosen, all four swap in one build.
+- `Claude.md`: the rethink is tracked in open item #4 and the doc map lists the new page.
+
+---
+
 ## v0.1.0 — Build 87 (2026-07-11)
 
 *Site disclaimer (Anat & Curtis's ask): a plain-language /disclaimer page so the stewards can't be read as vetting, endorsing, or being liable for what's offered on the site. Builds clean.*
