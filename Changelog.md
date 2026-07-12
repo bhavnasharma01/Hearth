@@ -4,6 +4,20 @@
 
 ---
 
+## v0.1.0 — Build 90 (2026-07-11)
+
+*Printable QR cards for events: scan at the table, land on the directory. The QR is branded and machine-verified to decode. Builds clean.*
+
+### Added
+- **`qr-card.html`** (root source + `public/` copy, live at `/qr-card.html`): a print-ready page with two formats and cut guides. Page 1: a **4×6 postcard** (heart-flame + wordmark, the home hero's own words, the QR, "Scan to browse the directory, or visit myhearthapp.ca", "free · no account needed"). Page 2: **eight 3.5×2 hand-out cards** per Letter sheet. Print at 100% scale; instructions are on the page (hidden when printing).
+- **The branded QR**: juniper modules, white heart-flame centre tile (clementine mark), error-correction level **H** with the centre covering only ~6%, 4-module quiet zone, pointing at `https://www.myhearthapp.ca/practitioners` (www form per the canonical-host rule). **Machine-verified before shipping**: decoded with jsQR at 1200/400/180px renders, plus a print-PDF proof of both pages.
+- **Standalone QR assets** for reuse anywhere (WhatsApp, Canva, posters): `public/qr-find-practitioners.svg` and `public/qr-find-practitioners.png` (1200px).
+
+### Notes
+- Docs: `Claude.md` doc map (qr-card is a keeper, not historical; re-verify by decode if the QR is ever regenerated), `Readme.md` repo layout, `Architecture.md` §9 → Build 90.
+
+---
+
 ## v0.1.0 — Build 89 (2026-07-11)
 
 *The flame burns: candidate B from the round-five rethink ships. The heart stays; its cutout is now a true flame (asymmetric, flicked tip, side tongue), so the blood-drop read is gone. Plus the 🌿 leaves the confirm email. Builds clean.*
