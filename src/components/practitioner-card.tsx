@@ -32,6 +32,11 @@ export function PractitionerCard({ p }: { p: PractitionerWithCategories }) {
                 className="hover:text-forest hover:underline after:absolute after:inset-0 after:content-['']"
               >
                 {p.practice_name || p.name}
+                {/* People recognize the person, not just the practice — show
+                    both when they differ (mirrors the profile's "with …"). */}
+                {p.practice_name && p.practice_name !== p.name && (
+                  <span className="font-normal text-muted"> · {p.name}</span>
+                )}
               </Link>
             </h3>
             {p.is_member && (

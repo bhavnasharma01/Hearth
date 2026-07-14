@@ -2,6 +2,7 @@ import Link from "next/link";
 import { getCategories } from "@/lib/data/categories";
 import { getPractitioners } from "@/lib/data/practitioners";
 import { PractitionerCard } from "@/components/practitioner-card";
+import { BackToTop } from "@/components/back-to-top";
 import { FilterChips, type ChipOption } from "@/components/filter-chips";
 import { CategoryRail } from "@/components/category-rail";
 import { LocationControl } from "@/components/location-control";
@@ -196,6 +197,8 @@ export default async function PractitionersPage({
           Add your practice
         </Link>
       </section>
+
+      <BackToTop />
     </div>
   );
 }

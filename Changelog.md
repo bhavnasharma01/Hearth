@@ -4,6 +4,19 @@
 
 ---
 
+## v0.1.0 — Build 94 (2026-07-14)
+
+*Directory ergonomics: the practitioner's own name joins the card, and long scrolls get a back-to-top button. Builds clean.*
+
+### Added
+- **Cards show the person, not just the practice** (`PractitionerCard`): when a listing has a practice name that differs from the practitioner's name, the row title reads **"Practice Name · Person Name"** (muted, same truncating line) — 7 of 8 live listings carried a practice name, which hid exactly the names people recognize from WhatsApp recommendations. Mirrors the profile header's "with …" pattern; no change when there's no practice name or they match.
+- **Floating back-to-top button** (`src/components/back-to-top.tsx`, mounted on `/practitioners`): fades in after ~1.5 screens of scroll, bottom-right (thumb-reachable), smooth-scrolls home, respects `prefers-reduced-motion`. **Recommendation rationale:** chosen over a sticky search header (would permanently eat phone-screen height and fight the calm design) and over a fixed-height scroll area (nested scrolling feels broken on mobile). Pagination/"load more" noted in `Design.md` as the lever for when the directory is genuinely long.
+
+### Notes
+- Docs: `Design.md` §3 (back-to-top decision) + §5 (card shows both names), `Architecture.md` §9 → Build 94.
+
+---
+
 ## v0.1.0 — Build 93 (2026-07-14)
 
 *Category admin, unstuck: silent add failures surfaced (and the deactivated-twin trap defused), renames now show on the rail, delete added for unused categories, and everything lists alphabetically. Builds clean.*
