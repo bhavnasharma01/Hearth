@@ -1,6 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
+import { redirect } from "next/navigation";
 import { requireAdmin } from "@/lib/auth";
 import { getSupabaseAdmin } from "@/lib/supabase/admin";
 import { slugify } from "@/lib/slug";
@@ -132,10 +133,42 @@ export async function dismissReports(fd: FormData) {
   revalidatePath("/admin/reports");
 }
 
+/** Land back on the categories page with a visible outcome banner. Every
+ *  category action ends here — a swallowed DB error reads as "categories are
+ *  capped" / "the button does nothing" (the July 14 report). */
+function categoriesNotice(message: string): never {
+  revalidatePath("/admin/categories");
+  redirect(`/admin/categories?notice=${encodeURIComponent(message)}`);
+}
+
 export async function createCategory(fd: FormData) {
   const sb = await admin();
   const name = str(fd, "name");
   if (!name) return;
+  const slug = slugify(name);
+
+  // Slugs are unique, and a DEACTIVATED category still holds its slug — so a
+  // deactivate-then-re-add used to fail silently. Detect the twin and act.
+  const { data: existing } = await sb
+    .from("categories")
+    .select("id, name, active")
+    .eq("slug", slug)
+    .maybeSingle();
+  if (existing) {
+    if (existing.active) {
+      categoriesNotice(
+        `"${existing.name}" already exists with the same web address (${slug}). Rename that one instead if the wording is off.`,
+      );
+    }
+    await sb
+      .from("categories")
+      .update({ name, active: true })
+      .eq("id", existing.id);
+    categoriesNotice(
+      `"${existing.name}" was deactivated, not gone — reactivated it as "${name}" (its links and members are intact).`,
+    );
+  }
+
   const { data: max } = await sb
     .from("categories")
     .select("sort_order")
@@ -143,10 +176,11 @@ export async function createCategory(fd: FormData) {
     .limit(1)
     .maybeSingle();
   const sort_order = ((max as { sort_order: number } | null)?.sort_order ?? 0) + 1;
-  await sb
+  const { error } = await sb
     .from("categories")
-    .insert({ name, slug: slugify(name), sort_order, active: true });
-  revalidatePath("/admin/categories");
+    .insert({ name, slug, sort_order, active: true });
+  if (error) categoriesNotice(`Couldn't add "${name}": ${error.message}`);
+  categoriesNotice(`Added "${name}".`);
 }
 
 export async function renameCategory(fd: FormData) {
@@ -154,8 +188,34 @@ export async function renameCategory(fd: FormData) {
   const id = str(fd, "id");
   const name = str(fd, "name");
   if (!id || !name) return;
-  await sb.from("categories").update({ name }).eq("id", id);
-  revalidatePath("/admin/categories");
+  const { error } = await sb.from("categories").update({ name }).eq("id", id);
+  if (error) categoriesNotice(`Couldn't rename: ${error.message}`);
+  categoriesNotice(`Renamed to "${name}". The web address (slug) stays the same, so links keep working.`);
+}
+
+/** Delete a category — only when nothing uses it. A category with members or
+ *  events keeps them findable; deactivating hides it without unlinking anyone. */
+export async function deleteCategory(fd: FormData) {
+  const sb = await admin();
+  const id = str(fd, "id");
+  if (!id) return;
+  const { count: pc } = await sb
+    .from("practitioner_categories")
+    .select("practitioner_id", { count: "exact", head: true })
+    .eq("category_id", id);
+  const { count: ec } = await sb
+    .from("events")
+    .select("id", { count: "exact", head: true })
+    .eq("category_id", id);
+  const inUse = (pc ?? 0) + (ec ?? 0);
+  if (inUse > 0) {
+    categoriesNotice(
+      `Can't delete: ${inUse} ${inUse === 1 ? "practice/event still uses" : "practices/events still use"} it. Deactivate it instead (hides it everywhere without unlinking anyone).`,
+    );
+  }
+  const { error } = await sb.from("categories").delete().eq("id", id);
+  if (error) categoriesNotice(`Couldn't delete: ${error.message}`);
+  categoriesNotice("Deleted.");
 }
 
 export async function setCategoryActive(fd: FormData) {

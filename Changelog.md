@@ -4,6 +4,27 @@
 
 ---
 
+## v0.1.0 — Build 93 (2026-07-14)
+
+*Category admin, unstuck: silent add failures surfaced (and the deactivated-twin trap defused), renames now show on the rail, delete added for unused categories, and everything lists alphabetically. Builds clean.*
+
+### Fixed
+- **"It doesn't let me add any more categories" (there was never a cap):** `createCategory` swallowed insert errors, and a **deactivated category still owns its slug**, so deactivate-then-re-add-something-similar failed with zero feedback. Now every category action ends in a visible outcome banner on `/admin/categories` (`?notice=`), an active same-slug twin explains itself, and a **deactivated twin is reactivated under the new name** (its links and members intact).
+- **Renames looked like they didn't save:** they saved (the July renames are all in the DB), but the `CategoryRail` hardcodes curated short labels for the 11 seeded slugs. Each `CATEGORY_META` entry now carries its `seedName`; the curated label applies only while that name stands, so a renamed category's label follows the new name (keyword-matched icon, curated icon as fallback). Also fixed the rail's React key (was the short label, which can collide; now the slug).
+
+### Added
+- **Delete category** (`deleteCategory`, danger button on `/admin/categories`): allowed only when **no practices or events reference it**; otherwise the banner explains and points to Deactivate (which hides without unlinking anyone).
+- **Alphabetical ordering** in the app (`getCategories`) and the admin list (`listCategoriesAdmin`), per Bhavna's request; `sort_order` stays in the schema but no longer drives display.
+- Keyword icons for her real new categories: womb → 🤱, products/shop → 🛍️ ("Conscious Products" no longer falls back to ✻).
+
+### Parked
+- **Taxonomy rethink (categories + subcategories)** recorded as `Product.md §11.7`: the flat list is growing (21 and counting); revisit structure deliberately, not today.
+
+### Notes
+- Docs: `Product.md` §8 + §11, `Claude.md` category gotcha rewritten (notice pattern, seedName tripwire, delete-when-unused), `Bugs.md` resolved entry, `Architecture.md` §9 → Build 93.
+
+---
+
 ## v0.1.0 — Build 92 (2026-07-11)
 
 *QR cards, round two: practitioner recruitment leads (supply-first adoption strategy), and the seeker card stops overclaiming "no account needed". Builds clean.*

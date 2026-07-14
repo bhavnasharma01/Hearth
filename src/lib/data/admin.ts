@@ -127,7 +127,7 @@ export async function listCategoriesAdmin(): Promise<AdminCategory[]> {
   const { data } = await sb
     .from("categories")
     .select("id, name, slug, sort_order, active")
-    .order("sort_order", { ascending: true });
+    .order("name", { ascending: true });
   return (data as AdminCategory[]) ?? [];
 }
 
