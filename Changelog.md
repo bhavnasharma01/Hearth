@@ -4,6 +4,23 @@
 
 ---
 
+## v0.1.0 — Build 95 (2026-07-21)
+
+*Documentation audit (per /updatestructure): Builds 86–94 reconciled across all docs; live-state checks folded in. Docs only; builds clean.*
+
+### Changed — staleness swept
+- **`Readme.md`**: migrations tree comment was still "0001 → 0007" (now 0001 → 0010); `logo-rethink.html` + `stone-ember-preview.html` added to the repo layout.
+- **`Architecture.md`**: §4 categories row reflects Build 93 (admin-extended, alphabetical, `sort_order` vestigial); §5 migrations + `public/` lines rewritten to match reality; a compact **Builds 88–94 "built so far" entry** added (flame redraw, QR cards + supply-first, Stone & Ember review, category admin, directory ergonomics); §9 → Build 95.
+- **`Product.md`** §5: directory cards described accurately (Practice · Person since Build 94; back-to-top).
+- **`Hearth - Database Schema.md`**: `categories.sort_order` marked vestigial (alphabetical display since Build 93).
+- **`Bugs.md`**: the Josh claim-funnel item **slimmed to a 🟡 duplicate-submission backstop** — checked live: **every pre-account listing is now claimed** (unowned = 0; Anat and Andjela used the manage-link path), so the claim-intercept gap is moot in practice. The middleware→proxy item updated (current Next 16.2.9 builds are warning-free).
+- **`Claude.md`**: new learning ("admin actions must land with a visible outcome; hardcoded labels mask renames"), a note listing the **untracked personal artifacts** in the working tree (feedback-call notes, `hearth-qr-cards.pdf`, `spark-dance/` — leave alone), and open item 5b: claiming is done.
+
+### Live-state notes (checked against the DB, July 21)
+- 9 live practitioners · 19 active categories · 0 unowned listings. The Build 93 deactivated-twin reactivation was confirmed working in production ("Animal healing").
+
+---
+
 ## v0.1.0 — Build 94 (2026-07-14)
 
 *Directory ergonomics: the practitioner's own name joins the card, and long scrolls get a back-to-top button. Builds clean.*

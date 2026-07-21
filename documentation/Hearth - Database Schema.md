@@ -71,7 +71,7 @@ Seeded from the spec's starter set (Bodywork & Massage, Somatic & Movement, Ener
 | name | text, unique | |
 | slug | text, unique | |
 | description | text | examples of what fits |
-| sort_order | int | display ordering |
+| sort_order | int | legacy display ordering — vestigial since Build 93 (display is alphabetical by name in app + admin) |
 | active | boolean | hide without deleting |
 
 **Seed rows (insert at setup — starter set from the spec):**

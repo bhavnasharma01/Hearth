@@ -63,7 +63,7 @@ Hearth is a **database-backed web application** — **Next.js + Supabase (Postgr
 Full detail in `Hearth - Database Schema.md`. Core v1 tables:
 
 - **`practitioners`** — the directory. `status` (`pending`/`live`/`hidden`/`rejected`), `auto_check`, `flag_count`, `is_member`, `accepting_clients`, `featured`, `source`, `search_vector`, `slug` (for `/p/slug`), and `manage_token` (a per-listing secret capability for the owner's edit link — **column-revoked from public roles**). DB `CHECK`: at least one of WhatsApp/email/website/Instagram.
-- **`categories`** — taxonomy table (seeded with 11), admin-extendable; `sort_order`, `active`.
+- **`categories`** — taxonomy table (seeded with 11; ~19 active by July 21), admin-extendable (add/rename/deactivate/delete-when-unused, all with outcome banners — Build 93); display is **alphabetical** everywhere since Build 93 (`sort_order` remains but is vestigial); `active`.
 - **`practitioner_categories`** — many-to-many join (a practitioner holds one or more; the 3-cap was removed in Build 39).
 - **`practitioner_services`** — the "what I offer" menu (`title`, optional `description`/`price_note`, `sort_order`), managed from the owner's `/manage` page. Public-read for live practitioners; service-role writes. *(Build 25, migration `0007`.)*
 - **`events`** — native events. `host_practitioner_id` (links to directory), `start_at`/`end_at`, `mode`, `cost_note`, `recurrence_rule` (RRULE), `status`, `source`, `external_id` (GCal dedupe), `search_vector`.
@@ -119,9 +119,11 @@ src/lib
   auth · notify · features · geocode · geo · format · url · slug · datetime
 src/components                  # cards, chips, forms/, admin/, logo, share-button, layout
 src/middleware.ts               # refreshes the Supabase session on /admin
-supabase/migrations             # 0001 schema+RLS+seed · 0002 geocoding · 0003 instagram · 0004 feedback
+supabase/migrations             # 0001 schema+RLS+seed → 0010 comprehensive search (run in order; see Readme)
 scripts                         # import-calendar.mjs · geocode-events.mjs
-public                          # static assets served at "/" (palette-explorations.html — temporary reviewer page)
+public                          # static assets at "/": logo.svg · email-logo.png · qr-card.html + two
+                                #   scan-verified QR pairs (find/add) · brand pages (palette-explorations,
+                                #   brand-preview, logo-rethink: historical · stone-ember-preview: review)
 vercel.json                     # Vercel Cron schedule → daily /api/cron/import
 ```
 
@@ -154,6 +156,7 @@ vercel.json                     # Vercel Cron schedule → daily /api/cron/impor
 - *Search overhaul (Build 74, migration `0010`):* the practitioner `search_vector` became a **trigger-maintained weighted vector** covering name/practice (A), categories + keywords (B), description + services (C), bio/area/languages (D) — refreshed on practitioner writes, category links, service edits, and category renames; `getPractitioners` issues sanitized prefix tsqueries. Directory cards became fully tappable (stretched-link).
 - *Brand + polish (Builds 73–84):* the final identity — **Clementine & Juniper** palette (two stage pairs), the **heart-flame** mark (34px header; `public/logo.svg` + `public/email-logo.png`), **Zilla Slab + Source Sans 3** type, branded emails with the logo, AODA/AA accessibility (skip-link, focus-visible, chip focus rings, reduced motion) — plus `/privacy` (Build 76) and the `token_hash` email-link fix (`/auth/confirm`, Build 77).
 - *Disclaimer (Build 87):* a public **`/disclaimer`** page (community directory, not vetting; practitioners are independent; not medical advice; offered as-is), linked as the footer's third quiet link, echoed by a muted footnote at the bottom of every practitioner profile, and referenced by the add form's strengthened community agreement (accuracy + own-responsibility).
+- *July sprint two (Builds 88–94):* the **flame cutout redrawn** as a true asymmetric flame across all four logo assets (89; a member read the symmetric teardrop as a blood drop — candidates on `logo-rethink.html`, 88); **printable QR cards** for events (`qr-card.html`, 90+92 — practitioner-recruitment pages lead per the supply-first adoption decision, seeker pages follow; both QRs branded + machine-decode-verified); the **Stone & Ember review page** for Anat (91, toggle to current identity, nothing shipped changed); **category admin unstuck** (93: outcome banners, deactivated-twin reactivation, delete-when-unused, alphabetical everywhere, rename-aware rail labels); **directory ergonomics** (94: cards show "Practice · Person", floating back-to-top). Also: area field welcomes any precision (86) and the claim gap that produced a duplicate listing was diagnosed (Bugs.md) — mooted in practice once every pre-account listing was claimed (July 21).
 
 **Not yet built:** event detail pages (`/events/[id]`). *(The whole Events layer is currently hidden for the practitioner-only pilot — see `EVENTS_ENABLED`.)*
 
@@ -215,4 +218,4 @@ The original plan ran moderation in Google Apps Script. In the database-backed d
 
 ## 9. Versioning
 
-The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 94** (practitioner-only pilot on www.myhearthapp.ca, launch-ready: full account layer, testimonials, comprehensive search, the final Clementine & Juniper / heart-flame / Zilla Slab identity (flame cutout redrawn as a true flame in Build 89), branded emails, privacy + disclaimer pages; events still behind one flag).
+The app's **Version** and **Build** number live in the README (and, once code exists, in the app's config/about surface). Build number increments each `/wouldyou` work session; version changes only on explicit instruction. Current: **v0.1.0 — Build 95** (practitioner-only pilot on www.myhearthapp.ca, launch-ready: full account layer, testimonials, comprehensive search, the final Clementine & Juniper / heart-flame / Zilla Slab identity (flame cutout redrawn as a true flame in Build 89), branded emails, privacy + disclaimer pages; events still behind one flag).

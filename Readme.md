@@ -4,7 +4,7 @@
 
 **🌐 Live:** https://myhearthapp.ca — auto-deploys from `main` via Vercel (hearthto.vercel.app remains as an alias).
 
-**Version:** 0.1.0 · **Build:** 94
+**Version:** 0.1.0 · **Build:** 95
 *(Status: **deployed & live** at www.myhearthapp.ca (canonical host is **www**; apex + hearthto.vercel.app redirect/alias). Practitioner-only pilot — the Events layer stays behind one flag (`src/lib/features.ts`). Live today: browse/search/contact with **no account**; **member accounts** (Google + email/password via Supabase Auth) gate contributing — add your practice (one per account), edit/delete it from **My practice**, claim pre-account listings; **testimonials** ("Kind words": member-written, practitioner-approved, with email notification); rich profiles (Where & how card, embedded neighbourhood map + directions, tappable links, services, avatar); **Support & feedback** in the footer; steward email alerts from the verified `myhearthapp.ca` Resend domain; the final **Clementine & Juniper** identity — heart-flame mark, **Zilla Slab + Source Sans 3** type, branded emails with the logo, AODA-minded WCAG-AA accessibility (skip-link, visible focus, reduced motion) — on a one-block-swappable palette system; **comprehensive search** (categories, services, bio, prefix matching); public **/privacy** and **/disclaimer** pages; and the full **admin panel** (moderation, reports resolve-on-hide, listings edit/manage-link copy, categories with auto emoji).)*
 
 ---
@@ -66,9 +66,11 @@ Effectively **$0** at community scale. Architecture detail in `documentation/Arc
 │   ├── qr-find-practitioners.svg / .png   ← branded QR → /practitioners (scan-verified; PNG for WhatsApp/Canva)
 │   ├── qr-add-practice.svg / .png         ← branded QR → /add-practitioner (scan-verified)
 │   ├── palette-explorations.html  ← how the brand was chosen (historical; removable)
-│   └── brand-preview.html         ← the brand dress rehearsals (historical; removable)
+│   ├── brand-preview.html         ← the brand dress rehearsals (historical; removable)
+│   ├── logo-rethink.html          ← flame-cutout redraw round (resolved Build 89; historical)
+│   └── stone-ember-preview.html   ← F4 palette review page with live toggle (Anat's ask; removable after review)
 ├── supabase/
-│   └── migrations/                ← SQL schema, RLS, category seed (0001 → 0007)
+│   └── migrations/                ← SQL schema, RLS, seeds (0001 → 0010, run in order)
 └── documentation/
     ├── Architecture.md            ← system & tech architecture (living)
     ├── Security.md                ← security, privacy, abuse-resistance (living)
